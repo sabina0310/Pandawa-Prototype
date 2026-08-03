@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Detail Booking - Pilar Pandawa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "whatsapp-green": "#25d366",
+                        "whatsapp-hover": "#1da851",
+                        "surface-tint": "#0055d5",
+                        "status-occupied": "#ef4444",
+                        "on-primary": "#ffffff",
+                        "border-strong": "#c1c1c1",
+                        "on-secondary-fixed": "#002109",
+                        "primary": "#0040a6",
+                        "on-primary-container": "#cfd9ff",
+                        "tertiary": "#674000",
+                        "on-secondary-container": "#007232",
+                        "surface-container-high": "#eae7e7",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#005322",
+                        "background": "#fcf9f8",
+                        "secondary": "#006d2f",
+                        "primary-container": "#0156d7",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-background": "#1b1c1c",
+                        "on-surface-variant": "#424654",
+                        "outline": "#737686",
+                        "secondary-fixed-dim": "#3de273",
+                        "on-primary-fixed": "#001849",
+                        "surface-canvas": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-fixed": "#66ff8e",
+                        "surface-soft": "#f7f7f7",
+                        "inverse-surface": "#303030",
+                        "ink-primary": "#222222",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "surface-container": "#f0eded",
+                        "secondary-container": "#5dfd8a",
+                        "surface-container-highest": "#e5e2e1",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-dim": "#dcd9d9",
+                        "surface-container-low": "#f6f3f2",
+                        "surface-bright": "#fcf9f8",
+                        "status-available": "#10b981",
+                        "ink-secondary": "#3f3f3f",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#dae2ff",
+                        "status-warning": "#f59e0b",
+                        "on-surface": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffd4a2",
+                        "inverse-on-surface": "#f3f0ef",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-primary": "#b2c5ff",
+                        "surface-variant": "#e5e2e1",
+                        "tertiary-container": "#875500",
+                        "surface": "#fcf9f8",
+                        "ink-muted": "#6a6a6a",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "border-hairline": "#dddddd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxs": "2px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "base": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "md": "12px",
+                        "section": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "badge": ["Plus Jakarta Sans"],
+                        "stat-display": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "tag-uppercase": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "button-md": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
+                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
+                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
+                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F8FAFC] font-body-md text-on-surface antialiased">
+    <!-- Memuat Top Nav dari file terpisah -->
+    <div id="top-nav-placeholder"></div>
+    <script>
+        fetch('top-nav.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('top-nav-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
+            });
+    </script>
+    <!-- Main Content Canvas -->
+    <main class="ml-64 pt-20 p-lg min-h-screen">
+        <!-- Page Title Section -->
+        <div class="mb-lg">
+            <a href="javascript:history.back()"
+                class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md">
+                <span class="material-symbols-outlined text-[18px]" data-icon="arrow_back">arrow_back</span>
+                Kembali
+            </a>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                <div>
+                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary" id="bookingCode">Detail
+                        Pemesanan -
+                        BK-202310-001</h1>
+                    <p class="font-body-md text-body-md text-ink-muted mt-xs">Informasi lengkap data penyewa, rincian
+                        sewa, status pembayaran, dan riwayat transaksi.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-sm mt-sm md:mt-0">
+                    <button id="downloadPdfBtn"
+                        class="flex items-center gap-xs px-base py-sm border border-primary text-primary hover:bg-surface-soft transition-colors rounded-md font-button-md text-button-md disabled:opacity-60 disabled:cursor-not-allowed">
+                        <span class="material-symbols-outlined text-[18px]" id="downloadPdfBtnIcon"
+                            data-icon="download">download</span>
+                        <span id="downloadPdfBtnText">Unduh PDF / Cetak</span>
+                    </button>
+                    <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-xs px-base py-sm bg-whatsapp-green text-on-primary hover:bg-whatsapp-hover transition-colors rounded-md font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] cursor-pointer no-underline">
+                        <span class="material-symbols-outlined text-[18px] filled" data-icon="chat">chat</span>
+                        Kirim WA Pengingat
+                    </a>
+                    <!-- <button
+                        class="bg-surface-variant text-ink-muted px-4 py-2 rounded-xl font-semibold text-[13px] cursor-not-allowed">
+                        Alokasikan Kamar
+                    </button>
+                    <button
+                        class="px-base py-sm  bg-primary-container text-on-primary hover:opacity-90 transition-opacity rounded-md font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                        Alokasikan Kamar
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        <!-- Main Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+            <!-- LEFT COLUMN (70%) -->
+            <div class="lg:col-span-8 flex flex-col gap-lg">
+                <!-- Card 1 (Status) -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    <div class="flex items-center gap-sm mb-md">
+                        <span
+                            class="px-sm py-xs bg-status-available/10 text-status-available font-badge text-badge rounded-full uppercase">LUNAS</span>
+                        <span
+                            class="px-sm py-xs bg-primary/10 text-primary font-badge text-badge rounded-full uppercase">DIKONFIRMASI</span>
+                    </div>
+                    <div class="flex items-start gap-sm">
+                        <span class="material-symbols-outlined text-primary"
+                            data-icon="check_circle">check_circle</span>
+                        <div>
+                            <div class="font-title-md text-title-md text-ink-primary" id="allocationBranch">Teralokasi
+                                di Cabang Utama</div>
+                            <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="allocationRoom">Kamar A01
+                                (Lantai 1)</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 (Tenant Info) -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    <h2
+                        class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                        Informasi Penyewa</h2>
+                    <div class="flex flex-col md:flex-row gap-lg">
+                        <div class="flex-1 space-y-md">
+                            <div>
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nama Lengkap</div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="tenantName">Budi
+                                    Santoso</div>
+                            </div>
+                            <div>
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nomor Identitas (NIK)
+                                </div>
+                                <div class="font-body-md text-body-md text-ink-primary" id="tenantNik">3515XXXXXXXXXXXX
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">WhatsApp</div>
+                                <div class="font-body-md text-body-md text-ink-primary" id="tenantWhatsapp">+62
+                                    812-3456-7890</div>
+                            </div>
+                            <!-- <div class="pt-sm border-t border-border-hairline">
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">Penghuni Tambahan</div>
+                                <div class="font-body-md text-body-md text-ink-primary">1 Penghuni (Anak - Budi Santoso
+                                    Jr)</div>
+                                <div>
+                                    <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nama Lengkap</div>
+                                    <div class="font-body-md text-body-md text-ink-primary font-medium">Budi Santoso
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nomor Identitas (NIK)
+                                    </div>
+                                    <div class="font-body-md text-body-md text-ink-primary">3515XXXXXXXXXXXX</div>
+                                </div>
+                                <div>
+                                    <div class="font-label-md text-label-md text-ink-muted mb-xxs">WhatsApp</div>
+                                    <div class="font-body-md text-body-md text-ink-primary">+62 812-3456-7890</div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="w-full md:w-48 shrink-0">
+                            <!-- <div class="font-label-md text-label-md text-ink-muted mb-sm">Verifikasi Identitas</div> -->
+                            <!-- <div
+                                class="aspect-[1.6/1] bg-surface-soft rounded-lg border border-border-hairline overflow-hidden relative group cursor-pointer">
+                                <img alt="KTP Preview"
+                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                    data-alt="A blurred, generic preview of an Indonesian identity card (KTP) placed on a clean white desk. The lighting is bright and even, creating a professional and secure atmosphere. The card itself is abstracted to hide personal details, showing only the distinct blue and yellow layout typical of such documents."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdf4WEjJlgxbhYTZMutHFzrcD6mvWg8mxzZXKJV5qxg9KuEkuihiLVHuRCdYSGR5MLSNFj5hxOqPcIGitLCHN-QnlRqAnLvnuHwBQxHzhQppGpz0_47m2KApzfUpYdNtpyv4Uo9eXGmdJXdT1qDxSYB5iD9MnRhXBFYLpRYOSrHlHWVasCiNSzc3ez5N-rh53wqJAEYITazrdLfkLPT-9OSySeX8-KEpwpn_VrxKIpv7wPDSwTVYH0WvCcuLnoGb02SLqPH3MCfjY">
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center bg-ink-primary/10 group-hover:bg-transparent transition-colors">
+                                    <span
+                                        class="material-symbols-outlined text-ink-primary bg-surface-canvas/80 p-xs rounded-full"
+                                        data-icon="zoom_in">zoom_in</span>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 (Property Details) -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    <h2
+                        class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                        Rincian Properti &amp; Jadwal</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                        <div class="flex items-start gap-sm">
+                            <div class="p-sm bg-surface-soft rounded-md text-primary mt-xxs">
+                                <span class="material-symbols-outlined" data-icon="domain">domain</span>
+                            </div>
+                            <div>
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">Cabang Properti</div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="propertyBranch">
+                                    Cabang Utama</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="propertyType">Tipe
+                                    Standar - Sewa <span class="font-bold">BULANAN</span></div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-sm">
+                            <div class="p-sm bg-surface-soft rounded-md text-primary mt-xxs">
+                                <span class="material-symbols-outlined" data-icon="event">event</span>
+                            </div>
+                            <div>
+                                <div class="font-label-md text-label-md text-ink-muted mb-xxs">Jadwal Sewa</div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="rentSchedule">15
+                                    Okt 2023 - 15 Nov
+                                    2023</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs">Durasi: 1 Bulan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- RIGHT COLUMN (30%) -->
+            <div class="lg:col-span-4 flex flex-col gap-lg">
+                <!-- Card 4 (Billing Summary) -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    <h2
+                        class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                        Ringkasan Tagihan</h2>
+                    <div class="space-y-sm mb-md">
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-md text-body-md text-ink-secondary">Harga Sewa</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billHargaSewa">Rp
+                                500.000</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-md text-body-md text-ink-secondary">Biaya Layanan</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billLayanan">Rp
+                                15.000</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-md text-body-md text-ink-secondary">Deposit</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billDeposit">Rp
+                                0</span>
+                        </div>
+                    </div>
+                    <div class="pt-sm border-t border-border-hairline">
+                        <div class="flex justify-between items-end">
+                            <span class="font-label-md text-label-md text-ink-muted">Total Pembayaran</span>
+                            <span class="font-stat-display text-stat-display text-primary-container" id="billTotal">Rp
+                                515.000</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 (Payment Info) -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    <h2
+                        class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                        Informasi Pembayaran</h2>
+                    <div class="space-y-md">
+                        <div>
+                            <div class="font-label-md text-label-md text-ink-muted mb-xxs">Metode Pembayaran</div>
+                            <div class="font-body-md text-body-md text-ink-primary font-medium" id="paymentMethod">
+                                Virtual Account - BCA
+                            </div>
+                            <div
+                                class="font-body-sm text-body-sm text-status-available mt-xxs flex items-center gap-xs">
+                                <span class="material-symbols-outlined text-[14px]"
+                                    data-icon="auto_awesome">auto_awesome</span>
+                                Dicek otomatis
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-label-md text-label-md text-ink-muted mb-xxs">Waktu Transaksi</div>
+                            <div class="font-body-md text-body-md text-ink-primary">15 Okt 2023, 10:30 WIB</div>
+                        </div>
+                        <div class="pt-sm border-t border-border-hairline flex items-center gap-sm">
+                            <div
+                                class="h-10 w-10 rounded-full bg-status-available/10 flex items-center justify-center text-status-available shrink-0">
+                                <span class="material-symbols-outlined filled"
+                                    data-icon="check_circle">check_circle</span>
+                            </div>
+                            <div>
+                                <div class="font-title-md text-title-md text-ink-primary">Berhasil / Lunas</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted">Dana telah diterima</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden Receipt Template (captured for PDF generation) -->
+    <div style="position:fixed; top:0; left:-9999px; z-index:-1;">
+        <div id="pdfReceipt"
+            style="width:700px; padding:40px; background:#ffffff; font-family:'Plus Jakarta Sans', sans-serif; color:#1b1c1c;">
+            <!-- Header -->
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                    <div style="font-size:22px; font-weight:700; color:#0040a6;">Pilar Pandawa</div>
+                    <div style="font-size:13px; color:#6a6a6a; margin-top:2px;">Professional Boarding House Management
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div
+                        style="font-size:14px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase;">
+                        Kuitansi Pembayaran</div>
+                    <div id="receiptInvoiceNo"
+                        style="display:inline-block; margin-top:6px; background:#f0eded; color:#6a6a6a; font-size:11px; padding:3px 10px; border-radius:4px;">
+                        INV/20231015/001</div>
+                </div>
+            </div>
+            <hr style="border:none; border-top:1px solid #dddddd; margin:20px 0;">
+            <!-- Data Penghuni & Detail Kamar -->
+            <div style="display:flex; gap:32px;">
+                <div style="flex:1;">
+                    <div
+                        style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                        Data Penghuni</div>
+                    <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Nama Lengkap</div>
+                    <div id="receiptTenantName" style="font-size:14px; font-weight:600; margin-bottom:10px;">Budi
+                        Santoso</div>
+                    <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">WhatsApp</div>
+                    <div id="receiptTenantWhatsapp" style="font-size:14px; margin-bottom:10px;">+62 812-3456-7890</div>
+                    <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">NIK</div>
+                    <div id="receiptTenantNik" style="font-size:14px;">3515XXXXXXXXXXXX</div>
+                </div>
+                <div style="flex:1;">
+                    <div
+                        style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                        Detail Kamar</div>
+                    <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Cabang</div>
+                    <div id="receiptBranch" style="font-size:14px; font-weight:600; margin-bottom:10px;">Cabang Utama
+                    </div>
+                    <div style="display:flex; gap:24px;">
+                        <div>
+                            <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Nomor Kamar</div>
+                            <div id="receiptRoomNumber" style="font-size:14px; font-weight:600;">A01</div>
+                        </div>
+                        <div>
+                            <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Tipe</div>
+                            <div id="receiptRoomType"
+                                style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; background:#f0eded; color:#3f3f3f; padding:2px 8px; border-radius:4px;">
+                                Standar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr style="border:none; border-top:1px solid #dddddd; margin:20px 0;">
+            <!-- Detail Transaksi -->
+            <div
+                style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                Detail Transaksi</div>
+            <div
+                style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:#6a6a6a; text-transform:uppercase; border-bottom:1px solid #dddddd; padding-bottom:8px; margin-bottom:4px;">
+                <span>Deskripsi</span>
+                <span>Jumlah</span>
+            </div>
+            <div id="receiptLineItems"></div>
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; background:#e8f0fe; padding:10px 12px; border-radius:6px; margin-top:8px;">
+                <span style="font-size:13px; font-weight:700; color:#1b1c1c;">Total Pembayaran</span>
+                <span id="receiptTotal" style="font-size:16px; font-weight:700; color:#0040a6;">Rp 515.000</span>
+            </div>
+            <div id="receiptStatusLine"
+                style="text-align:center; font-size:12px; font-weight:700; color:#10b981; text-transform:uppercase; margin-top:12px;">
+                Lunas - Pembayaran via Virtual Account - BCA</div>
+            <!-- Informasi Penting -->
+            <div
+                style="display:flex; gap:10px; align-items:flex-start; background:#f6f3f2; border-radius:8px; padding:12px 14px; margin-top:24px;">
+                <div style="font-size:13px; font-weight:700; color:#1b1c1c;">&#9432;</div>
+                <div>
+                    <div style="font-size:13px; font-weight:700; margin-bottom:6px;">Informasi Penting</div>
+                    <ul style="margin:0; padding-left:16px; font-size:12px; color:#3f3f3f; line-height:1.6;">
+                        <li>Waktu Check-in: 14:00 WIB, Check-out: 12:00 WIB.</li>
+                        <li id="receiptWifiInfo">Akses WiFi: Pandawa_A01 (Pass: pilar2023)</li>
+                        <li>Hubungi Pengelola Cabang: +62 811-9876-5432 untuk bantuan.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        (function () {
+            const downloadBtn = document.getElementById("downloadPdfBtn");
+            const downloadBtnText = document.getElementById("downloadPdfBtnText");
+            const downloadBtnIcon = document.getElementById("downloadPdfBtnIcon");
+
+            function text(id) {
+                const el = document.getElementById(id);
+                return el ? el.textContent.trim().replace(/\s+/g, " ") : "";
+            }
+
+            function populateReceipt() {
+                const bookingCode = (text("bookingCode").match(/BK-[\w-]+/) || ["BK-000000-000"])[0];
+                document.getElementById("receiptInvoiceNo").textContent = "INV/" + bookingCode;
+
+                document.getElementById("receiptTenantName").textContent = text("tenantName");
+                document.getElementById("receiptTenantWhatsapp").textContent = text("tenantWhatsapp");
+                document.getElementById("receiptTenantNik").textContent = text("tenantNik");
+
+                document.getElementById("receiptBranch").textContent = text("propertyBranch");
+
+                const roomMatch = text("allocationRoom").match(/Kamar\s+([\w-]+)/i);
+                const roomNumber = roomMatch ? roomMatch[1] : "-";
+                document.getElementById("receiptRoomNumber").textContent = roomNumber;
+
+                const typeMatch = text("propertyType").match(/Tipe\s+(\w+)/i);
+                document.getElementById("receiptRoomType").textContent = typeMatch ? typeMatch[1] : "-";
+
+                const schedule = text("rentSchedule");
+                const hargaSewa = text("billHargaSewa");
+                const layanan = text("billLayanan");
+                const deposit = text("billDeposit");
+                const total = text("billTotal");
+                const paymentMethod = text("paymentMethod");
+
+                const lineItems = [
+                    { label: "Sewa Bulanan (" + schedule + ")", value: hargaSewa },
+                    { label: "Deposit Keamanan (Dapat dikembalikan)", value: deposit },
+                    { label: "Biaya Layanan Admin", value: layanan }
+                ];
+                document.getElementById("receiptLineItems").innerHTML = lineItems.map(function (item) {
+                    return '<div style="display:flex; justify-content:space-between; font-size:13px; padding:8px 0; border-bottom:1px solid #eaecf0;">' +
+                        '<span style="color:#3f3f3f;">' + item.label + '</span>' +
+                        '<span style="font-weight:600;">' + item.value + '</span>' +
+                        '</div>';
+                }).join("");
+
+                document.getElementById("receiptTotal").textContent = total;
+                document.getElementById("receiptStatusLine").textContent = "Lunas - Pembayaran via " + paymentMethod;
+                document.getElementById("receiptWifiInfo").textContent = "Akses WiFi: Pandawa_" + roomNumber + " (Pass: pilar2023)";
+
+                return bookingCode;
+            }
+
+            downloadBtn.addEventListener("click", function () {
+                downloadBtn.disabled = true;
+                downloadBtnIcon.textContent = "hourglass_top";
+                downloadBtnText.textContent = "Menyiapkan PDF...";
+
+                const bookingCode = populateReceipt();
+                const receiptEl = document.getElementById("pdfReceipt");
+
+                html2canvas(receiptEl, { scale: 2, backgroundColor: "#ffffff" }).then(function (canvas) {
+                    const imgData = canvas.toDataURL("image/png");
+                    const jsPDF = window.jspdf.jsPDF;
+                    const pdf = new jsPDF("p", "pt", "a4");
+                    const pageWidth = pdf.internal.pageSize.getWidth();
+                    const imgHeight = (canvas.height * pageWidth) / canvas.width;
+
+                    pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
+                    pdf.save("Kuitansi-" + bookingCode + ".pdf");
+                }).catch(function (err) {
+                    console.error("Gagal membuat PDF:", err);
+                    alert("Gagal membuat PDF. Silakan coba lagi.");
+                }).finally(function () {
+                    downloadBtn.disabled = false;
+                    downloadBtnIcon.textContent = "download";
+                    downloadBtnText.textContent = "Unduh PDF / Cetak";
+                });
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

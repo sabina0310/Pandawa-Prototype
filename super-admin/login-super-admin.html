@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pilar Pandawa - Super Admin Login</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-variant": "#e5e2e1",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001849",
+                        "ink-primary": "#222222",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-container": "#5dfd8a",
+                        "surface-container": "#f0eded",
+                        "surface": "#fcf9f8",
+                        "secondary-fixed-dim": "#3de273",
+                        "background": "#fcf9f8",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f3f0ef",
+                        "ink-muted": "#6a6a6a",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "whatsapp-green": "#25d366",
+                        "inverse-surface": "#303030",
+                        "surface-tint": "#0055d5",
+                        "border-hairline": "#dddddd",
+                        "whatsapp-hover": "#1da851",
+                        "tertiary": "#674000",
+                        "status-warning": "#f59e0b",
+                        "status-available": "#10b981",
+                        "on-surface-variant": "#424654",
+                        "on-secondary-fixed": "#002109",
+                        "on-background": "#1b1c1c",
+                        "primary": "#0040a6",
+                        "primary-fixed": "#dae2ff",
+                        "on-primary-container": "#cfd9ff",
+                        "inverse-primary": "#b2c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "surface-soft": "#f7f7f7",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-canvas": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#66ff8e",
+                        "on-error": "#ffffff",
+                        "secondary": "#006d2f",
+                        "on-secondary-fixed-variant": "#005322",
+                        "surface-bright": "#fcf9f8",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "status-occupied": "#ef4444",
+                        "ink-secondary": "#3f3f3f",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#875500",
+                        "surface-container-low": "#f6f3f2",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "primary-container": "#0156d7",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#eae7e7",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-container": "#007232",
+                        "border-strong": "#c1c1c1",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffd4a2",
+                        "on-surface": "#1b1c1c"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "sm": "8px",
+                        "xl": "32px",
+                        "base": "16px",
+                        "lg": "24px",
+                        "xxs": "2px",
+                        "xs": "4px",
+                        "md": "12px",
+                        "section": "64px"
+                    },
+                    fontFamily: {
+                        "badge": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "tag-uppercase": ["Plus Jakarta Sans"],
+                        "button-md": ["Plus Jakarta Sans"],
+                        "stat-display": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "badge": ["11px", { lineHeight: "14px", fontWeight: "600" }],
+                        "display-md": ["20px", { lineHeight: "26px", fontWeight: "700" }],
+                        "body-md": ["15px", { lineHeight: "22px", fontWeight: "400" }],
+                        "tag-uppercase": ["10px", { lineHeight: "12px", letterSpacing: "0.5px", fontWeight: "700" }],
+                        "button-md": ["15px", { lineHeight: "20px", fontWeight: "600" }],
+                        "stat-display": ["32px", { lineHeight: "36px", fontWeight: "700" }],
+                        "display-lg": ["22px", { lineHeight: "28px", fontWeight: "600" }],
+                        "title-md": ["16px", { lineHeight: "20px", fontWeight: "600" }],
+                        "label-md": ["13px", { lineHeight: "18px", fontWeight: "500" }],
+                        "display-xl": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg-mobile": ["20px", { lineHeight: "26px", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-background min-h-screen font-body-md text-on-surface antialiased">
+    <main class="min-h-screen flex w-full">
+        <!-- Left Side: Hero Image & Branding -->
+        <section class="hidden lg:flex lg:w-1/2 relative bg-surface-variant overflow-hidden">
+            <!-- Background Image -->
+            <img alt="Pilar Pandawa Modern Boarding House" class="absolute inset-0 w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida/AP1WRLsYVQ9hb-30HtHBBbOGZ-8dWDbAwTsbop8zM5Lj2mCHT1Fqi2HRmoSCZhhl2qx_MB1pG4pzJHrUV1UBijD3I94BZm0QgC2fs9MNVfOqg6RwSH28HTUMYILbBvQyagrZMSmvmjBz7L2gNXBBnzrzGDtMMKN4hkAB7sIjlKA_9r_36dvBvUIoKucUtZYR5zMqnyLhH20vD_3C094O7-1GRxaF5sq6c0pWmeFD_I86RWOjMMUABqWMAuja6g" />
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent"></div>
+            <!-- Content Container -->
+            <div class="relative z-10 p-section flex flex-col justify-end w-full h-full">
+                <!-- Glassmorphism Badge -->
+                <div
+                    class="glass p-lg rounded-xl max-w-md backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+                    <div class="flex items-center gap-sm mb-sm">
+                        <span class="material-symbols-outlined text-white text-3xl">domain</span>
+                        <h2 class="font-display-lg text-display-lg text-white">Pilar Pandawa</h2>
+                    </div>
+                    <div
+                        class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-white/20 mb-md border border-white/30">
+                        <span class="material-symbols-outlined text-white text-[16px] fill-1">verified_user</span>
+                        <span class="font-badge text-badge text-white tracking-wide">MASTER ACCESS</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-white/90">
+                        Pusat Pengawasan Keuangan dan Manajemen Master Data Terpadu.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Right Side: Login Form -->
+        <section
+            class="w-full lg:w-1/2 flex items-center justify-center p-base lg:p-section bg-surface-canvas relative z-20">
+            <div class="w-full max-w-md flex flex-col justify-center min-h-[400px]">
+                <!-- Mobile Branding (Hidden on Desktop) -->
+                <div class="lg:hidden flex items-center gap-sm mb-lg justify-center">
+                    <span class="material-symbols-outlined text-primary text-4xl fill-1">domain</span>
+                    <h1 class="font-display-lg-mobile text-display-lg-mobile text-ink-primary">Pilar Pandawa</h1>
+                </div>
+                <!-- Form Header -->
+                <div class="mb-xl text-center lg:text-left">
+                    <h2 class="font-display-xl text-display-xl text-ink-primary mb-sm">Masuk Portal Super Admin</h2>
+                    <p class="font-body-md text-body-md text-ink-muted">Silakan masuk menggunakan kredensial master
+                        account Anda.</p>
+                </div>
+                <!-- Form Container -->
+                <form action="#" class="space-y-lg" id="loginForm" method="POST">
+                    <!-- Email / ID Input -->
+                    <div class="space-y-sm">
+                        <label class="block font-label-md text-label-md text-ink-secondary" for="email">Email / ID
+                            Master</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-outline">mail</span>
+                            </div>
+                            <input
+                                class="block w-full pl-10 pr-md py-md border-strong border rounded text-on-surface bg-surface-canvas focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md placeholder-outline-variant"
+                                id="email" name="email" placeholder="Masukkan Email atau ID" type="text" />
+                        </div>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="space-y-sm">
+                        <label class="block font-label-md text-label-md text-ink-secondary"
+                            for="password">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-outline">lock</span>
+                            </div>
+                            <input
+                                class="block w-full pl-10 pr-10 py-md border-strong border rounded text-on-surface bg-surface-canvas focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md placeholder-outline-variant"
+                                id="password" name="password" placeholder="••••••••" type="password" />
+                            <button
+                                class="absolute inset-y-0 right-0 pr-md flex items-center text-outline hover:text-ink-secondary transition-colors focus:outline-none"
+                                id="togglePassword" type="button">
+                                <span class="material-symbols-outlined" id="togglePasswordIcon">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Utilities (Remember & Forgot) -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input
+                                class="h-4 w-4 text-primary focus:ring-primary border-border-strong rounded cursor-pointer bg-surface-canvas"
+                                id="remember-me" name="remember-me" type="checkbox" />
+                            <label class="ml-sm block font-body-sm text-body-sm text-ink-secondary cursor-pointer"
+                                for="remember-me">
+                                Ingat Saya
+                            </label>
+                        </div>
+                        <div class="text-sm">
+                            <a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors"
+                                href="#">
+                                Lupa Password?
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <div>
+                        <button
+                            class="w-full flex justify-center items-center gap-sm py-md px-4 border border-transparent rounded bg-primary-container text-on-primary font-button-md text-button-md hover:bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+                            id="loginBtn" type="submit">
+                            <span class="material-symbols-outlined text-[18px] animate-spin hidden"
+                                id="loginBtnSpinner">progress_activity</span>
+                            <span id="loginBtnText">Masuk</span>
+                        </button>
+                    </div>
+                </form>
+                <!-- Footer Note -->
+                <div class="mt-section text-center">
+                    <div
+                        class="inline-flex items-center gap-xs text-ink-muted bg-surface-container-low px-md py-sm rounded-lg border border-border-hairline">
+                        <span class="material-symbols-outlined text-[18px]">info</span>
+                        <p class="font-body-sm text-body-sm">Akses terbatas untuk pemilik dan pemegang otoritas
+                            tertinggi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Error Modal -->
+    <div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="errorModal">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="errorModalOverlay"></div>
+        <div
+            class="relative w-full max-w-[380px] bg-surface-canvas rounded-xl shadow-2xl p-lg text-center transform transition-all">
+            <div class="mx-auto mb-md w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-error text-[32px]">error</span>
+            </div>
+            <h3 class="font-display-md text-display-md text-ink-primary mb-sm">Login Gagal</h3>
+            <p class="font-body-md text-body-md text-ink-muted mb-lg">Email/ID Master atau password yang Anda
+                masukkan salah. Silakan coba lagi.</p>
+            <button
+                class="w-full py-md bg-primary-container hover:bg-primary text-on-primary font-button-md text-button-md rounded transition-colors shadow-sm"
+                id="errorModalClose" type="button">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+            (function () {
+                const VALID_USERNAME = "supadmin";
+                const VALID_PASSWORD = "supadmin123";
+
+                const form = document.getElementById("loginForm");
+                const emailInput = document.getElementById("email");
+                const passwordInput = document.getElementById("password");
+                const toggleBtn = document.getElementById("togglePassword");
+                const toggleIcon = document.getElementById("togglePasswordIcon");
+                const loginBtn = document.getElementById("loginBtn");
+                const loginBtnText = document.getElementById("loginBtnText");
+                const loginBtnSpinner = document.getElementById("loginBtnSpinner");
+                const errorModal = document.getElementById("errorModal");
+                const errorModalOverlay = document.getElementById("errorModalOverlay");
+                const errorModalClose = document.getElementById("errorModalClose");
+
+                toggleBtn.addEventListener("click", function () {
+                    const isPassword = passwordInput.type === "password";
+                    passwordInput.type = isPassword ? "text" : "password";
+                    toggleIcon.textContent = isPassword ? "visibility_off" : "visibility";
+                });
+
+                function showErrorModal() {
+                    errorModal.classList.remove("hidden");
+                    errorModal.classList.add("flex");
+                }
+
+                function hideErrorModal() {
+                    errorModal.classList.add("hidden");
+                    errorModal.classList.remove("flex");
+                }
+
+                errorModalOverlay.addEventListener("click", hideErrorModal);
+                errorModalClose.addEventListener("click", hideErrorModal);
+
+                function setLoading(isLoading) {
+                    loginBtn.disabled = isLoading;
+                    loginBtnSpinner.classList.toggle("hidden", !isLoading);
+                    loginBtnText.textContent = isLoading ? "Memproses..." : "Masuk";
+                }
+
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    setLoading(true);
+
+                    setTimeout(function () {
+                        const username = emailInput.value.trim();
+                        const password = passwordInput.value;
+
+                        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                            localStorage.setItem("superAdminSession", JSON.stringify({
+                                username: username,
+                                loginTime: new Date().toISOString()
+                            }));
+                            window.location.href = "dashboard-super-admin.html";
+                        } else {
+                            setLoading(false);
+                            showErrorModal();
+                        }
+                    }, 800);
+                });
+            })();
+    </script>
+</body>
+
+</html>

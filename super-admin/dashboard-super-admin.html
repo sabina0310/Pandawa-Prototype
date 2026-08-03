@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id" style="">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard Operasional - Pilar Pandawa</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-soft": "#f4f7f6",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "inverse-surface": "#303030",
+                        "on-surface": "#1b1c1c",
+                        "surface-container-low": "#f6f3f2",
+                        "on-secondary-container": "#007232",
+                        "on-background": "#1b1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#0156d7",
+                        "on-tertiary-container": "#ffd4a2",
+                        "surface-container": "#f0eded",
+                        "surface-bright": "#fcf9f8",
+                        "border-hairline": "#eaecf0",
+                        "surface-container-highest": "#e5e2e1",
+                        "outline": "#737686",
+                        "secondary-fixed-dim": "#3de273",
+                        "ink-primary": "#101828",
+                        "on-secondary-fixed-variant": "#005322",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-dim": "#dcd9d9",
+                        "surface-tint": "#0055d5",
+                        "background": "#f9fafb",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "on-error-container": "#93000a",
+                        "error-container": "#fef3f2",
+                        "whatsapp-green": "#25d366",
+                        "tertiary-container": "#875500",
+                        "outline-variant": "#c3c6d7",
+                        "secondary": "#006d2f",
+                        "error": "#d92d20",
+                        "whatsapp-hover": "#1da851",
+                        "status-warning": "#f79009",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "secondary-fixed": "#66ff8e",
+                        "surface-container-high": "#eae7e7",
+                        "border-strong": "#d0d5dd",
+                        "ink-secondary": "#475467",
+                        "surface": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "status-available": "#12b76a",
+                        "on-surface-variant": "#424654",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001849",
+                        "surface-variant": "#f2f4f7",
+                        "secondary-container": "#5dfd8a",
+                        "on-error": "#ffffff",
+                        "primary": "#0156d7",
+                        "on-secondary-fixed": "#002109",
+                        "inverse-primary": "#b2c5ff",
+                        "ink-muted": "#667085",
+                        "on-primary-container": "#cfd9ff",
+                        "tertiary": "#674000",
+                        "status-occupied": "#f04438",
+                        "primary-fixed": "#dae2ff",
+                        "surface-canvas": "#ffffff",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxs": "2px",
+                        "sm": "8px",
+                        "section": "64px",
+                        "md": "12px",
+                        "xl": "32px",
+                        "base": "16px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "tag-uppercase": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "button-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "stat-display": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "badge": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f4f7f6;
+        }
+
+        .shadow-card {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+
+<body class="bg-surface-soft text-ink-primary font-body-md overflow-x-hidden min-h-screen">
+    <!-- Memuat Top Nav dari file terpisah -->
+    <div id="top-nav-placeholder"></div>
+    <script>
+        fetch('top-nav.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('top-nav-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
+            });
+    </script>
+    <!-- Main Content -->
+    <main class="pt-[96px] md:ml-[260px] px-base md:px-xl pb-xl min-h-screen">
+        <div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-md">
+            <div>
+                <h1 class="font-display-xl text-[28px] font-bold text-ink-primary tracking-tight">Ringkasan Operasional
+                </h1>
+                <p class="text-ink-muted font-body-sm mt-1">Pantau status kamar dan aktivitas hari ini.</p>
+            </div>
+            <div class="relative inline-block w-full md:w-56"><select
+                    class="appearance-none w-full bg-surface-canvas border border-border-hairline text-ink-primary font-body-sm rounded-xl px-4 py-2.5 pr-10 focus:border-primary focus:ring-1 focus:ring-primary outline-none cursor-pointer shadow-sm">
+                    <option value="all">Semua Cabang</option>
+                    <option value="utama">Cabang Utama</option>
+                    <option value="selatan">Cabang Selatan</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-ink-muted"><span
+                        class="material-symbols-outlined text-[20px]">expand_more</span></div>
+            </div>
+        </div>
+        <!-- 1. Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg mb-xl">
+            <!-- Terisi -->
+            <div
+                class="bg-surface-canvas rounded-2xl p-lg shadow-card border border-border-hairline flex flex-col justify-between">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-[#F0FDF4] flex items-center justify-center text-status-available">
+                        <span class="material-symbols-outlined text-[20px]">meeting_room</span>
+                    </div>
+                    <span class="font-title-md text-[16px] font-semibold text-ink-primary">Terisi</span>
+                </div>
+
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">42</div>
+            </div>
+            <!-- Kosong -->
+            <div
+                class="bg-surface-canvas rounded-2xl p-lg shadow-card border border-border-hairline flex flex-col justify-between">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-surface-variant flex items-center justify-center text-ink-secondary">
+                        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                    </div>
+                    <span class="font-title-md text-[16px] font-semibold text-ink-primary">Kosong</span>
+                </div>
+
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">18</div>
+            </div>
+            <!-- Pemesanan Baru -->
+            <div
+                class="bg-surface-canvas rounded-2xl p-lg shadow-card border border-border-hairline flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center text-error">
+                        <span class="material-symbols-outlined text-[20px]"
+                            style="font-variation-settings: 'FILL' 1;">error</span>
+                    </div>
+                    <span class="font-title-md text-[16px] font-semibold text-ink-primary">Pemesanan Baru</span>
+                </div>
+
+                <div class="flex items-end justify-between">
+                    <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">5</div>
+                    <span
+                        class="text-[11px] font-bold text-error bg-error-container px-2 py-1 rounded-md uppercase tracking-wider">Perlu
+                        Tindakan</span>
+                </div>
+            </div>
+            <!-- Jatuh Tempo Hari Ini -->
+            <div
+                class="bg-surface-canvas rounded-2xl p-lg shadow-card border border-border-hairline flex flex-col justify-between">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-[#FEF0C7] flex items-center justify-center text-status-warning">
+                        <span class="material-symbols-outlined text-[20px]">payments</span>
+                    </div>
+                    <span class="font-title-md text-[16px] font-semibold text-ink-primary">Jatuh Tempo Hari Ini</span>
+                </div>
+
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">3</div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
+            <section class="lg:col-span-2 bg-surface-canvas rounded-2xl shadow-card border border-border-hairline p-lg">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-8">
+                    <div>
+                        <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Grafik Pendapatan</h2>
+                        <p class="text-ink-muted text-[13px] mt-1">Tren pendapatan bulanan operasional.</p>
+                    </div>
+                    <select
+                        class="bg-surface-variant border-none rounded-xl px-4 py-2 text-[13px] font-semibold focus:ring-0 outline-none text-ink-secondary cursor-pointer">
+                        <option>Semua Cabang</option>
+                    </select>
+                </div>
+                <div class="h-56 flex items-end gap-4 px-2 border-b border-border-hairline pb-2">
+                    <div
+                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[40%] hover:bg-primary transition-colors relative group">
+                        <div
+                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-ink-primary text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                            4.2jt</div>
+                    </div>
+                    <div
+                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[65%] hover:bg-primary transition-colors relative group">
+                    </div>
+                    <div
+                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[55%] hover:bg-primary transition-colors relative group">
+                    </div>
+                    <div
+                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[85%] hover:bg-primary transition-colors relative group">
+                    </div>
+                    <div
+                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[70%] hover:bg-primary transition-colors relative group">
+                    </div>
+                    <div class="flex-1 bg-primary rounded-t-lg h-[95%] relative group shadow-md"></div>
+                </div>
+                <div class="flex justify-between mt-4 text-[12px] font-semibold text-ink-muted px-2">
+                    <span class="">Mei</span><span class="">Jun</span><span class="">Jul</span><span
+                        class="">Agu</span><span class="">Sep</span><span class="">Okt</span>
+                </div>
+            </section>
+            <!-- 3. Room Status Quick View (Replacing old placement) -->
+            <section class="bg-surface-canvas rounded-2xl shadow-card border border-border-hairline flex flex-col">
+                <div class="px-lg py-5 border-b border-border-hairline flex justify-between items-center">
+                    <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Penghuni Jatuh Tempo</h2>
+                </div>
+                <div class="flex-1 flex flex-col px-lg py-4 gap-4">
+                    <div class="flex flex-col gap-4">
+                        <!-- Resident 1 -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 flex-1">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
+                                    SA</div>
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Siti Aminah</div>
+                                    <div class="text-[12px] text-ink-muted truncate">Kamar A02 • Utama</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-[11px] font-bold bg-error-container text-error px-2 py-1 rounded-md uppercase tracking-wide">Besok</span>
+                                <button
+                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
+                                    title="Kirim Pengingat WA">
+                                    <span class="material-symbols-outlined text-[18px]">chat</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Resident 2 -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 flex-1">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
+                                    RH</div>
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Rudi Hermawan</div>
+                                    <div class="text-[12px] text-ink-muted truncate">Kamar B12 • Selatan</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-[11px] font-bold bg-[#FEF3F2] text-status-warning px-2 py-1 rounded-md uppercase tracking-wide">3
+                                    Hari Lagi</span>
+                                <button
+                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
+                                    title="Kirim Pengingat WA">
+                                    <span class="material-symbols-outlined text-[18px]">chat</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Resident 3 -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 flex-1">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
+                                    BP</div>
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Bambang Pamun</div>
+                                    <div class="text-[12px] text-ink-muted truncate">Kamar C05 • Utama</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-[11px] font-bold bg-[#FEF3F2] text-status-warning px-2 py-1 rounded-md uppercase tracking-wide">3
+                                    Hari Lagi</span>
+                                <button
+                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
+                                    title="Kirim Pengingat WA">
+                                    <span class="material-symbols-outlined text-[18px]">chat</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-border-hairline text-center">
+                    <button class="text-primary font-semibold text-[13px] hover:underline">Lihat Semua Tagihan</button>
+                </div>
+            </section>
+        </div>
+        <!-- 2. Pending Allocations -->
+        <div class="bg-surface-canvas rounded-2xl shadow-card border border-border-hairline mb-xl overflow-hidden">
+            <div class="px-lg py-5 border-b border-border-hairline flex justify-between items-center">
+                <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Menunggu Alokasi Kamar</h2>
+                <!-- <div
+                    class="flex items-center gap-2 bg-surface-variant rounded-xl px-3 py-1.5 text-sm text-ink-secondary cursor-pointer">
+                    <span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                </div> -->
+            </div>
+            <div class="overflow-x-auto p-4">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-border-hairline">
+                            <th class="px-4 py-3 text-[12px] font-semibold text-ink-muted uppercase tracking-wider">
+                                Penghuni</th>
+                            <th class="px-4 py-3 text-[12px] font-semibold text-ink-muted uppercase tracking-wider">
+                                Cabang</th>
+                            <th class="px-4 py-3 text-[12px] font-semibold text-ink-muted uppercase tracking-wider">Tipe
+                            </th>
+                            <th class="px-4 py-3 text-[12px] font-semibold text-ink-muted uppercase tracking-wider">Tgl
+                                Masuk</th>
+                            <th
+                                class="px-4 py-3 text-[12px] font-semibold text-ink-muted uppercase tracking-wider text-right">
+                                Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            class="hover:bg-surface-soft transition-colors border-b border-border-hairline last:border-0">
+                            <td class="px-4 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm">
+                                        BS</div>
+                                    <div>
+                                        <div class="font-semibold text-[14px] text-ink-primary">Budi Santoso</div>
+                                        <div class="text-[12px] text-ink-muted">BK-202310-001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-4 text-[13px] text-ink-secondary font-medium">Cabang Utama</td>
+                            <td class="px-4 py-4"><span
+                                    class="text-[11px] font-bold bg-surface-variant px-2.5 py-1 rounded-md text-ink-secondary tracking-wide">BULANAN</span>
+                            </td>
+                            <td class="px-4 py-4 text-[13px] text-ink-secondary font-medium">15 Okt 2023</td>
+                            <td class="px-4 py-4 text-right">
+                                <a href="alokasi-kamar.html" class="relative inline-block text-left">
+                                    <button
+                                        class="appearance-none bg-primary text-white font-semibold text-[13px] rounded-xl px-4 py-2 pr-8 focus:outline-none cursor-pointer shadow-sm">
+                                        Alokasikan Kamar
+                                    </button>
+                                    <!-- <select
+                                        class="appearance-none bg-primary text-white font-semibold text-[13px] rounded-xl px-4 py-2 pr-8 focus:outline-none cursor-pointer shadow-sm">
+                                        <option disabled="" selected="" value="">Alokasikan Kamar</option>
+                                        <option value="A01">A01 (Tersedia)</option>
+                                        <option value="A02">A02 (Tersedia)</option>
+                                        <option value="B05">B05 (Tersedia)</option>
+                                    </select> -->
+
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mb-xl bg-surface-canvas rounded-2xl shadow-card border border-border-hairline p-lg">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Status Kamar</h2>
+                <div class="flex gap-2 bg-surface-variant p-1 rounded-xl">
+                    <button
+                        class="px-4 py-1.5 rounded-lg bg-white shadow-sm text-ink-primary font-semibold text-[13px] transition-colors">Semua</button>
+                    <button
+                        class="px-4 py-1.5 rounded-lg text-ink-muted font-semibold text-[13px] hover:text-ink-primary transition-colors">Cabang
+                        Utama</button>
+                    <button
+                        class="px-4 py-1.5 rounded-lg text-ink-muted font-semibold text-[13px] hover:text-ink-primary transition-colors">Cabang
+                        Selatan</button>
+                </div>
+            </div>
+            <!-- Cabang Utama Group -->
+            <div>
+                <h3 class="font-semibold text-[14px] text-ink-muted mb-4 uppercase tracking-wider">Cabang Utama</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                    <!-- Available Room -->
+                    <div
+                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative">
+                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A01</span>
+                        <span
+                            class="text-[11px] font-bold bg-[#ECFDF3] text-status-available px-2.5 py-1 rounded-md">Tersedia</span>
+                    </div>
+                    <!-- Occupied Room -->
+                    <div
+                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-status-occupied"></div>
+                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A02</span>
+                        <span
+                            class="text-[11px] font-bold bg-[#FEF3F2] text-status-occupied px-2.5 py-1 rounded-md">Terisi</span>
+                    </div>
+                    <!-- Maintenance Room -->
+                    <!-- <div
+                        class="bg-surface-soft border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-not-allowed">
+                        <span class="font-display-md text-[20px] font-bold text-ink-muted mb-2">A03</span>
+                        <span
+                            class="text-[11px] font-bold bg-surface-variant text-ink-secondary px-2.5 py-1 rounded-md">Maintenance</span>
+                    </div> -->
+                    <!-- Checkout Soon Room -->
+                    <!-- <div
+                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-status-warning"></div>
+                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A04</span>
+                        <span
+                            class="text-[11px] font-bold bg-[#FFFAEB] text-status-warning px-2.5 py-1 rounded-md text-center leading-tight">Akan<br>Check-out</span>
+                    </div> -->
+                    <!-- Available Room -->
+                    <div
+                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow">
+                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A05</span>
+                        <span
+                            class="text-[11px] font-bold bg-[#ECFDF3] text-status-available px-2.5 py-1 rounded-md">Tersedia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+
+</body>
+
+</html>

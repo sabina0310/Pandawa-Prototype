@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Manajemen Check-in- Pilar Pandawa</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet">
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "on-secondary-fixed-variant": "#005322",
+                                                "status-warning": "#f59e0b",
+                                                "inverse-on-surface": "#f3f0ef",
+                                                "ink-secondary": "#3f3f3f",
+                                                "border-hairline": "#dddddd",
+                                                "on-error": "#ffffff",
+                                                "outline": "#737686",
+                                                "primary-container": "#0156d7",
+                                                "on-background": "#1b1c1c",
+                                                "status-available": "#10b981",
+                                                "tertiary-fixed": "#ffddb8",
+                                                "surface-tint": "#0055d5",
+                                                "on-tertiary-container": "#ffd4a2",
+                                                "error": "#ba1a1a",
+                                                "border-strong": "#c1c1c1",
+                                                "on-secondary-fixed": "#002109",
+                                                "secondary-container": "#5dfd8a",
+                                                "on-primary-fixed": "#001849",
+                                                "primary-fixed": "#dae2ff",
+                                                "tertiary-container": "#875500",
+                                                "surface-container-low": "#f6f3f2",
+                                                "outline-variant": "#c3c6d7",
+                                                "tertiary-fixed-dim": "#ffb95f",
+                                                "on-surface": "#1b1c1c",
+                                                "error-container": "#ffdad6",
+                                                "status-occupied": "#ef4444",
+                                                "inverse-surface": "#303030",
+                                                "whatsapp-green": "#25d366",
+                                                "surface": "#fcf9f8",
+                                                "on-primary-container": "#cfd9ff",
+                                                "on-tertiary-fixed-variant": "#653e00",
+                                                "primary": "#0040a6",
+                                                "on-surface-variant": "#424654",
+                                                "on-error-container": "#93000a",
+                                                "surface-soft": "#f7f7f7",
+                                                "secondary": "#006d2f",
+                                                "ink-muted": "#6a6a6a",
+                                                "surface-container-highest": "#e5e2e1",
+                                                "surface-container": "#f0eded",
+                                                "background": "#fcf9f8",
+                                                "surface-bright": "#fcf9f8",
+                                                "inverse-primary": "#b2c5ff",
+                                                "primary-fixed-dim": "#b2c5ff",
+                                                "tertiary": "#674000",
+                                                "surface-container-high": "#eae7e7",
+                                                "surface-canvas": "#ffffff",
+                                                "on-primary-fixed-variant": "#003fa3",
+                                                "whatsapp-hover": "#1da851",
+                                                "on-primary": "#ffffff",
+                                                "ink-primary": "#222222",
+                                                "surface-variant": "#e5e2e1",
+                                                "on-tertiary": "#ffffff",
+                                                "secondary-fixed": "#66ff8e",
+                                                "on-secondary": "#ffffff",
+                                                "surface-container-lowest": "#ffffff",
+                                                "secondary-fixed-dim": "#3de273",
+                                                "on-secondary-container": "#007232",
+                                                "surface-dim": "#dcd9d9",
+                                                "on-tertiary-fixed": "#2a1700"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "section": "64px",
+                                                "xs": "4px",
+                                                "xl": "32px",
+                                                "sm": "8px",
+                                                "md": "12px",
+                                                "xxs": "2px",
+                                                "lg": "24px",
+                                                "base": "16px"
+                                        },
+                                        "fontFamily": {
+                                                "display-xl": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "display-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "badge": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-sm": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "display-lg-mobile": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "tag-uppercase": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "display-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "title-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "stat-display": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "button-md": [
+                                                        "Plus Jakarta Sans"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "display-xl": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "display-md": [
+                                                        "20px",
+                                                        {
+                                                                "lineHeight": "26px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "badge": [
+                                                        "11px",
+                                                        {
+                                                                "lineHeight": "14px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "15px",
+                                                        {
+                                                                "lineHeight": "22px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "label-md": [
+                                                        "13px",
+                                                        {
+                                                                "lineHeight": "18px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "body-sm": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "display-lg-mobile": [
+                                                        "20px",
+                                                        {
+                                                                "lineHeight": "26px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "tag-uppercase": [
+                                                        "10px",
+                                                        {
+                                                                "lineHeight": "12px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "display-lg": [
+                                                        "22px",
+                                                        {
+                                                                "lineHeight": "28px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "title-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "stat-display": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "button-md": [
+                                                        "15px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+        <style>
+                body {
+                        font-family: 'Plus Jakarta Sans', sans-serif;
+                        background-color: #F8FAFC;
+                }
+        </style>
+</head>
+
+<body class="bg-surface-soft text-ink-primary font-body-md overflow-x-hidden min-h-screen">
+        <!-- Memuat Top Nav dari file terpisah -->
+        <div id="top-nav-placeholder"></div>
+        <script>
+                fetch('top-nav.html')
+                        .then(response => response.text())
+                        .then(data => {
+                                const placeholder = document.getElementById('top-nav-placeholder');
+                                placeholder.innerHTML = data;
+                                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                                        const newScript = document.createElement('script');
+                                        if (oldScript.src) {
+                                                newScript.src = oldScript.src;
+                                        } else {
+                                                newScript.textContent = oldScript.textContent;
+                                        }
+                                        oldScript.replaceWith(newScript);
+                                });
+                        });
+        </script>
+        <!-- Main Content Area -->
+        <main class="pt-[96px] md:ml-[260px] px-base md:px-xl pb-xl min-h-screen">
+                <!-- Page Title Section -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
+                        <div>
+                                <h2 class="font-display-lg text-display-lg text-ink-primary">Manajemen Check-in
+                                        &amp; </h2>
+                                <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Pantau kedatangan
+                                        penghuni, proses verifikasi identitas, dan serah terima kunci</p>
+                        </div>
+                        <div class="flex items-center gap-md shrink-0">
+                                <div class="relative">
+                                        <select
+                                                class="appearance-none bg-surface-canvas border border-border-strong rounded-lg py-sm pl-md pr-xl font-label-md text-label-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer">
+                                                <option>Semua Cabang</option>
+                                                <option>Cabang Utama</option>
+                                                <option>Cabang Selatan</option>
+                                        </select>
+                                        <span
+                                                class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                                </div>
+                                <!-- <button
+                                        class="bg-primary-container text-white font-button-md text-button-md px-lg py-sm rounded-lg hover:bg-surface-tint transition-colors flex items-center gap-sm shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                                        <span class="material-symbols-outlined text-[18px]">add</span>
+                                        Check-in Langsung / Manual
+                                </button> -->
+                        </div>
+                </div>
+                <!-- Metric Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md mb-xl">
+                        <div
+                                class="bg-surface-canvas rounded-[16px] p-base shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline flex flex-col justify-between h-full">
+                                <div class="flex justify-between items-start mb-md">
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-in Hari
+                                                Ini</span>
+                                        <div
+                                                class="w-8 h-8 rounded-full bg-primary-fixed/30 flex items-center justify-center">
+                                                <span
+                                                        class="material-symbols-outlined text-primary-container text-[18px]">login</span>
+                                        </div>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                        <span class="font-stat-display text-stat-display text-ink-primary">12</span>
+                                        <span
+                                                class="bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20">Perlu
+                                                Verifikasi</span>
+                                </div>
+                        </div>
+                        <!-- <div
+                                class="bg-surface-canvas rounded-[16px] p-base shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline flex flex-col justify-between h-full">
+                                <div class="flex justify-between items-start mb-md">
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-out Hari
+                                                Ini</span>
+                                        <div
+                                                class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center">
+                                                <span
+                                                        class="material-symbols-outlined text-ink-secondary text-[18px]">logout</span>
+                                        </div>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                        <span class="font-stat-display text-stat-display text-ink-primary">5</span>
+                                        <span
+                                                class="bg-surface-variant text-ink-secondary font-badge text-badge px-sm py-xxs rounded-full border border-border-strong">Inspeksi
+                                                Kamar</span>
+                                </div>
+                        </div> -->
+                        <div
+                                class="bg-surface-canvas rounded-[16px] p-base shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline flex flex-col justify-between h-full">
+                                <div class="flex justify-between items-start mb-md">
+                                        <span class="font-label-md text-label-md text-ink-muted">Penghuni
+                                                Aktif</span>
+                                        <div
+                                                class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center">
+                                                <span
+                                                        class="material-symbols-outlined text-status-available text-[18px]">people</span>
+                                        </div>
+                                </div>
+                                <div class="flex flex-col">
+                                        <span class="font-stat-display text-stat-display text-ink-primary">42</span>
+                                        <span class="font-body-sm text-body-sm text-ink-muted">Teralokasi</span>
+                                </div>
+                        </div>
+                        <div
+                                class="bg-surface-canvas rounded-[16px] p-base shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline flex flex-col justify-between h-full">
+                                <div class="flex justify-between items-start mb-md">
+                                        <span class="font-label-md text-label-md text-ink-muted">Kunci Belum
+                                                Diserahkan</span>
+                                        <div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center">
+                                                <span
+                                                        class="material-symbols-outlined text-error text-[18px]">vpn_key</span>
+                                        </div>
+                                </div>
+                                <div class="flex items-end justify-between">
+                                        <span class="font-stat-display text-stat-display text-ink-primary">3</span>
+                                        <span
+                                                class="bg-error/10 text-error font-badge text-badge px-sm py-xxs rounded-full border border-error/20 flex items-center gap-xs">
+                                                <span class="material-symbols-outlined text-[12px]">warning</span>
+                                                Perhatian
+                                        </span>
+                                </div>
+                        </div>
+                </div>
+                <!-- Tab Bar -->
+                <div class="border-b border-border-hairline mb-lg flex overflow-x-auto hide-scrollbar">
+                        <button
+                                class="px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap">Jadwal
+                                Hari Ini</button>
+                        <button
+                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Check-in
+                                Mendatang</button>
+                        <!-- <button
+                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Jadwal
+                                Check-out</button> -->
+                        <button
+                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Riwayat
+                                Serah Terima</button>
+                </div>
+                <!-- Operations Table -->
+                <div
+                        class="bg-surface-canvas rounded-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline overflow-hidden">
+                        <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                        <thead>
+                                                <tr class="bg-surface-soft border-b border-border-hairline">
+                                                        <th
+                                                                class="py-sm px-base font-label-md text-label-md text-ink-muted font-medium w-1/3">
+                                                                Penghuni</th>
+                                                        <th
+                                                                class="py-sm px-base font-label-md text-label-md text-ink-muted font-medium w-1/4">
+                                                                Kamar &amp; Tipe</th>
+                                                        <th
+                                                                class="py-sm px-base font-label-md text-label-md text-ink-muted font-medium w-1/5">
+                                                                Waktu Check-in</th>
+                                                        <th
+                                                                class="py-sm px-base font-label-md text-label-md text-ink-muted font-medium">
+                                                                Status</th>
+                                                        <th
+                                                                class="py-sm px-base font-label-md text-label-md text-ink-muted font-medium text-right">
+                                                                Aksi</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-border-hairline">
+                                                <!-- Row 1 -->
+                                                <tr class="hover:bg-surface-soft/50 transition-colors">
+                                                        <td class="py-md px-base">
+                                                                <div class="flex items-center gap-md">
+                                                                        <div
+                                                                                class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-title-md text-title-md text-primary-container shrink-0">
+                                                                                BS</div>
+                                                                        <div>
+                                                                                <div
+                                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                                        Budi Santoso</div>
+                                                                                <div
+                                                                                        class="flex items-center gap-xs mt-xs">
+                                                                                        <span
+                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
+                                                                                                BK-202310-001</span>
+                                                                                        <span
+                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
+                                                                                        <!-- <span
+                                                                                                class="flex items-center text-status-available text-[12px]"><span
+                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">verified</span>
+                                                                                                NIK
+                                                                                                Terverifikasi</span> -->
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div
+                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                        Kamar A01</div>
+                                                                <div class="flex items-center gap-xs mt-xs">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
+                                                                                Utama</span>
+                                                                        <span
+                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div class="font-body-md text-body-md text-ink-primary">
+                                                                        15 Okt 2023</div>
+                                                                <div class="font-body-sm text-body-sm text-ink-muted">
+                                                                        14:00 WIB</div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <span
+                                                                        class="inline-flex items-center bg-primary-container/10 text-primary-container font-badge text-badge px-sm py-xxs rounded-full border border-primary-container/20">
+                                                                        Siap Check-in
+                                                                </span>
+                                                        </td>
+                                                        <td class="py-md px-base text-right">
+                                                                <div class="flex items-center justify-end gap-sm">
+                                                                        <button class="checkin-trigger bg-primary-container text-white font-button-md text-button-md px-md py-sm rounded-lg hover:bg-surface-tint transition-colors text-sm"
+                                                                                data-initials="BS"
+                                                                                data-name="Budi Santoso"
+                                                                                data-booking-id="BK-202310-001"
+                                                                                data-room="A01"
+                                                                                data-branch="Cabang Utama">Proses
+                                                                                Check-in</button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
+                                                                                <svg class="w-4 h-4 fill-current"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
+                                                                                        </path>
+                                                                                </svg>
+                                                                        </button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
+                                                                        </button>
+                                                                </div>
+                                                        </td>
+                                                </tr>
+                                                <!-- Row 2 -->
+                                                <!-- <tr class="hover:bg-surface-soft/50 transition-colors">
+                                                        <td class="py-md px-base">
+                                                                <div class="flex items-center gap-md">
+                                                                        <div
+                                                                                class="w-10 h-10 rounded-full bg-status-warning/20 flex items-center justify-center font-title-md text-title-md text-status-warning shrink-0">
+                                                                                SA</div>
+                                                                        <div>
+                                                                                <div
+                                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                                        Siti Aminah</div>
+                                                                                <div
+                                                                                        class="flex items-center gap-xs mt-xs">
+                                                                                        <span
+                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
+                                                                                                BK-202310-002</span>
+                                                                                        <span
+                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
+                                                                                        <span
+                                                                                                class="flex items-center text-status-warning text-[12px]"><span
+                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">pending</span>
+                                                                                                Menunggu
+                                                                                                Verifikasi</span>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div
+                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                        Kamar B12</div>
+                                                                <div class="flex items-center gap-xs mt-xs">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
+                                                                                Selatan</span>
+                                                                        <span
+                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div class="font-body-md text-body-md text-ink-primary">
+                                                                        15 Okt 2023</div>
+                                                                <div class="font-body-sm text-body-sm text-ink-muted">
+                                                                        16:30 WIB</div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <span
+                                                                        class="inline-flex items-center bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20">
+                                                                        Menunggu Verifikasi KTP
+                                                                </span>
+                                                        </td>
+                                                        <td class="py-md px-base text-right">
+                                                                <div class="flex items-center justify-end gap-sm">
+                                                                        <button
+                                                                                class="checkin-trigger bg-surface-canvas text-primary-container border border-primary-container font-button-md text-button-md px-md py-sm rounded-lg hover:bg-primary-fixed/20 transition-colors text-sm"
+                                                                                data-initials="SA" data-name="Siti Aminah" data-booking-id="BK-202310-002"
+                                                                                data-room="B12" data-branch="Cabang Selatan">Proses
+                                                                                Check-in</button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
+                                                                                <svg class="w-4 h-4 fill-current"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
+                                                                                        </path>
+                                                                                </svg>
+                                                                        </button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
+                                                                        </button>
+                                                                </div>
+                                                        </td>
+                                                </tr> -->
+                                                <!-- Row 3 -->
+                                                <tr class="hover:bg-surface-soft/50 transition-colors">
+                                                        <td class="py-md px-base">
+                                                                <div class="flex items-center gap-md">
+                                                                        <div
+                                                                                class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center font-title-md text-title-md text-ink-secondary shrink-0">
+                                                                                BP</div>
+                                                                        <div>
+                                                                                <div
+                                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                                        Bambang Pamungkas</div>
+                                                                                <div
+                                                                                        class="flex items-center gap-xs mt-xs">
+                                                                                        <span
+                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
+                                                                                                BK-202309-045</span>
+                                                                                        <span
+                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
+                                                                                        <span
+                                                                                                class="flex items-center text-status-available text-[12px]"><span
+                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">verified</span>
+                                                                                                Terverifikasi</span>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div
+                                                                        class="font-title-md text-title-md text-ink-primary">
+                                                                        Kamar C05</div>
+                                                                <div class="flex items-center gap-xs mt-xs">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
+                                                                                Utama</span>
+                                                                        <span
+                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
+                                                                </div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <div class="font-body-md text-body-md text-ink-primary">
+                                                                        15 Okt 2023</div>
+                                                                <div class="font-body-sm text-body-sm text-ink-muted">
+                                                                        10:00 WIB</div>
+                                                        </td>
+                                                        <td class="py-md px-base">
+                                                                <span
+                                                                        class="inline-flex items-center bg-status-available/10 text-status-available font-badge text-badge px-sm py-xxs rounded-full border border-status-available/20">
+                                                                        Sudah Check-in / Kunci Diserahkan
+                                                                </span>
+                                                        </td>
+                                                        <td class="py-md px-base text-right">
+                                                                <div class="flex items-center justify-end gap-sm">
+
+                                                                        <button
+                                                                                class="text-ink-secondary font-button-md text-button-md px-md py-sm rounded-lg bg-surface-variant transition-colors text-sm border border-transparent">Sudah
+                                                                                Check-in</button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
+                                                                                <svg class="w-4 h-4 fill-current"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path
+                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
+                                                                                        </path>
+                                                                                </svg>
+                                                                        </button>
+                                                                        <button
+                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
+                                                                        </button>
+                                                                </div>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                </table>
+                        </div>
+                </div>
+        </main>
+
+        <!-- Modal: Verifikasi & Proses Check-in -->
+        <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+                id="checkinModal">
+                <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between px-lg pt-lg pb-md">
+                                <h3 class="font-display-md text-display-md text-ink-primary font-bold">Verifikasi &amp;
+                                        Proses Check-in</h3>
+                                <button class="text-ink-muted hover:text-ink-primary transition-colors"
+                                        id="checkinModalClose" type="button">
+                                        <span class="material-symbols-outlined">close</span>
+                                </button>
+                        </div>
+                        <!-- Body -->
+                        <div class="px-lg pb-lg space-y-lg">
+                                <!-- Guest Info -->
+                                <div class="bg-surface-soft rounded-xl p-base">
+                                        <div class="flex items-center gap-sm">
+                                                <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-title-md text-title-md text-primary-container shrink-0"
+                                                        id="checkinModalInitials">BS</div>
+                                                <div>
+                                                        <div class="font-title-md text-title-md text-ink-primary"
+                                                                id="checkinModalName">Budi Santoso</div>
+                                                        <div class="font-body-sm text-body-sm text-ink-muted"
+                                                                id="checkinModalBookingId">ID: BK-202310-001</div>
+                                                </div>
+                                        </div>
+                                        <div
+                                                class="border-t border-border-hairline mt-sm pt-sm flex items-center gap-xs">
+                                                <span
+                                                        class="material-symbols-outlined text-[18px] text-ink-muted">meeting_room</span>
+                                                <span class="font-body-sm text-body-sm text-ink-secondary"
+                                                        id="checkinModalRoom">Kamar A01 (Cabang Utama)</span>
+                                        </div>
+                                </div>
+                                <!-- Checklist -->
+                                <div>
+                                        <div
+                                                class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-sm">
+                                                Checklist Verifikasi</div>
+                                        <div class="space-y-sm">
+                                                <label class="flex items-center gap-sm cursor-pointer group">
+                                                        <div class="relative flex items-center justify-center shrink-0">
+                                                                <input class="peer w-5 h-5 appearance-none border border-border-strong rounded bg-surface-canvas checked:bg-primary-container checked:border-primary-container focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer"
+                                                                        type="checkbox">
+                                                                <span
+                                                                        class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+                                                        </div>
+                                                        <span
+                                                                class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Verifikasi
+                                                                KTP Asli (Sesuai Data Pemesanan)</span>
+                                                </label>
+                                                <label class="flex items-center gap-sm cursor-pointer group">
+                                                        <div class="relative flex items-center justify-center shrink-0">
+                                                                <input class="peer w-5 h-5 appearance-none border border-border-strong rounded bg-surface-canvas checked:bg-primary-container checked:border-primary-container focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer"
+                                                                        type="checkbox">
+                                                                <span
+                                                                        class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+                                                        </div>
+                                                        <span
+                                                                class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Terima
+                                                                Fotokopi KTP (Untuk Sewa Bulanan)</span>
+                                                </label>
+                                                <label class="flex items-center gap-sm cursor-pointer group">
+                                                        <div class="relative flex items-center justify-center shrink-0">
+                                                                <input class="peer w-5 h-5 appearance-none border border-border-strong rounded bg-surface-canvas checked:bg-primary-container checked:border-primary-container focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer"
+                                                                        type="checkbox">
+                                                                <span
+                                                                        class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+                                                        </div>
+                                                        <span
+                                                                class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Konfirmasi
+                                                                Pembayaran Lunas</span>
+                                                </label>
+                                                <label class="flex items-center gap-sm cursor-pointer group">
+                                                        <div class="relative flex items-center justify-center shrink-0">
+                                                                <input class="peer w-5 h-5 appearance-none border border-border-strong rounded bg-surface-canvas checked:bg-primary-container checked:border-primary-container focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer"
+                                                                        type="checkbox">
+                                                                <span
+                                                                        class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+                                                        </div>
+                                                        <span
+                                                                class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Serah
+                                                                Terima Kunci Fisik / Akses Kamar</span>
+                                                </label>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- Footer -->
+                        <div class="border-t border-border-hairline px-lg py-md flex items-center justify-end gap-sm">
+                                <button class="font-button-md text-button-md text-ink-secondary hover:bg-surface-variant transition-colors px-md py-sm rounded-lg"
+                                        id="checkinModalCancel" type="button">Batal</button>
+                                <button class="font-button-md text-button-md bg-primary-container text-on-primary hover:bg-surface-tint transition-colors px-md py-sm rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]"
+                                        id="checkinModalConfirm" type="button">Konfirmasi Check-in</button>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Modal: Check-in Berhasil -->
+        <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+                id="checkinSuccessModal">
+                <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+                        <!-- Body -->
+                        <div class="px-lg pt-xl pb-lg text-center">
+                                <div
+                                        class="w-16 h-16 rounded-full bg-status-available/10 flex items-center justify-center mx-auto mb-md">
+                                        <span class="material-symbols-outlined text-status-available text-[32px]"
+                                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                </div>
+                                <h3 class="font-display-md text-display-md text-ink-primary font-bold">Check-in
+                                        Berhasil!</h3>
+                                <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Data penghuni telah diperbarui
+                                        dan status kamar kini menjadi Terisi.</p>
+                        </div>
+                        <!-- Info -->
+                        <div class="px-lg pb-lg border-t border-border-hairline pt-lg">
+                                <div class="grid grid-cols-2 gap-base">
+                                        <div>
+                                                <div
+                                                        class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                        Informasi Penghuni</div>
+                                                <div class="font-title-md text-title-md text-ink-primary"
+                                                        id="checkinSuccessName">Budi Santoso</div>
+                                                <div class="font-body-sm text-body-sm text-ink-muted"
+                                                        id="checkinSuccessBookingId">BK-202310-001</div>
+                                        </div>
+                                        <div>
+                                                <div
+                                                        class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                        Informasi Kamar</div>
+                                                <div class="font-title-md text-title-md text-ink-primary"
+                                                        id="checkinSuccessRoom">Kamar A01</div>
+                                                <div class="font-body-sm text-body-sm text-ink-muted"
+                                                        id="checkinSuccessBranch">Cabang Utama</div>
+                                        </div>
+                                </div>
+                                <div class="mt-base">
+                                        <div
+                                                class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                Waktu Check-in</div>
+                                        <div class="font-title-md text-title-md text-ink-primary"
+                                                id="checkinSuccessTime">15 Okt 2023, 10:30 WIB</div>
+                                </div>
+                        </div>
+                        <!-- Instructions -->
+                        <div class="bg-surface-soft px-lg py-base">
+                                <div class="flex items-center gap-xs mb-sm">
+                                        <span class="material-symbols-outlined text-primary-container text-[18px]"
+                                                style="font-variation-settings: 'FILL' 1;">info</span>
+                                        <span class="font-title-md text-title-md text-ink-primary">Instruksi
+                                                Selanjutnya</span>
+                                </div>
+                                <ul class="space-y-sm">
+                                        <li class="flex items-center gap-sm">
+                                                <span
+                                                        class="material-symbols-outlined text-[18px] text-ink-muted">key</span>
+                                                <span class="font-body-sm text-body-sm text-ink-secondary">Serahkan
+                                                        kunci fisik/akses kamar kepada penghuni.</span>
+                                        </li>
+                                        <li class="flex items-center gap-sm">
+                                                <span
+                                                        class="material-symbols-outlined text-[18px] text-ink-muted">menu_book</span>
+                                                <span class="font-body-sm text-body-sm text-ink-secondary">Berikan
+                                                        informasi peraturan kos singkat.</span>
+                                        </li>
+                                        <!-- <li class="flex items-center gap-sm">
+                                                <span class="material-symbols-outlined text-[18px] text-ink-muted">group_add</span>
+                                                <span class="font-body-sm text-body-sm text-ink-secondary">Pastikan penghuni telah bergabung ke grup penghuni (opsional).</span>
+                                        </li> -->
+                                </ul>
+                        </div>
+                        <!-- Footer -->
+                        <div class="px-lg py-md flex items-center justify-end">
+                                <button class="font-button-md text-button-md bg-primary-container text-on-primary hover:bg-surface-tint transition-colors px-lg py-sm rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]"
+                                        id="checkinSuccessDone" type="button">Selesai</button>
+                        </div>
+                </div>
+        </div>
+
+        <script>
+                (function () {
+                        const modal = document.getElementById("checkinModal");
+                        const modalInitials = document.getElementById("checkinModalInitials");
+                        const modalName = document.getElementById("checkinModalName");
+                        const modalBookingId = document.getElementById("checkinModalBookingId");
+                        const modalRoom = document.getElementById("checkinModalRoom");
+                        const modalClose = document.getElementById("checkinModalClose");
+                        const modalCancel = document.getElementById("checkinModalCancel");
+                        const modalConfirm = document.getElementById("checkinModalConfirm");
+
+                        const successModal = document.getElementById("checkinSuccessModal");
+                        const successName = document.getElementById("checkinSuccessName");
+                        const successBookingId = document.getElementById("checkinSuccessBookingId");
+                        const successRoom = document.getElementById("checkinSuccessRoom");
+                        const successBranch = document.getElementById("checkinSuccessBranch");
+                        const successTime = document.getElementById("checkinSuccessTime");
+                        const successDone = document.getElementById("checkinSuccessDone");
+
+                        const MONTHS_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+
+                        let currentBooking = null;
+
+                        function formatCheckinTime(date) {
+                                const day = String(date.getDate()).padStart(2, "0");
+                                const month = MONTHS_ID[date.getMonth()];
+                                const year = date.getFullYear();
+                                const hours = String(date.getHours()).padStart(2, "0");
+                                const minutes = String(date.getMinutes()).padStart(2, "0");
+                                return day + " " + month + " " + year + ", " + hours + ":" + minutes + " WIB";
+                        }
+
+                        function openModal(button) {
+                                currentBooking = {
+                                        initials: button.dataset.initials || "",
+                                        name: button.dataset.name || "",
+                                        bookingId: button.dataset.bookingId || "",
+                                        room: button.dataset.room || "",
+                                        branch: button.dataset.branch || ""
+                                };
+
+                                modalInitials.textContent = currentBooking.initials;
+                                modalName.textContent = currentBooking.name;
+                                modalBookingId.textContent = "ID: " + currentBooking.bookingId;
+                                modalRoom.textContent = "Kamar " + currentBooking.room + " (" + currentBooking.branch + ")";
+
+                                modal.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+                                        checkbox.checked = false;
+                                });
+
+                                modal.classList.remove("hidden");
+                                modal.classList.add("flex");
+                        }
+
+                        function closeModal() {
+                                modal.classList.add("hidden");
+                                modal.classList.remove("flex");
+                        }
+
+                        function openSuccessModal() {
+                                if (!currentBooking) {
+                                        return;
+                                }
+
+                                successName.textContent = currentBooking.name;
+                                successBookingId.textContent = currentBooking.bookingId;
+                                successRoom.textContent = "Kamar " + currentBooking.room;
+                                successBranch.textContent = currentBooking.branch;
+                                successTime.textContent = formatCheckinTime(new Date());
+
+                                successModal.classList.remove("hidden");
+                                successModal.classList.add("flex");
+                        }
+
+                        function closeSuccessModal() {
+                                successModal.classList.add("hidden");
+                                successModal.classList.remove("flex");
+                        }
+
+                        document.querySelectorAll(".checkin-trigger").forEach(function (button) {
+                                button.addEventListener("click", function () {
+                                        openModal(button);
+                                });
+                        });
+
+                        modalClose.addEventListener("click", closeModal);
+                        modalCancel.addEventListener("click", closeModal);
+                        modal.addEventListener("click", function (e) {
+                                if (e.target === modal) {
+                                        closeModal();
+                                }
+                        });
+                        modalConfirm.addEventListener("click", function () {
+                                closeModal();
+                                openSuccessModal();
+                        });
+
+                        successDone.addEventListener("click", closeSuccessModal);
+                        successModal.addEventListener("click", function (e) {
+                                if (e.target === successModal) {
+                                        closeSuccessModal();
+                                }
+                        });
+                })();
+        </script>
+
+</body>
+
+</html>

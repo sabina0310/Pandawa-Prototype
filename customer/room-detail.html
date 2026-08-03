@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Room Detail - Pilar Pandawa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#f0eded",
+                        "surface-dim": "#dcd9d9",
+                        "secondary-fixed-dim": "#3de273",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-soft": "#f7f7f7",
+                        "on-tertiary-container": "#ffd4a2",
+                        "outline-variant": "#c3c6d7",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "ink-secondary": "#3f3f3f",
+                        "on-primary-fixed": "#001849",
+                        "surface-canvas": "#ffffff",
+                        "border-hairline": "#dddddd",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#cfd9ff",
+                        "ink-primary": "#222222",
+                        "surface-container-lowest": "#ffffff",
+                        "status-occupied": "#ef4444",
+                        "on-secondary-fixed-variant": "#005322",
+                        "on-secondary-fixed": "#002109",
+                        "on-surface": "#1b1c1c",
+                        "secondary": "#006d2f",
+                        "on-surface-variant": "#424654",
+                        "primary-fixed": "#dae2ff",
+                        "secondary-container": "#5dfd8a",
+                        "whatsapp-green": "#25d366",
+                        "primary-container": "#0156d7",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f6f3f2",
+                        "surface": "#fcf9f8",
+                        "on-secondary": "#ffffff",
+                        "primary": "#0040a6",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#66ff8e",
+                        "ink-muted": "#6a6a6a",
+                        "inverse-surface": "#303030",
+                        "status-available": "#10b981",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "background": "#fcf9f8",
+                        "border-strong": "#c1c1c1",
+                        "whatsapp-hover": "#1da851",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "on-background": "#1b1c1c",
+                        "surface-variant": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary": "#674000",
+                        "status-warning": "#f59e0b",
+                        "surface-tint": "#0055d5",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#eae7e7",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#007232",
+                        "outline": "#737686",
+                        "tertiary-container": "#875500",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b2c5ff",
+                        "surface-bright": "#fcf9f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "16px",
+                        "xl": "32px",
+                        "xxs": "2px",
+                        "md": "12px",
+                        "section": "64px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "tag-uppercase": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "stat-display": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "button-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "badge": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
+                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
+                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .hero-title {
+                font-size: clamp(3rem, 8vw, 6rem);
+                line-height: 1.1;
+                letter-spacing: -0.02em;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-surface-canvas text-on-surface font-body-md antialiased min-h-screen flex flex-col pt-16">
+    <!-- Top Navigation Bar -->
+    <nav
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-base lg:px-xl h-16 bg-surface shadow-sm">
+        <a class="flex items-center gap-sm scale-95 active:scale-90 transition-transform" href="#">
+            <span class="material-symbols-outlined text-primary-container text-display-md" data-weight="fill"
+                style="font-variation-settings: 'FILL' 1;">location_city</span>
+            <span class="text-display-md font-display-md text-primary font-bold">Pilar Pandawa</span>
+        </a>
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-lg">
+            <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Beranda</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors font-title-md pb-1" href="#">Tentang
+                Kami</a>
+        </div>
+        <div class="flex items-center gap-md">
+            <button id="loginNavBtn"
+                class="hidden md:flex items-center justify-center px-base py-sm bg-primary-container text-on-primary font-button-md rounded transition-colors hover:bg-primary scale-95 active:scale-90 transition-transform">
+                Masuk / Log in</button>
+            <a id="profileNavBtn" href="cust-profile.html"
+                class="hidden items-center justify-center w-10 h-10 rounded-full bg-primary-fixed text-primary-container hover:bg-primary-container hover:text-on-primary transition-colors scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">account_circle</span>
+            </a>
+            <button class="md:hidden text-on-surface p-sm scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col w-full relative">
+        <div class="relative z-20 bg-surface-canvas pt-section pb-section w-full">
+            <div class="max-w-7xl mx-auto px-base lg:px-xl flex flex-col gap-xl lg:grid lg:grid-cols-3">
+                <!-- Left Content Column -->
+                <div class="w-full flex flex-col gap-section lg:col-span-2">
+                    <!-- Hero Info & Image -->
+                    <div class="flex flex-col gap-lg">
+                        <div class="flex flex-col gap-sm">
+                            <div class="flex flex-wrap items-center gap-3 mb-2">
+                                <span
+                                    class="bg-status-available/10 text-status-available px-4 py-1.5 rounded-full font-badge text-badge tracking-wider shadow-sm border border-status-available/20">TERSEDIA</span>
+                                <span
+                                    class="bg-surface-soft text-ink-primary px-4 py-1.5 rounded-full font-tag-uppercase text-tag-uppercase tracking-wider shadow-sm border border-border-hairline">HARIAN
+                                    / BULANAN</span>
+                            </div>
+                            <h1 class="text-display-xl font-display-xl text-ink-primary font-bold max-w-3xl">Kamar
+                                Standar A01</h1>
+                            <div class="flex items-center text-ink-secondary font-title-md gap-2">
+                                <span class="material-symbols-outlined text-[20px]">location_on</span>
+                                <span class="">Cabang Utama, Jl. Pandawa No. 12, Jakarta Barat</span>
+                            </div>
+                        </div>
+                        <div class="w-full rounded-[2rem] overflow-hidden aspect-[16/10] md:aspect-[21/9]">
+                            <img alt="A professional, high-fidelity photograph of a modern, minimal boarding room interior with a comfortable bed, a desk area, and warm lighting."
+                                class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJQGLbvGQhWjed3O_qabxo8Ie-lp4Vr-jCvFUi2p3thwwm7qKwkWHswr0076Z9iLbk9APB5GHYeOUQ5-4Diaglo4ciPSEzmSch5_OT85oUyRKLzVz9V7KFmxyTMNAbdGAa_ZIwmw1lGc-P4oMc5G3x1OQvT5kr8_sNnTrBrk9SiFnBjkSRAh15ZTRTswWiv8Odnc61RbqDFkiHS6nuI0LN4ou8Xny1tDsqrR2v58R9m_XJ6J4XD1XQy1A7PLQUC6jCaobmdfbXnLo">
+                        </div>
+                    </div>
+                    <!-- Secondary Images Grid -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary">Gallery</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                                <img alt="Bathroom Photo"
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    data-alt="A close-up shot of a modern, clean private bathroom in a boarding house. The bathroom features contemporary white tiles, a sleek glass shower enclosure, and a modern vanity. The lighting is bright and hygienic, conveying a high standard of cleanliness and organized management."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEFFLagTOIkC7-l80J5zNM1tApcC_oU0aZbrNjDcMZx2HIP6J7CpW4j-boxs2Ug9jvBH3sgT_fSQmN_Yz56NRP4DZtq5ifSckNJA-0LPsz56fAMrMFZEsvjjS5PmxGWC_hhGwbDcqG9MvXxAYelH-O0S2MKH9Y-kt2oA2f9JghRKg7dfc34OCGiiqbNVVK2o0-iEn7fBwtiPtugxUJXhiIjrkXPikg6tCvRiN3g5lMJlbWHG-i6bkO4LTDpHA8mHYMP-lRQszkE-c">
+                            </div>
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                                <img alt="Desk Area Photo"
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    data-alt="A detailed shot of a study area within a modern boarding house room. The image shows a minimalist wooden desk with a comfortable chair, a small desk lamp, and a window in the background. The scene is organized and functional, reflecting a reliable living space."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu2BfkFv2l6PEtKBSteWMf7-lMhMyUq4WceSTd4LQ0orYwaROZNJKf2mujRHX328lpyimVCjp4zY3f-Y-fy7YfkZz3aBzd4k5uy9-kaw283dmnNZO-AkarqL2iPqy1je6yVPzCPVAAYaxBWUfEBvXPm6k5Nbuna8f_48dPzGSi-BailWxwGCp9p8MAXoPurI6BhcxPH9l_JkgxbiiuYwHkBdZKhZoi7nlKwed9ctda0pxlmFb16Kl_TfUrblffghlFU7TPr0ExCic">
+                            </div>
+                            <div
+                                class="rounded-2xl overflow-hidden aspect-[4/3] relative group cursor-pointer hidden md:block">
+                                <img alt="Storage Area Photo"
+                                    class="w-full h-full object-cover brightness-75 group-hover:brightness-50 transition-all duration-500"
+                                    data-alt="An interior shot showing the wardrobe and storage area of a modern boarding house room. The design is sleek with built-in wooden cabinets against a clean white wall. The image implies efficient use of space and a well-managed property."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSICCGQQTtOciw7ggua5XOHIHxHETRF8b5okTTAg8oNKted16JuoLqKjTNL1AG8oXKo_bh7CYXZnFRjthps5U__ZwF-0yE16NwXznu5RxqfF_QSLiLUJrrHKhCBik8tS1wXEYksORkaFIYOwc6oBZqP92yQt7H7BkLsroByxOOuNkGZOw35zIGW7W4slPPjBNA1RkwflAnVaD9g_AH13_gHyTJm-JNpv7jp--6C4uPb-EPaC-5AdZK9LcX6Xh3cTxkpBljmq_HGJo">
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-white font-title-md text-title-md z-10">
+                                    +5 Foto
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Description -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
+                            Deskripsi Kamar</h2>
+                        <p
+                            class="font-body-md text-body-md text-ink-secondary leading-relaxed max-w-3xl mx-auto md:mx-0 text-center md:text-left">
+                            Kamar Standar A01 dirancang untuk memberikan kenyamanan maksimal bagi para penghuni. Dengan
+                            desain interior modern minimalis dan pencahayaan alami yang optimal, kamar ini menawarkan
+                            lingkungan yang tenang dan produktif. Terletak strategis di Cabang Utama, memudahkan akses
+                            ke berbagai fasilitas umum. Sangat cocok bagi profesional muda maupun mahasiswa yang mencari
+                            hunian terorganisir dan dapat diandalkan.
+                        </p>
+                    </div>
+                    <!-- Specifications & Rules -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
+                            Ketentuan Sewa</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                            <div
+                                class="flex flex-col items-center md:items-start text-center md:text-left gap-md p-lg bg-surface-soft rounded-2xl border border-border-hairline">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-surface-canvas border border-border-hairline flex items-center justify-center shadow-sm">
+                                    <span
+                                        class="material-symbols-outlined text-[32px] text-ink-primary">calendar_today</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-title-md text-title-md text-ink-primary mb-xs">Sewa Harian</h3>
+                                    <p class="font-body-sm text-body-sm text-ink-secondary">Khusus Pria. Diperlukan
+                                        identitas valid saat check-in.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col items-center md:items-start text-center md:text-left gap-md p-lg bg-surface-soft rounded-2xl border border-border-hairline">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-surface-canvas border border-border-hairline flex items-center justify-center shadow-sm">
+                                    <span
+                                        class="material-symbols-outlined text-[32px] text-ink-primary">calendar_month</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-title-md text-title-md text-ink-primary mb-xs">Sewa Bulanan</h3>
+                                    <p class="font-body-sm text-body-sm text-ink-secondary">Keluarga Sah / Pria. Wajib
+                                        melampirkan KTP &amp; dokumen pendukung.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Facilities -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
+                            Fasilitas Kamar</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-md">
+                            <div
+                                class="flex flex-col items-center justify-center p-xl bg-surface-canvas border border-border-hairline rounded-2xl hover:border-ink-primary transition-colors text-center shadow-sm">
+                                <span class="material-symbols-outlined text-[32px] text-ink-primary mb-md">wifi</span>
+                                <span class="font-label-md text-label-md text-ink-primary">WiFi Gratis</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-center p-xl bg-surface-canvas border border-border-hairline rounded-2xl hover:border-ink-primary transition-colors text-center shadow-sm">
+                                <span
+                                    class="material-symbols-outlined text-[32px] text-ink-primary mb-md">ac_unit</span>
+                                <span class="font-label-md text-label-md text-ink-primary">AC</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-center p-xl bg-surface-canvas border border-border-hairline rounded-2xl hover:border-ink-primary transition-colors text-center shadow-sm">
+                                <span class="material-symbols-outlined text-[32px] text-ink-primary mb-md">bed</span>
+                                <span class="font-label-md text-label-md text-ink-primary">Kasur Springbed</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-center p-xl bg-surface-canvas border border-border-hairline rounded-2xl hover:border-ink-primary transition-colors text-center shadow-sm">
+                                <span class="material-symbols-outlined text-[32px] text-ink-primary mb-md">desk</span>
+                                <span class="font-label-md text-label-md text-ink-primary">Meja Kerja</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-center p-xl bg-surface-canvas border border-border-hairline rounded-2xl hover:border-ink-primary transition-colors text-center shadow-sm">
+                                <span class="material-symbols-outlined text-[32px] text-ink-primary mb-md">shower</span>
+                                <span class="font-label-md text-label-md text-ink-primary">Kamar Mandi Dalam</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Map Section -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
+                            Lokasi Cabang Utama</h2>
+                        <div
+                            class="w-full h-[400px] bg-surface-soft rounded-2xl border border-border-hairline overflow-hidden relative shadow-sm flex items-center justify-center">
+                            <img alt="Map Location" class="w-full h-full object-cover"
+                                data-alt="A stylized Google Maps interface showing the location of a boarding house in Jakarta. The map uses a clean, light mode corporate aesthetic with subtle gray and soft blue tones. A primary blue map pin marker is centrally located to denote 'Cabang Utama'. The surrounding streets are clearly visible in a modern, flat vector style."
+                                data-location="Jakarta"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp3O1coS3e2KPXNw4Y3CAVTy_Ks_eE1rqXxQqUAGKcy4ueX6IXfBbfhSjVYuyVwvaPnlQvEJcNafnsWCDNn4qvASjaLCWamUIMCCfDKGpuiD5i9d4dPs2hwqkUTq0-D76Rs0sd99RtaR6v03moCkefFB-8gb0Ycsw-lkUa2aRBpN0zhsW_nHtQf-iWmsILbi1EaqV901u2nh_t0WVBh2w8v43c7EA5bjj5ilUZDrD2LQx2ETNdWsCKcI0ZBGHpVNMRXIQFOmjNZ4U">
+                            <div
+                                class="absolute bottom-6 left-6 bg-surface-canvas p-lg rounded-2xl shadow-lg border border-border-hairline max-w-sm">
+                                <p class="font-title-md text-title-md mb-xs text-ink-primary font-bold">Cabang Utama
+                                    Pilar Pandawa</p>
+                                <p class="font-body-sm text-body-sm text-ink-secondary">Jl. Kebon Jeruk Raya No. 27,
+                                    Jakarta Barat, 11530</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column (Booking Box) -->
+                <div class="w-full lg:col-span-1">
+                    <div
+                        class="sticky top-[100px] bg-surface-canvas border border-border-hairline rounded-3xl p-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+                        <div class="mb-lg border-b border-border-hairline pb-lg">
+                            <div class="text-ink-muted font-label-md text-label-md mb-xs">Mulai dari</div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-stat-display text-stat-display text-ink-primary">Rp 100.000</span>
+                                <span class="font-body-sm text-body-sm text-ink-secondary">/ hari</span>
+                            </div>
+                        </div>
+                        <form class="flex flex-col gap-lg mb-xl">
+                            <div class="flex flex-col gap-xs">
+                                <label class="font-label-md text-label-md text-ink-muted ml-xs">Tipe Sewa</label>
+                                <div class="relative">
+                                    <select id="tipeSewaSelect"
+                                        class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-md pr-10 font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary appearance-none outline-none transition-colors">
+                                        <option value="harian">Harian</option>
+                                        <option value="bulanan">Bulanan</option>
+                                    </select>
+                                    <span
+                                        class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">expand_more</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-md">
+                                <div class="flex flex-col gap-xs">
+                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-in</label>
+                                    <div class="relative">
+                                        <input id="checkinInput"
+                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
+                                            type="date">
+                                        <span
+                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-xs">
+                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-out</label>
+                                    <div class="relative">
+                                        <input id="checkoutInput"
+                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
+                                            type="date">
+                                        <span
+                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="flex flex-col gap-md">
+                            <button id="pesanSekarangBtn"
+                                class="w-full bg-primary text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-primary-container transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200">
+                                <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                                Pesan Sekarang
+                            </button>
+                            <button
+                                class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200">
+                                <span class="material-symbols-outlined text-[20px]">chat</span>
+                                Tanya via WhatsApp
+                            </button>
+                        </div>
+                        <div class="mt-lg pt-lg border-t border-border-hairline">
+                            <div
+                                class="flex justify-between items-center mb-sm font-body-sm text-body-sm text-ink-secondary">
+                                <span class="">Harga Sewa (1 Hari)</span>
+                                <span class="">Rp 100.000</span>
+                            </div>
+                            <div
+                                class="flex justify-between items-center mb-md font-body-sm text-body-sm text-ink-secondary">
+                                <span class="">Biaya Layanan</span>
+                                <span class="">Rp 0</span>
+                            </div>
+                            <div
+                                class="flex justify-between items-center mt-md pt-md border-t border-border-hairline font-display-md text-display-md text-ink-primary">
+                                <span class="">Total</span>
+                                <span class="">Rp 100.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="w-full py-xl px-base lg:px-xl flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container dark:bg-surface-container-highest font-body-sm text-body-sm">
+        <div class="text-display-md font-display-md text-primary dark:text-primary-fixed-dim flex items-center gap-xs">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_city</span>
+            Pilar Pandawa
+        </div>
+        <div class="flex flex-wrap justify-center gap-md">
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Partner with Us</a>
+        </div>
+        <div class="text-on-surface-variant text-center md:text-right">
+            © 2024 Pilar Pandawa. Reliable Boarding Management.
+        </div>
+    </footer>
+    <!-- Floating WhatsApp Widget -->
+    <button aria-label="Konsultasi Petugas via WhatsApp"
+        class="fixed z-50 flex items-center gap-sm bg-whatsapp-green hover:bg-whatsapp-hover text-on-primary rounded-full pr-md pl-sm py-sm shadow-lg hover:shadow-xl transition-all scale-95 active:scale-90 bottom-6 right-6">
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">chat</span>
+        </div>
+        <span class="font-button-md text-button-md hidden md:block">Konsultasi Petugas</span>
+    </button>
+
+    <!-- Login Required Modal -->
+    <div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="loginRequiredModal">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="loginRequiredOverlay"></div>
+        <div
+            class="relative w-full max-w-[380px] bg-surface-canvas rounded-xl shadow-2xl p-lg text-center transform transition-all">
+            <div class="mx-auto mb-md w-14 h-14 rounded-full bg-primary-fixed flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary-container text-[32px]">lock</span>
+            </div>
+            <h3 class="font-display-md text-display-md text-ink-primary mb-sm">Anda Belum Login</h3>
+            <p class="font-body-md text-body-md text-ink-muted mb-lg">Silakan login terlebih dahulu untuk melanjutkan
+                pemesanan kamar.</p>
+            <div class="flex flex-col gap-sm">
+                <button
+                    class="w-full py-md bg-primary text-on-primary font-button-md text-button-md rounded-xl hover:bg-primary-container transition-colors shadow-sm"
+                    id="loginRequiredConfirm" type="button">Login Sekarang</button>
+                <button
+                    class="w-full py-md text-ink-secondary font-button-md text-button-md rounded-xl hover:bg-surface-soft transition-colors"
+                    id="loginRequiredCancel" type="button">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            (function () {
+                const pesanSekarangBtn = document.getElementById('pesanSekarangBtn');
+                const modal = document.getElementById('loginRequiredModal');
+                const overlay = document.getElementById('loginRequiredOverlay');
+                const confirmBtn = document.getElementById('loginRequiredConfirm');
+                const cancelBtn = document.getElementById('loginRequiredCancel');
+
+                function showModal() {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+
+                function hideModal() {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+
+                const loginNavBtn = document.getElementById('loginNavBtn');
+                const profileNavBtn = document.getElementById('profileNavBtn');
+                if (localStorage.getItem('customerSession')) {
+                    loginNavBtn.classList.add('hidden');
+                    profileNavBtn.classList.remove('hidden');
+                    profileNavBtn.classList.add('flex');
+                }
+
+                const tipeSewaSelect = document.getElementById('tipeSewaSelect');
+                const checkinInput = document.getElementById('checkinInput');
+                const checkoutInput = document.getElementById('checkoutInput');
+
+                pesanSekarangBtn.addEventListener('click', function () {
+                    const customerSession = localStorage.getItem('customerSession');
+                    if (customerSession) {
+                        localStorage.setItem('bookingData', JSON.stringify({
+                            tipeSewa: tipeSewaSelect.value,
+                            checkin: checkinInput.value,
+                            checkout: checkoutInput.value
+                        }));
+                        window.location.href = 'order/step-1.html';
+                    } else {
+                        showModal();
+                    }
+                });
+                overlay.addEventListener('click', hideModal);
+                cancelBtn.addEventListener('click', hideModal);
+                confirmBtn.addEventListener('click', function () {
+                    window.location.href = 'login-customer.html';
+                });
+            })();
+    </script>
+
+</body>
+
+</html>

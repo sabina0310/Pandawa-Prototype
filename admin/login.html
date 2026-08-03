@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pilar Pandawa - Portal Petugas Kos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary": "#ffffff",
+                        "ink-muted": "#6a6a6a",
+                        "surface": "#fcf9f8",
+                        "surface-variant": "#e5e2e1",
+                        "surface-canvas": "#ffffff",
+                        "primary-fixed": "#dae2ff",
+                        "outline": "#737686",
+                        "on-primary-container": "#cfd9ff",
+                        "surface-bright": "#fcf9f8",
+                        "ink-primary": "#222222",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#875500",
+                        "surface-dim": "#dcd9d9",
+                        "border-hairline": "#dddddd",
+                        "error": "#ba1a1a",
+                        "status-available": "#10b981",
+                        "on-surface": "#1b1c1c",
+                        "inverse-on-surface": "#f3f0ef",
+                        "primary-container": "#0156d7",
+                        "on-error": "#ffffff",
+                        "background": "#fcf9f8",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001849",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#b2c5ff",
+                        "ink-secondary": "#3f3f3f",
+                        "whatsapp-hover": "#1da851",
+                        "secondary": "#006d2f",
+                        "on-secondary-fixed": "#002109",
+                        "secondary-container": "#5dfd8a",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-container": "#007232",
+                        "surface-container": "#f0eded",
+                        "status-warning": "#f59e0b",
+                        "on-tertiary-fixed": "#2a1700",
+                        "status-occupied": "#ef4444",
+                        "primary": "#0040a6",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-tertiary-container": "#ffd4a2",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "border-strong": "#c1c1c1",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "on-background": "#1b1c1c",
+                        "secondary-fixed-dim": "#3de273",
+                        "surface-tint": "#0055d5",
+                        "surface-container-high": "#eae7e7",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-surface": "#303030",
+                        "tertiary": "#674000",
+                        "surface-soft": "#f7f7f7",
+                        "secondary-fixed": "#66ff8e",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-surface-variant": "#424654",
+                        "whatsapp-green": "#25d366",
+                        "on-secondary-fixed-variant": "#005322"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "12px",
+                        "xxs": "2px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "section": "64px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Plus Jakarta Sans"],
+                        "button-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "display-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "badge": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "stat-display": ["Plus Jakarta Sans"],
+                        "tag-uppercase": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
+                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-canvas min-h-screen flex flex-col md:flex-row font-body-md text-on-surface antialiased m-0 p-0">
+<!-- Left Panel: Visual/Image -->
+<div class="relative w-full h-64 md:h-screen md:w-1/2 lg:w-[55%] xl:w-[60%] bg-surface-dim order-1 md:order-1 flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCD71eQVVetPo1Y6nF-vXXtULdcDHJIKV0CZB7OGDlVe0TGc8du86sK31IQGzR4wQ0Jr1LTjrrU0lPrAFUYHn11Axiq6RcsXI1HjaCoI5kgp1D8OAgq2YcUMPSR0J6klorZkCN1jvkSaeR1Nn-2tariS1l19Hu8vu8U_CteygLhlZPfU1AFchfAJPByPttxGRjJfnFBm0xVzyqUxxN6g5sofb2qAsvgyhJj_mfLAJnSz6GJ-SzNvTKxWO1S9XBesLwDRCCU-HzmKx4&quot;);"></div>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-primary-fixed/80 via-transparent to-transparent"></div>
+<!-- Glassmorphism Metric / branding -->
+<div class="absolute bottom-lg left-base right-base md:left-xl md:right-xl p-lg bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl text-white transition-all duration-300 hover:bg-white/15">
+<div class="flex items-center gap-sm mb-sm">
+<span class="material-symbols-outlined text-secondary-container text-[24px]">verified</span>
+<h3 class="font-display-md text-display-md text-white tracking-tight">Manajemen Kos Terintegrasi</h3>
+</div>
+<p class="font-body-md text-body-md text-white/90 leading-relaxed max-w-lg">Sistem terpusat untuk efisiensi operasional dan kenyamanan penghuni Pilar Pandawa.</p>
+</div>
+</div>
+<!-- Right Panel: Login Form -->
+<div class="w-full md:w-1/2 lg:w-[45%] xl:w-[40%] p-lg md:p-xl lg:px-section flex flex-col justify-center order-2 md:order-2 bg-surface-canvas shadow-[-10px_0_30px_rgba(0,0,0,0.02)] z-10">
+<div class="w-full max-w-[420px] mx-auto">
+<!-- Header -->
+<div class="mb-xl">
+<div class="flex items-center gap-xs mb-md">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mr-xs">
+<span class="material-symbols-outlined text-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">domain</span>
+</div>
+<span class="font-display-md text-display-md text-primary font-bold tracking-tight">Pilar Pandawa</span>
+</div>
+<h1 class="font-display-xl text-display-xl text-ink-primary mb-xs tracking-tight">Masuk Portal Admin</h1>
+<p class="font-body-md text-body-md text-ink-muted">Silakan masuk menggunakan kredensial petugas Anda.</p>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-lg" id="loginForm" method="POST">
+<!-- Input Group: ID Petugas -->
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-ink-secondary" for="username">Username / ID Petugas</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary">person</span>
+</div>
+<input class="w-full pl-[44px] pr-md py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm" id="username" name="username" placeholder="Masukkan ID Petugas" required="" type="text">
+</div>
+</div>
+<!-- Input Group: Password -->
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-ink-secondary" for="password">Password</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary">lock</span>
+</div>
+<input class="w-full pl-[44px] pr-[44px] py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm" id="password" name="password" placeholder="••••••••" required="" type="password">
+<div class="absolute inset-y-0 right-0 pr-md flex items-center cursor-pointer" id="togglePassword">
+<span class="material-symbols-outlined text-outline hover:text-ink-primary transition-colors" id="togglePasswordIcon">visibility</span>
+</div>
+</div>
+</div>
+<!-- Remember Me & Forgot Password -->
+<div class="flex items-center justify-between pt-xs">
+<label class="flex items-center gap-sm cursor-pointer group">
+<div class="relative flex items-center justify-center">
+<input class="peer w-5 h-5 appearance-none border border-outline-variant rounded bg-surface-bright checked:bg-primary checked:border-primary focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer" type="checkbox">
+<span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Ingat Saya</span>
+</label>
+<a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="#">Lupa Password?</a>
+</div>
+<!-- Submit Button -->
+<button class="w-full mt-xl py-[14px] bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.99] active:translate-y-0 flex justify-center items-center gap-sm disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md" id="loginBtn" type="submit">
+<span class="material-symbols-outlined text-[18px] animate-spin hidden" id="loginBtnSpinner">progress_activity</span>
+<span id="loginBtnText">Masuk</span>
+<span class="material-symbols-outlined text-[18px]" id="loginBtnArrow">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Note -->
+<div class="mt-xl pt-lg border-t border-border-hairline text-center">
+<p class="font-body-sm text-[13px] leading-[20px] text-ink-muted">Akses khusus petugas. Jika mengalami kendala, hubungi <span class="font-medium text-ink-primary">Super Admin</span>.</p>
+</div>
+</div>
+</div>
+
+<!-- Error Modal -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="errorModal">
+<div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="errorModalOverlay"></div>
+<div class="relative w-full max-w-[380px] bg-surface-canvas rounded-xl shadow-2xl p-lg text-center transform transition-all">
+<div class="mx-auto mb-md w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-[32px]">error</span>
+</div>
+<h3 class="font-display-md text-display-md text-ink-primary mb-xs">Login Gagal</h3>
+<p class="font-body-md text-body-md text-ink-muted mb-lg">Username atau password yang Anda masukkan salah. Silakan coba lagi.</p>
+<button class="w-full py-[12px] bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg" id="errorModalClose" type="button">Tutup</button>
+</div>
+</div>
+
+<script>
+    (function () {
+        const VALID_USERNAME = "admin";
+        const VALID_PASSWORD = "admin123";
+
+        const form = document.getElementById("loginForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const toggleBtn = document.getElementById("togglePassword");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+        const loginBtn = document.getElementById("loginBtn");
+        const loginBtnText = document.getElementById("loginBtnText");
+        const loginBtnSpinner = document.getElementById("loginBtnSpinner");
+        const loginBtnArrow = document.getElementById("loginBtnArrow");
+        const errorModal = document.getElementById("errorModal");
+        const errorModalOverlay = document.getElementById("errorModalOverlay");
+        const errorModalClose = document.getElementById("errorModalClose");
+
+        toggleBtn.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleIcon.textContent = isPassword ? "visibility_off" : "visibility";
+        });
+
+        function showErrorModal() {
+            errorModal.classList.remove("hidden");
+            errorModal.classList.add("flex");
+        }
+
+        function hideErrorModal() {
+            errorModal.classList.add("hidden");
+            errorModal.classList.remove("flex");
+        }
+
+        errorModalOverlay.addEventListener("click", hideErrorModal);
+        errorModalClose.addEventListener("click", hideErrorModal);
+
+        function setLoading(isLoading) {
+            loginBtn.disabled = isLoading;
+            loginBtnSpinner.classList.toggle("hidden", !isLoading);
+            loginBtnArrow.classList.toggle("hidden", isLoading);
+            loginBtnText.textContent = isLoading ? "Memproses..." : "Masuk";
+        }
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            setLoading(true);
+
+            setTimeout(function () {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value;
+
+                if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                    localStorage.setItem("adminSession", JSON.stringify({
+                        username: username,
+                        loginTime: new Date().toISOString()
+                    }));
+                    window.location.href = "dashboard-admin.html";
+                } else {
+                    setLoading(false);
+                    showErrorModal();
+                }
+            }, 800);
+        });
+    })();
+</script>
+
+</body></html>

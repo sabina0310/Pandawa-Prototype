@@ -1,0 +1,205 @@
+<!-- TopNavBar -->
+<header
+    class="bg-surface-canvas fixed top-0 left-0 w-full z-40 flex justify-between items-center px-lg h-[72px] border-b border-border-hairline shadow-sm">
+    <div class="flex items-center gap-lg">
+        <!-- Mobile Menu Toggle (hidden on md) -->
+        <button class="md:hidden text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="font-display-md text-[24px] font-bold text-primary flex items-center gap-2">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">apartment</span>
+            Pilar Pandawa
+        </div>
+        <!-- Global Search (Web) -->
+        <div class="hidden md:flex items-center bg-surface-variant rounded-full px-base py-2.5 w-96 ml-8">
+            <span class="material-symbols-outlined text-ink-muted mr-sm text-[20px]">search</span>
+            <input
+                class="bg-transparent border-none outline-none w-full text-body-sm text-ink-primary placeholder:text-ink-muted focus:ring-0 p-0"
+                placeholder="Cari kamar, penghuni, atau NIK..." type="text">
+        </div>
+    </div>
+    <div class="flex items-center gap-md">
+        <!-- Trailing Icons -->
+        <div class="relative">
+            <button id="notificationBtn"
+                class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full relative">
+                <span class="material-symbols-outlined">notifications</span>
+                <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
+            </button>
+            <!-- Notification Panel -->
+            <div id="notificationPanel"
+                class="hidden absolute right-0 top-full mt-2 w-[360px] max-w-[90vw] bg-surface-canvas rounded-2xl shadow-2xl border border-border-hairline z-50 overflow-hidden">
+                <div class="flex items-center justify-between px-base py-base border-b border-border-hairline">
+                    <div class="flex items-center gap-sm">
+                        <h3 class="font-title-md text-title-md text-ink-primary font-bold">Notifikasi</h3>
+                        <span id="notificationCountBadge"
+                            class="bg-primary text-on-primary text-[11px] font-bold px-2 py-0.5 rounded-full uppercase">3
+                            Baru</span>
+                    </div>
+                    <button id="markAllReadBtn" class="text-primary text-[13px] font-semibold hover:underline">Tandai
+                        semua dibaca</button>
+                </div>
+                <div class="max-h-[420px] overflow-y-auto divide-y divide-border-hairline">
+                    <div class="notification-item flex gap-sm px-base py-base bg-primary/5" data-unread="true">
+                        <div
+                            class="w-9 h-9 rounded-full bg-status-available/10 text-status-available flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px]"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-[14px] text-ink-primary">Pembayaran Berhasil!</p>
+                            <p class="text-[13px] text-ink-secondary mt-0.5">Budi Santoso (Kamar 102 - Cabang Utama)
+                                telah membayar tagihan via Payment Gateway.</p>
+                            <p class="text-[12px] text-status-available mt-1">Status tagihan otomatis diperbarui
+                                menjadi Lunas.</p>
+                            <p class="text-[12px] text-ink-muted mt-1">10 menit yang lalu</p>
+                        </div>
+                    </div>
+                    <div class="notification-item flex gap-sm px-base py-base bg-status-warning/5" data-unread="true">
+                        <div
+                            class="w-9 h-9 rounded-full bg-status-warning/10 text-status-warning flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px]">schedule</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-[14px] text-ink-primary">Peringatan Jatuh Tempo!</p>
+                            <p class="text-[13px] text-ink-secondary mt-0.5">Masa sewa Siti Aminah di Kamar 205
+                                (Bulanan Keluarga) akan berakhir besok.</p>
+                            <p class="text-[12px] text-status-warning mt-1">Harap antar perpanjangan atau persiapan
+                                check-out.</p>
+                            <p class="text-[12px] text-ink-muted mt-1">1 jam yang lalu</p>
+                        </div>
+                    </div>
+                    <div class="notification-item flex gap-sm px-base py-base" data-unread="false">
+                        <div
+                            class="w-9 h-9 rounded-full bg-status-available/10 text-status-available flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px]">send</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-[14px] text-ink-primary">Pengingat Otomatis Terkirim</p>
+                            <p class="text-[13px] text-ink-secondary mt-0.5">Sistem telah mengirimkan pesan tagihan ke
+                                Rina Wijaya (Kamar 310) via WhatsApp.</p>
+                            <p class="text-[12px] text-ink-muted mt-1">3 jam yang lalu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-base py-base border-t border-border-hairline text-center">
+                    <a href="#" class="text-primary text-[13px] font-semibold hover:underline">Lihat Semua
+                        Aktivitas</a>
+                </div>
+            </div>
+        </div>
+        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+            <span class="material-symbols-outlined">help</span>
+        </button>
+        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+            <span class="material-symbols-outlined">settings</span>
+        </button>
+        <!-- Profile -->
+        <div
+            class="h-10 w-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-sm ml-sm overflow-hidden border border-border-hairline">
+            <img alt="Manager Profile" class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzibMmO5aabaOuM-AN98KKRM9m7vP_S2GDGOm7lGofuc-xIv2vrwkfxEtWoVFnPLTviC2zFDld4F1UvEjmUCE3-Dk_Ewj0BepoHu4in2np2QJkZtUVmvkwmdsks_rkBRlbbICuNHrqsSA8t6h8KHkgaHqzvKQDrr8QMg2RrMKsr72YtftbCFo93uf2TcTFhkRBTfWEANrefYoJlZxzrz77_ZSsSdZoNzPpIymXcoiDFdIesrQnXn-XGgE64eGHhS0T8Ktzjz92QoI">
+        </div>
+    </div>
+</header>
+<!-- SideNavBar -->
+<nav
+    class="hidden md:flex bg-surface-canvas fixed left-0 top-0 h-screen w-[260px] py-lg flex-col z-30 justify-between border-r border-border-hairline h-full">
+    <div class="px-md pt-[72px]">
+        <div class="mb-lg px-base">
+            <div class="text-[12px] font-bold text-ink-muted uppercase tracking-wider">Management Console</div>
+            <div class="text-label-md font-label-md text-ink-primary mt-xs font-semibold">Admin</div>
+        </div>
+        <div id="sideNavList">
+            <ul class="flex flex-col gap-1 font-title-md text-[15px]">
+                <li class="">
+                    <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
+                        href="dashboard-admin.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="">
+                    <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
+                        href="bookings.html">
+                        <span class="material-symbols-outlined">calendar_today</span>
+                        Bookings
+                    </a>
+                </li>
+                <li class="">
+                    <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
+                        href="check-ins.html">
+                        <span class="material-symbols-outlined">verified_user</span>
+                        Check-ins
+                    </a>
+                </li>
+                <li class="">
+                    <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
+                        href="branches.html">
+                        <span class="material-symbols-outlined">apartment</span>
+                        Branches
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="px-md pb-base mt-auto">
+        <a class="flex items-center gap-base px-base py-3 text-error hover:bg-error-container transition-all rounded-xl font-title-md text-[15px]"
+            href="#">
+            <span class="material-symbols-outlined">logout</span>
+            Logout
+        </a>
+    </div>
+</nav>
+<script>
+    (function () {
+        var currentPage = window.location.pathname.split('/').pop() || 'dashboard-admin.html';
+
+        document.querySelectorAll('#sideNavList .nav-link').forEach(function (link) {
+            var isActive = link.getAttribute('href') === currentPage;
+            var icon = link.querySelector('.material-symbols-outlined');
+
+            link.classList.toggle('bg-primary', isActive);
+            link.classList.toggle('text-on-primary', isActive);
+            link.classList.toggle('text-ink-secondary', !isActive);
+            link.classList.toggle('hover:bg-surface-variant', !isActive);
+
+            if (icon) {
+                icon.style.fontVariationSettings = isActive ? "'FILL' 1" : "'FILL' 0";
+            }
+        });
+    })();
+</script>
+<script>
+    (function () {
+        var notificationBtn = document.getElementById('notificationBtn');
+        var notificationPanel = document.getElementById('notificationPanel');
+        var notificationDot = document.getElementById('notificationDot');
+        var notificationCountBadge = document.getElementById('notificationCountBadge');
+        var markAllReadBtn = document.getElementById('markAllReadBtn');
+
+        function togglePanel(show) {
+            notificationPanel.classList.toggle('hidden', !show);
+        }
+
+        notificationBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            togglePanel(notificationPanel.classList.contains('hidden'));
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!notificationPanel.classList.contains('hidden') && !notificationPanel.contains(e.target) && e.target !== notificationBtn) {
+                togglePanel(false);
+            }
+        });
+
+        markAllReadBtn.addEventListener('click', function () {
+            document.querySelectorAll('.notification-item[data-unread="true"]').forEach(function (item) {
+                item.dataset.unread = 'false';
+                item.classList.remove('bg-primary/5', 'bg-status-warning/5');
+            });
+            notificationDot.classList.add('hidden');
+            notificationCountBadge.classList.add('hidden');
+        });
+    })();
+</script>
