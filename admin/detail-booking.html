@@ -170,9 +170,7 @@
             </a>
             <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
                 <div>
-                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary" id="bookingCode">Detail
-                        Pemesanan -
-                        BK-202310-001</h1>
+                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary" id="bookingCode">Memuat data...</h1>
                     <p class="font-body-md text-body-md text-ink-muted mt-xs">Informasi lengkap data penyewa, rincian
                         sewa, status pembayaran, dan riwayat transaksi.</p>
                 </div>
@@ -183,7 +181,7 @@
                             data-icon="download">download</span>
                         <span id="downloadPdfBtnText">Unduh PDF / Cetak</span>
                     </button>
-                    <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
+                    <a href="#" id="waButton" target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center gap-xs px-base py-sm bg-whatsapp-green text-on-primary hover:bg-whatsapp-hover transition-colors rounded-md font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] cursor-pointer no-underline">
                         <span class="material-symbols-outlined text-[18px] filled" data-icon="chat">chat</span>
                         Kirim WA Pengingat
@@ -200,26 +198,24 @@
             </div>
         </div>
         <!-- Main Grid Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="detailContent">
             <!-- LEFT COLUMN (70%) -->
             <div class="lg:col-span-8 flex flex-col gap-lg">
                 <!-- Card 1 (Status) -->
                 <div
                     class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
                     <div class="flex items-center gap-sm mb-md">
-                        <span
-                            class="px-sm py-xs bg-status-available/10 text-status-available font-badge text-badge rounded-full uppercase">LUNAS</span>
-                        <span
-                            class="px-sm py-xs bg-primary/10 text-primary font-badge text-badge rounded-full uppercase">DIKONFIRMASI</span>
+                        <span id="badgeStatusBayar"
+                            class="px-sm py-xs bg-status-available/10 text-status-available font-badge text-badge rounded-full uppercase">&mdash;</span>
+                        <span id="badgeStatusAlokasi"
+                            class="px-sm py-xs bg-primary/10 text-primary font-badge text-badge rounded-full uppercase">&mdash;</span>
                     </div>
                     <div class="flex items-start gap-sm">
                         <span class="material-symbols-outlined text-primary"
                             data-icon="check_circle">check_circle</span>
                         <div>
-                            <div class="font-title-md text-title-md text-ink-primary" id="allocationBranch">Teralokasi
-                                di Cabang Utama</div>
-                            <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="allocationRoom">Kamar A01
-                                (Lantai 1)</div>
+                            <div class="font-title-md text-title-md text-ink-primary" id="allocationBranch">-</div>
+                            <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="allocationRoom">-</div>
                         </div>
                     </div>
                 </div>
@@ -233,19 +229,16 @@
                         <div class="flex-1 space-y-md">
                             <div>
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nama Lengkap</div>
-                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="tenantName">Budi
-                                    Santoso</div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="tenantName">-</div>
                             </div>
                             <div>
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">Nomor Identitas (NIK)
                                 </div>
-                                <div class="font-body-md text-body-md text-ink-primary" id="tenantNik">3515XXXXXXXXXXXX
-                                </div>
+                                <div class="font-body-md text-body-md text-ink-primary" id="tenantNik">-</div>
                             </div>
                             <div>
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">WhatsApp</div>
-                                <div class="font-body-md text-body-md text-ink-primary" id="tenantWhatsapp">+62
-                                    812-3456-7890</div>
+                                <div class="font-body-md text-body-md text-ink-primary" id="tenantWhatsapp">-</div>
                             </div>
                             <!-- <div class="pt-sm border-t border-border-hairline">
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">Penghuni Tambahan</div>
@@ -298,10 +291,8 @@
                             </div>
                             <div>
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">Cabang Properti</div>
-                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="propertyBranch">
-                                    Cabang Utama</div>
-                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="propertyType">Tipe
-                                    Standar - Sewa <span class="font-bold">BULANAN</span></div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="propertyBranch">-</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="propertyType">-</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-sm">
@@ -310,10 +301,8 @@
                             </div>
                             <div>
                                 <div class="font-label-md text-label-md text-ink-muted mb-xxs">Jadwal Sewa</div>
-                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="rentSchedule">15
-                                    Okt 2023 - 15 Nov
-                                    2023</div>
-                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs">Durasi: 1 Bulan</div>
+                                <div class="font-body-md text-body-md text-ink-primary font-medium" id="rentSchedule">-</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted mt-xxs" id="rentDuration">Durasi: -</div>
                             </div>
                         </div>
                     </div>
@@ -330,25 +319,17 @@
                     <div class="space-y-sm mb-md">
                         <div class="flex justify-between items-center">
                             <span class="font-body-md text-body-md text-ink-secondary">Harga Sewa</span>
-                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billHargaSewa">Rp
-                                500.000</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billHargaSewa">-</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="font-body-md text-body-md text-ink-secondary">Biaya Layanan</span>
-                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billLayanan">Rp
-                                15.000</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-body-md text-body-md text-ink-secondary">Deposit</span>
-                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billDeposit">Rp
-                                0</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="billLayanan">-</span>
                         </div>
                     </div>
                     <div class="pt-sm border-t border-border-hairline">
                         <div class="flex justify-between items-end">
                             <span class="font-label-md text-label-md text-ink-muted">Total Pembayaran</span>
-                            <span class="font-stat-display text-stat-display text-primary-container" id="billTotal">Rp
-                                515.000</span>
+                            <span class="font-stat-display text-stat-display text-primary-container" id="billTotal">-</span>
                         </div>
                     </div>
                 </div>
@@ -361,9 +342,7 @@
                     <div class="space-y-md">
                         <div>
                             <div class="font-label-md text-label-md text-ink-muted mb-xxs">Metode Pembayaran</div>
-                            <div class="font-body-md text-body-md text-ink-primary font-medium" id="paymentMethod">
-                                Virtual Account - BCA
-                            </div>
+                            <div class="font-body-md text-body-md text-ink-primary font-medium" id="paymentMethod">-</div>
                             <div
                                 class="font-body-sm text-body-sm text-status-available mt-xxs flex items-center gap-xs">
                                 <span class="material-symbols-outlined text-[14px]"
@@ -373,7 +352,7 @@
                         </div>
                         <div>
                             <div class="font-label-md text-label-md text-ink-muted mb-xxs">Waktu Transaksi</div>
-                            <div class="font-body-md text-body-md text-ink-primary">15 Okt 2023, 10:30 WIB</div>
+                            <div class="font-body-md text-body-md text-ink-primary" id="transactionTime">-</div>
                         </div>
                         <div class="pt-sm border-t border-border-hairline flex items-center gap-sm">
                             <div
@@ -382,8 +361,8 @@
                                     data-icon="check_circle">check_circle</span>
                             </div>
                             <div>
-                                <div class="font-title-md text-title-md text-ink-primary">Berhasil / Lunas</div>
-                                <div class="font-body-sm text-body-sm text-ink-muted">Dana telah diterima</div>
+                                <div class="font-title-md text-title-md text-ink-primary" id="paymentStatusTitle">-</div>
+                                <div class="font-body-sm text-body-sm text-ink-muted" id="paymentStatusNote">-</div>
                             </div>
                         </div>
                     </div>
@@ -483,6 +462,9 @@
         </div>
     </div>
 
+    <!-- Menyambungkan halaman ini ke data Firestore -->
+    <script type="module" src="../js/admin-detail-booking.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
@@ -497,7 +479,7 @@
             }
 
             function populateReceipt() {
-                const bookingCode = (text("bookingCode").match(/BK-[\w-]+/) || ["BK-000000-000"])[0];
+                const bookingCode = (text("bookingCode").match(/PP-[\w-]+/) || ["PP-000000-000"])[0];
                 document.getElementById("receiptInvoiceNo").textContent = "INV/" + bookingCode;
 
                 document.getElementById("receiptTenantName").textContent = text("tenantName");
@@ -510,19 +492,17 @@
                 const roomNumber = roomMatch ? roomMatch[1] : "-";
                 document.getElementById("receiptRoomNumber").textContent = roomNumber;
 
-                const typeMatch = text("propertyType").match(/Tipe\s+(\w+)/i);
-                document.getElementById("receiptRoomType").textContent = typeMatch ? typeMatch[1] : "-";
+                const tipeSewa = text("propertyType").replace(/^Sewa\s+/i, "");
+                document.getElementById("receiptRoomType").textContent = tipeSewa || "-";
 
                 const schedule = text("rentSchedule");
                 const hargaSewa = text("billHargaSewa");
                 const layanan = text("billLayanan");
-                const deposit = text("billDeposit");
                 const total = text("billTotal");
                 const paymentMethod = text("paymentMethod");
 
                 const lineItems = [
-                    { label: "Sewa Bulanan (" + schedule + ")", value: hargaSewa },
-                    { label: "Deposit Keamanan (Dapat dikembalikan)", value: deposit },
+                    { label: "Sewa " + (text("propertyType").replace(/^Sewa\s+/i, "") || "-") + " (" + schedule + ")", value: hargaSewa },
                     { label: "Biaya Layanan Admin", value: layanan }
                 ];
                 document.getElementById("receiptLineItems").innerHTML = lineItems.map(function (item) {

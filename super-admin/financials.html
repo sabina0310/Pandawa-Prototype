@@ -283,13 +283,8 @@
                                 <div class="flex-1 flex flex-col justify-center">
                                         <div
                                                 class="font-display-xl text-[32px] font-bold text-ink-primary leading-none">
-                                                Rp 124.500.000</div>
-                                        <div
-                                                class="text-status-available text-xs font-bold flex items-center gap-xxs mt-sm">
-                                                <span
-                                                        class="material-symbols-outlined text-[16px]">trending_up</span>+12%
-                                                dari bulan lalu
-                                        </div>
+                                                <span id="statTotalPendapatan">-</span></div>
+                                        <div id="statPerubahanBulan" class="text-ink-muted text-xs mt-sm">Menghitung...</div>
                                 </div>
                         </div>
                         <div
@@ -309,7 +304,7 @@
                                 <div class="flex-1 flex flex-col justify-center">
                                         <div
                                                 class="font-display-xl text-[32px] font-bold text-ink-primary leading-none">
-                                                156</div>
+                                                <span id="statTransaksiLunas">-</span></div>
                                         <div class="text-ink-muted text-xs mt-sm">Transaksi Berhasil</div>
                                 </div>
                         </div>
@@ -330,8 +325,8 @@
                                 <div class="flex-1 flex flex-col justify-center">
                                         <div
                                                 class="font-display-xl text-[32px] font-bold text-ink-primary leading-none">
-                                                Rp 3.200.000</div>
-                                        <div class="text-ink-muted text-xs mt-sm">12 Transaksi Pending</div>
+                                                <span id="statMenungguBayar">-</span></div>
+                                        <div class="text-ink-muted text-xs mt-sm" id="statJumlahPending">-</div>
                                 </div>
                         </div>
                         <div
@@ -343,15 +338,15 @@
                                                         <span
                                                                 class="material-symbols-outlined text-[18px]">warning</span>
                                                 </div><span
-                                                        class="font-title-md text-[15px] font-semibold text-ink-primary">Potensi
-                                                        Tunggakan</span>
+                                                        class="font-title-md text-[15px] font-semibold text-ink-primary">Akan
+                                                        Jatuh Tempo (7 Hari)</span>
                                         </div><span
                                                 class="material-symbols-outlined text-ink-muted text-[18px]">more_vert</span>
                                 </div>
                                 <div class="flex-1 flex flex-col justify-center">
-                                        <div class="font-display-xl text-[32px] font-bold text-error leading-none">Rp
-                                                1.500.000</div>
-                                        <div class="text-error text-xs font-bold mt-sm">5 Penghuni Overstay</div>
+                                        <div class="font-display-xl text-[32px] font-bold text-error leading-none"
+                                                id="statNilaiJatuhTempo">-</div>
+                                        <div class="text-error text-xs font-bold mt-sm" id="statJumlahJatuhTempo">-</div>
                                 </div>
                         </div>
                 </div>
@@ -365,31 +360,27 @@
                                                 class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted">calendar_today</span>
                                 </div>
                         </div>
-                        <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Cabang</label><select
+                        <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Cabang</label><select id="filterCabang"
                                         class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary">
-                                        <option>Semua</option>
-                                        <option>Pesona</option>
-                                        <option>Gangnam</option>
-                                        <option>We o we</option>
-                                        <option>Seleb</option>
+                                        <option value="semua">Semua</option>
                                 </select></div>
                         <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Tipe
-                                        Sewa</label><select
+                                        Sewa</label><select id="filterTipeSewa"
                                         class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary">
-                                        <option>Semua</option>
-                                        <option>Harian</option>
-                                        <option>Bulanan</option>
+                                        <option value="semua">Semua</option>
+                                        <option value="harian">Harian</option>
+                                        <option value="bulanan">Bulanan</option>
                                 </select></div>
-                        <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Status</label><select
+                        <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Status</label><select id="filterStatus"
                                         class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary">
-                                        <option>Semua</option>
-                                        <option>Lunas</option>
-                                        <option>Pending</option>
-                                        <option>Gagal</option>
+                                        <option value="semua">Semua</option>
+                                        <option value="lunas">Lunas</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="gagal">Gagal</option>
                                 </select></div>
                         <div class="flex-1 min-w-[240px]"><label class="block text-label-md text-ink-muted mb-xs">Cari
                                         Transaksi</label>
-                                <div class="relative"><input
+                                <div class="relative"><input id="searchTransaksi"
                                                 class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
                                                 placeholder="ID Transaksi, Nama..." type="text"><span
                                                 class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">search</span>
@@ -471,100 +462,8 @@
         <!-- 4. Check-in Verification Modal (Simulated Open State) -->
 
 
-        <script>
-                (function () {
-                        const transactions = [
-                                { id: "#TRX-202607-001", datetime: "15 Okt 2023, 14:20", name: "Budi Santoso", phone: "+62 812-3456-7890", branch: "Pesona Kost", unit: "Unit A01", category: "BULANAN", duration: "01 Jul - 01 Aug", method: "QRIS", total: 515000, status: "LUNAS" },
-                                { id: "#TRX-202607-002", datetime: "15 Okt 2023, 16:05", name: "Siti Aminah", phone: "+62 813-9876-5432", branch: "Gangnam Kost", unit: "Unit B12", category: "HARIAN", duration: "15 Okt - 17 Okt", method: "Transfer Bank", total: 300000, status: "PENDING" },
-                                { id: "#TRX-202607-003", datetime: "14 Okt 2023, 09:12", name: "Rudi Hartono", phone: "+62 813-5555-6666", branch: "Pesona Kost", unit: "Unit A05", category: "BULANAN", duration: "01 Okt - 01 Nov", method: "Virtual Account - BCA", total: 530000, status: "LUNAS" },
-                                { id: "#TRX-202607-004", datetime: "14 Okt 2023, 11:47", name: "Maya Sari", phone: "+62 814-6666-7777", branch: "We o we", unit: "Unit C03", category: "HARIAN", duration: "10 Okt - 12 Okt", method: "Cash", total: 350000, status: "LUNAS" },
-                                { id: "#TRX-202607-005", datetime: "13 Okt 2023, 08:30", name: "Hendra Gunawan", phone: "+62 815-7777-8888", branch: "Seleb Kost", unit: "Unit D02", category: "BULANAN", duration: "05 Okt - 05 Nov", method: "QRIS", total: 545000, status: "LUNAS" },
-                                { id: "#TRX-202607-006", datetime: "13 Okt 2023, 19:22", name: "Joko Susilo", phone: "+62 812-1111-2222", branch: "Pesona Kost", unit: "Unit A08", category: "BULANAN", duration: "05 Sep - 05 Okt", method: "Transfer Bank", total: 500000, status: "GAGAL" },
-                                { id: "#TRX-202607-007", datetime: "12 Okt 2023, 10:05", name: "Rina Marlina", phone: "+62 812-2222-3333", branch: "Gangnam Kost", unit: "Unit B07", category: "BULANAN", duration: "10 Sep - 10 Okt", method: "E-Wallet", total: 480000, status: "PENDING" },
-                                { id: "#TRX-202607-008", datetime: "12 Okt 2023, 13:40", name: "Agus Salim", phone: "+62 812-3333-4444", branch: "We o we", unit: "Unit C09", category: "HARIAN", duration: "12 Okt - 14 Okt", method: "QRIS", total: 250000, status: "LUNAS" },
-                                { id: "#TRX-202607-009", datetime: "11 Okt 2023, 15:58", name: "Nadia Putri", phone: "+62 812-4444-5555", branch: "Seleb Kost", unit: "Unit D06", category: "BULANAN", duration: "01 Okt - 01 Nov", method: "Virtual Account - BCA", total: 520000, status: "PENDING" },
-                                { id: "#TRX-202607-010", datetime: "11 Okt 2023, 07:15", name: "Ani Wijaya", phone: "+62 815-1122-3344", branch: "Pesona Kost", unit: "Unit A02", category: "BULANAN", duration: "20 Okt - 20 Nov", method: "Transfer Bank", total: 550000, status: "LUNAS" },
-                                { id: "#TRX-202607-011", datetime: "10 Okt 2023, 12:33", name: "Dedi Kurniawan", phone: "+62 816-2233-4455", branch: "Gangnam Kost", unit: "Unit B03", category: "HARIAN", duration: "21 Okt - 23 Okt", method: "Cash", total: 450000, status: "LUNAS" },
-                                { id: "#TRX-202607-012", datetime: "10 Okt 2023, 17:02", name: "Fitri Handayani", phone: "+62 817-3344-5566", branch: "Pesona Kost", unit: "Unit A09", category: "BULANAN", duration: "22 Okt - 22 Nov", method: "QRIS", total: 600000, status: "LUNAS" },
-                                { id: "#TRX-202607-013", datetime: "09 Okt 2023, 09:47", name: "Wawan Setiawan", phone: "+62 816-8888-9999", branch: "We o we", unit: "Unit C11", category: "HARIAN", duration: "01 Okt - 03 Okt", method: "E-Wallet", total: 300000, status: "GAGAL" },
-                                { id: "#TRX-202607-014", datetime: "08 Okt 2023, 14:19", name: "Lestari Ningsih", phone: "+62 817-9999-0000", branch: "Seleb Kost", unit: "Unit D01", category: "BULANAN", duration: "15 Sep - 15 Okt", method: "Transfer Bank", total: 500000, status: "PENDING" },
-                                { id: "#TRX-202607-015", datetime: "07 Okt 2023, 10:51", name: "Bagus Prakoso", phone: "+62 818-0000-1111", branch: "Pesona Kost", unit: "Unit A11", category: "HARIAN", duration: "20 Sep - 22 Sep", method: "QRIS", total: 280000, status: "LUNAS" }
-                        ];
-
-                        const statusBadgeClass = {
-                                LUNAS: "bg-[#ECFDF3] text-status-available",
-                                PENDING: "bg-[#FEF0C7] text-status-warning",
-                                GAGAL: "bg-error-container text-error"
-                        };
-
-                        const categoryBadgeClass = {
-                                BULANAN: "bg-[#EFF4FF] text-primary",
-                                HARIAN: "bg-surface-variant text-ink-secondary"
-                        };
-
-                        function formatRupiah(amount) {
-                                return "Rp " + amount.toLocaleString("id-ID");
-                        }
-
-                        function rowHtml(trx) {
-                                return '' +
-                                        '<tr class="hover:bg-surface-soft transition-colors">' +
-                                        '<td class="px-base py-lg">' +
-                                        '<div class="font-title-md text-ink-primary">' + trx.id + '</div>' +
-                                        '<div class="text-xs text-ink-muted">' + trx.datetime + '</div>' +
-                                        '</td>' +
-                                        '<td class="px-base py-lg">' +
-                                        '<div class="flex items-center gap-xs"><span class="font-title-md text-ink-primary">' + trx.name + '</span><span class="material-symbols-outlined text-whatsapp-green text-[18px]">chat</span></div>' +
-                                        '<div class="text-xs text-ink-muted">' + trx.phone + '</div>' +
-                                        '</td>' +
-                                        '<td class="px-base py-lg">' +
-                                        '<div class="text-body-sm text-ink-primary">' + trx.branch + '</div>' +
-                                        '<div class="text-xs text-ink-muted">' + trx.unit + '</div>' +
-                                        '</td>' +
-                                        '<td class="px-base py-lg"><span class="text-[11px] font-bold ' + categoryBadgeClass[trx.category] + ' px-3 py-1 rounded-full tracking-wide">' + trx.category + '</span></td>' +
-                                        '<td class="px-base py-lg text-body-sm text-ink-secondary">' + trx.duration + '</td>' +
-                                        '<td class="px-base py-lg text-body-sm text-ink-secondary">' + trx.method + '</td>' +
-                                        '<td class="px-base py-lg font-bold text-ink-primary">' + formatRupiah(trx.total) + '</td>' +
-                                        '<td class="px-base py-lg"><span class="text-[11px] font-bold ' + statusBadgeClass[trx.status] + ' px-3 py-1 rounded-full">' + trx.status + '</span></td>' +
-                                        '<td class="px-base py-lg text-right"><button class="text-ink-muted hover:text-primary"><span class="material-symbols-outlined">visibility</span></button></td>' +
-                                        '</tr>';
-                        }
-
-                        const tableBody = document.getElementById("transactionsTableBody");
-                        tableBody.innerHTML = transactions.map(rowHtml).join("");
-
-                        function csvEscape(value) {
-                                const text = String(value);
-                                if (text.indexOf(",") !== -1 || text.indexOf('"') !== -1 || text.indexOf("\n") !== -1) {
-                                        return '"' + text.replace(/"/g, '""') + '"';
-                                }
-                                return text;
-                        }
-
-                        function exportToExcel() {
-                                const headers = ["ID Transaksi", "Waktu", "Penyewa", "Kontak", "Lokasi", "Unit", "Kategori", "Durasi", "Metode", "Total", "Status"];
-                                const rows = transactions.map(function (trx) {
-                                        return [trx.id, trx.datetime, trx.name, trx.phone, trx.branch, trx.unit, trx.category, trx.duration, trx.method, formatRupiah(trx.total), trx.status];
-                                });
-
-                                const csvContent = [headers].concat(rows).map(function (row) {
-                                        return row.map(csvEscape).join(",");
-                                }).join("\r\n");
-
-                                const blob = new Blob(["﻿" + csvContent], { type: "text/csv;charset=utf-8;" });
-                                const url = URL.createObjectURL(blob);
-                                const link = document.createElement("a");
-                                link.href = url;
-                                link.download = "Laporan-Transaksi-Pilar-Pandawa.csv";
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                URL.revokeObjectURL(url);
-                        }
-
-                        document.getElementById("exportExcelBtn").addEventListener("click", exportToExcel);
-                })();
-        </script>
+        <!-- Menyambungkan halaman ini ke data Firestore -->
+        <script type="module" src="../js/admin-financials.js"></script>
 
 </body>
 

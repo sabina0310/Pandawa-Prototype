@@ -268,19 +268,19 @@
                                                                 class="flex items-center gap-xs text-body-sm text-ink-muted">
                                                                 <span
                                                                         class="material-symbols-outlined text-[18px]">apartment</span>
-                                                                Total 4 Cabang Aktif
+                                                                <span id="statTotalCabang">Memuat...</span>
                                                         </div>
                                                         <div
                                                                 class="flex items-center gap-xs text-body-sm text-status-available">
                                                                 <span
                                                                         class="material-symbols-outlined text-[18px]">door_open</span>
-                                                                24 Kamar Tersedia
+                                                                <span id="statKamarTersedia">-</span>
                                                         </div>
                                                         <div
                                                                 class="flex items-center gap-xs text-body-sm text-status-occupied">
                                                                 <span
                                                                         class="material-symbols-outlined text-[18px]">bed</span>
-                                                                98 Kamar Terisi
+                                                                <span id="statKamarTerisi">-</span>
                                                         </div>
                                                 </div>
                                         </div>
@@ -291,41 +291,7 @@
                                                 <div
                                                         class="text-label-md font-bold text-ink-muted uppercase tracking-wider px-sm">
                                                         Pilih Cabang</div>
-                                                <div class="flex flex-col gap-2">
-                                                        <button data-branch-key="Pesona Kos"
-                                                                class="branch-select-btn flex flex-col gap-1 p-base bg-primary text-on-primary rounded-xl shadow-sm text-left transition-all">
-                                                                <span class="font-title-md">Pesona Kos</span>
-                                                                <span class="text-xs opacity-90">12/15 Kamar
-                                                                        Terisi</span>
-                                                        </button>
-                                                        <button data-branch-key="Gangnam Kos"
-                                                                class="branch-select-btn flex flex-col gap-1 p-base bg-surface-canvas border border-border-hairline text-ink-primary rounded-xl hover:border-primary/30 hover:bg-primary-container/5 hover:shadow-sm text-left transition-all group">
-                                                                <span class="font-title-md group-hover:text-primary">Gangnam
-                                                                        Kos</span>
-                                                                <span class="text-xs text-ink-muted">28/30 Kamar
-                                                                        Terisi</span>
-                                                        </button>
-                                                        <button data-branch-key="Pelangi Kos"
-                                                                class="branch-select-btn flex flex-col gap-1 p-base bg-surface-canvas border border-border-hairline text-ink-primary rounded-xl hover:border-primary/30 hover:bg-primary-container/5 hover:shadow-sm text-left transition-all group">
-                                                                <span class="font-title-md group-hover:text-primary">Pelangi
-                                                                        Kos</span>
-                                                                <span class="text-xs text-ink-muted">45/60 Kamar
-                                                                        Terisi</span>
-                                                        </button>
-                                                        <button data-branch-key="Seleb Kos"
-                                                                class="branch-select-btn flex flex-col gap-1 p-base bg-surface-canvas border border-border-hairline text-ink-primary rounded-xl hover:border-primary/30 hover:bg-primary-container/5 hover:shadow-sm text-left transition-all group">
-                                                                <span class="font-title-md group-hover:text-primary">Seleb
-                                                                        Kos</span>
-                                                                <span class="text-xs text-ink-muted">13/19 Kamar
-                                                                        Terisi</span>
-                                                        </button>
-                                                        <!-- <button id="openAddBranchBtn"
-                                                                class="flex items-center justify-center gap-xs p-base border-2 border-dashed border-outline-variant text-ink-muted rounded-xl hover:border-primary hover:text-primary hover:bg-primary-container/10 transition-all mt-sm">
-                                                                <span
-                                                                        class="material-symbols-outlined">add_circle</span>
-                                                                <span class="font-button-md">Tambah Cabang</span>
-                                                        </button> -->
-                                                </div>
+                                                <div class="flex flex-col gap-2" id="branchList"></div>
                                         </aside>
                                         <!-- Right Column: Branch Details -->
                                         <div class="flex-1 flex flex-col gap-lg w-full">
@@ -335,10 +301,8 @@
                                                                 class="flex flex-col md:flex-row justify-between items-start md:items-center gap-base mb-lg">
                                                                 <div>
                                                                         <h2 id="branchDetailName"
-                                                                                class="font-display-md text-display-md text-ink-primary">
-                                                                                Pesona Kost</h2>
-                                                                        <p id="branchDetailAddress" class="text-ink-muted text-body-sm">Jl.
-                                                                                Melati No. 45, Jakarta Selatan</p>
+                                                                                class="font-display-md text-display-md text-ink-primary">Memuat...</h2>
+                                                                        <p id="branchDetailAddress" class="text-ink-muted text-body-sm"></p>
                                                                 </div>
                                                                 <div class="flex gap-sm">
                                                                         <!-- <button id="editBranchInfoBtn"
@@ -354,140 +318,23 @@
                                                         </div>
                                                         <div class="flex flex-col md:flex-row gap-md items-center">
                                                                 <div class="relative flex-1 w-full">
-                                                                        <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
+                                                                        <input id="searchRoom" class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
                                                                                 placeholder="Cari nomor kamar..."
                                                                                 type="text">
                                                                         <span
                                                                                 class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">search</span>
                                                                 </div>
-                                                                <select
+                                                                <select id="filterStatusKamar"
                                                                         class="w-full md:w-48 h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary">
-                                                                        <option>Semua Status</option>
-                                                                        <option>Tersedia</option>
-                                                                        <option>Terisi</option>
+                                                                        <option value="semua">Semua Status</option>
+                                                                        <option value="tersedia">Tersedia</option>
+                                                                        <option value="terisi">Terisi</option>
                                                                         <!-- <option>Maintenance</option> -->
                                                                 </select>
                                                         </div>
                                                 </div>
                                                 <!-- Room Grid -->
-                                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-base">
-                                                        <!-- Room Card 1 -->
-                                                        <div
-                                                                class="bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline overflow-hidden flex flex-col hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer">
-                                                                <div
-                                                                        class="p-base flex justify-between items-center border-b border-border-hairline">
-                                                                        <div class="flex items-center gap-sm">
-                                                                                <div
-                                                                                        class="w-3 h-3 rounded-full bg-status-occupied">
-                                                                                </div>
-                                                                                <h4
-                                                                                        class="font-title-md text-ink-primary">
-                                                                                        Kamar 101</h4>
-                                                                        </div>
-                                                                        <button
-                                                                                class="text-ink-muted hover:bg-surface-soft p-1 rounded-full">
-                                                                                <span
-                                                                                        class="material-symbols-outlined">more_vert</span>
-                                                                        </button>
-                                                                </div>
-                                                                <div class="p-base flex flex-col gap-sm">
-                                                                        <div class="flex flex-wrap gap-xs">
-                                                                                <span
-                                                                                        class="px-2 py-0.5 rounded bg-primary-container/10 text-primary text-[10px] font-bold uppercase">Bulanan
-                                                                                        Pria</span>
-                                                                                <span
-                                                                                        class="px-2 py-0.5 rounded bg-error-container text-error text-[10px] font-bold uppercase">Terisi</span>
-                                                                        </div>
-                                                                        <div class="mt-xs">
-                                                                                <div class="text-xs text-ink-muted">
-                                                                                        Penyewa</div>
-                                                                                <div
-                                                                                        class="font-medium text-ink-primary">
-                                                                                        Budi Santoso</div>
-                                                                        </div>
-                                                                        <div>
-                                                                                <div class="text-xs text-ink-muted">
-                                                                                        Checkout</div>
-                                                                                <div
-                                                                                        class="font-medium text-ink-primary">
-                                                                                        12 Okt 2023</div>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                        <!-- Room Card 2 -->
-                                                        <div
-                                                                class="bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline overflow-hidden flex flex-col hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer">
-                                                                <div
-                                                                        class="p-base flex justify-between items-center border-b border-border-hairline">
-                                                                        <div class="flex items-center gap-sm">
-                                                                                <div
-                                                                                        class="w-3 h-3 rounded-full bg-status-available">
-                                                                                </div>
-                                                                                <h4
-                                                                                        class="font-title-md text-ink-primary">
-                                                                                        Kamar 102</h4>
-                                                                        </div>
-                                                                        <button
-                                                                                class="text-ink-muted hover:bg-surface-soft p-1 rounded-full">
-                                                                                <span
-                                                                                        class="material-symbols-outlined">more_vert</span>
-                                                                        </button>
-                                                                </div>
-                                                                <div class="p-base flex flex-col gap-sm">
-                                                                        <div class="flex flex-wrap gap-xs">
-                                                                                <span
-                                                                                        class="px-2 py-0.5 rounded bg-primary-container/10 text-primary text-[10px] font-bold uppercase">Harian
-                                                                                        Pria</span>
-                                                                                <span
-                                                                                        class="px-2 py-0.5 rounded bg-[#ECFDF3] text-status-available text-[10px] font-bold uppercase">Tersedia</span>
-                                                                        </div>
-                                                                        <div class="mt-xs">
-                                                                                <div
-                                                                                        class="text-xs text-ink-muted italic">
-                                                                                        Siap huni</div>
-                                                                                <div
-                                                                                        class="font-medium text-ink-primary">
-                                                                                        Rp 150.000/hari</div>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                        <!-- Room Card 3 -->
-                                                        <div
-                                                                class="bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline overflow-hidden flex flex-col hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer">
-                                                                <div
-                                                                        class="p-base flex justify-between items-center border-b border-border-hairline">
-                                                                        <div class="flex items-center gap-sm">
-                                                                                <div
-                                                                                        class="w-3 h-3 rounded-full bg-status-available">
-                                                                                </div>
-                                                                                <h4
-                                                                                        class="font-title-md text-ink-primary">
-                                                                                        Kamar 103</h4>
-                                                                        </div>
-                                                                        <button
-                                                                                class="text-ink-muted hover:bg-surface-soft p-1 rounded-full">
-                                                                                <span
-                                                                                        class="material-symbols-outlined">more_vert</span>
-                                                                        </button>
-                                                                </div>
-                                                                <div class="p-base flex flex-col gap-sm">
-                                                                        <div class="flex flex-wrap gap-xs">
-                                                                                <span
-                                                                                        class="px-2 py-0.5 rounded bg-primary-container/10 text-primary text-[10px] font-bold uppercase">Bulanan
-                                                                                        Keluarga</span>
-
-                                                                        </div>
-                                                                        <div class="mt-xs">
-                                                                                <div
-                                                                                        class="text-xs text-ink-muted italic">
-                                                                                        Siap huni</div>
-                                                                                <div
-                                                                                        class="font-medium text-ink-primary">
-                                                                                        Rp 550.000/bulan</div>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-base" id="roomGrid"></div>
                                         </div>
                                 </div>
                         </div>
@@ -510,12 +357,8 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Pilih
                                                                         Cabang</label>
-                                                                <select
+                                                                <select id="addRoomBranchSelect"
                                                                         class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all">
-                                                                        <option>Pesona Kos</option>
-                                                                        <option>Gangnam Kos</option>
-                                                                        <option>Pelangi Kos</option>
-                                                                        <option>Seleb Kos</option>
                                                                 </select>
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
@@ -661,164 +504,8 @@
                 </main>
         </div>
 
-        <script>
-                (function () {
-                        const branchesData = {
-                                "Pesona Kos": {
-                                        name: "Pesona Kost",
-                                        address: "Jl. Melati No. 45, Jakarta Selatan",
-                                        mapsUrl: "https://maps.google.com/?q=Pesona+Kos+Jakarta+Selatan",
-                                        facilities: ["WiFi", "Parkir Kendaraan", "CCTV 24 Jam"]
-                                },
-                                "Gangnam Kos": {
-                                        name: "Gangnam Kos",
-                                        address: "Jl. Kemang Raya No. 12, Jakarta Selatan",
-                                        mapsUrl: "https://maps.google.com/?q=Gangnam+Kos+Jakarta+Selatan",
-                                        facilities: ["WiFi", "CCTV 24 Jam", "Dapur Bersama", "Laundry"]
-                                },
-                                "Pelangi Kos": {
-                                        name: "Pelangi Kos",
-                                        address: "Jl. Pelangi No. 8, Bandung",
-                                        mapsUrl: "https://maps.google.com/?q=Pelangi+Kos+Bandung",
-                                        facilities: ["WiFi", "Parkir Kendaraan", "Laundry", "Keamanan Malam"]
-                                },
-                                "Seleb Kos": {
-                                        name: "Seleb Kos",
-                                        address: "Jl. Selebriti No. 3, Surabaya",
-                                        mapsUrl: "https://maps.google.com/?q=Seleb+Kos+Surabaya",
-                                        facilities: ["WiFi", "CCTV 24 Jam"]
-                                }
-                        };
-
-                        let currentBranchKey = "Pesona Kos";
-
-                        const listView = document.getElementById("branchesListView");
-                        const branchSelectBtns = document.querySelectorAll(".branch-select-btn");
-                        const branchDetailName = document.getElementById("branchDetailName");
-                        const branchDetailAddress = document.getElementById("branchDetailAddress");
-                        const editBranchInfoBtn = document.getElementById("editBranchInfoBtn");
-                        const openAddBranchBtn = document.getElementById("openAddBranchBtn");
-                        const addBranchPage = document.getElementById("addBranchPage");
-                        const addBranchPageTitle = document.getElementById("addBranchPageTitle");
-                        const addBranchForm = document.getElementById("addBranchForm");
-                        const branchNameInput = document.getElementById("branchNameInput");
-                        const branchAddressInput = document.getElementById("branchAddressInput");
-                        const branchMapsUrlInput = document.getElementById("branchMapsUrlInput");
-                        const saveAddBranchBtn = document.getElementById("saveAddBranchBtn");
-
-                        const pages = [
-                                {
-                                        page: document.getElementById("addRoomPage"),
-                                        openBtn: document.getElementById("openAddRoomBtn"),
-                                        closeBtn: document.getElementById("closeAddRoomBtn"),
-                                        cancelBtn: document.getElementById("cancelAddRoomBtn"),
-                                        saveBtn: document.getElementById("saveAddRoomBtn"),
-                                        form: document.getElementById("addRoomForm")
-                                },
-                                {
-                                        page: addBranchPage,
-                                        openBtn: null,
-                                        closeBtn: document.getElementById("closeAddBranchBtn"),
-                                        cancelBtn: document.getElementById("cancelAddBranchBtn"),
-                                        saveBtn: saveAddBranchBtn,
-                                        form: addBranchForm
-                                }
-                        ];
-
-                        function showPage(target) {
-                                listView.classList.add("hidden");
-                                pages.forEach(function (entry) {
-                                        if (entry.page === target) {
-                                                entry.page.classList.remove("hidden");
-                                                entry.page.classList.add("flex");
-                                        } else {
-                                                entry.page.classList.add("hidden");
-                                                entry.page.classList.remove("flex");
-                                        }
-                                });
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                        }
-
-                        function showListView(form) {
-                                pages.forEach(function (entry) {
-                                        entry.page.classList.add("hidden");
-                                        entry.page.classList.remove("flex");
-                                });
-                                listView.classList.remove("hidden");
-                                if (form) {
-                                        form.reset();
-                                }
-                        }
-
-                        pages.forEach(function (entry) {
-                                if (entry.openBtn) {
-                                        entry.openBtn.addEventListener("click", function () {
-                                                showPage(entry.page);
-                                        });
-                                }
-                                entry.closeBtn.addEventListener("click", function () {
-                                        showListView(entry.form);
-                                });
-                                entry.cancelBtn.addEventListener("click", function () {
-                                        showListView(entry.form);
-                                });
-                                entry.saveBtn.addEventListener("click", function () {
-                                        showListView(entry.form);
-                                });
-                        });
-
-                        function selectBranch(key) {
-                                currentBranchKey = key;
-                                const data = branchesData[key];
-
-                                branchSelectBtns.forEach(function (btn) {
-                                        const isActive = btn.dataset.branchKey === key;
-                                        btn.classList.toggle("bg-primary", isActive);
-                                        btn.classList.toggle("text-on-primary", isActive);
-                                        btn.classList.toggle("shadow-sm", isActive);
-                                        btn.classList.toggle("bg-surface-canvas", !isActive);
-                                        btn.classList.toggle("border", !isActive);
-                                        btn.classList.toggle("border-border-hairline", !isActive);
-                                        btn.classList.toggle("text-ink-primary", !isActive);
-                                });
-
-                                if (data) {
-                                        branchDetailName.textContent = data.name;
-                                        branchDetailAddress.textContent = data.address;
-                                }
-                        }
-
-                        branchSelectBtns.forEach(function (btn) {
-                                btn.addEventListener("click", function () {
-                                        selectBranch(btn.dataset.branchKey);
-                                });
-                        });
-
-                        function fillBranchForm(data) {
-                                branchNameInput.value = data ? data.name : "";
-                                branchAddressInput.value = data ? data.address : "";
-                                branchMapsUrlInput.value = data ? data.mapsUrl : "";
-
-                                addBranchForm.querySelectorAll("[data-facility]").forEach(function (checkbox) {
-                                        checkbox.checked = !!(data && data.facilities.indexOf(checkbox.dataset.facility) !== -1);
-                                });
-                        }
-
-                        openAddBranchBtn.addEventListener("click", function () {
-                                addBranchForm.reset();
-                                addBranchPageTitle.textContent = "Tambah Cabang Baru";
-                                saveAddBranchBtn.textContent = "Simpan Data Cabang";
-                                showPage(addBranchPage);
-                        });
-
-                        editBranchInfoBtn.addEventListener("click", function () {
-                                fillBranchForm(branchesData[currentBranchKey]);
-                                addBranchPageTitle.textContent = "Edit Info Cabang";
-                                saveAddBranchBtn.textContent = "Simpan Perubahan";
-                                showPage(addBranchPage);
-                        });
-                })();
-        </script>
+        <!-- Menyambungkan halaman ini ke data Firestore -->
+        <script type="module" src="../js/admin-branches.js"></script>
 
 </body>
 

@@ -263,11 +263,9 @@
                         </div>
                         <div class="flex items-center gap-md shrink-0">
                                 <div class="relative">
-                                        <select
+                                        <select id="filterCabang"
                                                 class="appearance-none bg-surface-canvas border border-border-strong rounded-lg py-sm pl-md pr-xl font-label-md text-label-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer">
-                                                <option>Semua Cabang</option>
-                                                <option>Cabang Utama</option>
-                                                <option>Cabang Selatan</option>
+                                                <option value="semua">Semua Cabang</option>
                                         </select>
                                         <span
                                                 class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
@@ -293,7 +291,7 @@
                                         </div>
                                 </div>
                                 <div class="flex items-end justify-between">
-                                        <span class="font-stat-display text-stat-display text-ink-primary">12</span>
+                                        <span class="font-stat-display text-stat-display text-ink-primary" id="statCheckinHariIni">0</span>
                                         <span
                                                 class="bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20">Perlu
                                                 Verifikasi</span>
@@ -329,43 +327,24 @@
                                         </div>
                                 </div>
                                 <div class="flex flex-col">
-                                        <span class="font-stat-display text-stat-display text-ink-primary">42</span>
+                                        <span class="font-stat-display text-stat-display text-ink-primary" id="statPenghuniAktif">0</span>
                                         <span class="font-body-sm text-body-sm text-ink-muted">Teralokasi</span>
-                                </div>
-                        </div>
-                        <div
-                                class="bg-surface-canvas rounded-[16px] p-base shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-border-hairline flex flex-col justify-between h-full">
-                                <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Kunci Belum
-                                                Diserahkan</span>
-                                        <div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center">
-                                                <span
-                                                        class="material-symbols-outlined text-error text-[18px]">vpn_key</span>
-                                        </div>
-                                </div>
-                                <div class="flex items-end justify-between">
-                                        <span class="font-stat-display text-stat-display text-ink-primary">3</span>
-                                        <span
-                                                class="bg-error/10 text-error font-badge text-badge px-sm py-xxs rounded-full border border-error/20 flex items-center gap-xs">
-                                                <span class="material-symbols-outlined text-[12px]">warning</span>
-                                                Perhatian
-                                        </span>
                                 </div>
                         </div>
                 </div>
                 <!-- Tab Bar -->
                 <div class="border-b border-border-hairline mb-lg flex overflow-x-auto hide-scrollbar">
-                        <button
-                                class="px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap">Jadwal
+                        <button data-tab="hari-ini"
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap">Jadwal
                                 Hari Ini</button>
-                        <button
-                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Check-in
+                        <button data-tab="mendatang"
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Check-in
                                 Mendatang</button>
                         <!-- <button
                                 class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Jadwal
                                 Check-out</button> -->
-                        <button
-                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Riwayat
+                        <button data-tab="riwayat"
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Riwayat
                                 Serah Terima</button>
                 </div>
                 <!-- Operations Table -->
@@ -392,233 +371,7 @@
                                                                 Aksi</th>
                                                 </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-border-hairline">
-                                                <!-- Row 1 -->
-                                                <tr class="hover:bg-surface-soft/50 transition-colors">
-                                                        <td class="py-md px-base">
-                                                                <div class="flex items-center gap-md">
-                                                                        <div
-                                                                                class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-title-md text-title-md text-primary-container shrink-0">
-                                                                                BS</div>
-                                                                        <div>
-                                                                                <div
-                                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                                        Budi Santoso</div>
-                                                                                <div
-                                                                                        class="flex items-center gap-xs mt-xs">
-                                                                                        <span
-                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
-                                                                                                BK-202310-001</span>
-                                                                                        <span
-                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
-                                                                                        <!-- <span
-                                                                                                class="flex items-center text-status-available text-[12px]"><span
-                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">verified</span>
-                                                                                                NIK
-                                                                                                Terverifikasi</span> -->
-                                                                                </div>
-                                                                        </div>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div
-                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                        Kamar A01</div>
-                                                                <div class="flex items-center gap-xs mt-xs">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
-                                                                                Utama</span>
-                                                                        <span
-                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div class="font-body-md text-body-md text-ink-primary">
-                                                                        15 Okt 2023</div>
-                                                                <div class="font-body-sm text-body-sm text-ink-muted">
-                                                                        14:00 WIB</div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <span
-                                                                        class="inline-flex items-center bg-primary-container/10 text-primary-container font-badge text-badge px-sm py-xxs rounded-full border border-primary-container/20">
-                                                                        Siap Check-in
-                                                                </span>
-                                                        </td>
-                                                        <td class="py-md px-base text-right">
-                                                                <div class="flex items-center justify-end gap-sm">
-                                                                        <button class="checkin-trigger bg-primary-container text-white font-button-md text-button-md px-md py-sm rounded-lg hover:bg-surface-tint transition-colors text-sm"
-                                                                                data-initials="BS"
-                                                                                data-name="Budi Santoso"
-                                                                                data-booking-id="BK-202310-001"
-                                                                                data-room="A01"
-                                                                                data-branch="Cabang Utama">Proses
-                                                                                Check-in</button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
-                                                                                <svg class="w-4 h-4 fill-current"
-                                                                                        viewBox="0 0 24 24">
-                                                                                        <path
-                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
-                                                                                        </path>
-                                                                                </svg>
-                                                                        </button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
-                                                                                <span
-                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
-                                                                        </button>
-                                                                </div>
-                                                        </td>
-                                                </tr>
-                                                <!-- Row 2 -->
-                                                <!-- <tr class="hover:bg-surface-soft/50 transition-colors">
-                                                        <td class="py-md px-base">
-                                                                <div class="flex items-center gap-md">
-                                                                        <div
-                                                                                class="w-10 h-10 rounded-full bg-status-warning/20 flex items-center justify-center font-title-md text-title-md text-status-warning shrink-0">
-                                                                                SA</div>
-                                                                        <div>
-                                                                                <div
-                                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                                        Siti Aminah</div>
-                                                                                <div
-                                                                                        class="flex items-center gap-xs mt-xs">
-                                                                                        <span
-                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
-                                                                                                BK-202310-002</span>
-                                                                                        <span
-                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
-                                                                                        <span
-                                                                                                class="flex items-center text-status-warning text-[12px]"><span
-                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">pending</span>
-                                                                                                Menunggu
-                                                                                                Verifikasi</span>
-                                                                                </div>
-                                                                        </div>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div
-                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                        Kamar B12</div>
-                                                                <div class="flex items-center gap-xs mt-xs">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
-                                                                                Selatan</span>
-                                                                        <span
-                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div class="font-body-md text-body-md text-ink-primary">
-                                                                        15 Okt 2023</div>
-                                                                <div class="font-body-sm text-body-sm text-ink-muted">
-                                                                        16:30 WIB</div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <span
-                                                                        class="inline-flex items-center bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20">
-                                                                        Menunggu Verifikasi KTP
-                                                                </span>
-                                                        </td>
-                                                        <td class="py-md px-base text-right">
-                                                                <div class="flex items-center justify-end gap-sm">
-                                                                        <button
-                                                                                class="checkin-trigger bg-surface-canvas text-primary-container border border-primary-container font-button-md text-button-md px-md py-sm rounded-lg hover:bg-primary-fixed/20 transition-colors text-sm"
-                                                                                data-initials="SA" data-name="Siti Aminah" data-booking-id="BK-202310-002"
-                                                                                data-room="B12" data-branch="Cabang Selatan">Proses
-                                                                                Check-in</button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
-                                                                                <svg class="w-4 h-4 fill-current"
-                                                                                        viewBox="0 0 24 24">
-                                                                                        <path
-                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
-                                                                                        </path>
-                                                                                </svg>
-                                                                        </button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
-                                                                                <span
-                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
-                                                                        </button>
-                                                                </div>
-                                                        </td>
-                                                </tr> -->
-                                                <!-- Row 3 -->
-                                                <tr class="hover:bg-surface-soft/50 transition-colors">
-                                                        <td class="py-md px-base">
-                                                                <div class="flex items-center gap-md">
-                                                                        <div
-                                                                                class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center font-title-md text-title-md text-ink-secondary shrink-0">
-                                                                                BP</div>
-                                                                        <div>
-                                                                                <div
-                                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                                        Bambang Pamungkas</div>
-                                                                                <div
-                                                                                        class="flex items-center gap-xs mt-xs">
-                                                                                        <span
-                                                                                                class="font-body-sm text-body-sm text-ink-muted">ID:
-                                                                                                BK-202309-045</span>
-                                                                                        <span
-                                                                                                class="w-1 h-1 rounded-full bg-border-strong"></span>
-                                                                                        <span
-                                                                                                class="flex items-center text-status-available text-[12px]"><span
-                                                                                                        class="material-symbols-outlined text-[14px] mr-xxs">verified</span>
-                                                                                                Terverifikasi</span>
-                                                                                </div>
-                                                                        </div>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div
-                                                                        class="font-title-md text-title-md text-ink-primary">
-                                                                        Kamar C05</div>
-                                                                <div class="flex items-center gap-xs mt-xs">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm text-ink-muted">Cabang
-                                                                                Utama</span>
-                                                                        <span
-                                                                                class="bg-surface-variant text-ink-secondary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded">BULANAN</span>
-                                                                </div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <div class="font-body-md text-body-md text-ink-primary">
-                                                                        15 Okt 2023</div>
-                                                                <div class="font-body-sm text-body-sm text-ink-muted">
-                                                                        10:00 WIB</div>
-                                                        </td>
-                                                        <td class="py-md px-base">
-                                                                <span
-                                                                        class="inline-flex items-center bg-status-available/10 text-status-available font-badge text-badge px-sm py-xxs rounded-full border border-status-available/20">
-                                                                        Sudah Check-in / Kunci Diserahkan
-                                                                </span>
-                                                        </td>
-                                                        <td class="py-md px-base text-right">
-                                                                <div class="flex items-center justify-end gap-sm">
-
-                                                                        <button
-                                                                                class="text-ink-secondary font-button-md text-button-md px-md py-sm rounded-lg bg-surface-variant transition-colors text-sm border border-transparent">Sudah
-                                                                                Check-in</button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-whatsapp-green hover:bg-whatsapp-green/10 transition-colors">
-                                                                                <svg class="w-4 h-4 fill-current"
-                                                                                        viewBox="0 0 24 24">
-                                                                                        <path
-                                                                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z">
-                                                                                        </path>
-                                                                                </svg>
-                                                                        </button>
-                                                                        <button
-                                                                                class="w-8 h-8 rounded-full border border-border-strong flex items-center justify-center text-ink-secondary hover:bg-surface-variant transition-colors">
-                                                                                <span
-                                                                                        class="material-symbols-outlined text-[18px]">more_horiz</span>
-                                                                        </button>
-                                                                </div>
-                                                        </td>
-                                                </tr>
-                                        </tbody>
+                                        <tbody class="divide-y divide-border-hairline" id="checkinsTableBody"></tbody>
                                 </table>
                         </div>
                 </div>
@@ -803,111 +556,8 @@
                 </div>
         </div>
 
-        <script>
-                (function () {
-                        const modal = document.getElementById("checkinModal");
-                        const modalInitials = document.getElementById("checkinModalInitials");
-                        const modalName = document.getElementById("checkinModalName");
-                        const modalBookingId = document.getElementById("checkinModalBookingId");
-                        const modalRoom = document.getElementById("checkinModalRoom");
-                        const modalClose = document.getElementById("checkinModalClose");
-                        const modalCancel = document.getElementById("checkinModalCancel");
-                        const modalConfirm = document.getElementById("checkinModalConfirm");
-
-                        const successModal = document.getElementById("checkinSuccessModal");
-                        const successName = document.getElementById("checkinSuccessName");
-                        const successBookingId = document.getElementById("checkinSuccessBookingId");
-                        const successRoom = document.getElementById("checkinSuccessRoom");
-                        const successBranch = document.getElementById("checkinSuccessBranch");
-                        const successTime = document.getElementById("checkinSuccessTime");
-                        const successDone = document.getElementById("checkinSuccessDone");
-
-                        const MONTHS_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-
-                        let currentBooking = null;
-
-                        function formatCheckinTime(date) {
-                                const day = String(date.getDate()).padStart(2, "0");
-                                const month = MONTHS_ID[date.getMonth()];
-                                const year = date.getFullYear();
-                                const hours = String(date.getHours()).padStart(2, "0");
-                                const minutes = String(date.getMinutes()).padStart(2, "0");
-                                return day + " " + month + " " + year + ", " + hours + ":" + minutes + " WIB";
-                        }
-
-                        function openModal(button) {
-                                currentBooking = {
-                                        initials: button.dataset.initials || "",
-                                        name: button.dataset.name || "",
-                                        bookingId: button.dataset.bookingId || "",
-                                        room: button.dataset.room || "",
-                                        branch: button.dataset.branch || ""
-                                };
-
-                                modalInitials.textContent = currentBooking.initials;
-                                modalName.textContent = currentBooking.name;
-                                modalBookingId.textContent = "ID: " + currentBooking.bookingId;
-                                modalRoom.textContent = "Kamar " + currentBooking.room + " (" + currentBooking.branch + ")";
-
-                                modal.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
-                                        checkbox.checked = false;
-                                });
-
-                                modal.classList.remove("hidden");
-                                modal.classList.add("flex");
-                        }
-
-                        function closeModal() {
-                                modal.classList.add("hidden");
-                                modal.classList.remove("flex");
-                        }
-
-                        function openSuccessModal() {
-                                if (!currentBooking) {
-                                        return;
-                                }
-
-                                successName.textContent = currentBooking.name;
-                                successBookingId.textContent = currentBooking.bookingId;
-                                successRoom.textContent = "Kamar " + currentBooking.room;
-                                successBranch.textContent = currentBooking.branch;
-                                successTime.textContent = formatCheckinTime(new Date());
-
-                                successModal.classList.remove("hidden");
-                                successModal.classList.add("flex");
-                        }
-
-                        function closeSuccessModal() {
-                                successModal.classList.add("hidden");
-                                successModal.classList.remove("flex");
-                        }
-
-                        document.querySelectorAll(".checkin-trigger").forEach(function (button) {
-                                button.addEventListener("click", function () {
-                                        openModal(button);
-                                });
-                        });
-
-                        modalClose.addEventListener("click", closeModal);
-                        modalCancel.addEventListener("click", closeModal);
-                        modal.addEventListener("click", function (e) {
-                                if (e.target === modal) {
-                                        closeModal();
-                                }
-                        });
-                        modalConfirm.addEventListener("click", function () {
-                                closeModal();
-                                openSuccessModal();
-                        });
-
-                        successDone.addEventListener("click", closeSuccessModal);
-                        successModal.addEventListener("click", function (e) {
-                                if (e.target === successModal) {
-                                        closeSuccessModal();
-                                }
-                        });
-                })();
-        </script>
+        <!-- Menyambungkan halaman ini ke data Firestore -->
+        <script type="module" src="../js/admin-checkins.js"></script>
 
 </body>
 

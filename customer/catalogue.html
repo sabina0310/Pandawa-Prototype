@@ -1,12 +1,20 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Room Catalog - Pilar Pandawa</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<style>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Room Catalog - Pilar Pandawa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <style>
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined';
             font-weight: normal;
@@ -23,7 +31,7 @@
             -webkit-font-smoothing: antialiased;
         }
     </style>
-<script id="tailwind-config">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -138,198 +146,130 @@
         }
     </script>
 </head>
+
 <body class="bg-surface font-body-md text-ink-primary antialiased">
-<!-- TopNavBar -->
-<header class="bg-surface-canvas dark:bg-inverse-surface text-primary dark:text-inverse-primary docked full-width top-0 shadow-sm z-50 sticky">
-<div class="flex justify-between items-center px-lg h-16 w-full max-w-7xl mx-auto"><div class="flex items-center gap-sm">
-    <span class="material-symbols-outlined text-primary" style="font-size: 20px;">corporate_fare</span>
-    <span class="text-primary font-bold text-title-md">Pilar Pandawa</span>
-</div>
-<nav class="hidden md:flex items-center gap-lg">
-    <a class="text-primary font-bold border-b-2 border-primary pb-1 text-body-md" href="#">Beranda</a>
-    <a class="text-ink-muted hover:text-primary transition-colors text-body-md" href="#">Tentang Kami</a>
-</nav>
-<div>
-    <button id="loginNavBtn" class="bg-primary text-on-primary font-button-md text-button-md px-base py-sm rounded shadow-sm hover:opacity-90 transition-opacity">
-        Masuk / Log in
-    </button>
-    <a id="profileNavBtn" href="cust-profile.html" class="hidden items-center justify-center w-10 h-10 rounded-full bg-primary-fixed text-primary hover:opacity-90 transition-opacity">
-        <span class="material-symbols-outlined">account_circle</span>
-    </a>
-</div></div>
-</header>
-<main class="max-w-7xl mx-auto px-lg py-section grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
-<!-- Left Column (Sidebar Filter) -->
-<aside class="md:col-span-3 bg-surface-canvas rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] p-base sticky top-24">
-<h2 class="font-display-md text-display-md text-ink-primary mb-base">Filter Kamar</h2>
-<div class="flex flex-col gap-base">
-<!-- Branch Dropdown -->
-<div class="flex flex-col gap-xs">
-<label class="font-label-md text-label-md text-ink-muted">Pilih Cabang</label>
-<select class="form-select w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary">
-<option>Semua Cabang</option>
-<option>Pesona kost</option>
-<option>Gangnam kost</option>
-<option>We o we</option>
-<option>Seleb kost</option>
-</select>
-</div>
-<!-- Rental Type -->
-<div class="flex flex-col gap-xs">
-<label class="font-label-md text-label-md text-ink-muted">Tipe Sewa</label>
-<div class="flex flex-col gap-sm">
-<label class="inline-flex items-center">
-<input checked="" class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio" value="Semua">
-<span class="ml-2 font-body-md text-ink-primary">Semua</span>
-</label>
-<label class="inline-flex items-center">
-<input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio" value="Harian">
-<span class="ml-2 font-body-md text-ink-primary">Harian (Pria)</span>
-</label>
-<label class="inline-flex items-center">
-<input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio" value="Bulanan">
-<span class="ml-2 font-body-md text-ink-primary">Bulanan (Keluarga)</span>
-</label>
-</div>
-</div>
-<!-- Date Pickers -->
-<div class="flex flex-col gap-xs">
-<label class="font-label-md text-label-md text-ink-muted">Tanggal Mulai</label>
-<input class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="date">
-</div>
-<div class="flex flex-col gap-xs">
-<label class="font-label-md text-label-md text-ink-muted">Tanggal Selesai</label>
-<input class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="date">
-</div>
-<!-- Apply Button -->
-<button class="mt-sm w-full bg-primary-container text-on-primary font-button-md text-button-md py-md rounded-md hover:opacity-90 transition-opacity">
+    <!-- Memuat Top Nav dari file terpisah -->
+    <div id="top-nav-placeholder"></div>
+    <script>
+        fetch('top-nav.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('top-nav-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
+            });
+    </script>
+    <main class="max-w-7xl mx-auto px-lg py-section grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
+        <!-- Left Column (Sidebar Filter) -->
+        <aside
+            class="md:col-span-3 bg-surface-canvas rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] p-base sticky top-24">
+            <h2 class="font-display-md text-display-md text-ink-primary mb-base">Filter Kamar</h2>
+            <div class="flex flex-col gap-base">
+                <!-- Branch Dropdown -->
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-md text-label-md text-ink-muted">Pilih Cabang</label>
+                    <!-- Pilihan cabang diisi otomatis dari Firestore oleh js/catalogue.js -->
+                    <select id="filterCabang"
+                        class="form-select w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary">
+                        <option value="semua">Semua Cabang</option>
+                    </select>
+                </div>
+                <!-- Rental Type -->
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-md text-label-md text-ink-muted">Tipe Sewa</label>
+                    <div class="flex flex-col gap-sm">
+                        <label class="inline-flex items-center">
+                            <input checked="" class="form-radio text-primary focus:ring-primary" name="rentalType"
+                                type="radio" value="Semua">
+                            <span class="ml-2 font-body-md text-ink-primary">Semua</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio"
+                                value="Harian">
+                            <span class="ml-2 font-body-md text-ink-primary">Harian (Pria)</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio"
+                                value="Bulanan">
+                            <span class="ml-2 font-body-md text-ink-primary">Bulanan (Keluarga)</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Date Pickers -->
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-md text-label-md text-ink-muted">Tanggal Mulai</label>
+                    <input
+                        class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary"
+                        type="date">
+                </div>
+                <div class="flex flex-col gap-xs">
+                    <label class="font-label-md text-label-md text-ink-muted">Tanggal Selesai</label>
+                    <input
+                        class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary"
+                        type="date">
+                </div>
+                <!-- Apply Button -->
+                <button id="btnTerapkanFilter"
+                    class="mt-sm w-full bg-primary-container text-on-primary font-button-md text-button-md py-md rounded-md hover:opacity-90 transition-opacity">
                     Terapkan Filter
                 </button>
-</div>
-</aside>
-<!-- Right Column (Catalog Grid) -->
-<section class="md:col-span-9">
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-base">
-<!-- Room Card 1 -->
-<div class="room-card bg-surface-canvas rounded-[10px] shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] overflow-hidden flex flex-col group cursor-pointer">
-<div class="relative h-48 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A brightly lit, modern bedroom in a high-end boarding house, featuring a comfortable single bed with crisp white linens, a wooden desk with a laptop, and warm ambient lighting from a bedside lamp. Large windows let in natural light, showcasing a minimalist, corporate flat-plus aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy_GwYY-IbDEf3wKbdLlTuq_KNDrLnJKBjr29vOoQPo0P9eug4sMt4VG675pZLqkfL_DXliBp9IH9PKLrHMpEkSNWX0z3ePTMnJe5EgWwgROwxIzdqqiVxuXKEibmRIkM43FcLWcN8P_SgrIs6g3CcyAFYM1qSLl9jsp-wMbPUHnCANy7pY0Z-OTce8i3jYkQhbkeuMbUIJCJJfCF8wout2FfKWqmxr80R6eZeErBrXxNZNH9R1uEAUYxHZFd-8CKurHxOdsLy9sI">
-<div class="absolute top-sm right-sm flex gap-sm">
-<span class="bg-status-available/10 text-status-available font-badge text-badge px-sm py-xxs rounded-full backdrop-blur-sm">Tersedia</span>
-<span class="bg-surface-canvas/90 text-primary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded-sm uppercase tracking-wide backdrop-blur-sm">HARIAN</span>
-</div>
-</div>
-<div class="p-base flex flex-col flex-grow">
-<h3 class="font-title-md text-title-md text-ink-primary mb-xs">Kamar Standar A01</h3>
-<p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-md">
-<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
-                            Pesona kost
-                        </p>
-<div class="mt-auto pt-sm border-t border-border-hairline flex items-center justify-between">
-<span class="font-title-md text-title-md text-primary">Rp 150K<span class="font-body-sm text-ink-muted font-normal">/hari</span></span>
-<button class="text-primary font-button-md text-button-md border border-primary px-sm py-xs rounded hover:bg-primary-container/10 transition-colors">Detail</button>
-</div>
-</div>
-</div>
-<!-- Room Card 2 -->
-<div class="room-card bg-surface-canvas rounded-[10px] shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] overflow-hidden flex flex-col group cursor-pointer">
-<div class="relative h-48 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A clean, organized studio apartment setup in a professional coliving space, showing a double bed, a small kitchenette, and a dedicated workspace. The room is decorated in a modern corporate style with light wood tones and white surfaces, illuminated by natural daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeRGHRc4_tY7SYWBM_opBGX7vqqSYgq_kzc-ZIxVrrAuTVFoZf0JlIBWuNGJS3PLcKz0GxFfxaBuFhZPxt5Tvlk30VYPF56rI8nwB9-XQG5F6ZUvylTx_FVzANo9uYEN25ROwanLM3uNhPMluV5dFYBes0JMGRuEisW8A67AP9qBhE8mOF1JrMyjv0Y8FFMB99ggkmtPX2IGP7YKvUZm712FP_4UYE-p1rY62MmK7I7by9eki9_S_L0wnD7pwis1hxCa050cjl50c">
-<div class="absolute top-sm right-sm flex gap-sm">
-<span class="bg-status-occupied/10 text-status-occupied font-badge text-badge px-sm py-xxs rounded-full backdrop-blur-sm">Terisi</span>
-<span class="bg-surface-canvas/90 text-primary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded-sm uppercase tracking-wide backdrop-blur-sm">BULANAN</span>
-</div>
-</div>
-<div class="p-base flex flex-col flex-grow">
-<h3 class="font-title-md text-title-md text-ink-primary mb-xs">Kamar Deluxe B05</h3>
-<p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-md">
-<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
-                            Gangnam kost
-                        </p>
-<div class="mt-auto pt-sm border-t border-border-hairline flex items-center justify-between">
-<span class="font-title-md text-title-md text-primary">Rp 1.5M<span class="font-body-sm text-ink-muted font-normal">/bln</span></span>
-<button class="text-primary font-button-md text-button-md border border-primary px-sm py-xs rounded hover:bg-primary-container/10 transition-colors">Detail</button>
-</div>
-</div>
-</div>
-<!-- Room Card 3 -->
-<div class="room-card bg-surface-canvas rounded-[10px] shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] overflow-hidden flex flex-col group cursor-pointer">
-<div class="relative h-48 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A premium boarding room interior featuring a minimalist aesthetic, high-contrast white walls, and a sleek modern bed frame. The space includes a comfortable reading chair and a small desk, conveying a reliable and accessible living environment for professionals." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA52hgcmdX0_edi6lL587C10yjWycYNcowGAtpP91Gz7sd9KyQpu7h39SCNatcHBF51FDgkYo0qEOPA_mLhUplVodhLEoVFWA7pULhVBQ9uDMH9pY_-5x4mPyDJqLWCHp_JxP1T6J06pEPInrfJZF19LRmJMHE2Sy7kWR-Ge_k-SChakMeNhQfaXaAstC9Gfqk48UIiwFxfSkh8NJ6qUtjQUUI3D5x57M-H5maJ4iJSB-VsllA6eATLIkrP1Bd7GhtCfvrBxjUDCfg">
-<div class="absolute top-sm right-sm flex gap-sm">
-<span class="bg-status-available/10 text-status-available font-badge text-badge px-sm py-xxs rounded-full backdrop-blur-sm">Tersedia</span>
-<span class="bg-surface-canvas/90 text-primary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded-sm uppercase tracking-wide backdrop-blur-sm">HARIAN</span>
-</div>
-</div>
-<div class="p-base flex flex-col flex-grow">
-<h3 class="font-title-md text-title-md text-ink-primary mb-xs">Kamar Superior C12</h3>
-<p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-md">
-<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
-                            We o we
-                        </p>
-<div class="mt-auto pt-sm border-t border-border-hairline flex items-center justify-between">
-<span class="font-title-md text-title-md text-primary">Rp 200K<span class="font-body-sm text-ink-muted font-normal">/hari</span></span>
-<button class="text-primary font-button-md text-button-md border border-primary px-sm py-xs rounded hover:bg-primary-container/10 transition-colors">Detail</button>
-</div>
-</div>
-</div>
-<!-- Room Card 4 -->
-<div class="room-card bg-surface-canvas rounded-[10px] shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] overflow-hidden flex flex-col group cursor-pointer">
-<div class="relative h-48 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A spacious, well-lit family room in a premium boarding house, featuring a large bed, ample wardrobe space, and a cozy seating area near a window. The design is modern flat-plus, with clean lines, neutral colors, and subtle warm accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkR-i3MUOoxYMHmE0Qz0biycQkao0C1xGb5NO7h-ZmYW54o-1UzKk36Os5odzW_mLflz9TKQZrA8owCdWU7RWgNBvWkNgH09t4HIua9AbAkEDRrsy7SO7RRaxBmwUJF8LIJxZjvJBe-Q0jODZwDavspzmYT8AS6m1hYlxAxOIYkCvBSNKovTCUntoYcQ_98UBx0P1LMvg5webCshFt21GhYMWvAmiXkUjaj4sljShzQUfmL27RrNCgcJzZZYQFK_W_XGr-G29uGWg">
-<div class="absolute top-sm right-sm flex gap-sm">
-<span class="bg-status-available/10 text-status-available font-badge text-badge px-sm py-xxs rounded-full backdrop-blur-sm">Tersedia</span>
-<span class="bg-surface-canvas/90 text-primary font-tag-uppercase text-tag-uppercase px-sm py-xxs rounded-sm uppercase tracking-wide backdrop-blur-sm">BULANAN</span>
-</div>
-</div>
-<div class="p-base flex flex-col flex-grow">
-<h3 class="font-title-md text-title-md text-ink-primary mb-xs">Kamar VIP D01</h3>
-<p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-md">
-<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
-                            Seleb kost
-                        </p>
-<div class="mt-auto pt-sm border-t border-border-hairline flex items-center justify-between">
-<span class="font-title-md text-title-md text-primary">Rp 2.5M<span class="font-body-sm text-ink-muted font-normal">/bln</span></span>
-<button class="text-primary font-button-md text-button-md border border-primary px-sm py-xs rounded hover:bg-primary-container/10 transition-colors">Detail</button>
-</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-surface-container dark:bg-inverse-surface text-primary dark:text-inverse-primary full-width border-t border-border-hairline">
-<div class="flex flex-col md:flex-row justify-between items-center px-lg py-xl w-full max-w-7xl mx-auto">
-<div class="text-display-md font-display-md text-primary mb-sm md:mb-0">
-                Pilar Pandawa
             </div>
-<div class="font-body-sm text-body-sm text-ink-muted mb-sm md:mb-0">
-                © 2024 Pilar Pandawa. All rights reserved.
+        </aside>
+        <!-- Right Column (Catalog Grid) -->
+        <section class="md:col-span-9">
+            <!-- Keterangan jumlah hasil, diisi oleh js/catalogue.js -->
+            <p class="font-body-sm text-body-sm text-ink-muted mb-base" id="infoJumlahKamar">Memuat data kamar...</p>
+            <!-- Grid katalog: diisi otomatis dari Firestore oleh js/catalogue.js -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-base" id="katalogGrid">
             </div>
-<div class="flex gap-lg font-body-sm text-body-sm">
-<a class="text-ink-muted opacity-80 hover:opacity-100 transition-opacity hover:text-ink-primary hover:underline" href="#">Privacy Policy</a>
-<a class="text-ink-muted opacity-80 hover:opacity-100 transition-opacity hover:text-ink-primary hover:underline" href="#">Terms of Service</a>
-<a class="text-ink-muted opacity-80 hover:opacity-100 transition-opacity hover:text-ink-primary hover:underline" href="#">Contact Us</a>
-</div>
-</div>
-</footer>
-
-<script>
-    (function () {
-        const loginNavBtn = document.getElementById('loginNavBtn');
-        const profileNavBtn = document.getElementById('profileNavBtn');
-        if (localStorage.getItem('customerSession')) {
-            loginNavBtn.classList.add('hidden');
-            profileNavBtn.classList.remove('hidden');
-            profileNavBtn.classList.add('flex');
-        }
-
-        document.querySelectorAll('.room-card').forEach(function (card) {
-            card.addEventListener('click', function () {
-                window.location.href = 'room-detail.html';
+        </section>
+    </main>
+    <!-- Memuat footer dari file terpisah -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('footer-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
             });
-        });
-    })();
-</script>
+    </script>
 
-</body></html>
+    <script>
+        (function () {
+            const loginNavBtn = document.getElementById('loginNavBtn');
+            const profileNavBtn = document.getElementById('profileNavBtn');
+            if (localStorage.getItem('customerSession')) {
+                loginNavBtn.classList.add('hidden');
+                profileNavBtn.classList.remove('hidden');
+                profileNavBtn.classList.add('flex');
+            }
+
+            // Catatan: klik pada kartu kamar ditangani oleh js/catalogue.js
+            // karena kartunya dibuat setelah data Firestore selesai dimuat.
+        })();
+    </script>
+
+    <!-- Mengambil data katalog dari Firestore -->
+    <script type="module" src="../js/catalogue.js"></script>
+
+</body>
+
+</html>

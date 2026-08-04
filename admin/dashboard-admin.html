@@ -153,11 +153,9 @@
                 </h1>
                 <p class="text-ink-muted font-body-sm mt-1">Pantau status kamar dan aktivitas hari ini.</p>
             </div>
-            <div class="relative inline-block w-full md:w-56"><select
+            <div class="relative inline-block w-full md:w-56"><select id="filterCabang"
                     class="appearance-none w-full bg-surface-canvas border border-border-hairline text-ink-primary font-body-sm rounded-xl px-4 py-2.5 pr-10 focus:border-primary focus:ring-1 focus:ring-primary outline-none cursor-pointer shadow-sm">
-                    <option value="all">Semua Cabang</option>
-                    <option value="utama">Cabang Utama</option>
-                    <option value="selatan">Cabang Selatan</option>
+                    <option value="semua">Semua Cabang</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-ink-muted"><span
                         class="material-symbols-outlined text-[20px]">expand_more</span></div>
@@ -176,7 +174,7 @@
                     <span class="font-title-md text-[16px] font-semibold text-ink-primary">Terisi</span>
                 </div>
 
-                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">42</div>
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none" id="statTerisi">0</div>
             </div>
             <!-- Kosong -->
             <div
@@ -189,7 +187,7 @@
                     <span class="font-title-md text-[16px] font-semibold text-ink-primary">Kosong</span>
                 </div>
 
-                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">18</div>
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none" id="statKosong">0</div>
             </div>
             <!-- Pemesanan Baru -->
             <div
@@ -203,7 +201,7 @@
                 </div>
 
                 <div class="flex items-end justify-between">
-                    <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">5</div>
+                    <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none" id="statPemesananBaru">0</div>
                     <span
                         class="text-[11px] font-bold text-error bg-error-container px-2 py-1 rounded-md uppercase tracking-wider">Perlu
                         Tindakan</span>
@@ -219,7 +217,7 @@
                     <span class="font-title-md text-[16px] font-semibold text-ink-primary">Jatuh Tempo Hari Ini</span>
                 </div>
 
-                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none">3</div>
+                <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none" id="statJatuhTempo">0</div>
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
@@ -266,73 +264,7 @@
                     <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Penghuni Jatuh Tempo</h2>
                 </div>
                 <div class="flex-1 flex flex-col px-lg py-4 gap-4">
-                    <div class="flex flex-col gap-4">
-                        <!-- Resident 1 -->
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 flex-1">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
-                                    SA</div>
-                                <div class="min-w-0">
-                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Siti Aminah</div>
-                                    <div class="text-[12px] text-ink-muted truncate">Kamar A02 • Utama</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span
-                                    class="text-[11px] font-bold bg-error-container text-error px-2 py-1 rounded-md uppercase tracking-wide">Besok</span>
-                                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
-                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
-                                    title="Kirim Pengingat WA">
-                                    <span class="material-symbols-outlined text-[18px]">chat</span>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Resident 2 -->
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 flex-1">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
-                                    RH</div>
-                                <div class="min-w-0">
-                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Rudi Hermawan</div>
-                                    <div class="text-[12px] text-ink-muted truncate">Kamar B12 • Selatan</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span
-                                    class="text-[11px] font-bold bg-[#FEF3F2] text-status-warning px-2 py-1 rounded-md uppercase tracking-wide">3
-                                    Hari Lagi</span>
-                                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
-                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
-                                    title="Kirim Pengingat WA">
-                                    <span class="material-symbols-outlined text-[18px]">chat</span>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Resident 3 -->
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 flex-1">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm flex-shrink-0">
-                                    BP</div>
-                                <div class="min-w-0">
-                                    <div class="font-semibold text-[14px] text-ink-primary truncate">Bambang Pamun</div>
-                                    <div class="text-[12px] text-ink-muted truncate">Kamar C05 • Utama</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span
-                                    class="text-[11px] font-bold bg-[#FEF3F2] text-status-warning px-2 py-1 rounded-md uppercase tracking-wide">3
-                                    Hari Lagi</span>
-                                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
-                                    class="w-8 h-8 rounded-full bg-whatsapp-green/10 text-whatsapp-green flex items-center justify-center hover:bg-whatsapp-green hover:text-white transition-colors group relative"
-                                    title="Kirim Pengingat WA">
-                                    <span class="material-symbols-outlined text-[18px]">chat</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="flex flex-col gap-4" id="listJatuhTempo"></div>
                 </div>
                 <div class="p-4 border-t border-border-hairline text-center">
                     <a href="bookings.html?tab=jatuh-tempo" class="text-primary font-semibold text-[13px] hover:underline">Lihat Semua Tagihan</a>
@@ -365,103 +297,16 @@
                                 Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr
-                            class="hover:bg-surface-soft transition-colors border-b border-border-hairline last:border-0">
-                            <td class="px-4 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-ink-secondary font-bold text-sm">
-                                        BS</div>
-                                    <div>
-                                        <div class="font-semibold text-[14px] text-ink-primary">Budi Santoso</div>
-                                        <div class="text-[12px] text-ink-muted">BK-202310-001</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-4 py-4 text-[13px] text-ink-secondary font-medium">Cabang Utama</td>
-                            <td class="px-4 py-4"><span
-                                    class="text-[11px] font-bold bg-surface-variant px-2.5 py-1 rounded-md text-ink-secondary tracking-wide">BULANAN</span>
-                            </td>
-                            <td class="px-4 py-4 text-[13px] text-ink-secondary font-medium">15 Okt 2023</td>
-                            <td class="px-4 py-4 text-right">
-                                <a href="alokasi-kamar.html" class="relative inline-block text-left">
-                                    <button
-                                        class="appearance-none bg-primary text-white font-semibold text-[13px] rounded-xl px-4 py-2 pr-8 focus:outline-none cursor-pointer shadow-sm">
-                                        Alokasikan Kamar
-                                    </button>
-                                    <!-- <select
-                                        class="appearance-none bg-primary text-white font-semibold text-[13px] rounded-xl px-4 py-2 pr-8 focus:outline-none cursor-pointer shadow-sm">
-                                        <option disabled="" selected="" value="">Alokasikan Kamar</option>
-                                        <option value="A01">A01 (Tersedia)</option>
-                                        <option value="A02">A02 (Tersedia)</option>
-                                        <option value="B05">B05 (Tersedia)</option>
-                                    </select> -->
-
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabelAlokasi"></tbody>
                 </table>
             </div>
         </div>
         <div class="mb-xl bg-surface-canvas rounded-2xl shadow-card border border-border-hairline p-lg">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="font-display-md text-[18px] font-bold text-ink-primary">Status Kamar</h2>
-                <div class="flex gap-2 bg-surface-variant p-1 rounded-xl">
-                    <button
-                        class="px-4 py-1.5 rounded-lg bg-white shadow-sm text-ink-primary font-semibold text-[13px] transition-colors">Semua</button>
-                    <button
-                        class="px-4 py-1.5 rounded-lg text-ink-muted font-semibold text-[13px] hover:text-ink-primary transition-colors">Cabang
-                        Utama</button>
-                    <button
-                        class="px-4 py-1.5 rounded-lg text-ink-muted font-semibold text-[13px] hover:text-ink-primary transition-colors">Cabang
-                        Selatan</button>
-                </div>
+                <div class="flex gap-2 bg-surface-variant p-1 rounded-xl" id="filterStatusKamar"></div>
             </div>
-            <!-- Cabang Utama Group -->
-            <div>
-                <h3 class="font-semibold text-[14px] text-ink-muted mb-4 uppercase tracking-wider">Cabang Utama</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                    <!-- Available Room -->
-                    <div
-                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative">
-                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A01</span>
-                        <span
-                            class="text-[11px] font-bold bg-[#ECFDF3] text-status-available px-2.5 py-1 rounded-md">Tersedia</span>
-                    </div>
-                    <!-- Occupied Room -->
-                    <div
-                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-status-occupied"></div>
-                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A02</span>
-                        <span
-                            class="text-[11px] font-bold bg-[#FEF3F2] text-status-occupied px-2.5 py-1 rounded-md">Terisi</span>
-                    </div>
-                    <!-- Maintenance Room -->
-                    <!-- <div
-                        class="bg-surface-soft border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-not-allowed">
-                        <span class="font-display-md text-[20px] font-bold text-ink-muted mb-2">A03</span>
-                        <span
-                            class="text-[11px] font-bold bg-surface-variant text-ink-secondary px-2.5 py-1 rounded-md">Maintenance</span>
-                    </div> -->
-                    <!-- Checkout Soon Room -->
-                    <!-- <div
-                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-status-warning"></div>
-                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A04</span>
-                        <span
-                            class="text-[11px] font-bold bg-[#FFFAEB] text-status-warning px-2.5 py-1 rounded-md text-center leading-tight">Akan<br>Check-out</span>
-                    </div> -->
-                    <!-- Available Room -->
-                    <div
-                        class="bg-surface-canvas border border-border-hairline rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow">
-                        <span class="font-display-md text-[20px] font-bold text-ink-primary mb-2">A05</span>
-                        <span
-                            class="text-[11px] font-bold bg-[#ECFDF3] text-status-available px-2.5 py-1 rounded-md">Tersedia</span>
-                    </div>
-                </div>
-            </div>
+            <div id="gridStatusKamar"></div>
         </div>
     </main>
 
@@ -470,6 +315,9 @@
 
 
 
+
+    <!-- Menyambungkan halaman ini ke data Firestore -->
+    <script type="module" src="../js/admin-dashboard.js"></script>
 </body>
 
 </html>

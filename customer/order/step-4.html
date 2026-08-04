@@ -404,12 +404,12 @@
                 document.getElementById('receiptWhatsapp').textContent = text('confirmWhatsapp');
                 document.getElementById('receiptNik').textContent = text('confirmNik');
 
-                document.getElementById('receiptBranch').textContent = text('roomAddressValue');
+                document.getElementById('receiptBranch').textContent = text('roomNameValue');
 
-                const roomName = text('roomNameValue');
-                const roomParts = roomName.split(' ');
-                const roomNumber = roomParts.length > 0 ? roomParts[roomParts.length - 1] : '-';
-                const roomType = roomParts.length > 2 ? roomParts.slice(1, -1).join(' ') : '-';
+                // Nomor kamar baru ditentukan admin setelah pembayaran,
+                // jadi pada kuitansi ini masih dikosongkan.
+                const roomNumber = 'Ditentukan admin';
+                const roomType = text('orderTypeBadge').replace(/^SEWA\s+/i, '');
                 document.getElementById('receiptRoomNumber').textContent = roomNumber;
                 document.getElementById('receiptRoomType').textContent = roomType;
 
@@ -432,7 +432,7 @@
 
                 document.getElementById('receiptTotal').textContent = totalValue;
                 document.getElementById('receiptStatusLine').textContent = 'Lunas - Pembayaran via ' + paymentMethod;
-                document.getElementById('receiptWifiInfo').textContent = 'Akses WiFi: Pandawa_' + roomNumber + ' (Pass: pilar2023)';
+                document.getElementById('receiptWifiInfo').textContent = 'Nomor kamar dan akses WiFi diberikan petugas saat check-in.';
 
                 return invoiceNo.replace(/\//g, '-');
             }
@@ -470,64 +470,8 @@
         })();
     </script>
 
-<script>
-    function formatDateID(dateStr) {
-        if (!dateStr) return '-';
-        const date = new Date(dateStr + 'T00:00:00');
-        if (isNaN(date.getTime())) return '-';
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-        return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-    }
+<!-- Menyambungkan halaman ini ke data pemesanan -->
+<script type="module" src="../../js/order-step4.js"></script>
 
-    function calculateDuration(checkin, checkout, tipeSewa) {
-        if (!checkin || !checkout) return '-';
-        const start = new Date(checkin + 'T00:00:00');
-        const end = new Date(checkout + 'T00:00:00');
-        const diffDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
-        if (diffDays <= 0) return '-';
-        if (tipeSewa === 'bulanan') {
-            return Math.max(1, Math.round(diffDays / 30)) + ' Bulan';
-        }
-        return diffDays + ' Hari';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const identityDataRaw = localStorage.getItem('identityData');
-        const identityData = identityDataRaw ? JSON.parse(identityDataRaw) : null;
-        const bookingDataRaw = localStorage.getItem('bookingData');
-        const bookingData = bookingDataRaw ? JSON.parse(bookingDataRaw) : null;
-
-        if (identityData) {
-            const confirmNama = document.getElementById('confirmNama');
-            const confirmWhatsapp = document.getElementById('confirmWhatsapp');
-            const confirmNik = document.getElementById('confirmNik');
-            const confirmTenantsSummary = document.getElementById('confirmTenantsSummary');
-
-            if (confirmNama) confirmNama.textContent = identityData.nama || '-';
-            if (confirmWhatsapp) confirmWhatsapp.textContent = '+62 ' + (identityData.whatsapp || '-');
-            if (confirmNik) confirmNik.textContent = identityData.nik || '-';
-
-            const tenants = identityData.tenants || [];
-            if (confirmTenantsSummary) {
-                confirmTenantsSummary.textContent = tenants.length > 0
-                    ? tenants.map((t) => t.nama || '-').join(', ')
-                    : '-';
-            }
-        }
-
-        if (bookingData) {
-            const isBulanan = bookingData.tipeSewa === 'bulanan';
-            const orderTypeBadge = document.getElementById('orderTypeBadge');
-            const summaryCheckin = document.getElementById('summaryCheckin');
-            const summaryCheckout = document.getElementById('summaryCheckout');
-            const summaryDuration = document.getElementById('summaryDuration');
-
-            if (orderTypeBadge) orderTypeBadge.textContent = isBulanan ? 'SEWA BULANAN' : 'SEWA HARIAN';
-            if (summaryCheckin) summaryCheckin.textContent = formatDateID(bookingData.checkin);
-            if (summaryCheckout) summaryCheckout.textContent = formatDateID(bookingData.checkout);
-            if (summaryDuration) summaryDuration.textContent = calculateDuration(bookingData.checkin, bookingData.checkout, bookingData.tipeSewa);
-        }
-    });
-</script>
 
 </body></html>

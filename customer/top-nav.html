@@ -1,0 +1,28 @@
+<nav
+    class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-base lg:px-xl h-16 bg-surface shadow-sm">
+    <a class="flex items-center gap-sm scale-95 active:scale-90 transition-transform" href="#">
+        <span class="material-symbols-outlined text-primary-container text-display-md" data-weight="fill"
+            style="font-variation-settings: 'FILL' 1;">location_city</span>
+        <span class="text-display-md font-display-md text-primary font-bold">Pilar Pandawa</span>
+    </a>
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center gap-lg">
+        <a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Beranda</a>
+
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-title-md pb-1" href="#">Tentang
+            Kami</a>
+
+    </div>
+    <div class="flex items-center gap-md">
+        <a href="/customer/login-customer.html" id="loginNavBtn"
+            class="hidden md:flex items-center justify-center px-base py-sm bg-primary-container text-on-primary font-button-md rounded transition-colors hover:bg-primary scale-95 active:scale-90 transition-transform">
+            Masuk / Log in</a>
+        <a id="profileNavBtn" href="customer/cust-profile.html"
+            class="hidden items-center justify-center w-10 h-10 rounded-full bg-primary-fixed text-primary-container hover:bg-primary-container hover:text-on-primary transition-colors scale-95 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">account_circle</span>
+        </a>
+        <button class="md:hidden text-on-surface p-sm scale-95 active:scale-90 transition-transform">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+</nav>

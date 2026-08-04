@@ -1,0 +1,14 @@
+# =====================================================================
+# File yang TIDAK ikut di-deploy ke Vercel
+# =====================================================================
+# Alat bantu seeding hanya dipakai sekali di komputer lokal.
+# Bila ikut ter-deploy, orang lain bisa membukanya dan menjalankan
+# ulang seeding sehingga data di Firestore menjadi ganda.
+seed.html
+seed-data.js
+
+# Server lokal (di Vercel, folder /api sudah jalan otomatis)
+server.js
+
+# Kunci rahasia (diisi lewat Settings > Environment Variables di Vercel)
+.env

@@ -195,11 +195,9 @@
         class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-canvas p-4 rounded-xl border-none shadow-card">
         <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-ink-muted">filter_list</span>
-          <select
+          <select id="filterCabang"
             class="bg-transparent border border-border-strong rounded-md px-3 py-1.5 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-            <option>Semua Cabang</option>
-            <option>Cabang Utama</option>
-            <option>Cabang Utara</option>
+            <option value="semua">Semua Cabang</option>
           </select>
         </div>
       </div>
@@ -215,7 +213,7 @@
           <button data-tab="jatuh-tempo"
             class="status-tab pb-3 border-b-2 border-transparent font-title-md text-title-md text-ink-muted hover:text-on-surface transition-colors flex items-center gap-2">
             Jatuh Tempo / Menunggak
-            <span class="bg-error text-on-error rounded-full px-2 py-0.5 font-badge text-badge">5</span>
+            <span class="bg-error text-on-error rounded-full px-2 py-0.5 font-badge text-badge" id="badgeJatuhTempo">0</span>
           </button>
           <!-- <button data-tab="dikonfirmasi-aktif"
             class="status-tab pb-3 border-b-2 border-transparent font-title-md text-title-md text-ink-muted hover:text-on-surface transition-colors">Dikonfirmasi
@@ -234,7 +232,7 @@
           </div>
           <div>
             <p class="font-label-md text-[14px] text-ink-muted font-semibold">Terisi</p>
-            <p class="font-stat-display text-[32px] text-ink-primary font-bold">124</p>
+            <p class="font-stat-display text-[32px] text-ink-primary font-bold" id="statTerisi">0</p>
           </div>
         </div>
         <!-- Kosong -->
@@ -244,7 +242,7 @@
           </div>
           <div>
             <p class="font-label-md text-[14px] text-ink-muted font-semibold">Kosong</p>
-            <p class="font-stat-display text-[32px] text-ink-primary font-bold">18</p>
+            <p class="font-stat-display text-[32px] text-ink-primary font-bold" id="statKosong">0</p>
           </div>
         </div>
         <!-- Pemesanan Baru -->
@@ -255,7 +253,7 @@
           <div class="flex-1">
             <p class="font-label-md text-[14px] text-ink-muted font-semibold">Pemesanan Baru</p>
             <div class="flex items-baseline gap-2">
-              <p class="font-stat-display text-[32px] text-ink-primary font-bold">5</p>
+              <p class="font-stat-display text-[32px] text-ink-primary font-bold" id="statPemesananBaru">0</p>
               <span
                 class="bg-error-container text-error px-2 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider">PERLU
                 TINDAKAN</span>
@@ -269,7 +267,7 @@
           </div>
           <div>
             <p class="font-label-md text-[14px] text-ink-muted font-semibold">Jatuh Tempo Hari Ini</p>
-            <p class="font-stat-display text-[32px] text-ink-primary font-bold">3</p>
+            <p class="font-stat-display text-[32px] text-ink-primary font-bold" id="statJatuhTempo">0</p>
           </div>
         </div>
       </div>
@@ -299,166 +297,14 @@
         <div
           class="p-4 px-lg border-t border-border-hairline flex flex-col sm:flex-row justify-between items-center gap-4">
           <span class="font-body-sm text-body-sm text-ink-muted" id="paginationInfo">Menampilkan 1-10 dari 45 data</span>
-          <div class="flex items-center gap-1">
-            <button
-              class="p-1.5 rounded-md text-ink-muted hover:bg-surface-soft border border-transparent hover:border-border-hairline transition-all">
-              <span class="material-symbols-outlined text-sm">chevron_left</span>
-            </button>
-            <button
-              class="w-8 h-8 rounded-md bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center">1</button>
-            <button
-              class="w-8 h-8 rounded-md text-ink-primary hover:bg-surface-soft font-label-md text-label-md flex items-center justify-center transition-colors">2</button>
-            <button
-              class="w-8 h-8 rounded-md text-ink-primary hover:bg-surface-soft font-label-md text-label-md flex items-center justify-center transition-colors">3</button>
-            <span class="w-8 h-8 flex items-center justify-center text-ink-muted">...</span>
-            <button
-              class="w-8 h-8 rounded-md text-ink-primary hover:bg-surface-soft font-label-md text-label-md flex items-center justify-center transition-colors">5</button>
-            <button
-              class="p-1.5 rounded-md text-ink-muted hover:bg-surface-soft border border-transparent hover:border-border-hairline transition-all">
-              <span class="material-symbols-outlined text-sm">chevron_right</span>
-            </button>
-          </div>
+          <div class="flex items-center gap-1" id="paginationButtons"></div>
         </div>
       </div>
     </main>
   </div>
 
-  <script>
-    (function () {
-      const bookingsData = {
-        "menunggu-alokasi": [
-          { id: "BK-202310-010", name: "Ani Wijaya", phone: "+62 815-1122-3344", branch: "Cabang Utama", type: "BULANAN", checkin: "20 Okt 2023", checkout: "20 Nov 2023", total: "Rp 550.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["allocate", "wa", "detail"] },
-          { id: "BK-202310-011", name: "Dedi Kurniawan", phone: "+62 816-2233-4455", branch: "Cabang Utara", type: "HARIAN", checkin: "21 Okt 2023", checkout: "23 Okt 2023", total: "Rp 450.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["allocate", "wa", "detail"] },
-          { id: "BK-202310-012", name: "Fitri Handayani", phone: "+62 817-3344-5566", branch: "Cabang Utama", type: "BULANAN", checkin: "22 Okt 2023", checkout: "22 Nov 2023", total: "Rp 600.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["allocate", "wa", "detail"] }
-        ],
-        "jatuh-tempo": [
-          { id: "BK-202310-002", name: "Siti Aminah", phone: "+62 813-9876-5432", branch: "Cabang Utara", type: "HARIAN", checkin: "18 Okt 2023", checkout: "20 Okt 2023", total: "Rp 300.000", payment: { text: "BELUM BAYAR", className: "bg-status-warning/10 text-status-warning" }, actions: ["wa", "detail"] },
-          { id: "BK-202309-030", name: "Joko Susilo", phone: "+62 812-1111-2222", branch: "Cabang Utama", type: "BULANAN", checkin: "5 Sep 2023", checkout: "5 Okt 2023", total: "Rp 500.000", payment: { text: "MENUNGGAK 3 HARI", className: "bg-error/10 text-error" }, actions: ["wa", "detail"] },
-          { id: "BK-202309-031", name: "Rina Marlina", phone: "+62 812-2222-3333", branch: "Cabang Utara", type: "BULANAN", checkin: "10 Sep 2023", checkout: "10 Okt 2023", total: "Rp 480.000", payment: { text: "MENUNGGAK 5 HARI", className: "bg-error/10 text-error" }, actions: ["wa", "detail"] },
-          { id: "BK-202309-032", name: "Agus Salim", phone: "+62 812-3333-4444", branch: "Cabang Utama", type: "HARIAN", checkin: "12 Okt 2023", checkout: "14 Okt 2023", total: "Rp 250.000", payment: { text: "BELUM BAYAR", className: "bg-status-warning/10 text-status-warning" }, actions: ["wa", "detail"] },
-          { id: "BK-202309-033", name: "Nadia Putri", phone: "+62 812-4444-5555", branch: "Cabang Utara", type: "BULANAN", checkin: "1 Okt 2023", checkout: "1 Nov 2023", total: "Rp 520.000", payment: { text: "MENUNGGAK 7 HARI", className: "bg-error/10 text-error" }, actions: ["wa", "detail"] }
-        ],
-        "dikonfirmasi-aktif": [
-          { id: "BK-202310-001", name: "Budi Santoso", phone: "+62 812-3456-7890", branch: "Cabang Utama", type: "BULANAN", checkin: "15 Okt 2023", checkout: "15 Nov 2023", total: "Rp 515.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["wa", "detail"] },
-          { id: "BK-202310-020", name: "Rudi Hartono", phone: "+62 813-5555-6666", branch: "Cabang Utama", type: "BULANAN", checkin: "1 Okt 2023", checkout: "1 Nov 2023", total: "Rp 530.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["wa", "detail"] },
-          { id: "BK-202310-021", name: "Maya Sari", phone: "+62 814-6666-7777", branch: "Cabang Utara", type: "HARIAN", checkin: "10 Okt 2023", checkout: "12 Okt 2023", total: "Rp 350.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["wa", "detail"] },
-          { id: "BK-202310-022", name: "Hendra Gunawan", phone: "+62 815-7777-8888", branch: "Cabang Utama", type: "BULANAN", checkin: "5 Okt 2023", checkout: "5 Nov 2023", total: "Rp 545.000", payment: { text: "LUNAS", className: "bg-status-available/10 text-status-available" }, actions: ["wa", "detail"] }
-        ],
-        "dibatalkan-kadaluarsa": [
-          { id: "BK-202309-040", name: "Wawan Setiawan", phone: "+62 816-8888-9999", branch: "Cabang Utama", type: "HARIAN", checkin: "1 Okt 2023", checkout: "3 Okt 2023", total: "Rp 300.000", payment: { text: "DIBATALKAN", className: "bg-surface-variant text-ink-secondary" }, actions: ["detail"] },
-          { id: "BK-202309-041", name: "Lestari Ningsih", phone: "+62 817-9999-0000", branch: "Cabang Utara", type: "BULANAN", checkin: "15 Sep 2023", checkout: "15 Okt 2023", total: "Rp 500.000", payment: { text: "KADALUARSA", className: "bg-surface-variant text-ink-secondary" }, actions: ["detail"] },
-          { id: "BK-202309-042", name: "Bagus Prakoso", phone: "+62 818-0000-1111", branch: "Cabang Utama", type: "HARIAN", checkin: "20 Sep 2023", checkout: "22 Sep 2023", total: "Rp 280.000", payment: { text: "DIBATALKAN", className: "bg-surface-variant text-ink-secondary" }, actions: ["detail"] }
-        ]
-      };
-
-      bookingsData["semua"] = [].concat(
-        bookingsData["menunggu-alokasi"],
-        bookingsData["jatuh-tempo"],
-        bookingsData["dikonfirmasi-aktif"],
-        bookingsData["dibatalkan-kadaluarsa"]
-      );
-
-      const tabButtons = document.querySelectorAll(".status-tab");
-      const tableBody = document.getElementById("bookingsTableBody");
-      const paginationInfo = document.getElementById("paginationInfo");
-
-      function getInitials(name) {
-        return name.split(" ").map(function (part) { return part[0]; }).slice(0, 2).join("").toUpperCase();
-      }
-
-      function toWaLink(phone) {
-        const digits = phone.replace(/[^0-9]/g, "").replace(/^0/, "62");
-        return "https://wa.me/" + digits;
-      }
-
-      function actionButtonsHtml(booking) {
-        let html = "";
-        if (booking.actions.indexOf("allocate") !== -1) {
-          html += '<a href="alokasi-kamar.html" class="bg-primary text-white px-4 py-2 rounded-xl font-semibold text-[13px] hover:opacity-90 transition-colors shadow-sm">Alokasikan Kamar</a>';
-        }
-        if (booking.actions.indexOf("wa") !== -1) {
-          html += '<a href="' + toWaLink(booking.phone) + '" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="bg-whatsapp-green/10 text-whatsapp-green p-2 rounded-full hover:bg-whatsapp-green hover:text-white transition-colors flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">chat</span></a>';
-        }
-        if (booking.actions.indexOf("detail") !== -1) {
-          html += '<a href="detail-booking.html" class="border border-border-strong text-ink-primary px-3 py-2 rounded-xl font-semibold text-[13px] hover:bg-surface-soft transition-colors flex items-center gap-1">Detail</a>';
-        }
-        return '<div class="flex items-center justify-end gap-2">' + html + "</div>";
-      }
-
-      function rowHtml(b) {
-        return '' +
-          '<tr class="hover:bg-surface-soft transition-colors">' +
-          '<td class="px-lg py-4">' +
-          '<div class="flex items-center gap-3">' +
-          '<div class="w-10 h-10 rounded-full bg-primary-fixed text-primary-container flex items-center justify-center font-bold text-[14px] shrink-0">' + getInitials(b.name) + '</div>' +
-          '<div>' +
-          '<div class="font-semibold text-[14px] text-ink-primary">' + b.name + '</div>' +
-          '<div class="text-[12px] text-ink-secondary">' + b.phone + '</div>' +
-          '<div class="text-[12px] text-ink-secondary mt-0.5">' + b.id + '</div>' +
-          '</div>' +
-          '</div>' +
-          '</td>' +
-          '<td class="px-lg py-4">' +
-          '<div class="flex flex-col items-start gap-1">' +
-          '<span class="text-[13px] text-ink-secondary font-medium">' + b.branch + '</span>' +
-          '<span class="bg-surface-variant text-ink-secondary px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide">' + b.type + '</span>' +
-          '</div>' +
-          '</td>' +
-          '<td class="px-lg py-4">' +
-          '<div class="flex flex-col gap-1 text-[13px] text-ink-secondary font-medium">' +
-          '<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-ink-muted">flight_land</span> ' + b.checkin + '</div>' +
-          '<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-ink-muted">flight_takeoff</span> ' + b.checkout + '</div>' +
-          '</div>' +
-          '</td>' +
-          '<td class="px-lg py-4">' +
-          '<div class="flex flex-col items-start gap-1.5">' +
-          '<span class="font-semibold text-[14px] text-ink-primary">' + b.total + '</span>' +
-          '<span class="' + b.payment.className + ' px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wide">' + b.payment.text + '</span>' +
-          '</div>' +
-          '</td>' +
-          '<td class="px-lg py-4 text-right">' + actionButtonsHtml(b) + '</td>' +
-          '</tr>';
-      }
-
-      function renderTab(tabKey) {
-        const rows = bookingsData[tabKey] || [];
-        tableBody.innerHTML = rows.map(rowHtml).join("");
-        paginationInfo.textContent = rows.length > 0
-          ? "Menampilkan 1-" + rows.length + " dari " + rows.length + " data"
-          : "Tidak ada data";
-      }
-
-      function setActiveTab(button) {
-        tabButtons.forEach(function (btn) {
-          const isActive = btn === button;
-          btn.classList.toggle("border-primary", isActive);
-          btn.classList.toggle("text-primary", isActive);
-          btn.classList.toggle("font-bold", isActive);
-          btn.classList.toggle("border-transparent", !isActive);
-          btn.classList.toggle("text-ink-muted", !isActive);
-        });
-      }
-
-      tabButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-          setActiveTab(button);
-          renderTab(button.dataset.tab);
-        });
-      });
-
-      const requestedTab = new URLSearchParams(window.location.search).get("tab");
-      const initialButton = Array.prototype.find.call(tabButtons, function (btn) {
-        return btn.dataset.tab === requestedTab;
-      });
-
-      if (initialButton) {
-        setActiveTab(initialButton);
-        renderTab(initialButton.dataset.tab);
-      } else {
-        renderTab("semua");
-      }
-    })();
-  </script>
+  <!-- Menyambungkan halaman ini ke data Firestore -->
+  <script type="module" src="../js/admin-bookings.js"></script>
 
 </body>
 

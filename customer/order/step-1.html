@@ -203,7 +203,24 @@
                         <p class="font-body-sm text-body-sm text-ink-secondary">Pastikan data yang diisi sesuai dengan
                             kartu identitas (KTP) yang berlaku.</p>
                     </div>
-                    <form class="flex flex-col gap-lg">
+                    <!-- Ringkasan kesalahan pengisian -->
+                    <div class="hidden items-start gap-sm p-md bg-error-container border border-error/30 rounded-lg"
+                        id="ringkasanError">
+                        <span class="material-symbols-outlined text-[20px] text-error">error</span>
+                        <p class="font-body-sm text-body-sm text-error" id="ringkasanErrorTeks"></p>
+                    </div>
+                    <!-- Peringatan aturan sewa harian -->
+                    <div class="hidden items-start gap-sm p-md bg-[#FFFAEB] border border-status-warning/30 rounded-lg"
+                        id="peringatanSewaHarian">
+                        <span class="material-symbols-outlined text-[20px] text-status-warning">info</span>
+                        <p class="font-body-sm text-body-sm text-ink-secondary">
+                            <strong class="text-ink-primary">Ketentuan sewa harian:</strong> hanya berlaku untuk
+                            <strong class="text-ink-primary">satu orang penyewa pria</strong>. Petugas akan
+                            memeriksa kesesuaian identitas saat check-in. Untuk keluarga atau lebih dari satu
+                            penghuni, silakan gunakan sewa bulanan.
+                        </p>
+                    </div>
+                    <form class="flex flex-col gap-lg" id="formPemesanan">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
                             <!-- NIK -->
                             <div class="flex flex-col gap-xs">
@@ -211,7 +228,8 @@
                                     Kependudukan (NIK)</label>
                                 <input
                                     class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted"
-                                    id="nik" name="nik" placeholder="Masukkan 16 digit NIK" type="text">
+                                    id="nik" name="nik" placeholder="Masukkan 16 digit NIK" type="text"
+                                    inputmode="numeric" maxlength="16">
                             </div>
                             <!-- Nama Lengkap -->
                             <div class="flex flex-col gap-xs">
@@ -249,70 +267,18 @@
                                 lain selain penyewa utama yang menempati kamar dalam sewa kos bulanan (khusus untuk
                                 hubungan keluarga sah: Suami, Istri, atau Anak).</p>
                             <div class="flex flex-col gap-xs mb-md">
-                                <label class="font-title-md text-label-md text-ink-primary" for="jumlah_penghuni">Jumlah
-                                    Penghuni Tambahan</label>
-                                <select
-                                    class="w-full md:w-1/2 bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none"
-                                    id="jumlah_penghuni" name="jumlah_penghuni" onchange="updatePenghuniForms()">
-                                    <option value="0">Tidak Ada (0)</option>
-                                    <option selected="" value="1">1 Penghuni Tambahan</option>
-                                    <option value="2">2 Penghuni Tambahan</option>
-                                    <option value="3">3 Penghuni Tambahan</option>
-                                </select>
+                                <p class="font-body-sm text-body-sm text-ink-muted" id="infoJumlahPenghuni">
+                                    0 dari 3 penghuni tambahan ditambahkan.</p>
                             </div>
-                            <div class="flex flex-col gap-lg" id="penghuni-forms-container">
-                                <div
-                                    class="flex flex-col gap-sm border border-border-hairline rounded-lg p-md bg-surface-container-lowest shadow-sm">
-                                    <h4
-                                        class="font-title-md text-title-md text-ink-primary pb-xs border-b border-border-hairline">
-                                        Data Penghuni Tambahan 1</h4>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg mt-xs">
-                                        <div class="flex flex-col gap-xs">
-                                            <label class="font-title-md text-label-md text-ink-primary"
-                                                for="nik_penghuni_1">Nomor Induk Kependudukan (NIK)</label>
-                                            <input
-                                                class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted"
-                                                id="nik_penghuni_1" name="nik_penghuni_1"
-                                                placeholder="Masukkan 16 digit NIK penghuni 1" type="text">
-                                        </div>
-                                        <div class="flex flex-col gap-xs">
-                                            <label class="font-title-md text-label-md text-ink-primary"
-                                                for="nama_penghuni_1">Nama Lengkap (Sesuai KTP)</label>
-                                            <input
-                                                class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted"
-                                                id="nama_penghuni_1" name="nama_penghuni_1"
-                                                placeholder="Masukkan nama lengkap penghuni 1" type="text">
-                                        </div>
-                                        <div class="flex flex-col gap-xs">
-                                            <label class="font-title-md text-label-md text-ink-primary"
-                                                for="hubungan_1">Hubungan Keluarga</label>
-                                            <select
-                                                class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none"
-                                                id="hubungan_1" name="hubungan_1">
-                                                <option value="">Pilih Hubungan</option>
-                                                <option value="suami">Suami</option>
-                                                <option value="istri">Istri</option>
-                                                <option value="anak">Anak</option>
-                                            </select>
-                                        </div>
-                                        <div class="flex flex-col gap-xs">
-                                            <label class="font-title-md text-label-md text-ink-primary"
-                                                for="whatsapp_penghuni_1">Nomor WhatsApp Aktif</label>
-                                            <div class="relative flex items-center">
-                                                <span
-                                                    class="absolute left-md font-body-md text-ink-secondary bg-surface-soft h-[calc(100%-2px)] rounded-l-lg flex items-center px-sm border-r border-border-strong">+62</span>
-                                                <input
-                                                    class="w-full bg-surface-canvas border border-border-strong rounded-lg pl-[64px] pr-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted"
-                                                    id="whatsapp_penghuni_1" name="whatsapp_penghuni_1"
-                                                    placeholder="81234567890" type="tel">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="button" id="tambahPenghuniBtn"
+                                class="self-start flex items-center gap-xs px-md py-sm mb-md border border-dashed border-primary-container text-primary-container font-button-md text-button-md rounded-lg hover:bg-primary-fixed/20 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">add</span>
+                                Tambah Penghuni
+                            </button>
+                            <div class="flex flex-col gap-lg" id="penghuni-forms-container"></div>
                         </div>
                         <!-- Mandatory Checkbox -->
-                        <div
+                        <div id="kotakPersetujuan"
                             class="flex items-start gap-md mt-sm bg-primary-fixed/10 p-md rounded-lg border border-primary-fixed-dim/30">
                             <div class="pt-[2px]">
                                 <input
@@ -450,7 +416,7 @@
                         class="bg-surface-canvas rounded-xl shadow-subtle border border-border-hairline overflow-hidden flex flex-col">
                         <!-- Room Image -->
                         <div class="h-48 w-full relative">
-                            <img class="w-full h-full object-cover"
+                            <img class="w-full h-full object-cover" id="summaryRoomImage"
                                 data-alt="A clean, brightly lit standard boarding room with a neatly made bed, white linens, a wooden desk, and soft natural daylight streaming through a window. The overall mood is tidy, reliable, and professional, perfectly suited for a corporate real estate management platform. Flat-plus aesthetic, high contrast."
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8Xg-Y1SmPbD3DqTu7N7beNaiuUz13RKzti8sY-9bbB735BISjUDVHAEqVMVbgN7GXfZQ_UmtFgorh6FNPws64Bc4CLO8KL1JFeiHhOw_2Vp4_MB4rO6QVPxaKq-8HzDNOZ_R38vd4DQlf0HtvNdv-rpyAxQnxaDAZxNITT_hBcLahB9VYc6cE8KN4NwqnsDzBDCq7QWCJRG9xd5ebiipKUAjspoEcPCtCZe-3-46xqBSG0JR46I0BXNwuQ8Hqwq_uPEtNwM7af6A">
                             <div class="absolute top-md right-md bg-primary-container px-sm py-xs rounded font-tag-uppercase text-tag-uppercase text-on-primary tracking-widest shadow-sm"
@@ -461,10 +427,10 @@
                         <div class="p-lg flex flex-col gap-lg">
                             <!-- Header Info -->
                             <div class="flex flex-col gap-xs">
-                                <h3 class="font-display-md text-display-md text-ink-primary">Kamar Standar A01</h3>
+                                <h3 class="font-display-md text-display-md text-ink-primary" id="summaryRoomName">-</h3>
                                 <div class="flex items-center gap-xs text-ink-secondary">
                                     <span class="material-symbols-outlined text-[18px]">location_on</span>
-                                    <span class="font-body-sm text-body-sm">Cabang Utama, Jakarta Selatan</span>
+                                    <span class="font-body-sm text-body-sm" id="summaryRoomAddress">-</span>
                                 </div>
                             </div>
                             <!-- Date Details -->
@@ -495,19 +461,19 @@
                             <!-- Price Breakdown -->
                             <div class="flex flex-col gap-sm">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-body-sm text-body-md text-ink-secondary">Harga Sewa</span>
-                                    <span class="font-title-md text-body-md text-ink-primary">Rp 500.000</span>
+                                    <span class="font-body-sm text-body-md text-ink-secondary" id="summaryHargaLabel">Harga Sewa</span>
+                                    <span class="font-title-md text-body-md text-ink-primary" id="summaryHargaValue">-</span>
                                 </div>
                                 <div class="flex justify-between items-center">
-
-
+                                    <span class="font-body-sm text-body-md text-ink-secondary">Biaya Layanan</span>
+                                    <span class="font-title-md text-body-md text-ink-primary" id="summaryBiayaLayanan">-</span>
                                 </div>
                             </div>
                             <!-- Total -->
                             <div class="pt-md border-t border-border-strong flex justify-between items-center">
                                 <span class="font-display-md text-title-md text-ink-primary">Total Pembayaran</span>
-                                <span class="font-display-lg text-display-lg text-primary-container tracking-tight">Rp
-                                    500.000</span>
+                                <span class="font-display-lg text-display-lg text-primary-container tracking-tight"
+                                    id="summaryTotalValue">-</span>
                             </div>
                             <!-- Primary Action for Step 1 -->
                             <button id="lanjutStep2Btn"
@@ -613,133 +579,8 @@
             </div>
         </div>
     </div>
-    <script>
-        function updatePenghuniForms() {
-            const count = parseInt(document.getElementById('jumlah_penghuni').value);
-            const container = document.getElementById('penghuni-forms-container');
-            container.innerHTML = ''; // Clear existing forms
-
-            if (count === 0) {
-                return;
-            }
-
-            for (let i = 1; i <= count; i++) {
-                const formHTML = `
-                <div class="flex flex-col gap-sm border border-border-hairline rounded-lg p-md bg-surface-container-lowest shadow-sm">
-                    <h4 class="font-title-md text-title-md text-ink-primary pb-xs border-b border-border-hairline">Data Penghuni Tambahan ${i}</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg mt-xs">
-                        <div class="flex flex-col gap-xs">
-                            <label class="font-title-md text-label-md text-ink-primary" for="nik_penghuni_${i}">Nomor Induk Kependudukan (NIK)</label>
-                            <input class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted" id="nik_penghuni_${i}" name="nik_penghuni_${i}" placeholder="Masukkan 16 digit NIK penghuni ${i}" type="text">
-                        </div>
-                        <div class="flex flex-col gap-xs">
-                            <label class="font-title-md text-label-md text-ink-primary" for="nama_penghuni_${i}">Nama Lengkap (Sesuai KTP)</label>
-                            <input class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted" id="nama_penghuni_${i}" name="nama_penghuni_${i}" placeholder="Masukkan nama lengkap penghuni ${i}" type="text">
-                        </div>
-                        <div class="flex flex-col gap-xs">
-                            <label class="font-title-md text-label-md text-ink-primary" for="hubungan_${i}">Hubungan Keluarga</label>
-                            <select class="w-full bg-surface-canvas border border-border-strong rounded-lg px-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none" id="hubungan_${i}" name="hubungan_${i}">
-                                <option value="">Pilih Hubungan</option>
-                                <option value="suami">Suami</option>
-                                <option value="istri">Istri</option>
-                                <option value="anak">Anak</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col gap-xs">
-                            <label class="font-title-md text-label-md text-ink-primary" for="whatsapp_penghuni_${i}">Nomor WhatsApp Aktif</label>
-                            <div class="relative flex items-center">
-                                <span class="absolute left-md font-body-md text-ink-secondary bg-surface-soft h-[calc(100%-2px)] rounded-l-lg flex items-center px-sm border-r border-border-strong">+62</span>
-                                <input class="w-full bg-surface-canvas border border-border-strong rounded-lg pl-[64px] pr-md py-md font-body-md text-ink-primary focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none placeholder:text-ink-muted" id="whatsapp_penghuni_${i}" name="whatsapp_penghuni_${i}" placeholder="81234567890" type="tel">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-                container.insertAdjacentHTML('beforeend', formHTML);
-            }
-        }
-
-        function formatDateID(dateStr) {
-            if (!dateStr) return '-';
-            const date = new Date(dateStr + 'T00:00:00');
-            if (isNaN(date.getTime())) return '-';
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-            return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-        }
-
-        function calculateDuration(checkin, checkout, tipeSewa) {
-            if (!checkin || !checkout) return '-';
-            const start = new Date(checkin + 'T00:00:00');
-            const end = new Date(checkout + 'T00:00:00');
-            const diffDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
-            if (diffDays <= 0) return '-';
-            if (tipeSewa === 'bulanan') {
-                return Math.max(1, Math.round(diffDays / 30)) + ' Bulan';
-            }
-            return diffDays + ' Hari';
-        }
-
-        // Initialize with default value (1)
-        document.addEventListener('DOMContentLoaded', () => {
-            updatePenghuniForms();
-
-            const bookingDataRaw = localStorage.getItem('bookingData');
-            const bookingData = bookingDataRaw ? JSON.parse(bookingDataRaw) : null;
-            const isBulanan = !!bookingData && bookingData.tipeSewa === 'bulanan';
-
-            const additionalTenantSection = document.getElementById('additional-tenant-section');
-            const orderTypeBadge = document.getElementById('orderTypeBadge');
-            const summaryCheckin = document.getElementById('summaryCheckin');
-            const summaryCheckout = document.getElementById('summaryCheckout');
-            const summaryDuration = document.getElementById('summaryDuration');
-
-            if (additionalTenantSection) {
-                additionalTenantSection.classList.toggle('hidden', !isBulanan);
-            }
-
-            if (bookingData) {
-                if (orderTypeBadge) {
-                    orderTypeBadge.textContent = isBulanan ? 'SEWA BULANAN' : 'SEWA HARIAN';
-                }
-                if (summaryCheckin) summaryCheckin.textContent = formatDateID(bookingData.checkin);
-                if (summaryCheckout) summaryCheckout.textContent = formatDateID(bookingData.checkout);
-                if (summaryDuration) summaryDuration.textContent = calculateDuration(bookingData.checkin, bookingData.checkout, bookingData.tipeSewa);
-            }
-
-            const lanjutBtn = document.getElementById('lanjutStep2Btn');
-            if (lanjutBtn) {
-                lanjutBtn.addEventListener('click', () => {
-                    const tenants = [];
-
-                    if (isBulanan) {
-                        const jumlah = parseInt(document.getElementById('jumlah_penghuni').value, 10) || 0;
-                        for (let i = 1; i <= jumlah; i++) {
-                            const nikEl = document.getElementById('nik_penghuni_' + i);
-                            const namaEl = document.getElementById('nama_penghuni_' + i);
-                            const hubunganEl = document.getElementById('hubungan_' + i);
-                            const waEl = document.getElementById('whatsapp_penghuni_' + i);
-                            tenants.push({
-                                nik: nikEl ? nikEl.value : '',
-                                nama: namaEl ? namaEl.value : '',
-                                hubungan: hubunganEl ? hubunganEl.value : '',
-                                whatsapp: waEl ? waEl.value : ''
-                            });
-                        }
-                    }
-
-                    const identityData = {
-                        nik: document.getElementById('nik').value,
-                        nama: document.getElementById('nama').value,
-                        whatsapp: document.getElementById('whatsapp').value,
-                        tenants: tenants
-                    };
-
-                    localStorage.setItem('identityData', JSON.stringify(identityData));
-                    window.location.href = 'step-2.html';
-                });
-            }
-        });
-    </script>
+    <!-- Menyambungkan halaman ini ke data pemesanan -->
+    <script type="module" src="../../js/order-step1.js"></script>
 
 
 </body>

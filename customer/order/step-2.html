@@ -490,7 +490,7 @@
                                         class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm sticky top-24 overflow-hidden">
                                         <!-- Property Image & Badge -->
                                         <div class="relative h-48 w-full bg-surface-container-highest">
-                                                <img class="w-full h-full object-cover"
+                                                <img id="summaryRoomImage" class="w-full h-full object-cover"
                                                         data-alt="A modern, clean boarding house room interior featuring a neatly made bed with white linens, a wooden desk, and soft natural lighting coming from a nearby window. The atmosphere is professional, organized, and inviting, styled in a corporate flat-plus aesthetic with high contrast and functional clarity."
                                                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3PcjRjT4qhlnXmmTVBUfogfz0vaXZY1-PH9xo2L2Ma8ZhaUZu2am6IgjOpEYo3FhLoIpUdu39n3mnOR5u4jYEN2-VnmL3LrX_4h7-He175sFW3fSFLnNbIoaCKL_BHUXxGsgPZCHB1lSipsYa0Xv-EiEH5yU3LzNTdDPYXhwZ2YL7jQv36f3iEcrfBZXkGUVsay2Cd52Mt4ViYNwDBvzxN-cbmKnjGJZspRhk-SOIdlWUnV8bDDa91c5_w40Er5tlue_4fAfZXTA">
                                                 <div
@@ -503,14 +503,13 @@
                                         <div class="p-base flex flex-col gap-md">
                                                 <!-- Property Info -->
                                                 <div>
-                                                        <h3
-                                                                class="font-display-md text-display-md text-ink-primary mb-1">
-                                                                Kamar Standar A01</h3>
+                                                        <h3 id="summaryRoomName"
+                                                                class="font-display-md text-display-md text-ink-primary mb-1">-</h3>
                                                         <p
                                                                 class="font-body-sm text-body-sm text-ink-muted flex items-center gap-1">
                                                                 <span class="material-symbols-outlined text-sm"
                                                                         data-icon="location_on">location_on</span>
-                                                                Cabang Utama, Jakarta Selatan
+                                                                <span id="summaryRoomAddress">-</span>
                                                         </p>
                                                 </div>
                                                 <hr class="border-border-hairline">
@@ -540,19 +539,19 @@
                                                 <div class="space-y-xs">
                                                         <div class="flex justify-between items-center">
                                                                 <span
-                                                                        class="font-body-sm text-body-sm text-ink-secondary">Harga
-                                                                        Sewa</span>
+                                                                        class="font-body-sm text-body-sm text-ink-secondary"
+                                                                        id="summaryHargaLabel">Harga Sewa</span>
                                                                 <span
-                                                                        class="font-body-sm text-body-sm text-ink-primary">Rp
-                                                                        500.000</span>
+                                                                        class="font-body-sm text-body-sm text-ink-primary"
+                                                                        id="summaryHargaValue">-</span>
                                                         </div>
                                                         <div class="flex justify-between items-center">
                                                                 <span
                                                                         class="font-body-sm text-body-sm text-ink-secondary">Biaya
                                                                         Layanan</span>
                                                                 <span
-                                                                        class="font-body-sm text-body-sm text-ink-primary">Rp
-                                                                        15.000</span>
+                                                                        class="font-body-sm text-body-sm text-ink-primary"
+                                                                        id="summaryBiayaLayanan">-</span>
                                                         </div>
                                                 </div>
                                                 <!-- Total -->
@@ -560,16 +559,27 @@
                                                         class="flex justify-between items-center bg-surface-soft p-sm rounded mt-2">
                                                         <span class="font-title-md text-title-md text-ink-primary">Total
                                                                 Pembayaran</span>
+                                                        <span id="summaryTotalValue"
+                                                                class="font-display-md text-display-md text-primary-container">-</span>
+                                                </div>
+                                                <!-- Pesan error bila gagal membuat transaksi QRIS -->
+                                                <div id="paymentErrorAlert"
+                                                        class="hidden items-start gap-sm bg-error-container/40 border border-error/30 rounded-lg p-sm mt-2">
                                                         <span
-                                                                class="font-display-md text-display-md text-primary-container">Rp
-                                                                515.000</span>
+                                                                class="material-symbols-outlined text-error text-[18px]">error</span>
+                                                        <p class="font-body-sm text-body-sm text-error flex-1"
+                                                                id="paymentErrorText">Terjadi kesalahan.</p>
                                                 </div>
                                                 <!-- CTA -->
                                                 <button id="lanjutStep3Btn"
-                                                        class="w-full bg-primary-container text-white font-button-md text-button-md py-3 rounded-md hover:bg-surface-tint transition-colors shadow-sm flex items-center justify-center gap-2 mt-2">
-                                                        Lanjut ke Pembayaran
+                                                        class="w-full bg-primary-container text-white font-button-md text-button-md py-3 rounded-md hover:bg-surface-tint transition-colors shadow-sm flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                                                        <span
+                                                                class="material-symbols-outlined animate-spin hidden text-[20px]"
+                                                                id="lanjutStep3Spinner">progress_activity</span>
+                                                        <span id="lanjutStep3Text">Lanjut ke Pembayaran</span>
                                                         <span class="material-symbols-outlined"
-                                                                data-icon="arrow_forward">arrow_forward</span>
+                                                                data-icon="arrow_forward"
+                                                                id="lanjutStep3Arrow">arrow_forward</span>
                                                 </button>
                                                 <!-- Trust Badges -->
                                                 <div
@@ -593,87 +603,8 @@
                 </div>
         </main>
 
-        <script>
-                function formatDateID(dateStr) {
-                        if (!dateStr) return '-';
-                        const date = new Date(dateStr + 'T00:00:00');
-                        if (isNaN(date.getTime())) return '-';
-                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                        return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-                }
-
-                function calculateDuration(checkin, checkout, tipeSewa) {
-                        if (!checkin || !checkout) return '-';
-                        const start = new Date(checkin + 'T00:00:00');
-                        const end = new Date(checkout + 'T00:00:00');
-                        const diffDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
-                        if (diffDays <= 0) return '-';
-                        if (tipeSewa === 'bulanan') {
-                                return Math.max(1, Math.round(diffDays / 30)) + ' Bulan';
-                        }
-                        return diffDays + ' Hari';
-                }
-
-                function tenantReviewHtml(tenant, index) {
-                        const hubunganLabel = { suami: 'Suami', istri: 'Istri', anak: 'Anak' }[tenant.hubungan] || '-';
-                        return '' +
-                                '<div class="pb-md border-b border-border-hairline last:border-0 last:pb-0">' +
-                                '<p class="font-label-md text-label-md text-ink-primary font-bold mb-sm">Penghuni Tambahan ' + index + '</p>' +
-                                '<div class="grid grid-cols-1 md:grid-cols-2 gap-md">' +
-                                '<div><p class="font-label-md text-label-md text-ink-muted mb-xxs">Nama Lengkap</p><p class="font-body-md text-body-md text-ink-primary font-medium">' + (tenant.nama || '-') + '</p></div>' +
-                                '<div><p class="font-label-md text-label-md text-ink-muted mb-xxs">NIK (Nomor Induk Kependudukan)</p><p class="font-body-md text-body-md text-ink-primary font-medium">' + (tenant.nik || '-') + '</p></div>' +
-                                '<div><p class="font-label-md text-label-md text-ink-muted mb-xxs">Hubungan</p><p class="font-body-md text-body-md text-ink-primary font-medium">' + hubunganLabel + '</p></div>' +
-                                '<div><p class="font-label-md text-label-md text-ink-muted mb-xxs">Nomor WhatsApp</p><p class="font-body-md text-body-md text-ink-primary font-medium">+62 ' + (tenant.whatsapp || '-') + '</p></div>' +
-                                '</div>' +
-                                '</div>';
-                }
-
-                document.addEventListener('DOMContentLoaded', () => {
-                        const identityDataRaw = localStorage.getItem('identityData');
-                        const identityData = identityDataRaw ? JSON.parse(identityDataRaw) : null;
-                        const bookingDataRaw = localStorage.getItem('bookingData');
-                        const bookingData = bookingDataRaw ? JSON.parse(bookingDataRaw) : null;
-
-                        if (identityData) {
-                                const reviewNama = document.getElementById('reviewNama');
-                                const reviewNik = document.getElementById('reviewNik');
-                                const reviewWhatsapp = document.getElementById('reviewWhatsapp');
-                                if (reviewNama) reviewNama.textContent = identityData.nama || '-';
-                                if (reviewNik) reviewNik.textContent = identityData.nik || '-';
-                                if (reviewWhatsapp) reviewWhatsapp.textContent = '+62 ' + (identityData.whatsapp || '-');
-
-                                const tenants = identityData.tenants || [];
-                                const tenantsReviewSection = document.getElementById('tenantsReviewSection');
-                                const tenantsReviewContainer = document.getElementById('tenantsReviewContainer');
-
-                                if (tenants.length > 0 && tenantsReviewContainer) {
-                                        tenantsReviewContainer.innerHTML = tenants.map((tenant, i) => tenantReviewHtml(tenant, i + 1)).join('');
-                                } else if (tenantsReviewSection) {
-                                        tenantsReviewSection.classList.add('hidden');
-                                }
-                        }
-
-                        if (bookingData) {
-                                const isBulanan = bookingData.tipeSewa === 'bulanan';
-                                const orderTypeBadge = document.getElementById('orderTypeBadge');
-                                const summaryCheckin = document.getElementById('summaryCheckin');
-                                const summaryCheckout = document.getElementById('summaryCheckout');
-                                const summaryDuration = document.getElementById('summaryDuration');
-
-                                if (orderTypeBadge) orderTypeBadge.textContent = isBulanan ? 'SEWA BULANAN' : 'SEWA HARIAN';
-                                if (summaryCheckin) summaryCheckin.textContent = formatDateID(bookingData.checkin);
-                                if (summaryCheckout) summaryCheckout.textContent = formatDateID(bookingData.checkout);
-                                if (summaryDuration) summaryDuration.textContent = calculateDuration(bookingData.checkin, bookingData.checkout, bookingData.tipeSewa);
-                        }
-
-                        const lanjutStep3Btn = document.getElementById('lanjutStep3Btn');
-                        if (lanjutStep3Btn) {
-                                lanjutStep3Btn.addEventListener('click', () => {
-                                        window.location.href = 'step-3.html';
-                                });
-                        }
-                });
-        </script>
+        <!-- Menyambungkan halaman ini ke data pemesanan -->
+        <script type="module" src="../../js/order-step2.js"></script>
 
 </body>
 

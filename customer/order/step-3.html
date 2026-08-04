@@ -181,26 +181,58 @@
 <!-- QRIS Payment Card -->
 <div class="bg-surface-canvas border border-border-hairline rounded-xl shadow-sm p-lg flex flex-col items-center text-center">
 <h2 class="font-display-md text-display-md text-on-surface mb-xs">Pembayaran via QRIS</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg mx-auto max-w-2xl">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md mx-auto max-w-2xl">
                         Scan kode QR di bawah ini menggunakan aplikasi M-Banking atau E-Wallet pilihan Anda (BCA, Mandiri, GoPay, OVO, ShopeePay, DANA, dll).
                     </p>
-<div class="bg-white p-4 rounded-lg border border-border-hairline shadow-sm mb-md flex flex-col items-center"><img alt="QRIS Code" class="w-80 h-80 object-cover mb-xs" data-alt="A detailed view of a standard QR code for digital payment, displayed on a clean white background with a modern, high-contrast flat-plus design style, suitable for a professional corporate dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwL_UgbnVfUYcDM6nODZmAlaGzM-NORLqjM8qlmGIgDUyV1dPTOPTPDWTLp4LdI4cPdw4wDw3ZtDeGPUV9vSRzlGBVQ789ulwofEM89mpG6R852nRnL4XwAxmZfdjY4svPyEnK48_Z7WrYxcCEiV0MF0hZNB3VQSiR2Q31rbOxBnZkHAZeuEh2GkfSvcUyO-YLMDe554NKBN22jVIRaqRk5GFNkwRf0K0MxcwyDMB90ki8UTolYDbirbVgPf9ZJ9WewRfVMm5VW28"></div>
+<!-- Badge status pembayaran (diperbarui otomatis oleh polling) -->
+<div class="flex flex-wrap items-center justify-center gap-sm mb-md">
+<span id="statusBadge"
+    class="inline-flex items-center gap-xs bg-status-warning/10 text-status-warning border border-status-warning/30 px-md py-xs rounded-full font-badge text-badge">
+<span class="material-symbols-outlined text-[16px]" id="statusBadgeIcon">schedule</span>
+<span id="statusBadgeText">Menunggu Pembayaran</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">ID Transaksi:
+<strong class="text-on-surface" id="orderIdText">-</strong></span>
+</div>
+<!-- Wadah kode QR -->
+<div class="bg-white p-4 rounded-lg border border-border-hairline shadow-sm mb-md flex flex-col items-center min-h-[240px] justify-center w-full max-w-[360px]">
+<!-- Tampilan saat QR sedang dimuat -->
+<div class="flex flex-col items-center gap-sm text-ink-muted" id="qrisLoading">
+<span class="material-symbols-outlined animate-spin text-[32px]">progress_activity</span>
+<span class="font-body-sm text-body-sm">Memuat kode QR...</span>
+</div>
+<!-- Gambar QR dari Midtrans (actions.url) -->
+<img alt="Kode QRIS Pembayaran" class="w-72 h-72 object-contain hidden" id="qrisImage">
+<!-- Cadangan: QR digambar dari qr_string bila URL tidak tersedia -->
+<canvas class="hidden" id="qrisCanvas"></canvas>
+<!-- Tampilan bila QR gagal dimuat -->
+<div class="hidden flex-col items-center gap-sm text-error px-md" id="qrisError">
+<span class="material-symbols-outlined text-[32px]">error</span>
+<span class="font-body-sm text-body-sm" id="qrisErrorText">Kode QR tidak tersedia.</span>
+</div>
+</div>
 <div class="flex items-center justify-center gap-sm bg-surface-soft py-sm px-md rounded-lg mb-lg">
-<span class="font-title-md text-title-md text-on-surface">Nominal: Rp 515.000</span>
-<button aria-label="Copy nominal" class="text-primary hover:text-primary-container transition-colors flex items-center" onclick="alert('Nominal tersalin!')">
+<span class="font-title-md text-title-md text-on-surface" id="nominalText">Nominal: Rp 0</span>
+<button aria-label="Salin nominal" id="copyNominalBtn" class="text-primary hover:text-primary-container transition-colors flex items-center">
 <span class="material-symbols-outlined text-[20px]">content_copy</span>
 </button>
 </div>
 <div class="w-full flex flex-col sm:flex-row gap-md justify-center">
-<button id="refreshPaymentBtn" class="flex items-center justify-center gap-xs px-base py-sm rounded border border-primary text-primary font-button-md hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[18px]">refresh</span>
-                            Refresh Status Pembayaran
+<button id="refreshPaymentBtn" class="flex items-center justify-center gap-xs px-base py-sm rounded border border-primary text-primary font-button-md hover:bg-primary/5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]" id="refreshIcon">refresh</span>
+<span id="refreshText">Refresh Status Pembayaran</span>
                         </button>
-<button class="flex items-center justify-center gap-xs px-base py-sm rounded bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors font-button-md border border-border-hairline">
+<a id="downloadQrBtn" download="qris-pilar-pandawa.png" class="flex items-center justify-center gap-xs px-base py-sm rounded bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors font-button-md border border-border-hairline no-underline">
 <span class="material-symbols-outlined text-[18px]">download</span>
                             Unduh Kode QR
+                        </a>
+<!-- Tombol bantu pengujian: menyalin URL QR untuk ditempel di simulator sandbox -->
+<button id="copyQrUrlBtn" class="flex items-center justify-center gap-xs px-base py-sm rounded bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors font-button-md border border-border-hairline">
+<span class="material-symbols-outlined text-[18px]" id="copyQrUrlIcon">link</span>
+<span id="copyQrUrlText">Salin URL QR</span>
                         </button>
 </div>
+<p class="font-body-sm text-body-sm text-ink-muted mt-md" id="pollingInfo">Status pembayaran dicek otomatis setiap 5 detik.</p>
 </div>
 <!-- Payment Guide Accordion (Simplified as static open list for clarity in this focused step) -->
 <div class="bg-surface-canvas border border-border-hairline rounded-xl p-lg">
@@ -236,6 +268,7 @@
 <h3 class="font-display-md text-display-md text-ink-primary">Pembayaran Berhasil!</h3>
 <p class="font-body-md text-body-md text-ink-secondary">Pembayaran QRIS Anda telah kami terima. Silakan lanjut untuk melihat konfirmasi pesanan Anda.</p>
 </div>
+<p class="font-body-sm text-[12px] text-ink-muted text-center" id="statusSimpanDatabase"></p>
 <button id="goToStep4Btn" class="w-full bg-primary text-on-primary font-button-md text-button-md py-md rounded-lg hover:opacity-90 transition-colors shadow-sm mt-sm">
                         Lihat Konfirmasi Pesanan
                     </button>
@@ -243,43 +276,349 @@
 </div>
 </div>
 
+<!-- Library pembuat QR (cadangan bila Midtrans hanya mengirim qr_string) -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<!-- Menyediakan window.simpanPesananKeDatabase() untuk script di bawah -->
+<script type="module" src="../../js/order-step3-simpan.js"></script>
+
 <script>
-    document.getElementById('refreshPaymentBtn').addEventListener('click', function () {
+    // ==============================================================
+    // HALAMAN PEMBAYARAN QRIS - MIDTRANS SANDBOX
+    // Alur:
+    // 1. Ambil data transaksi dari localStorage (dibuat di step-2)
+    // 2. Tampilkan kode QR + nominal
+    // 3. Cek status pembayaran otomatis tiap 5 detik (polling)
+    // 4. Bila status settlement/capture -> tampilkan modal "Lunas"
+    // ==============================================================
+
+    // Biarkan kosong bila halaman dibuka lewat server lokal
+    // (jalankan "node server.js" lalu buka http://localhost:3000).
+    // Isi dengan "http://localhost:3000" hanya jika HTML dibuka dari
+    // Live Server sementara server API berjalan terpisah.
+    const API_BASE = '';
+
+    const JEDA_POLLING = 5000; // 5 detik
+    let idPolling = null;
+    let dataPembayaran = null;
+    let sudahLunas = false;
+
+    function formatRupiah(angka) {
+        return 'Rp ' + Number(angka || 0).toLocaleString('id-ID');
+    }
+
+    // ---------- 1. Menampilkan kode QR ----------
+    function tampilkanQr(data) {
+        const loading = document.getElementById('qrisLoading');
+        const gambar = document.getElementById('qrisImage');
+        const kanvas = document.getElementById('qrisCanvas');
+        const kotakError = document.getElementById('qrisError');
+        const tombolUnduh = document.getElementById('downloadQrBtn');
+
+        // Tombol "Salin URL QR" hanya berguna bila Midtrans mengirim URL gambar
+        if (!data.qr_url) {
+            document.getElementById('copyQrUrlBtn').classList.add('hidden');
+        }
+
+        function tampilkanGagal(pesan) {
+            loading.classList.add('hidden');
+            document.getElementById('qrisErrorText').textContent = pesan;
+            kotakError.classList.remove('hidden');
+            kotakError.classList.add('flex');
+            tombolUnduh.classList.add('hidden');
+        }
+
+        // Prioritas 1: gambar QR langsung dari Midtrans (actions.url)
+        if (data.qr_url) {
+            gambar.onload = function () {
+                loading.classList.add('hidden');
+                gambar.classList.remove('hidden');
+            };
+            gambar.onerror = function () {
+                // Bila URL gagal dimuat, coba pakai qr_string
+                if (data.qr_string) {
+                    gambarDariQrString(data.qr_string);
+                } else {
+                    tampilkanGagal('Kode QR gagal dimuat.');
+                }
+            };
+            gambar.src = data.qr_url;
+            tombolUnduh.href = data.qr_url;
+            return;
+        }
+
+        // Prioritas 2: gambar QR dibuat dari teks qr_string
+        if (data.qr_string) {
+            gambarDariQrString(data.qr_string);
+            return;
+        }
+
+        tampilkanGagal('Kode QR tidak tersedia dari Midtrans.');
+
+        function gambarDariQrString(teksQr) {
+            if (typeof QRCode === 'undefined') {
+                tampilkanGagal('Library QR gagal dimuat.');
+                return;
+            }
+            QRCode.toCanvas(kanvas, teksQr, { width: 288, margin: 1 }, function (err) {
+                if (err) {
+                    tampilkanGagal('Gagal membuat gambar QR.');
+                    return;
+                }
+                loading.classList.add('hidden');
+                gambar.classList.add('hidden');
+                kanvas.classList.remove('hidden');
+                tombolUnduh.href = kanvas.toDataURL('image/png');
+            });
+        }
+    }
+
+    // ---------- 2. Memperbarui tampilan status ----------
+    function perbaruiStatus(status, lunas, gagal) {
+        const badge = document.getElementById('statusBadge');
+        const ikon = document.getElementById('statusBadgeIcon');
+        const teks = document.getElementById('statusBadgeText');
+
+        badge.className = 'inline-flex items-center gap-xs px-md py-xs rounded-full font-badge text-badge border';
+
+        if (lunas) {
+            badge.classList.add('bg-status-available/10', 'text-status-available', 'border-status-available/30');
+            ikon.textContent = 'check_circle';
+            teks.textContent = 'Lunas';
+        } else if (gagal) {
+            badge.classList.add('bg-error/10', 'text-error', 'border-error/30');
+            ikon.textContent = 'cancel';
+            teks.textContent = status === 'expire' ? 'Kedaluwarsa' : 'Pembayaran Gagal';
+        } else {
+            badge.classList.add('bg-status-warning/10', 'text-status-warning', 'border-status-warning/30');
+            ikon.textContent = 'schedule';
+            teks.textContent = 'Menunggu Pembayaran';
+        }
+    }
+
+    // ---------- 3. Cek status ke server ----------
+    async function cekStatusPembayaran(dariTombol) {
+        if (!dataPembayaran || !dataPembayaran.order_id || sudahLunas) return;
+
+        const tombol = document.getElementById('refreshPaymentBtn');
+        const ikonRefresh = document.getElementById('refreshIcon');
+        const teksRefresh = document.getElementById('refreshText');
+
+        if (dariTombol) {
+            tombol.disabled = true;
+            ikonRefresh.classList.add('animate-spin');
+            teksRefresh.textContent = 'Mengecek...';
+        }
+
+        try {
+            const response = await fetch(
+                API_BASE + '/api/check-status?order_id=' + encodeURIComponent(dataPembayaran.order_id)
+            );
+            const hasil = await response.json();
+
+            if (!response.ok) {
+                throw new Error(hasil.error || 'Gagal mengecek status.');
+            }
+
+            perbaruiStatus(hasil.transaction_status, hasil.lunas, hasil.gagal);
+
+            if (hasil.lunas) {
+                sudahLunas = true;
+                hentikanPolling();
+
+                // Simpan status akhir agar bisa dipakai di halaman step-4
+                dataPembayaran.transaction_status = hasil.transaction_status;
+                dataPembayaran.payment_type = hasil.payment_type;
+                dataPembayaran.settlement_time = hasil.settlement_time;
+                localStorage.setItem('dataPembayaran', JSON.stringify(dataPembayaran));
+
+                tampilkanModalBerhasil();
+
+                // Catat pesanan ke Firestore agar muncul di halaman admin.
+                // Fungsi ini disediakan oleh js/order-step3-simpan.js
+                if (typeof window.simpanPesananKeDatabase === 'function') {
+                    window.simpanPesananKeDatabase();
+                }
+            } else if (hasil.gagal) {
+                hentikanPolling();
+                document.getElementById('pollingInfo').textContent =
+                    'Transaksi sudah tidak dapat dibayar. Silakan ulangi pemesanan.';
+            } else if (dariTombol) {
+                document.getElementById('pollingInfo').textContent =
+                    'Pembayaran belum masuk. Status dicek otomatis setiap 5 detik.';
+            }
+        } catch (err) {
+            document.getElementById('pollingInfo').textContent =
+                err.message === 'Failed to fetch'
+                    ? 'Tidak dapat menghubungi server. Jalankan "node server.js" lalu buka lewat http://localhost:3000'
+                    : 'Gagal mengecek status: ' + err.message;
+        } finally {
+            if (dariTombol) {
+                tombol.disabled = false;
+                ikonRefresh.classList.remove('animate-spin');
+                teksRefresh.textContent = 'Refresh Status Pembayaran';
+            }
+        }
+    }
+
+    function mulaiPolling() {
+        hentikanPolling();
+        idPolling = setInterval(function () { cekStatusPembayaran(false); }, JEDA_POLLING);
+    }
+
+    function hentikanPolling() {
+        if (idPolling) {
+            clearInterval(idPolling);
+            idPolling = null;
+        }
+    }
+
+    function tampilkanModalBerhasil() {
         const modal = document.getElementById('paymentSuccessModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
+    }
+
+    // ---------- 4. Hitung mundur masa berlaku QR ----------
+    function mulaiHitungMundur(detik) {
+        const tampilan = document.getElementById('countdown-timer');
+        if (!tampilan) return;
+
+        let sisa = detik;
+        function render() {
+            if (sisa < 0) sisa = 0;
+            const jam = String(Math.floor(sisa / 3600)).padStart(2, '0');
+            const menit = String(Math.floor((sisa % 3600) / 60)).padStart(2, '0');
+            const dtk = String(sisa % 60).padStart(2, '0');
+            tampilan.textContent = jam + ':' + menit + ':' + dtk;
+            sisa--;
+        }
+        render();
+        setInterval(render, 1000);
+    }
+
+    // ---------- 5. Inisialisasi halaman ----------
+    document.addEventListener('DOMContentLoaded', function () {
+        const dataMentah = localStorage.getItem('dataPembayaran');
+
+        if (!dataMentah) {
+            document.getElementById('qrisLoading').classList.add('hidden');
+            const kotakError = document.getElementById('qrisError');
+            document.getElementById('qrisErrorText').textContent =
+                'Data pembayaran tidak ditemukan. Silakan ulangi dari halaman sebelumnya.';
+            kotakError.classList.remove('hidden');
+            kotakError.classList.add('flex');
+            document.getElementById('downloadQrBtn').classList.add('hidden');
+            document.getElementById('copyQrUrlBtn').classList.add('hidden');
+            document.getElementById('refreshPaymentBtn').disabled = true;
+            document.getElementById('pollingInfo').textContent = '';
+            return;
+        }
+
+        dataPembayaran = JSON.parse(dataMentah);
+
+        // Tampilkan informasi transaksi
+        document.getElementById('orderIdText').textContent = dataPembayaran.order_id || '-';
+        document.getElementById('nominalText').textContent =
+            'Nominal: ' + formatRupiah(dataPembayaran.gross_amount);
+
+        tampilkanQr(dataPembayaran);
+        perbaruiStatus(dataPembayaran.transaction_status || 'pending', false, false);
+
+        // Hitung mundur berdasarkan expiry_time dari Midtrans (default 15 menit)
+        let sisaDetik = 15 * 60;
+        if (dataPembayaran.expiry_time) {
+            // Format Midtrans: "2024-10-01 14:45:00" (zona waktu WIB / UTC+7)
+            const waktuHabis = new Date(dataPembayaran.expiry_time.replace(' ', 'T') + '+07:00');
+            const selisih = Math.floor((waktuHabis - new Date()) / 1000);
+            if (!isNaN(selisih)) sisaDetik = Math.max(0, selisih);
+        }
+        mulaiHitungMundur(sisaDetik);
+
+        // Mulai pengecekan otomatis
+        cekStatusPembayaran(false);
+        mulaiPolling();
+    });
+
+    // ---------- 6. Fungsi menyalin teks ke papan klip ----------
+    // Memakai Clipboard API bila tersedia. Bila tidak (misalnya halaman
+    // dibuka lewat alamat selain localhost), otomatis memakai cara cadangan.
+    async function salinTeks(teks) {
+        if (!teks) return false;
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(teks);
+                return true;
+            }
+        } catch (err) {
+            // abaikan, lanjut ke cara cadangan di bawah
+        }
+
+        // Cara cadangan: membuat kotak teks sementara lalu menyalinnya
+        const kotakSementara = document.createElement('textarea');
+        kotakSementara.value = teks;
+        kotakSementara.style.position = 'fixed';
+        kotakSementara.style.opacity = '0';
+        document.body.appendChild(kotakSementara);
+        kotakSementara.select();
+
+        let berhasil = false;
+        try {
+            berhasil = document.execCommand('copy');
+        } catch (err) {
+            berhasil = false;
+        }
+
+        document.body.removeChild(kotakSementara);
+        return berhasil;
+    }
+
+    // Menampilkan tanda "tersalin" sebentar pada tombol
+    function tandaiTersalin(idIkon, idTeks, ikonAwal, teksAwal, teksSukses) {
+        const ikon = document.getElementById(idIkon);
+        const teks = document.getElementById(idTeks);
+
+        ikon.textContent = 'check';
+        teks.textContent = teksSukses;
+
+        setTimeout(function () {
+            ikon.textContent = ikonAwal;
+            teks.textContent = teksAwal;
+        }, 2000);
+    }
+
+    // ---------- 7. Aksi tombol ----------
+    document.getElementById('refreshPaymentBtn').addEventListener('click', function () {
+        cekStatusPembayaran(true);
+    });
+
+    // Menyalin URL kode QR, dipakai untuk pengujian di simulator sandbox Midtrans
+    document.getElementById('copyQrUrlBtn').addEventListener('click', async function () {
+        if (!dataPembayaran || !dataPembayaran.qr_url) return;
+
+        const berhasil = await salinTeks(dataPembayaran.qr_url);
+
+        if (berhasil) {
+            tandaiTersalin('copyQrUrlIcon', 'copyQrUrlText', 'link', 'Salin URL QR', 'URL Tersalin!');
+        } else {
+            // Bila penyalinan otomatis gagal, tampilkan URL agar bisa disalin manual
+            window.prompt('Salin URL QR di bawah ini secara manual:', dataPembayaran.qr_url);
+        }
+    });
+
+    document.getElementById('copyNominalBtn').addEventListener('click', async function () {
+        const nominal = dataPembayaran ? String(dataPembayaran.gross_amount) : '';
+        const berhasil = await salinTeks(nominal);
+        if (berhasil) {
+            alert('Nominal ' + formatRupiah(nominal) + ' tersalin!');
+        }
     });
 
     document.getElementById('goToStep4Btn').addEventListener('click', function () {
         window.location.href = 'step-4.html';
     });
+
+    // Hentikan polling saat halaman ditutup
+    window.addEventListener('beforeunload', hentikanPolling);
 </script>
-<script>
-        // Simple countdown simulation for visual completeness
-        function startCountdown(duration, display) {
-            let timer = duration, hours, minutes, seconds;
-            setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                hours = hours < 10 ? "0" + hours : hours;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = hours + ":" + minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = 0;
-                }
-            }, 1000);
-        }
-
-        window.onload = function () {
-            // Start roughly 24 hours
-            let countdownTime = 60 * 60 * 24 - 1;
-            let display = document.querySelector('#countdown-timer');
-            if(display) startCountdown(countdownTime, display);
-        };
-    </script>
 </body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Seeding Data Dummy - Pilar Pandawa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 32px 16px;
+            color: #222222;
+        }
+
+        .wadah {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .kartu {
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 4px;
+            color: #0040a6;
+        }
+
+        .subjudul {
+            font-size: 14px;
+            color: #6a6a6a;
+            margin: 0;
+        }
+
+        .peringatan {
+            background: #fff8e6;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .peringatan strong {
+            color: #92400e;
+        }
+
+        ul {
+            margin: 8px 0 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .baris-konfirmasi {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #3f3f3f;
+        }
+
+        button {
+            background: #0156d7;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover:not(:disabled) {
+            background: #0040a6;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #log {
+            background: #1b1c1c;
+            color: #d7f5e0;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 120px;
+            max-height: 420px;
+            overflow-y: auto;
+            margin: 0;
+        }
+
+        .log-kosong {
+            color: #6a6a6a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wadah">
+
+        <div class="kartu">
+            <h1>Seeding Data Dummy</h1>
+            <p class="subjudul">Pilar Pandawa &mdash; alat bantu pengisian data Firestore (sekali pakai)</p>
+        </div>
+
+        <div class="kartu">
+            <div class="peringatan">
+                <strong>Sebelum menjalankan, pastikan:</strong>
+                <ul>
+                    <li>Firestore Database sudah dibuat di Firebase Console</li>
+                    <li>Security Rules masih dalam <em>test mode</em> (mengizinkan tulis), jika tidak proses akan
+                        ditolak</li>
+                    <li>Halaman ini dibuka lewat <code>http://localhost:3000/seed.html</code>, bukan klik dua kali
+                        pada file</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="kartu">
+            <p style="margin:0 0 4px; font-weight:600;">Yang akan dibuat:</p>
+            <ul style="font-size:14px; color:#3f3f3f; margin-top:6px;">
+                <li><strong>cabang</strong> &mdash; 4 dokumen (master data cabang kos)</li>
+                <li><strong>kamar</strong> &mdash; 50 dokumen, mereferensikan <code>cabang_id</code></li>
+                <li><strong>transaksi_pemesanan</strong> &mdash; 50 dokumen dengan status bervariasi,
+                    termasuk 6 transaksi yang mendekati jatuh tempo</li>
+            </ul>
+
+            <div class="baris-konfirmasi" style="margin-top:20px;">
+                <input type="checkbox" id="konfirmasiPaksa">
+                <label for="konfirmasiPaksa">
+                    Saya tetap ingin menjalankan walaupun database sudah berisi data
+                    <br><span style="color:#6a6a6a;">(biarkan kosong agar aman dari data ganda)</span>
+                </label>
+            </div>
+
+            <button id="tombolSeed">Mulai Seeding</button>
+        </div>
+
+        <div class="kartu">
+            <p style="margin:0 0 10px; font-weight:600;">Log Proses</p>
+            <pre id="log"><span class="log-kosong">Menunggu... klik tombol "Mulai Seeding" di atas.</span></pre>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { jalankanSeeding } from './seed-data.js';
+
+        const kotakLog = document.getElementById('log');
+        const tombol = document.getElementById('tombolSeed');
+        const konfirmasi = document.getElementById('konfirmasiPaksa');
+
+        let logKosong = true;
+
+        // Menampilkan satu baris pesan ke kotak log
+        function tulisLog(pesan) {
+            if (logKosong) {
+                kotakLog.textContent = '';
+                logKosong = false;
+            }
+            kotakLog.textContent += pesan + '\n';
+            kotakLog.scrollTop = kotakLog.scrollHeight;
+        }
+
+        tombol.addEventListener('click', async function () {
+            tombol.disabled = true;
+            tombol.textContent = 'Sedang memproses...';
+
+            kotakLog.textContent = '';
+            logKosong = false;
+
+            try {
+                await jalankanSeeding(tulisLog, konfirmasi.checked);
+            } catch (err) {
+                tulisLog('');
+                tulisLog('GAGAL: ' + err.message);
+
+                // Penjelasan untuk kesalahan yang paling sering terjadi
+                if (String(err.code).includes('permission-denied')) {
+                    tulisLog('');
+                    tulisLog('Penyebab: Firestore Security Rules menolak penulisan.');
+                    tulisLog('Solusi  : buka Firebase Console > Firestore Database > Rules,');
+                    tulisLog('          lalu ubah sementara menjadi:');
+                    tulisLog('          allow read, write: if true;');
+                } else if (String(err.message).toLowerCase().includes('failed to get document')) {
+                    tulisLog('');
+                    tulisLog('Penyebab: Firestore Database belum dibuat pada proyek ini.');
+                    tulisLog('Solusi  : buka Firebase Console > Build > Firestore Database > Create database.');
+                }
+            } finally {
+                tombol.disabled = false;
+                tombol.textContent = 'Mulai Seeding';
+            }
+        });
+    </script>
+</body>
+
+</html>
