@@ -321,7 +321,32 @@ function buatDataTransaksi(daftarKamar) {
 
       status_checkin: opsi.status_checkin,
       tanggal_aktual_checkin: opsi.tanggal_aktual_checkin ? Timestamp.fromDate(opsi.tanggal_aktual_checkin) : null,
-      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null
+      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null,
+
+      // ---------------------------------------------------------------
+      // Field pendukung notifikasi WhatsApp (dipakai folder /api)
+      // ---------------------------------------------------------------
+      // Ketiganya WAJIB ada di setiap dokumen. Firestore tidak akan
+      // mengembalikan dokumen yang field-nya tidak ada saat query
+      // memakai where(...), jadi dokumen tanpa field ini akan luput
+      // dari cron notifikasi.
+
+      // false = penyewa belum memperpanjang sewa.
+      // Cron tenggat hanya memproses yang masih false.
+      status_perpanjangan: false,
+
+      // Penanda agar tiap tahap pengingat hanya terkirim satu kali.
+      // Menambah milestone baru (misalnya h14) berarti menambah
+      // kuncinya di sini juga.
+      status_notifikasi_tenggat: {
+        h7: false,
+        h3: false,
+        h1: false
+      },
+
+      // Khusus simulasi pengujian UAT (api/cron-uji-notifikasi.js).
+      // Boleh dihapus setelah pengujian selesai.
+      status_notifikasi_uji: false
     };
   }
 

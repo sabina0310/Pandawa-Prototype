@@ -216,6 +216,14 @@ export async function simpanPesananKeFirestore(bookingData, identityData, dataPe
     tanggal_aktual_checkin: null,
     tanggal_aktual_checkout: null,
 
+    // Field pendukung notifikasi WhatsApp.
+    // Bentuknya harus sama persis dengan yang dibuat seed-data.js,
+    // karena Firestore tidak mengembalikan dokumen yang field-nya
+    // tidak ada saat query memakai where(...).
+    status_perpanjangan: false,
+    status_notifikasi_tenggat: { h7: false, h3: false, h1: false },
+    status_notifikasi_uji: false,
+
     // Penghuni tambahan hanya ada pada sewa bulanan.
     // Field ini tidak dipakai halaman admin mana pun, tapi disimpan
     // agar data yang diisi customer tidak hilang begitu saja.
