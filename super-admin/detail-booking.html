@@ -2,144 +2,18 @@
 <html lang="id">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Detail Booking - Pilar Pandawa</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "whatsapp-green": "#25d366",
-                        "whatsapp-hover": "#1da851",
-                        "surface-tint": "#0055d5",
-                        "status-occupied": "#ef4444",
-                        "on-primary": "#ffffff",
-                        "border-strong": "#c1c1c1",
-                        "on-secondary-fixed": "#002109",
-                        "primary": "#0040a6",
-                        "on-primary-container": "#cfd9ff",
-                        "tertiary": "#674000",
-                        "on-secondary-container": "#007232",
-                        "surface-container-high": "#eae7e7",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#005322",
-                        "background": "#fcf9f8",
-                        "secondary": "#006d2f",
-                        "primary-container": "#0156d7",
-                        "on-secondary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "on-background": "#1b1c1c",
-                        "on-surface-variant": "#424654",
-                        "outline": "#737686",
-                        "secondary-fixed-dim": "#3de273",
-                        "on-primary-fixed": "#001849",
-                        "surface-canvas": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "secondary-fixed": "#66ff8e",
-                        "surface-soft": "#f7f7f7",
-                        "inverse-surface": "#303030",
-                        "ink-primary": "#222222",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "surface-container": "#f0eded",
-                        "secondary-container": "#5dfd8a",
-                        "surface-container-highest": "#e5e2e1",
-                        "tertiary-fixed": "#ffddb8",
-                        "surface-dim": "#dcd9d9",
-                        "surface-container-low": "#f6f3f2",
-                        "surface-bright": "#fcf9f8",
-                        "status-available": "#10b981",
-                        "ink-secondary": "#3f3f3f",
-                        "on-tertiary": "#ffffff",
-                        "primary-fixed": "#dae2ff",
-                        "status-warning": "#f59e0b",
-                        "on-surface": "#1b1c1c",
-                        "on-error": "#ffffff",
-                        "on-tertiary-container": "#ffd4a2",
-                        "inverse-on-surface": "#f3f0ef",
-                        "outline-variant": "#c3c6d7",
-                        "inverse-primary": "#b2c5ff",
-                        "surface-variant": "#e5e2e1",
-                        "tertiary-container": "#875500",
-                        "surface": "#fcf9f8",
-                        "ink-muted": "#6a6a6a",
-                        "error": "#ba1a1a",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "on-tertiary-fixed": "#2a1700",
-                        "border-hairline": "#dddddd"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "xxs": "2px",
-                        "xl": "32px",
-                        "sm": "8px",
-                        "base": "16px",
-                        "lg": "24px",
-                        "xs": "4px",
-                        "md": "12px",
-                        "section": "64px"
-                    },
-                    "fontFamily": {
-                        "body-md": ["Plus Jakarta Sans"],
-                        "badge": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "label-md": ["Plus Jakarta Sans"],
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Detail Booking - Pilar Pandawa</title>
 
-        .material-symbols-outlined.filled {
-            font-variation-settings: 'FILL' 1;
-        }
-    </style>
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+<script src="../js/head-bersama.js"></script>
 </head>
 
-<body class="bg-[#F8FAFC] font-body-md text-on-surface antialiased">
+<body class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
     <!-- Memuat Top Nav dari file terpisah -->
     <div id="top-nav-placeholder"></div>
     <script>
@@ -160,7 +34,7 @@
             });
     </script>
     <!-- Main Content Canvas -->
-    <main class="ml-64 pt-20 p-lg min-h-screen">
+    <main class="md:ml-[260px] pt-[96px] px-base md:px-lg lg:px-xl pb-xl min-h-screen flex flex-col gap-lg">
         <!-- Page Title Section -->
         <div class="mb-lg">
             <a href="javascript:history.back()"
@@ -170,7 +44,7 @@
             </a>
             <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
                 <div>
-                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary" id="bookingCode">Memuat data...</h1>
+                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight" id="bookingCode">Memuat data...</h1>
                     <p class="font-body-md text-body-md text-ink-muted mt-xs">Informasi lengkap data penyewa, rincian
                         sewa, status pembayaran, dan riwayat transaksi.</p>
                 </div>
@@ -182,16 +56,16 @@
                         <span id="downloadPdfBtnText">Unduh PDF / Cetak</span>
                     </button>
                     <a href="#" id="waButton" target="_blank" rel="noopener noreferrer"
-                        class="inline-flex items-center gap-xs px-base py-sm bg-whatsapp-green text-on-primary hover:bg-whatsapp-hover transition-colors rounded-md font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] cursor-pointer no-underline">
+                        class="inline-flex items-center gap-xs px-base py-sm bg-whatsapp-green text-on-primary hover:bg-whatsapp-hover transition-colors rounded-lg font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] cursor-pointer no-underline">
                         <span class="material-symbols-outlined text-[18px] filled" data-icon="chat">chat</span>
                         Kirim WA Pengingat
                     </a>
                     <!-- <button
-                        class="bg-surface-variant text-ink-muted px-4 py-2 rounded-xl font-semibold text-[13px] cursor-not-allowed">
+                        class="bg-surface-variant text-ink-muted px-4 py-2 rounded-xl font-semibold text-label-md cursor-not-allowed">
                         Alokasikan Kamar
                     </button>
                     <button
-                        class="px-base py-sm  bg-primary-container text-on-primary hover:opacity-90 transition-opacity rounded-md font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                        class="px-base py-sm bg-primary-container text-on-primary hover:opacity-90 transition-opacity rounded-lg font-button-md text-button-md shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
                         Alokasikan Kamar
                     </button> -->
                 </div>
@@ -203,12 +77,12 @@
             <div class="lg:col-span-8 flex flex-col gap-lg">
                 <!-- Card 1 (Status) -->
                 <div
-                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
                     <div class="flex items-center gap-sm mb-md">
                         <span id="badgeStatusBayar"
-                            class="px-sm py-xs bg-status-available/10 text-status-available font-badge text-badge rounded-full uppercase">&mdash;</span>
+                            class="px-sm py-xs bg-status-available/10 text-status-available font-badge text-badge rounded-full uppercase inline-flex items-center gap-xxs">&mdash;</span>
                         <span id="badgeStatusAlokasi"
-                            class="px-sm py-xs bg-primary/10 text-primary font-badge text-badge rounded-full uppercase">&mdash;</span>
+                            class="px-sm py-xs bg-primary/10 text-primary font-badge text-badge rounded-full uppercase inline-flex items-center gap-xxs">&mdash;</span>
                     </div>
                     <div class="flex items-start gap-sm">
                         <span class="material-symbols-outlined text-primary"
@@ -221,7 +95,7 @@
                 </div>
                 <!-- Card 2 (Tenant Info) -->
                 <div
-                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
                     <h2
                         class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
                         Informasi Penyewa</h2>
@@ -263,7 +137,7 @@
                         <div class="w-full md:w-48 shrink-0">
                             <!-- <div class="font-label-md text-label-md text-ink-muted mb-sm">Verifikasi Identitas</div> -->
                             <!-- <div
-                                class="aspect-[1.6/1] bg-surface-soft rounded-lg border border-border-hairline overflow-hidden relative group cursor-pointer">
+                                class="aspect-[1.6/1] bg-surface-soft rounded-xl shadow-sm border border-border-hairline overflow-hidden relative group cursor-pointer">
                                 <img alt="KTP Preview"
                                     class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     data-alt="A blurred, generic preview of an Indonesian identity card (KTP) placed on a clean white desk. The lighting is bright and even, creating a professional and secure atmosphere. The card itself is abstracted to hide personal details, showing only the distinct blue and yellow layout typical of such documents."
@@ -271,7 +145,7 @@
                                 <div
                                     class="absolute inset-0 flex items-center justify-center bg-ink-primary/10 group-hover:bg-transparent transition-colors">
                                     <span
-                                        class="material-symbols-outlined text-ink-primary bg-surface-canvas/80 p-xs rounded-full"
+                                        class="material-symbols-outlined text-ink-primary bg-surface-canvas/80 p-xs rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
                                         data-icon="zoom_in">zoom_in</span>
                                 </div>
                             </div> -->
@@ -280,7 +154,7 @@
                 </div>
                 <!-- Card 3 (Property Details) -->
                 <div
-                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
                     <h2
                         class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
                         Rincian Properti &amp; Jadwal</h2>
@@ -312,7 +186,7 @@
             <div class="lg:col-span-4 flex flex-col gap-lg">
                 <!-- Card 4 (Billing Summary) -->
                 <div
-                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
                     <h2
                         class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
                         Ringkasan Tagihan</h2>
@@ -335,7 +209,7 @@
                 </div>
                 <!-- Card 5 (Payment Info) -->
                 <div
-                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
+                    class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
                     <h2
                         class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
                         Informasi Pembayaran</h2>

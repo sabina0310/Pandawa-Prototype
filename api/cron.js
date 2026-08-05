@@ -92,7 +92,7 @@ function pesanBulanan(data) {
     'Bila ingin melanjutkan sewa, mohon lakukan *perpanjangan* sebelum ' +
     'tanggal tersebut agar kamar Anda tidak dialihkan ke penyewa lain.\n\n' +
     'Bila tidak melanjutkan, mohon bersiap untuk check-out pada tanggal ' +
-    'tersebut paling lambat pukul 12.00.\n\n' +
+    'tersebut.\n\n' +
     'Terima kasih.\n' +
     '_Pesan otomatis dari sistem Pilar Pandawa._'
   );

@@ -1,17 +1,19 @@
 <!-- TopNavBar -->
 <header
-    class="bg-surface-canvas fixed top-0 left-0 w-full z-40 flex justify-between items-center px-lg h-[72px] border-b border-border-hairline shadow-sm">
+    class="bg-surface-canvas fixed top-0 left-0 w-full z-40 flex justify-between items-center gap-sm px-base lg:px-lg h-[72px] border-b border-border-hairline shadow-sm">
     <div class="flex items-center gap-lg">
         <!-- Mobile Menu Toggle (hidden on md) -->
-        <button class="md:hidden text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+        <button id="sidebarToggle" type="button" aria-expanded="false"
+            aria-controls="sideNav" aria-label="Buka menu navigasi"
+            class="md:hidden text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full active:scale-95 px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs">
             <span class="material-symbols-outlined">menu</span>
         </button>
-        <div class="font-display-md text-[24px] font-bold text-primary flex items-center gap-2">
+        <div class="font-display-md text-display-lg font-bold text-primary flex items-center gap-2">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">apartment</span>
             Pilar Pandawa
         </div>
         <!-- Global Search (Web) -->
-        <div class="hidden md:flex items-center bg-surface-variant rounded-full px-base py-2.5 w-96 ml-8">
+        <div class="hidden md:flex items-center bg-surface-variant rounded-full px-base py-2.5 flex-1 min-w-0 max-w-xs lg:max-w-sm xl:max-w-md ml-md lg:ml-8">
             <span class="material-symbols-outlined text-ink-muted mr-sm text-[20px]">search</span>
             <input
                 class="bg-transparent border-none outline-none w-full text-body-sm text-ink-primary placeholder:text-ink-muted focus:ring-0 p-0"
@@ -22,51 +24,51 @@
         <!-- Trailing Icons -->
         <div class="relative">
             <button id="notificationBtn"
-                class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full relative">
+                class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full relative px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs">
                 <span class="material-symbols-outlined">notifications</span>
                 <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
             </button>
             <!-- Notification Panel -->
             <div id="notificationPanel"
-                class="hidden absolute right-0 top-full mt-2 w-[360px] max-w-[90vw] bg-surface-canvas rounded-2xl shadow-2xl border border-border-hairline z-50 overflow-hidden">
+                class="hidden absolute right-0 top-full mt-2 w-[360px] max-w-[90vw] bg-surface-canvas rounded-xl shadow-2xl border border-border-hairline z-50 overflow-hidden">
                 <div class="flex items-center justify-between px-base py-base border-b border-border-hairline">
                     <div class="flex items-center gap-sm">
                         <h3 class="font-title-md text-title-md text-ink-primary font-bold">Notifikasi</h3>
                         <span id="notificationCountBadge"
-                            class="bg-primary text-on-primary text-[11px] font-bold px-2 py-0.5 rounded-full uppercase">3
+                            class="bg-primary text-on-primary text-badge font-bold px-2 py-0.5 rounded-full uppercase inline-flex items-center gap-xxs">3
                             Baru</span>
                     </div>
-                    <button id="markAllReadBtn" class="text-primary text-[13px] font-semibold hover:underline">Tandai
+                    <button id="markAllReadBtn" class="text-primary text-label-md font-semibold hover:underline">Tandai
                         semua dibaca</button>
                 </div>
                 <div class="max-h-[420px] overflow-y-auto divide-y divide-border-hairline">
-                    <div class="notification-item flex gap-sm px-base py-base bg-primary/5" data-unread="true">
+                    <div class="notification-item flex gap-sm px-base py-base bg-primary/5 rounded-lg" data-unread="true">
                         <div
                             class="w-9 h-9 rounded-full bg-status-available/10 text-status-available flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-[20px]"
                                 style="font-variation-settings: 'FILL' 1;">check_circle</span>
                         </div>
                         <div class="flex-1">
-                            <p class="font-semibold text-[14px] text-ink-primary">Pembayaran Berhasil!</p>
-                            <p class="text-[13px] text-ink-secondary mt-0.5">Budi Santoso (Kamar 102 - Cabang Utama)
+                            <p class="font-semibold text-body-sm text-ink-primary">Pembayaran Berhasil!</p>
+                            <p class="text-label-md text-ink-secondary mt-0.5">Budi Santoso (Kamar 102 - Cabang Utama)
                                 telah membayar tagihan via Payment Gateway.</p>
-                            <p class="text-[12px] text-status-available mt-1">Status tagihan otomatis diperbarui
+                            <p class="text-badge text-status-available mt-1">Status tagihan otomatis diperbarui
                                 menjadi Lunas.</p>
-                            <p class="text-[12px] text-ink-muted mt-1">10 menit yang lalu</p>
+                            <p class="text-badge text-ink-muted mt-1">10 menit yang lalu</p>
                         </div>
                     </div>
-                    <div class="notification-item flex gap-sm px-base py-base bg-status-warning/5" data-unread="true">
+                    <div class="notification-item flex gap-sm px-base py-base bg-status-warning/5 rounded-lg" data-unread="true">
                         <div
                             class="w-9 h-9 rounded-full bg-status-warning/10 text-status-warning flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-[20px]">schedule</span>
                         </div>
                         <div class="flex-1">
-                            <p class="font-semibold text-[14px] text-ink-primary">Peringatan Jatuh Tempo!</p>
-                            <p class="text-[13px] text-ink-secondary mt-0.5">Masa sewa Siti Aminah di Kamar 205
+                            <p class="font-semibold text-body-sm text-ink-primary">Peringatan Jatuh Tempo!</p>
+                            <p class="text-label-md text-ink-secondary mt-0.5">Masa sewa Siti Aminah di Kamar 205
                                 (Bulanan Keluarga) akan berakhir besok.</p>
-                            <p class="text-[12px] text-status-warning mt-1">Harap antar perpanjangan atau persiapan
+                            <p class="text-badge text-status-warning mt-1">Harap antar perpanjangan atau persiapan
                                 check-out.</p>
-                            <p class="text-[12px] text-ink-muted mt-1">1 jam yang lalu</p>
+                            <p class="text-badge text-ink-muted mt-1">1 jam yang lalu</p>
                         </div>
                     </div>
                     <div class="notification-item flex gap-sm px-base py-base" data-unread="false">
@@ -75,23 +77,23 @@
                             <span class="material-symbols-outlined text-[20px]">send</span>
                         </div>
                         <div class="flex-1">
-                            <p class="font-semibold text-[14px] text-ink-primary">Pengingat Otomatis Terkirim</p>
-                            <p class="text-[13px] text-ink-secondary mt-0.5">Sistem telah mengirimkan pesan tagihan ke
+                            <p class="font-semibold text-body-sm text-ink-primary">Pengingat Otomatis Terkirim</p>
+                            <p class="text-label-md text-ink-secondary mt-0.5">Sistem telah mengirimkan pesan tagihan ke
                                 Rina Wijaya (Kamar 310) via WhatsApp.</p>
-                            <p class="text-[12px] text-ink-muted mt-1">3 jam yang lalu</p>
+                            <p class="text-badge text-ink-muted mt-1">3 jam yang lalu</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-base py-base border-t border-border-hairline text-center">
-                    <a href="#" class="text-primary text-[13px] font-semibold hover:underline">Lihat Semua
+                    <a href="#" class="text-primary text-label-md font-semibold hover:underline">Lihat Semua
                         Aktivitas</a>
                 </div>
             </div>
         </div>
-        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs">
             <span class="material-symbols-outlined">help</span>
         </button>
-        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full">
+        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs">
             <span class="material-symbols-outlined">settings</span>
         </button>
         <!-- Profile -->
@@ -103,17 +105,17 @@
     </div>
 </header>
 <!-- SideNavBar -->
-<nav
+<nav id="sideNav"
     class="hidden md:flex bg-surface-canvas fixed left-0 top-0 h-screen w-[260px] py-lg flex-col z-30 justify-between border-r border-border-hairline h-full">
     <div class="px-md pt-[72px]">
         <div class="mb-lg px-base">
-            <div class="text-[12px] font-bold text-ink-muted uppercase tracking-wider">Management Console</div>
+            <div class="text-badge font-bold text-ink-muted uppercase tracking-wider">Management Console</div>
             <div class="text-label-md font-label-md text-ink-primary mt-xs font-semibold">Super
                 Admin</div>
         </div>
         <div id="sideNavList">
-            <div class="px-base mb-xs text-[11px] font-bold text-ink-muted uppercase tracking-wider">Operational</div>
-            <ul class="flex flex-col gap-1 font-title-md text-[15px] mb-lg">
+            <div class="px-base mb-xs text-badge font-bold text-ink-muted uppercase tracking-wider">Operational</div>
+            <ul class="flex flex-col gap-1 font-title-md text-body-md mb-lg">
                 <li class="">
                     <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
                         href="dashboard-super-admin.html">
@@ -150,9 +152,9 @@
                     </a>
                 </li>
             </ul>
-            <div class="px-base mb-xs text-[11px] font-bold text-ink-muted uppercase tracking-wider">Administration
+            <div class="px-base mb-xs text-badge font-bold text-ink-muted uppercase tracking-wider">Administration
             </div>
-            <ul class="flex flex-col gap-1 font-title-md text-[15px]">
+            <ul class="flex flex-col gap-1 font-title-md text-body-md">
                 <li class="">
                     <a class="nav-link flex items-center gap-base px-base py-3 text-ink-secondary hover:bg-surface-variant transition-all rounded-xl"
                         href="penghuni.html">
@@ -178,7 +180,7 @@
         </div>
     </div>
     <div class="px-md pb-base mt-auto">
-        <a class="flex items-center gap-base px-base py-3 text-error hover:bg-error-container transition-all rounded-xl font-title-md text-[15px]"
+        <a class="flex items-center gap-base px-base py-sm text-error hover:bg-error-container transition-all rounded-lg font-title-md text-body-md"
             href="#">
             <span class="material-symbols-outlined">logout</span>
             Logout
@@ -237,3 +239,7 @@
         });
     })();
 </script>
+
+<!-- Menghidupkan tombol menu di layar kecil: sidebar menjadi laci geser.
+     Skrip pemuat di tiap halaman menyusun ulang <script> ini agar dijalankan. -->
+<script src="../js/admin-laci.js"></script>

@@ -208,7 +208,12 @@
           md: "0 4px 6px -1px rgb(15 23 42 / 0.07), 0 2px 4px -2px rgb(15 23 42 / 0.05)",
           lg: "0 10px 15px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.05)",
           xl: "0 20px 25px -5px rgb(15 23 42 / 0.09), 0 8px 10px -6px rgb(15 23 42 / 0.05)",
-          naik: "0 12px 20px -8px rgb(1 86 215 / 0.22)"
+          naik: "0 12px 20px -8px rgb(1 86 215 / 0.22)",
+
+          // Dipakai kartu pada halaman admin & super-admin. Sebelumnya
+          // didefinisikan terpisah di beberapa halaman dengan nilai yang
+          // berbeda-beda; kini satu nilai untuk semuanya.
+          card: "0 1px 2px 0 rgb(15 23 42 / 0.04), 0 4px 12px -4px rgb(15 23 42 / 0.08)"
         },
 
         transitionTimingFunction: {
@@ -316,10 +321,25 @@
     "  line-height: 1;",
     "  vertical-align: middle;",
     "}",
+    // Nama kelas untuk ikon terisi dulu berbeda-beda per halaman:
+    // .fill (customer), .filled (detail-booking), .fill-icon (branches),
+    // .fill-1 (login super-admin). Keempatnya diterima di sini agar
+    // markup yang sudah ada tidak perlu diubah.
     ".material-symbols-outlined.fill,",
     ".material-symbols-outlined.filled,",
+    ".material-symbols-outlined.fill-icon,",
+    ".material-symbols-outlined.fill-1,",
+    ".fill-icon,",
     ".material-symbols-outlined[data-weight='fill'] {",
     "  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;",
+    "}",
+
+    // Panel tembus pandang pada halaman masuk super-admin
+    ".glass {",
+    "  background: rgba(255, 255, 255, 0.1);",
+    "  backdrop-filter: blur(10px);",
+    "  -webkit-backdrop-filter: blur(10px);",
+    "  border: 1px solid rgba(255, 255, 255, 0.2);",
     "}",
 
     // Judul besar di beranda. Kelas ini dipakai index.html, tetapi
@@ -394,6 +414,30 @@
     // Tabel: garis pemisah lembut
     "table { border-collapse: separate; border-spacing: 0; }",
     "tbody tr { transition: background-color .15s ease; }",
+
+    // -----------------------------------------------------------------
+    // TABEL DATA (halaman admin & super-admin)
+    // -----------------------------------------------------------------
+    // Baris tabel di halaman ini dibuat oleh JavaScript saat data tiba,
+    // sehingga gayanya tidak bisa diseragamkan lewat markup. Diatur di
+    // sini agar keempat tabel tampil sama tanpa menyentuh berkas JS.
+    //
+    // Penanda .tabel-data hanya dipasang pada tabel yang punya <thead>,
+    // supaya tabel keterangan dua kolom (label/isi) pada halaman detail
+    // tidak ikut diberi baris selang-seling.
+    // -----------------------------------------------------------------
+    ".tabel-data { width: 100%; }",
+    ".tabel-data tbody tr { border-bottom: 1px solid " + GARIS + "; }",
+    ".tabel-data tbody tr:last-child { border-bottom: 0; }",
+    ".tabel-data tbody tr:nth-child(even) { background-color: rgb(248 250 252 / .7); }",
+    ".tabel-data tbody tr:hover { background-color: #F1F5F9; }",
+    ".tabel-data tbody td { padding: 12px 16px; vertical-align: middle; }",
+
+    // Di layar sempit tabel digulir mendatar di dalam kotaknya sendiri,
+    // sehingga halaman tidak pernah bergeser ke samping.
+    "@media (max-width: 767px) {",
+    "  .tabel-data { min-width: 640px; }",
+    "}",
 
     // Gambar tidak pernah meluber dari kotaknya
     "img, svg, video, canvas { max-width: 100%; height: auto; }",

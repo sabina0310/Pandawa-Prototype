@@ -3,155 +3,15 @@
 <html class="light" lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Pilar Pandawa - Super Admin Login</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <!-- Material Icons -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Tailwind Config -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "tertiary-fixed": "#ffddb8",
-                        "surface-variant": "#e5e2e1",
-                        "on-secondary": "#ffffff",
-                        "on-primary-fixed": "#001849",
-                        "ink-primary": "#222222",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "secondary-container": "#5dfd8a",
-                        "surface-container": "#f0eded",
-                        "surface": "#fcf9f8",
-                        "secondary-fixed-dim": "#3de273",
-                        "background": "#fcf9f8",
-                        "error": "#ba1a1a",
-                        "surface-container-lowest": "#ffffff",
-                        "inverse-on-surface": "#f3f0ef",
-                        "ink-muted": "#6a6a6a",
-                        "on-tertiary-fixed": "#2a1700",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "whatsapp-green": "#25d366",
-                        "inverse-surface": "#303030",
-                        "surface-tint": "#0055d5",
-                        "border-hairline": "#dddddd",
-                        "whatsapp-hover": "#1da851",
-                        "tertiary": "#674000",
-                        "status-warning": "#f59e0b",
-                        "status-available": "#10b981",
-                        "on-surface-variant": "#424654",
-                        "on-secondary-fixed": "#002109",
-                        "on-background": "#1b1c1c",
-                        "primary": "#0040a6",
-                        "primary-fixed": "#dae2ff",
-                        "on-primary-container": "#cfd9ff",
-                        "inverse-primary": "#b2c5ff",
-                        "outline-variant": "#c3c6d7",
-                        "surface-soft": "#f7f7f7",
-                        "surface-container-highest": "#e5e2e1",
-                        "surface-canvas": "#ffffff",
-                        "on-tertiary": "#ffffff",
-                        "secondary-fixed": "#66ff8e",
-                        "on-error": "#ffffff",
-                        "secondary": "#006d2f",
-                        "on-secondary-fixed-variant": "#005322",
-                        "surface-bright": "#fcf9f8",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "status-occupied": "#ef4444",
-                        "ink-secondary": "#3f3f3f",
-                        "outline": "#737686",
-                        "error-container": "#ffdad6",
-                        "tertiary-container": "#875500",
-                        "surface-container-low": "#f6f3f2",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "primary-container": "#0156d7",
-                        "on-primary": "#ffffff",
-                        "surface-container-high": "#eae7e7",
-                        "surface-dim": "#dcd9d9",
-                        "on-secondary-container": "#007232",
-                        "border-strong": "#c1c1c1",
-                        "on-error-container": "#93000a",
-                        "on-tertiary-container": "#ffd4a2",
-                        "on-surface": "#1b1c1c"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    spacing: {
-                        "sm": "8px",
-                        "xl": "32px",
-                        "base": "16px",
-                        "lg": "24px",
-                        "xxs": "2px",
-                        "xs": "4px",
-                        "md": "12px",
-                        "section": "64px"
-                    },
-                    fontFamily: {
-                        "badge": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "label-md": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"]
-                    },
-                    fontSize: {
-                        "badge": ["11px", { lineHeight: "14px", fontWeight: "600" }],
-                        "display-md": ["20px", { lineHeight: "26px", fontWeight: "700" }],
-                        "body-md": ["15px", { lineHeight: "22px", fontWeight: "400" }],
-                        "tag-uppercase": ["10px", { lineHeight: "12px", letterSpacing: "0.5px", fontWeight: "700" }],
-                        "button-md": ["15px", { lineHeight: "20px", fontWeight: "600" }],
-                        "stat-display": ["32px", { lineHeight: "36px", fontWeight: "700" }],
-                        "display-lg": ["22px", { lineHeight: "28px", fontWeight: "600" }],
-                        "title-md": ["16px", { lineHeight: "20px", fontWeight: "600" }],
-                        "label-md": ["13px", { lineHeight: "18px", fontWeight: "500" }],
-                        "display-xl": ["28px", { lineHeight: "36px", fontWeight: "700" }],
-                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-                        "display-lg-mobile": ["20px", { lineHeight: "26px", fontWeight: "700" }]
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pilar Pandawa - Super Admin Login</title>
 
-        .material-symbols-outlined.fill-1 {
-            font-variation-settings: 'FILL' 1;
-        }
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-        /* Glassmorphism utility */
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-    </style>
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+<script src="../js/head-bersama.js"></script>
 </head>
 
 <body class="bg-background min-h-screen font-body-md text-on-surface antialiased">
@@ -173,7 +33,7 @@
                         <h2 class="font-display-lg text-display-lg text-white">Pilar Pandawa</h2>
                     </div>
                     <div
-                        class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-white/20 mb-md border border-white/30">
+                        class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-white/20 mb-md border border-white/30 font-badge text-badge">
                         <span class="material-symbols-outlined text-white text-[16px] fill-1">verified_user</span>
                         <span class="font-badge text-badge text-white tracking-wide">MASTER ACCESS</span>
                     </div>
@@ -252,7 +112,7 @@
                     <!-- Submit Button -->
                     <div>
                         <button
-                            class="w-full flex justify-center items-center gap-sm py-md px-4 border border-transparent rounded bg-primary-container text-on-primary font-button-md text-button-md hover:bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+                            class="w-full flex justify-center items-center gap-sm py-sm px-base border border-transparent rounded bg-primary-container text-on-primary font-button-md text-button-md hover:bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed rounded-lg"
                             id="loginBtn" type="submit">
                             <span class="material-symbols-outlined text-[18px] animate-spin hidden"
                                 id="loginBtnSpinner">progress_activity</span>
@@ -263,7 +123,7 @@
                 <!-- Footer Note -->
                 <div class="mt-section text-center">
                     <div
-                        class="inline-flex items-center gap-xs text-ink-muted bg-surface-container-low px-md py-sm rounded-lg border border-border-hairline">
+                        class="inline-flex items-center gap-xs text-ink-muted bg-surface-container-low px-md py-sm rounded-xl shadow-sm border border-border-hairline">
                         <span class="material-symbols-outlined text-[18px]">info</span>
                         <p class="font-body-sm text-body-sm">Akses terbatas untuk pemilik dan pemegang otoritas
                             tertinggi.</p>
@@ -285,7 +145,7 @@
             <p class="font-body-md text-body-md text-ink-muted mb-lg">Email/ID Master atau password yang Anda
                 masukkan salah. Silakan coba lagi.</p>
             <button
-                class="w-full py-md bg-primary-container hover:bg-primary text-on-primary font-button-md text-button-md rounded transition-colors shadow-sm"
+                class="w-full py-sm bg-primary-container hover:bg-primary text-on-primary font-button-md text-button-md rounded transition-colors shadow-sm rounded-lg px-base"
                 id="errorModalClose" type="button">Tutup</button>
         </div>
     </div>

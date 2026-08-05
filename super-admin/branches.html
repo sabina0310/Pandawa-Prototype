@@ -5,236 +5,15 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <title>Manajemen Kamar &amp; Cabang - Pilar Pandawa</title>
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <link href="https://fonts.googleapis.com" rel="preconnect">
-        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-                rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-                rel="stylesheet">
-        <script id="tailwind-config">
-                tailwind.config = {
-                        darkMode: "class",
-                        theme: {
-                                extend: {
-                                        "colors": {
-                                                "inverse-primary": "#b2c5ff",
-                                                "secondary": "#006d2f",
-                                                "on-error": "#ffffff",
-                                                "on-secondary-container": "#007232",
-                                                "surface-soft": "#f7f7f7",
-                                                "surface-canvas": "#ffffff",
-                                                "border-strong": "#c1c1c1",
-                                                "surface-container-highest": "#e5e2e1",
-                                                "on-primary": "#ffffff",
-                                                "on-primary-container": "#cfd9ff",
-                                                "error-container": "#ffdad6",
-                                                "on-primary-fixed": "#001849",
-                                                "on-tertiary-fixed": "#2a1700",
-                                                "on-secondary-fixed": "#002109",
-                                                "whatsapp-hover": "#1da851",
-                                                "on-error-container": "#93000a",
-                                                "surface-container-low": "#f6f3f2",
-                                                "on-primary-fixed-variant": "#003fa3",
-                                                "ink-primary": "#222222",
-                                                "border-hairline": "#dddddd",
-                                                "tertiary-fixed": "#ffddb8",
-                                                "whatsapp-green": "#25d366",
-                                                "surface-variant": "#e5e2e1",
-                                                "secondary-fixed": "#66ff8e",
-                                                "on-surface-variant": "#424654",
-                                                "status-occupied": "#ef4444",
-                                                "on-secondary-fixed-variant": "#005322",
-                                                "surface-dim": "#dcd9d9",
-                                                "primary": "#0040a6",
-                                                "primary-container": "#0156d7",
-                                                "ink-secondary": "#3f3f3f",
-                                                "primary-fixed": "#dae2ff",
-                                                "surface-container-lowest": "#ffffff",
-                                                "surface-container": "#f0eded",
-                                                "background": "#F8FAFC",
-                                                "inverse-on-surface": "#f3f0ef",
-                                                "status-warning": "#f59e0b",
-                                                "outline": "#737686",
-                                                "surface": "#fcf9f8",
-                                                "status-available": "#10b981",
-                                                "secondary-fixed-dim": "#3de273",
-                                                "tertiary-container": "#875500",
-                                                "surface-tint": "#0055d5",
-                                                "error": "#ba1a1a",
-                                                "secondary-container": "#5dfd8a",
-                                                "tertiary": "#674000",
-                                                "on-tertiary-fixed-variant": "#653e00",
-                                                "on-surface": "#1b1c1c",
-                                                "surface-container-high": "#eae7e7",
-                                                "primary-fixed-dim": "#b2c5ff",
-                                                "on-tertiary-container": "#ffd4a2",
-                                                "outline-variant": "#c3c6d7",
-                                                "surface-bright": "#fcf9f8",
-                                                "on-secondary": "#ffffff",
-                                                "tertiary-fixed-dim": "#ffb95f",
-                                                "ink-muted": "#6a6a6a",
-                                                "on-background": "#1b1c1c",
-                                                "inverse-surface": "#303030",
-                                                "on-tertiary": "#ffffff"
-                                        },
-                                        "borderRadius": {
-                                                "DEFAULT": "0.25rem",
-                                                "lg": "0.5rem",
-                                                "xl": "0.75rem",
-                                                "full": "9999px"
-                                        },
-                                        "spacing": {
-                                                "xxs": "2px",
-                                                "sm": "8px",
-                                                "section": "64px",
-                                                "md": "12px",
-                                                "xl": "32px",
-                                                "base": "16px",
-                                                "lg": "24px",
-                                                "xs": "4px"
-                                        },
-                                        "fontFamily": {
-                                                "display-lg-mobile": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "title-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "body-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "tag-uppercase": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-xl": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-lg": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "button-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "body-sm": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "stat-display": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "label-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "badge": [
-                                                        "Plus Jakarta Sans"
-                                                ]
-                                        },
-                                        "fontSize": {
-                                                "display-lg-mobile": [
-                                                        "20px",
-                                                        {
-                                                                "lineHeight": "26px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "title-md": [
-                                                        "16px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "body-md": [
-                                                        "15px",
-                                                        {
-                                                                "lineHeight": "22px",
-                                                                "fontWeight": "400"
-                                                        }
-                                                ],
-                                                "display-md": [
-                                                        "20px",
-                                                        {
-                                                                "lineHeight": "26px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "tag-uppercase": [
-                                                        "10px",
-                                                        {
-                                                                "lineHeight": "12px",
-                                                                "letterSpacing": "0.5px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "display-xl": [
-                                                        "28px",
-                                                        {
-                                                                "lineHeight": "36px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "display-lg": [
-                                                        "22px",
-                                                        {
-                                                                "lineHeight": "28px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "button-md": [
-                                                        "15px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "body-sm": [
-                                                        "14px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "400"
-                                                        }
-                                                ],
-                                                "stat-display": [
-                                                        "32px",
-                                                        {
-                                                                "lineHeight": "36px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "label-md": [
-                                                        "13px",
-                                                        {
-                                                                "lineHeight": "18px",
-                                                                "fontWeight": "500"
-                                                        }
-                                                ],
-                                                "badge": [
-                                                        "11px",
-                                                        {
-                                                                "lineHeight": "14px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ]
-                                        }
-                                },
-                        },
-                }
-        </script>
-        <style>
-                .material-symbols-outlined {
-                        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-                }
 
-                .fill-icon {
-                        font-variation-settings: 'FILL' 1;
-                }
-        </style>
+        <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+        <script src="../js/head-bersama.js"></script>
 </head>
 
-<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen">
+<body class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
         <!-- Memuat Top Nav dari file terpisah -->
         <div id="top-nav-placeholder"></div>
         <script>
@@ -255,13 +34,16 @@
                         });
         </script>
         <!-- Main Content Area -->
-        <div class="flex-1 md:ml-64 flex flex-col min-h-screen bg-background pt-[96px]">
+        <!-- Wadah isi. Jarak kiri, jarak atas, dan latar diatur <main> di dalamnya -->
+        <div class="flex flex-col">
                 <!-- Main Scrollable Canvas -->
-                <main class="flex-1 px-base md:px-lg pb-xl flex flex-col gap-xl">
+                <main class="md:ml-[260px] pt-[96px] px-base md:px-lg lg:px-xl pb-xl min-h-screen flex flex-col gap-lg">
                         <div class="flex flex-col gap-lg" id="branchesListView">
                                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-base">
                                         <div>
-                                                <h1 class="font-display-lg text-display-lg text-ink-primary">Manajemen
+                                                <h1
+                                                        class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
+                                                        Manajemen
                                                         Kamar &amp; Cabang</h1>
                                                 <div class="flex flex-wrap gap-md mt-sm">
                                                         <div
@@ -296,7 +78,7 @@
                                         <!-- Right Column: Branch Details -->
                                         <div class="flex-1 flex flex-col gap-lg w-full">
                                                 <div
-                                                        class="bg-surface-canvas rounded-2xl p-lg shadow-sm border border-border-hairline">
+                                                        class="bg-surface-canvas rounded-xl p-lg shadow-sm border border-border-hairline">
                                                         <div
                                                                 class="flex flex-col md:flex-row justify-between items-start md:items-center gap-base mb-lg">
                                                                 <div>
@@ -311,13 +93,13 @@
                                                                                 class="px-base py-2 border border-border-strong text-ink-primary font-button-md rounded-lg hover:bg-surface-soft transition-colors">Edit
                                                                                 Info Cabang</button>
                                                                         <button id="hapusCabangBtn"
-                                                                                class="px-base py-2 border border-error text-error font-button-md rounded-lg hover:bg-error-container transition-colors flex items-center gap-xs">
+                                                                                class="px-base py-sm border border-error text-error font-button-md rounded-lg hover:bg-error-container transition-colors flex items-center gap-xs">
                                                                                 <span
                                                                                         class="material-symbols-outlined text-[20px]">delete</span>
                                                                                 Hapus Cabang
                                                                         </button>
                                                                         <button id="openAddRoomBtn"
-                                                                                class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors flex items-center gap-xs shadow-sm">
+                                                                                class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors flex items-center gap-xs shadow-sm">
                                                                                 <span
                                                                                         class="material-symbols-outlined">add</span>
                                                                                 Tambah Kamar
@@ -327,14 +109,14 @@
                                                         <div class="flex flex-col md:flex-row gap-md items-center">
                                                                 <div class="relative flex-1 w-full">
                                                                         <input id="searchRoom"
-                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm pl-10 pr-base text-body-sm focus:ring-primary"
                                                                                 placeholder="Cari nomor kamar..."
                                                                                 type="text">
                                                                         <span
                                                                                 class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">search</span>
                                                                 </div>
                                                                 <select id="filterStatusKamar"
-                                                                        class="w-full md:w-48 h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary">
+                                                                        class="w-full md:w-48 h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
                                                                         <option value="semua">Semua Status</option>
                                                                         <option value="tersedia">Tersedia</option>
                                                                         <option value="terisi">Terisi</option>
@@ -349,13 +131,13 @@
                                 </div>
                         </div>
                         <!-- Page: Tambah Kamar Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
+                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
                                 id="addRoomPage">
                                 <div
                                         class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
                                         <h3 class="font-display-md text-display-md text-ink-primary">Tambah Kamar Baru
                                         </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full"
+                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
                                                 id="closeAddRoomBtn">
                                                 <span class="material-symbols-outlined">close</span>
                                         </button>
@@ -368,7 +150,7 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Pilih
                                                                         Cabang</label>
                                                                 <select id="addRoomBranchSelect"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all">
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
                                                                 </select>
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
@@ -376,7 +158,7 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Nomor/Nama
                                                                         Kamar</label>
                                                                 <input id="addRoomNumberInput"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
                                                                         placeholder="e.g., 101" type="text">
                                                         </div>
                                                 </div>
@@ -420,20 +202,20 @@
                                         class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
                                         <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
                                                 id="cancelAddRoomBtn">Batal</button>
-                                        <button class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
                                                 id="saveAddRoomBtn">Simpan
                                                 Data Kamar</button>
                                 </div>
                         </div>
                         <!-- Page: Tambah Cabang Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
+                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
                                 id="addBranchPage">
                                 <div
                                         class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
                                         <h3 class="font-display-md text-display-md text-ink-primary"
                                                 id="addBranchPageTitle">Tambah Cabang Baru
                                         </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full"
+                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
                                                 id="closeAddBranchBtn">
                                                 <span class="material-symbols-outlined">close</span>
                                         </button>
@@ -445,7 +227,7 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Nama
                                                                         Cabang</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
                                                                         placeholder="e.g., Pesona Kos" type="text"
                                                                         id="branchNameInput">
                                                         </div>
@@ -453,7 +235,7 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Alamat</label>
                                                                 <textarea
-                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-lg px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
                                                                         placeholder="Jl. Melati No. 45, Jakarta Selatan"
                                                                         rows="3" id="branchAddressInput"></textarea>
                                                         </div>
@@ -461,39 +243,37 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">URL
                                                                         Google Maps</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
                                                                         placeholder="https://maps.google.com/..."
                                                                         type="url" id="branchMapsUrlInput">
                                                         </div>
+                                                        <div class="flex flex-col gap-xs">
+                                                                <label
+                                                                        class="font-label-md text-label-md text-ink-muted">Deskripsi
+                                                                        Singkat</label>
+                                                                <textarea
+                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                        placeholder="Kos nyaman dengan lokasi strategis..."
+                                                                        rows="3" id="branchDescInput"></textarea>
+                                                        </div>
+                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
                                                                 <div class="flex flex-col gap-xs">
                                                                         <label
-                                                                                class="font-label-md text-label-md text-ink-muted">Deskripsi
-                                                                                Singkat</label>
-                                                                        <textarea
-                                                                                class="w-full bg-surface-soft border border-border-hairline rounded-lg px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
-                                                                                placeholder="Kos nyaman dengan lokasi strategis..."
-                                                                                rows="3" id="branchDescInput"></textarea>
+                                                                                class="font-label-md text-label-md text-ink-muted">Harga
+                                                                                Bulanan (Rp)</label>
+                                                                        <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 650000" type="number"
+                                                                                min="0" id="branchHargaBulananInput">
                                                                 </div>
-                                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
-                                                                        <div class="flex flex-col gap-xs">
-                                                                                <label
-                                                                                        class="font-label-md text-label-md text-ink-muted">Harga
-                                                                                        Bulanan (Rp)</label>
-                                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                                        placeholder="e.g., 650000"
-                                                                                        type="number" min="0"
-                                                                                        id="branchHargaBulananInput">
-                                                                        </div>
-                                                                        <div class="flex flex-col gap-xs">
-                                                                                <label
-                                                                                        class="font-label-md text-label-md text-ink-muted">Harga
-                                                                                        Harian (Rp)</label>
-                                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                                        placeholder="e.g., 100000"
-                                                                                        type="number" min="0"
-                                                                                        id="branchHargaHarianInput">
-                                                                        </div>
+                                                                <div class="flex flex-col gap-xs">
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted">Harga
+                                                                                Harian (Rp)</label>
+                                                                        <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 100000" type="number"
+                                                                                min="0" id="branchHargaHarianInput">
                                                                 </div>
+                                                        </div>
                                                 </div>
                                                 <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
                                                         <label class="font-label-md text-label-md text-ink-muted">Fasilitas
@@ -545,7 +325,7 @@
                                                 <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
                                                         <label class="font-label-md text-label-md text-ink-muted">Fasilitas
                                                                 Kamar</label>
-                                                        <p class="font-body-sm text-[12px] text-ink-muted -mt-xs">Berlaku
+                                                        <p class="font-body-sm text-badge text-ink-muted -mt-xs">Berlaku
                                                                 untuk seluruh kamar di cabang ini.</p>
                                                         <div class="grid grid-cols-2 md:grid-cols-3 gap-sm"
                                                                 id="roomFacilitiesGroup">
@@ -557,21 +337,24 @@
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Kasur Springbed">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm">Kasur Springbed</span>
+                                                                                type="checkbox"
+                                                                                data-facility="Kasur Springbed">
+                                                                        <span class="font-body-sm text-body-sm">Kasur
+                                                                                Springbed</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Meja Kerja">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm">Meja Kerja</span>
+                                                                                type="checkbox"
+                                                                                data-facility="Meja Kerja">
+                                                                        <span class="font-body-sm text-body-sm">Meja
+                                                                                Kerja</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Kamar Mandi Dalam">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm">Kamar Mandi Dalam</span>
+                                                                                type="checkbox"
+                                                                                data-facility="Kamar Mandi Dalam">
+                                                                        <span class="font-body-sm text-body-sm">Kamar
+                                                                                Mandi Dalam</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
@@ -581,15 +364,17 @@
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Water Heater">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm">Water Heater</span>
+                                                                                type="checkbox"
+                                                                                data-facility="Water Heater">
+                                                                        <span class="font-body-sm text-body-sm">Water
+                                                                                Heater</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Kulkas Mini">
-                                                                        <span
-                                                                                class="font-body-sm text-body-sm">Kulkas Mini</span>
+                                                                                type="checkbox"
+                                                                                data-facility="Kulkas Mini">
+                                                                        <span class="font-body-sm text-body-sm">Kulkas
+                                                                                Mini</span>
                                                                 </label>
                                                         </div>
                                                 </div>
@@ -599,19 +384,19 @@
                                         class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
                                         <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
                                                 id="cancelAddBranchBtn">Batal</button>
-                                        <button class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
                                                 id="saveAddBranchBtn">Simpan
                                                 Data Cabang</button>
                                 </div>
                         </div>
                         <!-- Page: Edit Kamar (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
+                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
                                 id="editRoomPage">
                                 <div
                                         class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
                                         <h3 class="font-display-md text-display-md text-ink-primary">Edit Data Kamar
                                         </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full"
+                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
                                                 id="closeEditRoomBtn">
                                                 <span class="material-symbols-outlined">close</span>
                                         </button>
@@ -624,9 +409,9 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Kode
                                                                         Kamar</label>
                                                                 <input id="editRoomCodeInput" readonly
-                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-lg px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
                                                                         type="text">
-                                                                <p class="font-body-sm text-[12px] text-ink-muted">Kode
+                                                                <p class="font-body-sm text-badge text-ink-muted">Kode
                                                                         tidak dapat diubah karena dipakai sebagai acuan
                                                                         pada data transaksi.</p>
                                                         </div>
@@ -634,7 +419,7 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Cabang</label>
                                                                 <input id="editRoomBranchInput" readonly
-                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-lg px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
                                                                         type="text">
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
@@ -642,7 +427,7 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Nomor/Nama
                                                                         Kamar</label>
                                                                 <input id="editRoomNumberInput"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
                                                                         placeholder="e.g., 101" type="text">
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
@@ -650,11 +435,11 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Status
                                                                         Kamar</label>
                                                                 <select id="editRoomStatusSelect"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all">
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
                                                                         <option value="tersedia">Tersedia</option>
                                                                         <option value="terisi">Terisi</option>
                                                                 </select>
-                                                                <p class="font-body-sm text-[12px] text-ink-muted">Ubah
+                                                                <p class="font-body-sm text-badge text-ink-muted">Ubah
                                                                         hanya bila status di sistem tidak sesuai kondisi
                                                                         sebenarnya di lapangan.</p>
                                                         </div>
@@ -665,7 +450,7 @@
                                         class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
                                         <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
                                                 id="cancelEditRoomBtn">Batal</button>
-                                        <button class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
                                                 id="saveEditRoomBtn">Simpan Perubahan</button>
                                 </div>
                         </div>
@@ -678,7 +463,8 @@
                 id="konfirmasiModal">
                 <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
                         <div class="px-lg pt-lg pb-md text-center">
-                                <div class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center mx-auto mb-md">
+                                <div
+                                        class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center mx-auto mb-md">
                                         <span class="material-symbols-outlined text-error text-[32px]">warning</span>
                                 </div>
                                 <h3 class="font-display-md text-display-md text-ink-primary font-bold"

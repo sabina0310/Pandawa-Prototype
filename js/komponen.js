@@ -125,7 +125,19 @@ function siapkanLaci() {
   const sidebar = wadah.querySelector("aside");
   if (!sidebar) return;
 
-  // Latar gelap dibuat sekali, dipakai berulang
+  // -------------------------------------------------------------------
+  // Latar gelap dibuat sekali, dipakai berulang.
+  //
+  // URUTAN LAPISAN ITU PENTING. Tirai memakai backdrop-blur, yang
+  // mengaburkan apa pun DI BELAKANGNYA. Bila tirai berada pada lapisan
+  // yang sama dengan sidebar (dua-duanya z-40), tirai menang karena
+  // disisipkan belakangan ke <body> -- akibatnya sidebar ikut terkena
+  // blur dan seluruh layar tampak kabur.
+  //
+  // Karena itu tirai ditahan di z-40, sedangkan sidebar dinaikkan ke
+  // z-50 khusus layar kecil (max-lg:z-50). Di layar lebar sidebar tetap
+  // z-40 seperti semula, sebab di sana tirai memang tidak dipakai.
+  // -------------------------------------------------------------------
   const tirai = document.createElement("div");
   tirai.className =
     "fixed inset-0 z-40 bg-ink-primary/50 backdrop-blur-sm opacity-0 pointer-events-none " +
@@ -134,8 +146,9 @@ function siapkanLaci() {
 
   // Di layar kecil sidebar digeser ke luar layar, siap didorong masuk
   sidebar.classList.remove("hidden");
-  sidebar.classList.add("flex", "max-lg:-translate-x-full", "transition-transform",
-                        "duration-300", "ease-halus", "max-lg:shadow-xl");
+  sidebar.classList.add("flex", "max-lg:z-50", "max-lg:-translate-x-full",
+                        "transition-transform", "duration-300", "ease-halus",
+                        "max-lg:shadow-xl");
 
   let terbuka = false;
 
@@ -231,8 +244,55 @@ export async function muatKomponen() {
   ]);
 
   tandaiAktif();
+
+  // -------------------------------------------------------------------
+  // Sapaan dan tombol keluar BARU BISA dipasang di sini.
+  //
+  // Sebelum sidebar dipisah menjadi partial, elemen #logoutBtn dan
+  // #sidebarWelcome sudah ada di berkas halaman, sehingga
+  // siapkanSidebar() yang dipanggil modul halaman langsung menemukannya.
+  //
+  // Sekarang keduanya datang lewat fetch, yang selesai JAUH SETELAH
+  // modul halaman berjalan. Akibatnya getElementById mengembalikan null,
+  // penjaga "if (tombolKeluar)" melewatinya tanpa error, dan tombol
+  // Logout tidak pernah dipasangi penanganan -- ditekan tidak terjadi
+  // apa-apa. Sapaan pun berhenti di "Welcome" tanpa nama.
+  //
+  // Dipanggil dengan wajibLogin = false karena modul halaman sudah
+  // lebih dulu mengurus pengalihan bagi pengunjung yang belum masuk.
+  // -------------------------------------------------------------------
+  const halamanBerpelindung = !!document.getElementById("sidebar-placeholder");
+
+  if (halamanBerpelindung) {
+    try {
+      const modul = await import("./customer-sidebar.js");
+      modul.siapkanSidebar(false);
+    } catch (err) {
+      console.error("Gagal menyiapkan sidebar:", err);
+    }
+  }
+
   siapkanLaci();
   tungguTopNav();
+
+  // -------------------------------------------------------------------
+  // Mencocokkan sesi peramban dengan akun di Firestore.
+  //
+  // Sesi tersimpan di localStorage, akunnya di Firestore. Keduanya bisa
+  // tidak sinkron -- misalnya setelah collection "customers" dihapus
+  // atau dibuat ulang saat seeding. Bila tidak diperiksa, peramban
+  // tetap merasa sudah masuk untuk akun yang sebenarnya tidak ada.
+  //
+  // Dijalankan paling akhir dan tanpa ditunggu, supaya isi halaman
+  // sudah tampil lebih dulu dan pemeriksaan ini tidak memperlambatnya.
+  // -------------------------------------------------------------------
+  import("./sesi-valid.js")
+    .then(function (modul) {
+      return modul.periksaSesi({ wajibLogin: halamanBerpelindung });
+    })
+    .catch(function (err) {
+      console.error("Gagal memeriksa keabsahan sesi:", err);
+    });
 }
 
 muatKomponen();
