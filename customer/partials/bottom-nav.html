@@ -1,0 +1,45 @@
+<!--
+    Bilah navigasi bawah untuk layar kecil.
+
+    Dipakai oleh cust-profile.html, profil-customer.html,
+    history-order.html, dan detail-pesanan.html melalui js/komponen.js.
+    Keempat halaman memuat bilah yang IDENTIK sebelumnya.
+
+    Seluruh tautannya dulu berisi href="#" sehingga tidak ke mana-mana.
+    Kini masing-masing diarahkan ke halaman yang memang sudah ada:
+
+        Home     -> cust-profile.html   (beranda penyewa)
+        Bookings -> history-order.html  (daftar pemesanan)
+        Extend   -> cust-profile.html   (formulir perpanjangan ada di sana)
+        Profile  -> profil-customer.html
+
+    Penandaan halaman aktif diatur js/komponen.js.
+-->
+<nav
+    class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-sm pt-sm bg-surface-canvas/95 backdrop-blur-md border-t border-border-hairline shadow-[0_-4px_16px_-6px_rgb(15_23_42_/_0.15)]"
+    style="padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));">
+
+    <a data-nav="beranda" href="cust-profile.html"
+        class="nav-bawah flex flex-col items-center justify-center w-1/4 py-xs rounded-lg tap-highlight-none transition-all duration-200 active:scale-95">
+        <span class="material-symbols-outlined mb-xxs">home</span>
+        <span class="font-label-md text-label-md">Home</span>
+    </a>
+
+    <a data-nav="riwayat" href="history-order.html"
+        class="nav-bawah flex flex-col items-center justify-center w-1/4 py-xs rounded-lg tap-highlight-none transition-all duration-200 active:scale-95">
+        <span class="material-symbols-outlined mb-xxs">bed</span>
+        <span class="font-label-md text-label-md">Bookings</span>
+    </a>
+
+    <a data-nav="perpanjang" href="cust-profile.html"
+        class="nav-bawah flex flex-col items-center justify-center w-1/4 py-xs rounded-lg tap-highlight-none transition-all duration-200 active:scale-95">
+        <span class="material-symbols-outlined mb-xxs">add_circle</span>
+        <span class="font-label-md text-label-md">Extend</span>
+    </a>
+
+    <a data-nav="profil" href="profil-customer.html"
+        class="nav-bawah flex flex-col items-center justify-center w-1/4 py-xs rounded-lg tap-highlight-none transition-all duration-200 active:scale-95">
+        <span class="material-symbols-outlined mb-xxs">person</span>
+        <span class="font-label-md text-label-md">Profile</span>
+    </a>
+</nav>

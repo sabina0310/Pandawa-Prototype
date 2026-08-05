@@ -25,6 +25,7 @@
 
 import { ambilSatuCabang, hitungBiaya, selisihHari } from '../js/customer-data.js';
 import { formatRupiah, ikonFasilitas } from '../js/format.js';
+import { KUNCI_TUJUAN, KUNCI_CABANG_DIBUKA } from '../js/customer-auth.js';
 
 // Menyimpan data cabang agar bisa dipakai saat menekan "Pesan Sekarang"
 let cabangAktif = null;
@@ -325,6 +326,12 @@ function pasangTombolPesan() {
 
     // --- Wajib login sebelum memesan ---
     if (!localStorage.getItem('customerSession')) {
+      // Titipkan alamat halaman ini supaya setelah login pengunjung
+      // dikembalikan ke cabang yang sedang dilihatnya, bukan ke beranda.
+      localStorage.setItem(KUNCI_TUJUAN,
+        'room-detail.html?cabang=' + encodeURIComponent(cabangAktif.id) +
+        '&tipe=' + encodeURIComponent(tipeSewa));
+
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       return;
@@ -420,6 +427,15 @@ async function muatDetail() {
     cabangAktif = cabang;
     tampilkanDetailCabang(cabang);
     document.title = cabang.nama_cabang + ' - Pilar Pandawa';
+
+    // Catat cabang yang sedang dibuka. Berguna untuk mengembalikan
+    // pengunjung ke tempat yang sama setelah ia login.
+    localStorage.setItem(KUNCI_CABANG_DIBUKA, JSON.stringify({
+      cabangId: cabang.id,
+      namaCabang: cabang.nama_cabang,
+      alamat: cabang.alamat,
+      waktuDibuka: new Date().toISOString()
+    }));
 
     aturLoading(false);
 

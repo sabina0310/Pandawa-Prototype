@@ -2,163 +2,22 @@
 <html lang="id" style="">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Pilar Pandawa - Reliable Boarding Management</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container": "#f0eded",
-                        "surface-dim": "#dcd9d9",
-                        "secondary-fixed-dim": "#3de273",
-                        "surface-container-highest": "#e5e2e1",
-                        "surface-soft": "#f7f7f7",
-                        "on-tertiary-container": "#ffd4a2",
-                        "outline-variant": "#c3c6d7",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "ink-secondary": "#3f3f3f",
-                        "on-primary-fixed": "#001849",
-                        "surface-canvas": "#ffffff",
-                        "border-hairline": "#dddddd",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-container": "#cfd9ff",
-                        "ink-primary": "#222222",
-                        "surface-container-lowest": "#ffffff",
-                        "status-occupied": "#ef4444",
-                        "on-secondary-fixed-variant": "#005322",
-                        "on-secondary-fixed": "#002109",
-                        "on-surface": "#1b1c1c",
-                        "secondary": "#006d2f",
-                        "on-surface-variant": "#424654",
-                        "primary-fixed": "#dae2ff",
-                        "secondary-container": "#5dfd8a",
-                        "whatsapp-green": "#25d366",
-                        "primary-container": "#0156d7",
-                        "on-tertiary-fixed": "#2a1700",
-                        "on-error-container": "#93000a",
-                        "surface-container-low": "#f6f3f2",
-                        "surface": "#fcf9f8",
-                        "on-secondary": "#ffffff",
-                        "primary": "#0040a6",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed": "#66ff8e",
-                        "ink-muted": "#6a6a6a",
-                        "inverse-surface": "#303030",
-                        "status-available": "#10b981",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "background": "#fcf9f8",
-                        "border-strong": "#c1c1c1",
-                        "whatsapp-hover": "#1da851",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "on-background": "#1b1c1c",
-                        "surface-variant": "#e5e2e1",
-                        "inverse-on-surface": "#f3f0ef",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "tertiary": "#674000",
-                        "status-warning": "#f59e0b",
-                        "surface-tint": "#0055d5",
-                        "tertiary-fixed": "#ffddb8",
-                        "on-primary": "#ffffff",
-                        "surface-container-high": "#eae7e7",
-                        "on-error": "#ffffff",
-                        "on-secondary-container": "#007232",
-                        "outline": "#737686",
-                        "tertiary-container": "#875500",
-                        "error": "#ba1a1a",
-                        "inverse-primary": "#b2c5ff",
-                        "surface-bright": "#fcf9f8"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "base": "16px",
-                        "xl": "32px",
-                        "xxs": "2px",
-                        "md": "12px",
-                        "section": "64px",
-                        "xs": "4px",
-                        "lg": "24px",
-                        "sm": "8px"
-                    },
-                    "fontFamily": {
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "label-md": ["Plus Jakarta Sans"],
-                        "badge": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }]
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .glass-panel {
-                @apply bg-surface-canvas/90 backdrop-blur-md border border-border-hairline shadow-sm;
-            }
-            .hero-title {
-                font-size: clamp(3rem, 8vw, 6rem);
-                line-height: 1.1;
-                letter-spacing: -0.02em;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pilar Pandawa - Reliable Boarding Management</title>
+
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+<script src="js/head-bersama.js"></script>
 </head>
 
 <body class="bg-surface-canvas text-on-surface font-body-md antialiased min-h-screen flex flex-col pt-16">
     <!-- Memuat Top Nav dari file terpisah -->
     <div id="top-nav-placeholder"></div>
-    <script>
-        fetch('customer/top-nav.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('top-nav-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
+    <!-- Memuat top nav sekaligus mengatur tombol Masuk / ikon profil -->
+    <script type="module" src="js/customer-topnav.js"></script>
     <!-- Main Content -->
     <main class="flex-grow flex flex-col w-full relative">
         <!-- Hero Section -->
@@ -268,7 +127,7 @@
                 </div>
                 <!-- Rental Types Section -->
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-xl max-w-5xl mx-auto mb-section border-t border-border-hairline pt-xl">
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-lg sm:gap-xl max-w-5xl mx-auto mb-section border-t border-border-hairline pt-xl">
                     <!-- Sewa Harian -->
                     <div class="flex flex-col items-center text-center gap-sm">
                         <div class="w-16 h-16 rounded-full bg-surface-soft flex items-center justify-center mb-sm">
@@ -303,7 +162,7 @@
                             cabang kami.</p>
                     </div>
                     <!-- Grid katalog: diisi otomatis dari Firestore oleh js/index-katalog.js -->
-                    <div id="katalogPreviewGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-base">
+                    <div id="katalogPreviewGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-base">
                     </div>
                     <div class="mt-xl text-center">
                         <button id="viewAllRoomsBtn"
@@ -322,7 +181,7 @@
                         <p class="font-body-md text-body-md text-ink-secondary">Testimoni dari penghuni yang telah
                             merasakan kenyamanan di Pilar Pandawa.</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-lg">
                         <!-- Testimonial 1 -->
                         <div class="bg-surface-soft p-xl rounded-2xl flex flex-col gap-lg">
                             <div class="flex gap-xs text-status-warning">
@@ -400,25 +259,8 @@
             </div>
         </div>
     </main>
-    <!-- Memuat footer dari file terpisah -->
-    <div id="footer-placeholder"></div>
-    <script>
-        fetch('customer/footer.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('footer-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
+    <!-- Footer: customer/partials/footer.html (dimuat js/komponen.js) -->
+<div id="footer-placeholder"></div>
     <!-- Floating WhatsApp Widget -->
     <a aria-label="Konsultasi Petugas via WhatsApp" href="https://wa.me/6281234567890" target="_blank"
         rel="noopener noreferrer"
@@ -475,18 +317,17 @@
             // Catatan: klik pada kartu katalog ditangani oleh js/index-katalog.js
             // karena kartunya dibuat setelah data Firestore selesai dimuat.
 
-            const loginNavBtn = document.getElementById('loginNavBtn');
-            const profileNavBtn = document.getElementById('profileNavBtn');
-            if (localStorage.getItem('customerSession')) {
-                loginNavBtn.classList.add('hidden');
-                profileNavBtn.classList.remove('hidden');
-                profileNavBtn.classList.add('flex');
-            }
+            // Catatan: tombol Masuk / ikon profil pada top nav
+            // ditangani js/customer-topnav.js
         });
     </script>
 
     <!-- Mengambil data katalog dari Firestore -->
     <script type="module" src="js/index-katalog.js"></script>
+
+<!-- Pemuat komponen bersama (footer) -->
+<script type="module" src="js/komponen.js"></script>
+
 </body>
 
 </html>

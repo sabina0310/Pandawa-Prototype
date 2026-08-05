@@ -59,7 +59,7 @@ const {
 // Untuk demo yang lebih cepat, ubah menjadi 1. Untuk jeda lebih
 // panjang, ubah menjadi 5, 10, dan seterusnya.
 // =====================================================================
-const JEDA_MENIT = 3;
+const JEDA_MENIT = 1;
 
 // =====================================================================
 // [B] ISI PESAN WHATSAPP UJI  <-- UBAH KALIMATNYA DI SINI

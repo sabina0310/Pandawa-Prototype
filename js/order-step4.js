@@ -13,6 +13,7 @@
  */
 
 import { formatRupiah } from '../js/format.js';
+import { infoMetode } from '../js/metode-bayar.js';
 
 function isiTeks(id, nilai) {
   const elemen = document.getElementById(id);
@@ -45,16 +46,26 @@ function formatWaktuMidtrans(teksWaktu) {
          ', ' + jam + ':' + menit + ' WIB';
 }
 
-/** Menerjemahkan kode metode pembayaran Midtrans ke bahasa Indonesia. */
-function labelMetodeBayar(kode) {
+/**
+ * Menyebutkan metode pembayaran yang dipakai.
+ *
+ * Yang diutamakan adalah field "metode" dari /api/create-transaction
+ * karena menyebut banknya sekaligus (misalnya "BCA Virtual Account").
+ * payment_type dari Midtrans hanya dipakai sebagai cadangan, sebab
+ * nilainya cuma "bank_transfer" tanpa keterangan bank.
+ */
+function labelMetodeBayar(dataPembayaran) {
+  if (dataPembayaran && dataPembayaran.metode) {
+    return infoMetode(dataPembayaran.metode).label;
+  }
+
   const peta = {
     qris: 'QRIS',
-    bank_transfer: 'Transfer Bank',
-    gopay: 'E-Wallet (GoPay)',
+    bank_transfer: 'Virtual Account',
     echannel: 'Virtual Account',
     credit_card: 'Kartu Kredit'
   };
-  return peta[kode] || 'QRIS';
+  return peta[dataPembayaran && dataPembayaran.payment_type] || 'QRIS';
 }
 
 // =====================================================================
@@ -69,7 +80,7 @@ function mulai() {
   if (dataPembayaran) {
     isiTeks('invoiceIdValue', dataPembayaran.order_id || '-');
     isiTeks('transactionDateValue', formatWaktuMidtrans(dataPembayaran.settlement_time));
-    isiTeks('paymentMethodValue', labelMetodeBayar(dataPembayaran.payment_type));
+    isiTeks('paymentMethodValue', labelMetodeBayar(dataPembayaran));
     isiTeks('paymentStatusValue', 'LUNAS');
   }
 
@@ -98,7 +109,6 @@ function mulai() {
     isiTeks('hargaSewaLabel',
       'Harga Sewa (' + bookingData.durasi + ' ' + bookingData.satuanDurasi + ')');
     isiTeks('hargaSewaValue', formatRupiah(bookingData.hargaSewa));
-    isiTeks('biayaLayananValue', formatRupiah(bookingData.biayaLayanan));
     isiTeks('totalPembayaranValue', formatRupiah(bookingData.total));
 
     const gambar = document.querySelector('.relative.h-48 img');

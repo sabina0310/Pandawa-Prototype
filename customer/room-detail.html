@@ -5,157 +5,19 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Room Detail - Pilar Pandawa</title>
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container": "#f0eded",
-                        "surface-dim": "#dcd9d9",
-                        "secondary-fixed-dim": "#3de273",
-                        "surface-container-highest": "#e5e2e1",
-                        "surface-soft": "#f7f7f7",
-                        "on-tertiary-container": "#ffd4a2",
-                        "outline-variant": "#c3c6d7",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "ink-secondary": "#3f3f3f",
-                        "on-primary-fixed": "#001849",
-                        "surface-canvas": "#ffffff",
-                        "border-hairline": "#dddddd",
-                        "on-tertiary": "#ffffff",
-                        "on-primary-container": "#cfd9ff",
-                        "ink-primary": "#222222",
-                        "surface-container-lowest": "#ffffff",
-                        "status-occupied": "#ef4444",
-                        "on-secondary-fixed-variant": "#005322",
-                        "on-secondary-fixed": "#002109",
-                        "on-surface": "#1b1c1c",
-                        "secondary": "#006d2f",
-                        "on-surface-variant": "#424654",
-                        "primary-fixed": "#dae2ff",
-                        "secondary-container": "#5dfd8a",
-                        "whatsapp-green": "#25d366",
-                        "primary-container": "#0156d7",
-                        "on-tertiary-fixed": "#2a1700",
-                        "on-error-container": "#93000a",
-                        "surface-container-low": "#f6f3f2",
-                        "surface": "#fcf9f8",
-                        "on-secondary": "#ffffff",
-                        "primary": "#0040a6",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed": "#66ff8e",
-                        "ink-muted": "#6a6a6a",
-                        "inverse-surface": "#303030",
-                        "status-available": "#10b981",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "background": "#fcf9f8",
-                        "border-strong": "#c1c1c1",
-                        "whatsapp-hover": "#1da851",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "on-background": "#1b1c1c",
-                        "surface-variant": "#e5e2e1",
-                        "inverse-on-surface": "#f3f0ef",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "tertiary": "#674000",
-                        "status-warning": "#f59e0b",
-                        "surface-tint": "#0055d5",
-                        "tertiary-fixed": "#ffddb8",
-                        "on-primary": "#ffffff",
-                        "surface-container-high": "#eae7e7",
-                        "on-error": "#ffffff",
-                        "on-secondary-container": "#007232",
-                        "outline": "#737686",
-                        "tertiary-container": "#875500",
-                        "error": "#ba1a1a",
-                        "inverse-primary": "#b2c5ff",
-                        "surface-bright": "#fcf9f8"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "base": "16px",
-                        "xl": "32px",
-                        "xxs": "2px",
-                        "md": "12px",
-                        "section": "64px",
-                        "xs": "4px",
-                        "lg": "24px",
-                        "sm": "8px"
-                    },
-                    "fontFamily": {
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "label-md": ["Plus Jakarta Sans"],
-                        "badge": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }]
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .hero-title {
-                font-size: clamp(3rem, 8vw, 6rem);
-                line-height: 1.1;
-                letter-spacing: -0.02em;
-            }
-        }
-    </style>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../js/head-bersama.js"></script>
 </head>
 
 <body class="bg-surface-canvas text-on-surface font-body-md antialiased min-h-screen flex flex-col pt-16">
     <!-- Memuat Top Nav dari file terpisah -->
     <div id="top-nav-placeholder"></div>
-    <script>
-        fetch('top-nav.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('top-nav-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
+    <!-- Memuat top nav sekaligus mengatur tombol Masuk / ikon profil -->
+    <script type="module" src="../js/customer-topnav.js"></script>
     <!-- Main Content -->
     <main class="flex-grow flex flex-col w-full relative">
         <div class="relative z-20 bg-surface-canvas pt-section pb-section w-full">
@@ -244,7 +106,7 @@
                     <div>
                         <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
                             Ketentuan Sewa</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-lg">
                             <div
                                 class="flex flex-col items-center md:items-start text-center md:text-left gap-md p-lg bg-surface-soft rounded-2xl border border-border-hairline">
                                 <div
@@ -433,22 +295,17 @@
                                 <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
                                 Pesan Sekarang
                             </button>
-                            <button
-                                class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200">
+                            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+                                class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200 no-underline">
                                 <span class="material-symbols-outlined text-[20px]">chat</span>
                                 Tanya via WhatsApp
-                            </button>
+                            </a>
                         </div>
                         <div class="mt-lg pt-lg border-t border-border-hairline">
                             <div
                                 class="flex justify-between items-center mb-sm font-body-sm text-body-sm text-ink-secondary">
                                 <span class="" id="detailLabelHargaSewa">Harga Sewa (1 Hari)</span>
                                 <span class="" id="detailNilaiHargaSewa">Rp 100.000</span>
-                            </div>
-                            <div
-                                class="flex justify-between items-center mb-md font-body-sm text-body-sm text-ink-secondary">
-                                <span class="">Biaya Layanan</span>
-                                <span class="" id="detailBiayaLayanan">Rp 0</span>
                             </div>
                             <div
                                 class="flex justify-between items-center mt-md pt-md border-t border-border-hairline font-display-md text-display-md text-ink-primary">
@@ -461,33 +318,16 @@
             </div>
         </div>
     </main>
-    <!-- Memuat footer dari file terpisah -->
+    <!-- Footer: customer/partials/footer.html (dimuat js/komponen.js) -->
     <div id="footer-placeholder"></div>
-    <script>
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('footer-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
     <!-- Floating WhatsApp Widget -->
-    <button aria-label="Konsultasi Petugas via WhatsApp"
-        class="fixed z-50 flex items-center gap-sm bg-whatsapp-green hover:bg-whatsapp-hover text-on-primary rounded-full pr-md pl-sm py-sm shadow-lg hover:shadow-xl transition-all scale-95 active:scale-90 bottom-6 right-6">
+    <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+        class="fixed z-50 flex items-center gap-sm bg-whatsapp-green hover:bg-whatsapp-hover text-on-primary rounded-full pr-md pl-sm py-sm shadow-lg hover:shadow-xl transition-all scale-95 active:scale-90 bottom-6 right-6 no-underline">
         <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
             <span class="material-symbols-outlined text-white">chat</span>
         </div>
         <span class="font-button-md text-button-md hidden md:block">Konsultasi Petugas</span>
-    </button>
+    </a>
 
     <!-- Login Required Modal -->
     <div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="loginRequiredModal">
@@ -514,13 +354,8 @@
     <script>
         (function () {
             // Header: tombol "Masuk" diganti ikon profil bila sudah login
-            const loginNavBtn = document.getElementById('loginNavBtn');
-            const profileNavBtn = document.getElementById('profileNavBtn');
-            if (localStorage.getItem('customerSession')) {
-                loginNavBtn.classList.add('hidden');
-                profileNavBtn.classList.remove('hidden');
-                profileNavBtn.classList.add('flex');
-            }
+            // Catatan: tombol Masuk / ikon profil pada top nav
+            // ditangani js/customer-topnav.js
 
             // Modal "Anda Belum Login".
             // Modal ini DIBUKA oleh js/room-detail.js saat tombol pesan
@@ -545,6 +380,10 @@
 
     <!-- Mengambil detail kamar dari Firestore berdasarkan ?id= pada URL -->
     <script type="module" src="../js/room-detail.js"></script>
+
+
+    <!-- Pemuat komponen bersama (footer) -->
+    <script type="module" src="../js/komponen.js"></script>
 
 </body>
 

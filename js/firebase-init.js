@@ -36,3 +36,4 @@ export const db = getFirestore(app);
 export const COL_CABANG = "cabang";
 export const COL_KAMAR = "kamar";
 export const COL_TRANSAKSI = "transaksi_pemesanan";
+export const COL_CUSTOMERS = "customers";

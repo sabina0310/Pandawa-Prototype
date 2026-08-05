@@ -1,0 +1,30 @@
+<!--
+    Bilah atas untuk layar kecil pada halaman Portal Penyewa.
+
+    Dipakai oleh cust-profile.html, profil-customer.html,
+    history-order.html, dan detail-pesanan.html melalui js/komponen.js.
+    Keempat halaman memuat bilah yang IDENTIK sebelumnya.
+
+    Tombol "menu" dulu tidak melakukan apa pun. Kini tombol itu
+    membuka sidebar sebagai laci geser, sehingga tautan Beranda /
+    Profil Saya / Riwayat Pesanan bisa dijangkau di ponsel -- di layar
+    kecil sidebar memang tersembunyi (kelas "hidden lg:flex").
+-->
+<header
+    class="lg:hidden fixed top-0 left-0 w-full z-40 h-16 bg-surface-canvas/95 backdrop-blur-md border-b border-border-hairline">
+    <div class="flex justify-between items-center w-full h-full px-base max-w-7xl mx-auto">
+        <h1 class="flex items-center gap-xs text-display-md font-display-md text-primary-container">
+            <span class="material-symbols-outlined text-display-md"
+                style="font-variation-settings: 'FILL' 1;">location_city</span>
+            Pilar Pandawa</h1>
+        <div class="flex gap-xs">
+            <button type="button" aria-disabled="true" title="Fitur ini belum tersedia"
+                class="belum-tersedia text-on-surface-variant p-sm rounded-full">
+                <span class="material-symbols-outlined">notifications</span></button>
+            <button type="button" id="sidebarToggle" aria-expanded="false" aria-controls="sidebar-placeholder"
+                aria-label="Buka menu Portal Penyewa"
+                class="text-on-surface-variant p-sm rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+                <span class="material-symbols-outlined">menu</span></button>
+        </div>
+    </div>
+</header>

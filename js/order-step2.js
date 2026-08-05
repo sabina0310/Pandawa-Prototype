@@ -14,6 +14,7 @@
  */
 
 import { formatRupiah } from '../js/format.js';
+import { ambilMetode, infoMetode } from '../js/metode-bayar.js';
 
 // Biarkan kosong bila halaman dibuka lewat server lokal
 // (jalankan "node server.js" lalu buka http://localhost:3000).
@@ -97,7 +98,6 @@ function tampilkanRingkasan() {
   isiTeks('summaryHargaLabel',
     'Harga Sewa (' + bookingData.durasi + ' ' + bookingData.satuanDurasi + ')');
   isiTeks('summaryHargaValue', formatRupiah(bookingData.hargaSewa));
-  isiTeks('summaryBiayaLayanan', formatRupiah(bookingData.biayaLayanan));
   isiTeks('summaryTotalValue', formatRupiah(bookingData.total));
 
   const gambar = document.getElementById('summaryRoomImage');
@@ -108,7 +108,23 @@ function tampilkanRingkasan() {
 }
 
 // =====================================================================
-// 4. INTEGRASI MIDTRANS SANDBOX (QRIS)
+// 3b. MENAMPILKAN METODE PEMBAYARAN YANG DIPILIH DI LANGKAH 1
+// ---------------------------------------------------------------------
+// Halaman ini hanya menampilkan ulang pilihan yang tersimpan. Bila
+// pengunjung ingin menggantinya, tautan "Ubah" mengembalikannya ke
+// langkah 1 -- sehingga hanya ada SATU tempat pilihan itu ditentukan.
+// =====================================================================
+function tampilkanMetode() {
+  const m = infoMetode(ambilMetode());
+
+  const wadahLogo = document.getElementById('metodeLogo');
+  if (wadahLogo) wadahLogo.innerHTML = m.logo;
+
+  isiTeks('metodeLabel', m.label);
+}
+
+// =====================================================================
+// 4. INTEGRASI MIDTRANS SANDBOX (QRIS / VIRTUAL ACCOUNT)
 // =====================================================================
 
 function setLoadingTombol(sedangProses) {
@@ -120,7 +136,7 @@ function setLoadingTombol(sedangProses) {
   tombol.disabled = sedangProses;
   spinner.classList.toggle('hidden', !sedangProses);
   panah.classList.toggle('hidden', sedangProses);
-  teks.textContent = sedangProses ? 'Membuat kode QRIS...' : 'Lanjut ke Pembayaran';
+  teks.textContent = sedangProses ? 'Menyiapkan pembayaran...' : 'Lanjut ke Pembayaran';
 }
 
 function tampilkanError(pesan) {
@@ -136,7 +152,7 @@ function sembunyikanError() {
   kotak.classList.remove('flex');
 }
 
-async function prosesPembayaranQris() {
+async function prosesPembayaran() {
   sembunyikanError();
   setLoadingTombol(true);
 
@@ -148,12 +164,16 @@ async function prosesPembayaranQris() {
       throw new Error('Total pembayaran tidak valid. Silakan ulangi pemesanan dari halaman cabang.');
     }
 
+    // Metode dibaca dari pilihan yang tersimpan di langkah 1
+    const metode = ambilMetode();
+
     const dataPesanan = {
       nama: identityData.nama || 'Penyewa',
       whatsapp: identityData.whatsapp || '',
       kamar: bookingData.namaCabang + ' - Sewa ' +
              (bookingData.tipeSewa === 'bulanan' ? 'Bulanan' : 'Harian'),
-      total: total
+      total: total,
+      metode: metode
     };
 
     const tanggapan = await fetch(API_BASE + '/api/create-transaction', {
@@ -165,7 +185,8 @@ async function prosesPembayaranQris() {
     const hasil = await tanggapan.json();
 
     if (!tanggapan.ok) {
-      throw new Error(hasil.error || 'Gagal membuat transaksi QRIS.');
+      throw new Error(hasil.error ||
+        'Gagal membuat transaksi ' + infoMetode(metode).singkat + '.');
     }
 
     localStorage.setItem('dataPembayaran', JSON.stringify(hasil));
@@ -206,10 +227,11 @@ function mulai() {
 
   tampilkanIdentitas();
   tampilkanRingkasan();
+  tampilkanMetode();
 
   const tombol = document.getElementById('lanjutStep3Btn');
   if (tombol) {
-    tombol.addEventListener('click', prosesPembayaranQris);
+    tombol.addEventListener('click', prosesPembayaran);
   }
 }
 

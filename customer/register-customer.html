@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="id" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Portal Penyewa Login</title>
+<title>Daftar Akun Penyewa - Pilar Pandawa</title>
 
 <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -53,42 +53,64 @@
 <div class="max-w-[400px] mx-auto w-full">
 <!-- Header -->
 <header class="mb-xl text-center md:text-left">
-<h1 class="font-display-xl text-display-xl text-ink-primary mb-sm font-bold">Masuk Akun Penyewa</h1>
-<p class="font-body-md text-body-md text-on-surface-variant">Cari hunian Anda dengan mudah dalam satu portal.</p>
+<h1 class="font-display-xl text-display-xl text-ink-primary mb-sm font-bold">Daftar Akun Penyewa</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Buat akun untuk memesan kamar dan memantau riwayat sewa Anda.</p>
 </header>
 <!-- Form -->
 <!-- Kotak pesan hasil aksi (sukses / gagal) -->
 <div class="hidden" id="authAlert"></div>
-<form class="space-y-lg" id="loginForm">
-<!-- Username Input -->
+<!-- Form -->
+<form class="space-y-lg" id="registerForm">
+<!-- Nama Lengkap -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-ink-primary font-semibold" for="fullName">Nama Lengkap</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<input class="w-full pl-xl pr-md py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="fullName" placeholder="Masukkan nama sesuai KTP" required="" type="text">
+</div>
+</div>
+<!-- Username -->
 <div class="space-y-xs">
 <label class="font-label-md text-label-md text-ink-primary font-semibold" for="username">Username</label>
 <div class="relative group">
 <div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input class="w-full pl-xl pr-md py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="username" placeholder="Masukkan username" required="" type="text">
+<input class="w-full pl-xl pr-md py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="username" placeholder="Contoh: budi.santoso" required="" type="text">
 </div>
+<p class="font-body-sm text-[12px] text-ink-muted pt-xs">Minimal 4 karakter. Hanya huruf, angka, titik, dan garis bawah.</p>
 </div>
-<!-- Password Input -->
+<!-- Kata Sandi -->
 <div class="space-y-xs">
 <label class="font-label-md text-label-md text-ink-primary font-semibold" for="password">Kata Sandi</label>
 <div class="relative group">
 <div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full pl-xl pr-[48px] py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="password" placeholder="••••••••" required="" type="password">
+<input class="w-full pl-xl pr-[48px] py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="password" placeholder="Minimal 8 karakter" required="" type="password">
 <button class="absolute inset-y-0 right-0 flex items-center pr-md text-on-surface-variant hover:text-primary-container transition-colors" onclick="togglePassword()" type="button">
 <span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
 </button>
 </div>
-<div class="flex justify-end pt-xs">
-<a class="font-label-md text-label-md text-primary-container hover:underline font-semibold belum-tersedia" href="#" aria-disabled="true" title="Halaman ini belum tersedia">Lupa Kata Sandi?</a>
+</div>
+<!-- Konfirmasi Kata Sandi -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-ink-primary font-semibold" for="confirmPassword">Konfirmasi Kata Sandi</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</div>
+<input class="w-full pl-xl pr-[48px] py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="confirmPassword" placeholder="Ulangi kata sandi" required="" type="password">
+<button class="absolute inset-y-0 right-0 flex items-center pr-md text-on-surface-variant hover:text-primary-container transition-colors" onclick="toggleConfirmPassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="eye-icon-confirm">visibility</span>
+</button>
 </div>
 </div>
 <!-- Primary Action -->
-<button id="loginBtn" class="w-full py-md px-base bg-primary-container text-on-primary font-button-md text-button-md rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-sm mt-lg" type="submit">
-                    Masuk
+<button id="registerBtn" class="w-full py-md px-base bg-primary-container text-on-primary font-button-md text-button-md rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-sm mt-lg" type="submit">
+                    Daftar Sekarang
                 </button>
 </form>
 <!-- Divider -->
@@ -110,7 +132,7 @@
                 </a>
 <!-- Footer Link -->
 <p class="text-center font-body-sm text-body-sm text-ink-muted">
-                    Belum punya akun? <a class="text-primary-container font-semibold hover:underline" href="register-customer.html">Daftar di sini</a>
+                    Sudah punya akun? <a class="text-primary-container font-semibold hover:underline" href="login-customer.html">Login di sini</a>
 </p>
 </div>
 </div>
@@ -128,7 +150,19 @@
             }
         }
 
-        // Add subtle animation when focus state changes
+        function toggleConfirmPassword() {
+            const input = document.getElementById('confirmPassword');
+            const eyeIcon = document.getElementById('eye-icon-confirm');
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        // Efek halus saat isian mendapat fokus (sama seperti halaman login)
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.addEventListener('focus', () => {
@@ -141,9 +175,8 @@
         });
     </script>
 
-<!-- Logika login: memverifikasi ke collection "customers" -->
-<script type="module" src="../js/login-customer.js"></script>
-
+<!-- Logika registrasi ke Firestore -->
+<script type="module" src="../js/register-customer.js"></script>
 
 
 </body></html>

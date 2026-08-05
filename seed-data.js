@@ -265,16 +265,34 @@ function buatDataKamar() {
 // Komposisi 50 transaksi (sesuai ketentuan a-f):
 //   (a)  8 pending, belum dialokasikan
 //   (b)  8 settlement, belum dialokasikan  -> perlu tindakan admin
-//   (c) 15 settlement, sudah check-in      -> 6 di antaranya jatuh tempo dekat
+//   (c) 15 settlement bulanan, sudah check-in -> 6 di antaranya jatuh tempo dekat
+//   (g)  2 settlement harian, sudah check-in, CHECK-OUT HARI INI
 //   (e)  8 sudah check-out                 -> riwayat
-//   (f) 11 gagal (deny/expire/cancel)
+//   (f)  9 gagal (deny/expire/cancel)
 // =====================================================================
 const JUMLAH_PENDING = 8;
 const JUMLAH_BELUM_ALOKASI = 8;
 const JUMLAH_CHECKED_IN = 15;
 const JUMLAH_JATUH_TEMPO = 6; // bagian dari JUMLAH_CHECKED_IN
 const JUMLAH_CHECKED_OUT = 8;
-const JUMLAH_GAGAL = 11;
+const JUMLAH_GAGAL = 9;
+
+// ---------------------------------------------------------------------
+// DATA TERJAMIN UNTUK PENGUJIAN NOTIFIKASI (api/cron.js)
+// ---------------------------------------------------------------------
+// Tanpa ini, kedua job notifikasi bisa saja menemukan nol kandidat
+// karena tanggalnya diacak. Angka di bawah menjamin selalu ada bahan
+// uji begitu seeding selesai:
+//
+//   JUMLAH_TEPAT_H7  -> sewa bulanan yang check-out TEPAT 7 hari lagi
+//                       (bahan uji job bulanan)
+//   JUMLAH_HARIAN_HARI_INI -> sewa harian yang check-out HARI INI
+//                       (bahan uji job harian)
+//
+// Keduanya berstatus checked_in, karena notifikasi hanya masuk akal
+// untuk penyewa yang memang sedang menempati kamar.
+const JUMLAH_TEPAT_H7 = 2;          // bagian dari JUMLAH_JATUH_TEMPO
+const JUMLAH_HARIAN_HARI_INI = 2;   // blok tersendiri
 
 function buatDataTransaksi(daftarKamar) {
   const daftarTransaksi = [];
@@ -296,7 +314,7 @@ function buatDataTransaksi(daftarKamar) {
 
     const waktuTransaksi = opsi.transaction_time;
 
-    return {
+    const dokumen = {
       // order_id memakai pola yang sama dengan api/create-transaction.js
       // ("PP-" + waktu), ditambah nomor urut agar dijamin unik
       _id: "PP-" + waktuTransaksi.getTime() + "-" + String(nomorUrut).padStart(2, "0"),
@@ -321,33 +339,31 @@ function buatDataTransaksi(daftarKamar) {
 
       status_checkin: opsi.status_checkin,
       tanggal_aktual_checkin: opsi.tanggal_aktual_checkin ? Timestamp.fromDate(opsi.tanggal_aktual_checkin) : null,
-      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null,
-
-      // ---------------------------------------------------------------
-      // Field pendukung notifikasi WhatsApp (dipakai folder /api)
-      // ---------------------------------------------------------------
-      // Ketiganya WAJIB ada di setiap dokumen. Firestore tidak akan
-      // mengembalikan dokumen yang field-nya tidak ada saat query
-      // memakai where(...), jadi dokumen tanpa field ini akan luput
-      // dari cron notifikasi.
-
-      // false = penyewa belum memperpanjang sewa.
-      // Cron tenggat hanya memproses yang masih false.
-      status_perpanjangan: false,
-
-      // Penanda agar tiap tahap pengingat hanya terkirim satu kali.
-      // Menambah milestone baru (misalnya h14) berarti menambah
-      // kuncinya di sini juga.
-      status_notifikasi_tenggat: {
-        h7: false,
-        h3: false,
-        h1: false
-      },
-
-      // Khusus simulasi pengujian UAT (api/cron-uji-notifikasi.js).
-      // Boleh dihapus setelah pengujian selesai.
-      status_notifikasi_uji: false
+      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null
     };
+
+    // -----------------------------------------------------------------
+    // status_perpanjangan - KHUSUS SEWA BULANAN
+    // -----------------------------------------------------------------
+    // Menyimpan jawaban penyewa saat ditanya apakah akan lanjut sewa.
+    // Memakai teks (bukan boolean) karena keadaannya ada TIGA, sedangkan
+    // boolean hanya bisa membedakan dua:
+    //
+    //   "belum"        -> belum menjawab   -> masih perlu diingatkan
+    //   "perpanjang"   -> lanjut sewa      -> tidak perlu diingatkan
+    //   "tidak_lanjut" -> berhenti menyewa -> tidak perlu diingatkan
+    //
+    // Sewa harian tidak memakai field ini karena tidak ada perpanjangan.
+    if (opsi.tipe_sewa === "bulanan") {
+      dokumen.status_perpanjangan = "belum";
+    }
+
+    // Catatan: penanda "sudah dikirimi notifikasi" TIDAK disimpan di
+    // sini. Riwayat pengiriman dicatat pada collection terpisah
+    // "log_notifikasi" (lihat api/cron.js), sehingga dokumen transaksi
+    // tetap berisi data transaksi saja.
+
+    return dokumen;
   }
 
   // Menentukan lama sewa sesuai tipe
@@ -441,10 +457,18 @@ function buatDataTransaksi(daftarKamar) {
     // 6 transaksi pertama -> 1 sampai 7 hari lagi (mendekati jatuh tempo).
     // Sisanya -> lebih lama, tapi tidak boleh melebihi masa sewanya sendiri
     // supaya tanggal check-in tetap jatuh di masa lalu.
+    // Beberapa transaksi pertama sengaja dibuat TEPAT 7 hari lagi agar
+    // job notifikasi bulanan selalu punya kandidat saat diuji.
     const batasAman = Math.min(60, durasi * 28 - 2);
-    const hariMenujuCheckout = (i < JUMLAH_JATUH_TEMPO)
-      ? acakAngka(1, 7)
-      : acakAngka(8, batasAman);
+    let hariMenujuCheckout;
+
+    if (i < JUMLAH_TEPAT_H7) {
+      hariMenujuCheckout = 7;
+    } else if (i < JUMLAH_JATUH_TEMPO) {
+      hariMenujuCheckout = acakAngka(1, 7);
+    } else {
+      hariMenujuCheckout = acakAngka(8, batasAman);
+    }
 
     const tanggalCheckout = geserHari(hariMenujuCheckout, 12);
     const tanggalCheckin = mundurDurasi(tanggalCheckout, tipeSewa, durasi);
@@ -470,6 +494,50 @@ function buatDataTransaksi(daftarKamar) {
       order_amount: hitungNominal(cabang, tipeSewa, durasi),
       cabang_id: kamar.cabang_id,
       kamar_id: kamar._id,             // sudah dialokasikan admin
+      tipe_sewa: tipeSewa,
+      tanggal_checkin: tanggalCheckin,
+      tanggal_checkout: tanggalCheckout,
+      status_checkin: "checked_in",
+      tanggal_aktual_checkin: aktualCheckin,
+      tanggal_aktual_checkout: null
+    }));
+  }
+
+  // -------------------------------------------------------------
+  // (g) SEWA HARIAN YANG CHECK-OUT HARI INI
+  //     Bahan uji untuk job notifikasi harian pada api/cron.js.
+  //     Penyewa sedang menempati kamar dan harus keluar hari ini.
+  // -------------------------------------------------------------
+  for (let i = 0; i < JUMLAH_HARIAN_HARI_INI; i++) {
+    const kamar = kamarTersisa.pop();
+    const cabang = petaCabang[kamar.cabang_id];
+
+    const tipeSewa = "harian";
+    const durasi = acakAngka(1, 5); // menginap 1-5 malam
+
+    // Check-out hari ini pukul 12 siang, check-in beberapa hari lalu
+    const tanggalCheckout = geserHari(0, 12);
+    const tanggalCheckin = mundurDurasi(tanggalCheckout, tipeSewa, durasi);
+
+    const waktuTransaksi = new Date(tanggalCheckin);
+    waktuTransaksi.setDate(waktuTransaksi.getDate() - acakAngka(1, 5));
+    waktuTransaksi.setHours(acakAngka(8, 20), acakAngka(0, 59), 0, 0);
+
+    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
+
+    const aktualCheckin = new Date(tanggalCheckin);
+    aktualCheckin.setHours(acakAngka(13, 19), acakAngka(0, 59), 0, 0);
+
+    // Masih dihuni sampai siang ini
+    kamar.tersedia = false;
+
+    daftarTransaksi.push(buatTransaksi({
+      transaction_status: "settlement",
+      transaction_time: waktuTransaksi,
+      settlement_time: waktuSettlement,
+      order_amount: hitungNominal(cabang, tipeSewa, durasi),
+      cabang_id: kamar.cabang_id,
+      kamar_id: kamar._id,
       tipe_sewa: tipeSewa,
       tanggal_checkin: tanggalCheckin,
       tanggal_checkout: tanggalCheckout,

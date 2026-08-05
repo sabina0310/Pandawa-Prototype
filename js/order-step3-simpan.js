@@ -19,6 +19,43 @@
 
 import { simpanPesananKeFirestore } from '../js/customer-data.js';
 
+// =====================================================================
+// PEMICU DATA UJI (UAT)
+// ---------------------------------------------------------------------
+// Meminta server membuat satu pemesanan tambahan bertenggat H-7 memakai
+// data diri yang sama, supaya cron notifikasi dapat diuji tanpa perlu
+// menunggu tanggal jatuh tempo sungguhan.
+//
+// Seluruh keputusan aktif atau tidaknya ada di sisi server lewat
+// environment variable UAT_MODE. Bila tidak aktif, server menjawab
+// dengan sopan dan tidak ada data apa pun yang dibuat.
+//
+// Kegagalan di sini SENGAJA diabaikan: pemesanan asli sudah tersimpan,
+// jadi urusan pengujian tidak boleh mengganggu pengalaman pemesan.
+// =====================================================================
+async function buatDataUji(orderId, tulisStatusTambahan) {
+  try {
+    const tanggapan = await fetch('/api/uat-dummy-booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order_id: orderId })
+    });
+
+    const hasil = await tanggapan.json();
+
+    if (hasil.sukses) {
+      console.log('[UAT] Data uji dibuat:', hasil.dummy);
+      if (tulisStatusTambahan) {
+        tulisStatusTambahan('Mode pengujian aktif: pengingat WhatsApp akan segera dikirim.');
+      }
+    } else {
+      console.log('[UAT] Tidak ada data uji dibuat:', hasil.alasan || hasil.error);
+    }
+  } catch (err) {
+    console.log('[UAT] Pemicu data uji dilewati:', err.message);
+  }
+}
+
 /**
  * Dipanggil oleh step-3.html setelah status pembayaran menjadi lunas.
  * Sengaja tidak melempar error keluar: kegagalan menyimpan tidak boleh
@@ -52,6 +89,15 @@ window.simpanPesananKeDatabase = async function () {
     tulisStatus(hasil.dibuat
       ? 'Pesanan berhasil dicatat. Admin akan menentukan nomor kamar Anda.'
       : 'Pesanan ini sudah tercatat sebelumnya.');
+
+    // Pemesanan asli SUDAH selesai di atas. Baris di bawah hanya
+    // dijalankan untuk keperluan pengujian dan tidak memengaruhi
+    // pemesanan yang barusan tersimpan.
+    if (hasil.dibuat) {
+      buatDataUji(hasil.order_id, function (pesanTambahan) {
+        tulisStatus('Pesanan berhasil dicatat. ' + pesanTambahan);
+      });
+    }
 
   } catch (err) {
     console.error('Gagal menyimpan pesanan ke Firestore:', err);

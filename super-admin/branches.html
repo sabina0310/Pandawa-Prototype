@@ -301,24 +301,33 @@
                                                                 class="flex flex-col md:flex-row justify-between items-start md:items-center gap-base mb-lg">
                                                                 <div>
                                                                         <h2 id="branchDetailName"
-                                                                                class="font-display-md text-display-md text-ink-primary">Memuat...</h2>
-                                                                        <p id="branchDetailAddress" class="text-ink-muted text-body-sm"></p>
+                                                                                class="font-display-md text-display-md text-ink-primary">
+                                                                                Memuat...</h2>
+                                                                        <p id="branchDetailAddress"
+                                                                                class="text-ink-muted text-body-sm"></p>
                                                                 </div>
                                                                 <div class="flex gap-sm">
-                                                                        <!-- <button id="editBranchInfoBtn"
+                                                                        <button id="editBranchInfoBtn"
                                                                                 class="px-base py-2 border border-border-strong text-ink-primary font-button-md rounded-lg hover:bg-surface-soft transition-colors">Edit
                                                                                 Info Cabang</button>
+                                                                        <button id="hapusCabangBtn"
+                                                                                class="px-base py-2 border border-error text-error font-button-md rounded-lg hover:bg-error-container transition-colors flex items-center gap-xs">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-[20px]">delete</span>
+                                                                                Hapus Cabang
+                                                                        </button>
                                                                         <button id="openAddRoomBtn"
                                                                                 class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors flex items-center gap-xs shadow-sm">
                                                                                 <span
                                                                                         class="material-symbols-outlined">add</span>
                                                                                 Tambah Kamar
-                                                                        </button> -->
+                                                                        </button>
                                                                 </div>
                                                         </div>
                                                         <div class="flex flex-col md:flex-row gap-md items-center">
                                                                 <div class="relative flex-1 w-full">
-                                                                        <input id="searchRoom" class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
+                                                                        <input id="searchRoom"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg pl-10 pr-base text-body-sm focus:ring-primary"
                                                                                 placeholder="Cari nomor kamar..."
                                                                                 type="text">
                                                                         <span
@@ -334,7 +343,8 @@
                                                         </div>
                                                 </div>
                                                 <!-- Room Grid -->
-                                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-base" id="roomGrid"></div>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-base"
+                                                        id="roomGrid"></div>
                                         </div>
                                 </div>
                         </div>
@@ -365,8 +375,9 @@
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Nomor/Nama
                                                                         Kamar</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., A-101" type="text">
+                                                                <input id="addRoomNumberInput"
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                        placeholder="e.g., 101" type="text">
                                                         </div>
                                                 </div>
                                                 <!-- <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
@@ -419,7 +430,8 @@
                                 id="addBranchPage">
                                 <div
                                         class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary" id="addBranchPageTitle">Tambah Cabang Baru
+                                        <h3 class="font-display-md text-display-md text-ink-primary"
+                                                id="addBranchPageTitle">Tambah Cabang Baru
                                         </h3>
                                         <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full"
                                                 id="closeAddBranchBtn">
@@ -434,59 +446,150 @@
                                                                         class="font-label-md text-label-md text-ink-muted">Nama
                                                                         Cabang</label>
                                                                 <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., Pesona Kos" type="text" id="branchNameInput">
+                                                                        placeholder="e.g., Pesona Kos" type="text"
+                                                                        id="branchNameInput">
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">Alamat</label>
-                                                                <textarea class="w-full bg-surface-soft border border-border-hairline rounded-lg px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
-                                                                        placeholder="Jl. Melati No. 45, Jakarta Selatan" rows="3" id="branchAddressInput"></textarea>
+                                                                <textarea
+                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-lg px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                        placeholder="Jl. Melati No. 45, Jakarta Selatan"
+                                                                        rows="3" id="branchAddressInput"></textarea>
                                                         </div>
                                                         <div class="flex flex-col gap-xs">
                                                                 <label
                                                                         class="font-label-md text-label-md text-ink-muted">URL
                                                                         Google Maps</label>
                                                                 <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="https://maps.google.com/..." type="url" id="branchMapsUrlInput">
+                                                                        placeholder="https://maps.google.com/..."
+                                                                        type="url" id="branchMapsUrlInput">
                                                         </div>
+                                                                <div class="flex flex-col gap-xs">
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted">Deskripsi
+                                                                                Singkat</label>
+                                                                        <textarea
+                                                                                class="w-full bg-surface-soft border border-border-hairline rounded-lg px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                                placeholder="Kos nyaman dengan lokasi strategis..."
+                                                                                rows="3" id="branchDescInput"></textarea>
+                                                                </div>
+                                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
+                                                                        <div class="flex flex-col gap-xs">
+                                                                                <label
+                                                                                        class="font-label-md text-label-md text-ink-muted">Harga
+                                                                                        Bulanan (Rp)</label>
+                                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                        placeholder="e.g., 650000"
+                                                                                        type="number" min="0"
+                                                                                        id="branchHargaBulananInput">
+                                                                        </div>
+                                                                        <div class="flex flex-col gap-xs">
+                                                                                <label
+                                                                                        class="font-label-md text-label-md text-ink-muted">Harga
+                                                                                        Harian (Rp)</label>
+                                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                        placeholder="e.g., 100000"
+                                                                                        type="number" min="0"
+                                                                                        id="branchHargaHarianInput">
+                                                                        </div>
+                                                                </div>
                                                 </div>
                                                 <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
                                                         <label class="font-label-md text-label-md text-ink-muted">Fasilitas
                                                                 Cabang</label>
-                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm" id="branchFacilitiesGroup">
+                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm"
+                                                                id="branchFacilitiesGroup">
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
                                                                                 type="checkbox" data-facility="WiFi">
-                                                                        <span class="font-body-sm text-body-sm">WiFi</span>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">WiFi</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Parkir Kendaraan">
+                                                                                type="checkbox"
+                                                                                data-facility="Parkir Kendaraan">
                                                                         <span class="font-body-sm text-body-sm">Parkir
                                                                                 Kendaraan</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="CCTV 24 Jam">
+                                                                                type="checkbox"
+                                                                                data-facility="CCTV 24 Jam">
                                                                         <span class="font-body-sm text-body-sm">CCTV 24
                                                                                 Jam</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Dapur Bersama">
+                                                                                type="checkbox"
+                                                                                data-facility="Dapur Bersama">
                                                                         <span class="font-body-sm text-body-sm">Dapur
                                                                                 Bersama</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
                                                                                 type="checkbox" data-facility="Laundry">
-                                                                        <span class="font-body-sm text-body-sm">Laundry</span>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Laundry</span>
                                                                 </label>
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Keamanan Malam">
+                                                                                type="checkbox"
+                                                                                data-facility="Keamanan Malam">
                                                                         <span class="font-body-sm text-body-sm">Keamanan
                                                                                 Malam</span>
+                                                                </label>
+                                                        </div>
+                                                </div>
+                                                <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
+                                                        <label class="font-label-md text-label-md text-ink-muted">Fasilitas
+                                                                Kamar</label>
+                                                        <p class="font-body-sm text-[12px] text-ink-muted -mt-xs">Berlaku
+                                                                untuk seluruh kamar di cabang ini.</p>
+                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm"
+                                                                id="roomFacilitiesGroup">
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="AC">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">AC</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="Kasur Springbed">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Kasur Springbed</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="Meja Kerja">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Meja Kerja</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="Kamar Mandi Dalam">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Kamar Mandi Dalam</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="TV">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">TV</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="Water Heater">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Water Heater</span>
+                                                                </label>
+                                                                <label class="flex items-center gap-sm">
+                                                                        <input class="text-primary focus:ring-primary rounded"
+                                                                                type="checkbox" data-facility="Kulkas Mini">
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm">Kulkas Mini</span>
                                                                 </label>
                                                         </div>
                                                 </div>
@@ -501,8 +604,98 @@
                                                 Data Cabang</button>
                                 </div>
                         </div>
+                        <!-- Page: Edit Kamar (Hidden by default) -->
+                        <div class="hidden flex-col bg-surface-canvas rounded-2xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
+                                id="editRoomPage">
+                                <div
+                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
+                                        <h3 class="font-display-md text-display-md text-ink-primary">Edit Data Kamar
+                                        </h3>
+                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full"
+                                                id="closeEditRoomBtn">
+                                                <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                </div>
+                                <div class="p-lg overflow-y-auto flex-1">
+                                        <form class="flex flex-col gap-lg" id="editRoomForm">
+                                                <div class="grid grid-cols-1 gap-base">
+                                                        <div class="flex flex-col gap-xs">
+                                                                <label
+                                                                        class="font-label-md text-label-md text-ink-muted">Kode
+                                                                        Kamar</label>
+                                                                <input id="editRoomCodeInput" readonly
+                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-lg px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                        type="text">
+                                                                <p class="font-body-sm text-[12px] text-ink-muted">Kode
+                                                                        tidak dapat diubah karena dipakai sebagai acuan
+                                                                        pada data transaksi.</p>
+                                                        </div>
+                                                        <div class="flex flex-col gap-xs">
+                                                                <label
+                                                                        class="font-label-md text-label-md text-ink-muted">Cabang</label>
+                                                                <input id="editRoomBranchInput" readonly
+                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-lg px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                        type="text">
+                                                        </div>
+                                                        <div class="flex flex-col gap-xs">
+                                                                <label
+                                                                        class="font-label-md text-label-md text-ink-muted">Nomor/Nama
+                                                                        Kamar</label>
+                                                                <input id="editRoomNumberInput"
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                        placeholder="e.g., 101" type="text">
+                                                        </div>
+                                                        <div class="flex flex-col gap-xs">
+                                                                <label
+                                                                        class="font-label-md text-label-md text-ink-muted">Status
+                                                                        Kamar</label>
+                                                                <select id="editRoomStatusSelect"
+                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-lg px-base text-body-sm focus:ring-primary outline-none transition-all">
+                                                                        <option value="tersedia">Tersedia</option>
+                                                                        <option value="terisi">Terisi</option>
+                                                                </select>
+                                                                <p class="font-body-sm text-[12px] text-ink-muted">Ubah
+                                                                        hanya bila status di sistem tidak sesuai kondisi
+                                                                        sebenarnya di lapangan.</p>
+                                                        </div>
+                                                </div>
+                                        </form>
+                                </div>
+                                <div
+                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
+                                        <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                                                id="cancelEditRoomBtn">Batal</button>
+                                        <button class="px-base py-2 bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                                id="saveEditRoomBtn">Simpan Perubahan</button>
+                                </div>
+                        </div>
                 </main>
         </div>
+
+
+        <!-- Modal Konfirmasi Hapus -->
+        <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+                id="konfirmasiModal">
+                <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+                        <div class="px-lg pt-lg pb-md text-center">
+                                <div class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center mx-auto mb-md">
+                                        <span class="material-symbols-outlined text-error text-[32px]">warning</span>
+                                </div>
+                                <h3 class="font-display-md text-display-md text-ink-primary font-bold"
+                                        id="konfirmasiJudul">Yakin ingin menghapus?</h3>
+                                <p class="font-body-sm text-body-sm text-ink-muted mt-xs" id="konfirmasiPesan"></p>
+                        </div>
+                        <div class="border-t border-border-hairline px-lg py-md flex items-center justify-end gap-sm">
+                                <button class="font-button-md text-button-md text-ink-secondary hover:bg-surface-variant transition-colors px-md py-sm rounded-lg"
+                                        id="konfirmasiBatal" type="button">Batal</button>
+                                <button class="font-button-md text-button-md bg-error text-on-error hover:opacity-90 transition-opacity px-md py-sm rounded-lg shadow-sm"
+                                        id="konfirmasiHapus" type="button">Ya, Hapus</button>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Kotak notifikasi hasil aksi (muncul sebentar lalu hilang) -->
+        <div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-sm items-end" id="notifikasiAksi"></div>
 
         <!-- Menyambungkan halaman ini ke data Firestore -->
         <script type="module" src="../js/admin-branches.js"></script>

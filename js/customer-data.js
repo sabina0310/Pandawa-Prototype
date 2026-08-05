@@ -193,8 +193,21 @@ export async function simpanPesananKeFirestore(bookingData, identityData, dataPe
   // Nomor WhatsApp disimpan dengan format yang sama seperti data seeder
   const kontak = "+62 " + String(identityData.whatsapp || "").replace(/^0+/, "");
 
+  // Username pemilik pesanan, diambil dari sesi login.
+  // Field inilah yang dipakai halaman Riwayat Pemesanan untuk menyaring
+  // "pesanan milik saya". Transaksi hasil seeding tidak memilikinya,
+  // sehingga memang tidak muncul di riwayat akun mana pun.
+  let pemilik = null;
+  try {
+    const sesi = JSON.parse(localStorage.getItem("customerSession") || "null");
+    if (sesi && sesi.username) pemilik = sesi.username;
+  } catch (err) {
+    pemilik = null;
+  }
+
   const dokumen = {
     order_id: orderId,
+    customer_username: pemilik,
     order_amount: Number(dataPembayaran.gross_amount || bookingData.total || 0),
     payment_type: dataPembayaran.payment_type || "qris",
     transaction_status: dataPembayaran.transaction_status || "settlement",
@@ -216,19 +229,19 @@ export async function simpanPesananKeFirestore(bookingData, identityData, dataPe
     tanggal_aktual_checkin: null,
     tanggal_aktual_checkout: null,
 
-    // Field pendukung notifikasi WhatsApp.
-    // Bentuknya harus sama persis dengan yang dibuat seed-data.js,
-    // karena Firestore tidak mengembalikan dokumen yang field-nya
-    // tidak ada saat query memakai where(...).
-    status_perpanjangan: false,
-    status_notifikasi_tenggat: { h7: false, h3: false, h1: false },
-    status_notifikasi_uji: false,
-
     // Penghuni tambahan hanya ada pada sewa bulanan.
     // Field ini tidak dipakai halaman admin mana pun, tapi disimpan
     // agar data yang diisi customer tidak hilang begitu saja.
     penghuni_tambahan: Array.isArray(identityData.tenants) ? identityData.tenants : []
   };
+
+  // Hanya sewa bulanan yang mengenal perpanjangan.
+  // Nilai "belum" berarti penyewa belum menjawab akan lanjut atau tidak,
+  // sehingga masih perlu diingatkan oleh cron notifikasi.
+  // Bentuknya harus sama persis dengan yang dibuat seed-data.js.
+  if (bookingData.tipeSewa === "bulanan") {
+    dokumen.status_perpanjangan = "belum";
+  }
 
   await setDoc(doc(db, COL_TRANSAKSI, orderId), dokumen);
 

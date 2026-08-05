@@ -1,0 +1,82 @@
+<!--
+    Sidebar Portal Penyewa.
+
+    Dipakai oleh cust-profile.html, profil-customer.html,
+    history-order.html, dan detail-pesanan.html melalui js/komponen.js.
+
+    Keempat halaman itu sebelumnya memuat sidebar yang IDENTIK;
+    perbedaannya hanya tautan mana yang ditandai sedang aktif.
+    Penandaan itu kini diatur js/komponen.js lewat atribut
+    data-halaman pada elemen pemanggil, sehingga cukup satu berkas.
+
+    Id "sidebarWelcome" dan "logoutBtn" dipertahankan persis karena
+    dipakai js/customer-sidebar.js.
+-->
+<aside
+    class="hidden lg:flex flex-col h-screen w-64 p-base gap-md bg-surface-canvas border-r border-border-hairline fixed left-0 top-0 z-40">
+
+    <div class="mb-lg pt-sm">
+        <h1 class="flex items-center gap-sm text-display-lg font-display-lg text-primary">
+            <span class="material-symbols-outlined text-display-lg text-primary-container"
+                style="font-variation-settings: 'FILL' 1;">location_city</span>
+            Pilar Pandawa</h1>
+    </div>
+
+    <!-- Kartu pengguna -->
+    <div class="flex items-center gap-md mb-lg p-md bg-surface-soft rounded-xl border border-border-hairline">
+        <img alt="User Portrait" class="w-12 h-12 rounded-full object-cover border-2 border-surface-canvas shadow-sm"
+            data-alt="A professional headshot of a young adult tenant in a bright, modern indoor setting, smiling warmly. Clean lighting, soft focus background, corporate but approachable style, aligning with a reliable property management platform aesthetic."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIZWr3b8ivdvyE04MkIJAbFCzCBTF_6_tiir8FzmbS83_bvKbXypBalTQnb-mlFJo1NPCSHqd5pMWYvxppM9564Rmy9ejGem0O0Pe_Qr4X3_o4-mikPnRuQU7SY_KJhkeTaV0YcohO_rSD6mUxzy3VSoC-P_5XXxdWGy0SMNM8cEs_G9RaHHHO2pbAY_e1k-Kneo16j44THfGDirVnA1lv58VBG98WN3WysnwuBY5d-MC2g3rFBUl4MnZN4v0Ow078JJXR2VdX-hg">
+        <div class="min-w-0">
+            <p class="font-title-md text-title-md text-on-surface truncate" id="sidebarWelcome">Welcome</p>
+        </div>
+    </div>
+
+    <!-- Tautan utama. Kelas aktifnya dipasang js/komponen.js -->
+    <nav class="flex-1 flex flex-col gap-xs">
+        <a data-nav="beranda" href="cust-profile.html"
+            class="nav-sidebar flex items-center gap-md rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200">
+            <span class="material-symbols-outlined">dashboard</span>Beranda</a>
+
+        <a data-nav="profil" href="profil-customer.html"
+            class="nav-sidebar flex items-center gap-md rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200">
+            <span class="material-symbols-outlined">person</span>Profil Saya</a>
+
+        <a data-nav="riwayat" href="history-order.html"
+            class="nav-sidebar flex items-center gap-md rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200">
+            <span class="material-symbols-outlined">receipt_long</span>Riwayat Pesanan</a>
+
+        <!-- <a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">event_available</span>
+                Active Bookings
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+                Payment History
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+                Extension Requests
+            </a> -->
+
+        <a href="#" aria-disabled="true" title="Halaman ini belum tersedia"
+            class="belum-tersedia flex items-center gap-md text-on-surface-variant rounded-lg px-md py-sm font-label-md text-label-md">
+            <span class="material-symbols-outlined">settings</span>
+            Settings
+        </a>
+    </nav>
+
+    <div class="mt-auto flex flex-col gap-sm pt-md border-t border-border-hairline">
+        <a id="sidebarSupportBtn" href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+            class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-sm px-md rounded-lg flex items-center justify-center gap-sm hover:bg-whatsapp-hover transition-colors shadow-sm no-underline">
+            <span class="material-symbols-outlined">chat</span>
+            Contact Support
+        </a>
+        <a id="logoutBtn"
+            class="flex items-center gap-md text-on-surface-variant hover:bg-error-container hover:text-error rounded-lg px-md py-sm font-label-md text-label-md transition-colors duration-200 cursor-pointer"
+            href="#">
+            <span class="material-symbols-outlined">logout</span>
+            Logout
+        </a>
+    </div>
+</aside>

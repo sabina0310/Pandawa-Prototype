@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profil Saya - Pilar Pandawa</title>
+
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+<script src="../js/head-bersama.js"></script>
+</head>
+<body data-halaman="profil" class="bg-surface-soft min-h-screen flex flex-col md:flex-row font-body-md text-on-surface">
+<!-- SideNavBar (Desktop) -->
+<!-- Sidebar: customer/partials/sidebar.html -->
+<div id="sidebar-placeholder"></div>
+<!-- TopNavBar (Mobile) -->
+<!-- Bilah atas layar kecil: customer/partials/top-bar-mobile.html -->
+<div id="top-bar-mobile-placeholder"></div>
+<!-- Main Content -->
+<main class="flex-1 w-full lg:ml-64 pt-16 lg:pt-0 p-base lg:p-xl max-w-5xl mx-auto flex flex-col gap-lg">
+<div class="flex flex-col gap-sm lg:mt-lg mt-base">
+<h2 class="font-display-xl text-display-xl text-on-surface">Profil Saya</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Data diri Anda sesuai yang didaftarkan. Ubah isinya lalu tekan Simpan Perubahan.</p>
+</div>
+<!-- Kotak pesan hasil aksi -->
+<div class="hidden" id="authAlert"></div>
+<section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm">
+<div class="p-base border-b border-border-hairline">
+<h3 class="font-title-md text-title-md text-on-surface">Data Akun</h3>
+</div>
+<div class="p-base flex flex-col gap-base">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface font-semibold" for="profilFullName">Nama Lengkap</label>
+<input class="w-full px-md py-md rounded-lg border font-body-md text-body-md transition-colors bg-surface border-border-strong text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20" id="profilFullName" type="text" placeholder="Masukkan nama lengkap">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface font-semibold" for="profilUsername">Username</label>
+<input class="w-full px-md py-md rounded-lg border font-body-md text-body-md transition-colors bg-surface-container-high border-border-hairline text-on-surface-variant cursor-not-allowed" id="profilUsername" type="text" placeholder="" readonly>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Username dipakai untuk masuk dan tidak dapat diubah.</p>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface font-semibold" for="profilDibuat">Terdaftar Sejak</label>
+<input class="w-full px-md py-md rounded-lg border font-body-md text-body-md transition-colors bg-surface-container-high border-border-hairline text-on-surface-variant cursor-not-allowed" id="profilDibuat" type="text" placeholder="" readonly>
+</div>
+</div>
+<div class="p-base border-t border-border-hairline">
+<h3 class="font-title-md text-title-md text-on-surface mb-xs">Ganti Kata Sandi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">Kosongkan kedua kolom ini bila tidak ingin mengganti kata sandi.</p>
+<div class="flex flex-col gap-base">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface font-semibold" for="profilPassword">Kata Sandi Baru</label>
+<input class="w-full px-md py-md rounded-lg border font-body-md text-body-md transition-colors bg-surface border-border-strong text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20" id="profilPassword" type="password" placeholder="Minimal 8 karakter">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface font-semibold" for="profilConfirmPassword">Konfirmasi Kata Sandi Baru</label>
+<input class="w-full px-md py-md rounded-lg border font-body-md text-body-md transition-colors bg-surface border-border-strong text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20" id="profilConfirmPassword" type="password" placeholder="Ulangi kata sandi baru">
+</div>
+</div>
+</div>
+<div class="p-base border-t border-border-hairline bg-surface-soft flex justify-end rounded-b-lg">
+<button id="simpanProfilBtn" class="bg-primary-container text-on-primary font-button-md text-button-md py-sm px-lg rounded-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                Simpan Perubahan
+            </button>
+</div>
+</section>
+<!-- Penyangga agar isi terakhir tidak tertutup bilah navigasi bawah -->
+<div class="h-24 lg:hidden" aria-hidden="true"></div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<!-- Bilah bawah layar kecil: customer/partials/bottom-nav.html -->
+<div id="bottom-nav-placeholder"></div>
+
+<!-- Memuat & menyimpan data profil -->
+<script type="module" src="../js/profil-customer.js"></script>
+
+
+<!-- Sidebar, bilah atas, dan bilah bawah dari customer/partials/ -->
+<script type="module" src="../js/komponen.js"></script>
+
+</body></html>

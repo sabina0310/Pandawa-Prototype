@@ -5,142 +5,26 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Checkout - Pilar Pandawa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "inverse-on-surface": "#f3f0ef",
-                        "on-primary-fixed": "#001849",
-                        "status-available": "#10b981",
-                        "surface-container-highest": "#e5e2e1",
-                        "surface": "#fcf9f8",
-                        "surface-bright": "#fcf9f8",
-                        "on-primary-container": "#cfd9ff",
-                        "on-secondary-fixed": "#002109",
-                        "on-surface": "#1b1c1c",
-                        "ink-secondary": "#3f3f3f",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "border-strong": "#c1c1c1",
-                        "surface-tint": "#0055d5",
-                        "surface-container": "#f0eded",
-                        "secondary-container": "#5dfd8a",
-                        "primary-container": "#0156d7",
-                        "ink-primary": "#222222",
-                        "secondary-fixed": "#66ff8e",
-                        "on-secondary-container": "#007232",
-                        "surface-dim": "#dcd9d9",
-                        "tertiary-fixed": "#ffddb8",
-                        "status-occupied": "#ef4444",
-                        "primary-fixed": "#dae2ff",
-                        "on-surface-variant": "#424654",
-                        "surface-soft": "#f7f7f7",
-                        "primary": "#0040a6",
-                        "surface-variant": "#e5e2e1",
-                        "on-tertiary-fixed": "#2a1700",
-                        "whatsapp-green": "#25d366",
-                        "inverse-primary": "#b2c5ff",
-                        "background": "#fcf9f8",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "on-tertiary-container": "#ffd4a2",
-                        "tertiary-container": "#875500",
-                        "on-primary": "#ffffff",
-                        "on-error": "#ffffff",
-                        "whatsapp-hover": "#1da851",
-                        "status-warning": "#f59e0b",
-                        "error": "#ba1a1a",
-                        "outline": "#737686",
-                        "on-error-container": "#93000a",
-                        "surface-container-low": "#f6f3f2",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "inverse-surface": "#303030",
-                        "tertiary": "#674000",
-                        "border-hairline": "#dddddd",
-                        "on-background": "#1b1c1c",
-                        "ink-muted": "#6a6a6a",
-                        "on-secondary-fixed-variant": "#005322",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "on-secondary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-fixed-dim": "#3de273",
-                        "surface-container-high": "#eae7e7",
-                        "outline-variant": "#c3c6d7",
-                        "error-container": "#ffdad6",
-                        "secondary": "#006d2f",
-                        "on-tertiary": "#ffffff",
-                        "surface-canvas": "#ffffff"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "sm": "8px",
-                        "base": "16px",
-                        "xs": "4px",
-                        "xl": "32px",
-                        "section": "64px",
-                        "xxs": "2px",
-                        "md": "12px",
-                        "lg": "24px"
-                    },
-                    "fontFamily": {
-                        "label-md": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "badge": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"],
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }]
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .shadow-subtle {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-    </style>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../../js/head-bersama.js"></script>
 </head>
 
 <body class="bg-background text-ink-primary font-body-md antialiased min-h-screen flex flex-col">
     <!-- Navbar Structure matching SCREEN_17 -->
     <header
-        class="bg-surface-canvas border-b border-border-hairline py-md px-base lg:px-xl flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        class="bg-surface-canvas border-b border-border-hairline px-base lg:px-xl h-16 flex items-center justify-between sticky top-0 z-40 shadow-sm">
         <div class="flex-1 flex items-center justify-start">
-            <div class="flex items-center gap-sm cursor-pointer hover:opacity-80 transition-opacity">
+            <!-- Alamatnya diisi js/order-step1.js: kembali ke halaman cabang
+                 yang tadi dibuka, bukan sekadar mundur satu langkah -->
+            <a href="../catalogue.html" id="kembaliBtn"
+                class="flex items-center gap-sm cursor-pointer hover:opacity-80 transition-opacity">
                 <span class="material-symbols-outlined text-primary text-[24px]">arrow_back</span>
                 <span class="font-button-md text-button-md text-primary">Kembali</span>
-            </div>
+            </a>
         </div>
         <div class="flex-1 flex items-center justify-center">
             <div class="font-display-md text-display-md text-primary tracking-tight">
@@ -149,7 +33,8 @@
         </div>
         <div class="flex-1 flex items-center justify-end">
             <button
-                class="text-ink-secondary hover:text-primary p-sm rounded-full hover:bg-surface-soft transition-colors">
+                class="text-ink-secondary hover:text-primary p-sm rounded-full hover:bg-surface-soft transition-colors belum-tersedia"
+                aria-disabled="true" title="Halaman ini belum tersedia">
                 <span class="material-symbols-outlined">help_outline</span>
             </button>
         </div>
@@ -197,7 +82,7 @@
             <div class="lg:col-span-8 flex flex-col gap-lg">
                 <!-- Step 1: Form Input Card -->
                 <div
-                    class="bg-surface-canvas rounded-xl shadow-subtle border border-border-hairline p-lg flex flex-col gap-lg">
+                    class="bg-surface-canvas rounded-xl shadow-sm border border-border-hairline p-lg flex flex-col gap-lg">
                     <div class="flex flex-col gap-xs pb-sm border-b border-border-hairline">
                         <h2 class="font-display-lg text-display-lg text-ink-primary">Data Diri Penyewa</h2>
                         <p class="font-body-sm text-body-sm text-ink-secondary">Pastikan data yang diisi sesuai dengan
@@ -221,7 +106,7 @@
                         </p>
                     </div>
                     <form class="flex flex-col gap-lg" id="formPemesanan">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-lg">
                             <!-- NIK -->
                             <div class="flex flex-col gap-xs">
                                 <label class="font-title-md text-label-md text-ink-primary" for="nik">Nomor Induk
@@ -300,111 +185,12 @@
                                 dan nyaman untuk Anda.</p>
                         </div>
                         <div class="flex flex-col gap-md" id="payment-accordion-container">
-                            <!-- Virtual Account Accordion -->
-                            <div class="payment-category border border-border-strong rounded-xl overflow-hidden transition-all bg-surface-canvas"
-                                data-category="va">
-                                <div class="p-md flex items-center justify-between cursor-pointer hover:bg-surface-soft transition-colors"
-                                    onclick="togglePaymentCategory('va')">
-                                    <div class="flex items-center gap-md">
-                                        <div
-                                            class="w-12 h-12 rounded-lg bg-surface-soft border border-border-hairline flex items-center justify-center text-primary-container">
-                                            <span class="material-symbols-outlined text-[24px]">account_balance</span>
-                                        </div>
-                                        <div class="flex flex-col"><span
-                                                class="font-title-md text-title-md text-ink-primary">Virtual
-                                                Account</span><span
-                                                class="font-body-sm text-body-sm text-ink-muted">BCA, Mandiri, BNI, BRI,
-                                                Permata</span></div>
-                                    </div><span
-                                        class="material-symbols-outlined text-ink-muted transition-transform duration-300"
-                                        id="va-chevron">expand_more</span>
-                                </div>
-                                <div class="hidden flex-col bg-surface-container-lowest border-t border-border-hairline"
-                                    id="va-content"><label
-                                        class="flex items-center justify-between p-md hover:bg-surface-soft cursor-pointer border-b border-border-hairline last:border-0">
-                                        <div class="flex items-center gap-md">
-                                            <div
-                                                class="w-10 h-6 bg-white border border-border-hairline rounded flex items-center justify-center overflow-hidden">
-                                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuvedYWco-UjtV_MBWkvu_uOb3WroEpNkJs1vT-6HXp449kOLTR4Gg21f1vDcMlSn-oH4qK_9WaYq61Br17FriRK5qkZto4W-3DczMNUyyUsXeC2KN13c1FmbPJCeW1xWnGkSTfhOpVwZByeVHogl6NvCWAxGibg8LA8SeUfcBwrm9CqV_XNoq97mgNgxzB10YIQf0ut3GLgOnVAzCsV24i4h9SuqG35v8oTbd8XdJEA9e1fcrwkpXIsnJXF962gkR6RLRmUJkvxE"
-                                                    class="h-full object-contain"
-                                                    style="object-position: 0 0; transform: scale(3.5);" alt="BCA">
-                                            </div><span class="font-body-md text-ink-primary">BCA Virtual Account</span>
-                                        </div><input type="radio" name="payment_method" value="va_bca"
-                                            class="w-5 h-5 text-primary-container focus:ring-primary-container border-border-strong">
-                                    </label><label
-                                        class="flex items-center justify-between p-md hover:bg-surface-soft cursor-pointer border-b border-border-hairline last:border-0">
-                                        <div class="flex items-center gap-md">
-                                            <div
-                                                class="w-10 h-6 bg-white border border-border-hairline rounded flex items-center justify-center overflow-hidden">
-                                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuvedYWco-UjtV_MBWkvu_uOb3WroEpNkJs1vT-6HXp449kOLTR4Gg21f1vDcMlSn-oH4qK_9WaYq61Br17FriRK5qkZto4W-3DczMNUyyUsXeC2KN13c1FmbPJCeW1xWnGkSTfhOpVwZByeVHogl6NvCWAxGibg8LA8SeUfcBwrm9CqV_XNoq97mgNgxzB10YIQf0ut3GLgOnVAzCsV24i4h9SuqG35v8oTbd8XdJEA9e1fcrwkpXIsnJXF962gkR6RLRmUJkvxE"
-                                                    class="h-full object-contain"
-                                                    style="object-position: -40px 0; transform: scale(3.5);"
-                                                    alt="Mandiri"></div><span
-                                                class="font-body-md text-ink-primary">Mandiri Virtual Account</span>
-                                        </div><input type="radio" name="payment_method" value="va_mandiri"
-                                            class="w-5 h-5 text-primary-container focus:ring-primary-container border-border-strong">
-                                    </label><label
-                                        class="flex items-center justify-between p-md hover:bg-surface-soft cursor-pointer border-b border-border-hairline last:border-0">
-                                        <div class="flex items-center gap-md">
-                                            <div
-                                                class="w-10 h-6 bg-white border border-border-hairline rounded flex items-center justify-center overflow-hidden">
-                                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuvedYWco-UjtV_MBWkvu_uOb3WroEpNkJs1vT-6HXp449kOLTR4Gg21f1vDcMlSn-oH4qK_9WaYq61Br17FriRK5qkZto4W-3DczMNUyyUsXeC2KN13c1FmbPJCeW1xWnGkSTfhOpVwZByeVHogl6NvCWAxGibg8LA8SeUfcBwrm9CqV_XNoq97mgNgxzB10YIQf0ut3GLgOnVAzCsV24i4h9SuqG35v8oTbd8XdJEA9e1fcrwkpXIsnJXF962gkR6RLRmUJkvxE"
-                                                    class="h-full object-contain"
-                                                    style="object-position: -80px 0; transform: scale(3.5);" alt="BNI">
-                                            </div><span class="font-body-md text-ink-primary">BNI Virtual Account</span>
-                                        </div><input type="radio" name="payment_method" value="va_bni"
-                                            class="w-5 h-5 text-primary-container focus:ring-primary-container border-border-strong">
-                                    </label></div>
-                            </div><!-- E-Wallet Accordion -->
-                            <div class="payment-category border border-border-strong rounded-xl overflow-hidden transition-all bg-surface-canvas"
-                                data-category="ewallet">
-                                <div class="p-md flex items-center justify-between cursor-pointer hover:bg-surface-soft transition-colors"
-                                    onclick="togglePaymentCategory('ewallet')">
-                                    <div class="flex items-center gap-md">
-                                        <div
-                                            class="w-12 h-12 rounded-lg bg-surface-soft border border-border-hairline flex items-center justify-center text-secondary">
-                                            <span
-                                                class="material-symbols-outlined text-[24px]">account_balance_wallet</span>
-                                        </div>
-                                        <div class="flex flex-col"><span
-                                                class="font-title-md text-title-md text-ink-primary">E-Wallet</span><span
-                                                class="font-body-sm text-body-sm text-ink-muted">GoPay, OVO, DANA,
-                                                ShopeePay</span></div>
-                                    </div><span
-                                        class="material-symbols-outlined text-ink-muted transition-transform duration-300"
-                                        id="ewallet-chevron">expand_more</span>
-                                </div>
-                                <div class="hidden flex-col bg-surface-container-lowest border-t border-border-hairline"
-                                    id="ewallet-content"><label
-                                        class="flex items-center justify-between p-md hover:bg-surface-soft cursor-pointer border-b border-border-hairline last:border-0">
-                                        <div class="flex items-center gap-md">
-                                            <div
-                                                class="w-10 h-6 bg-white border border-border-hairline rounded flex items-center justify-center overflow-hidden">
-                                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuvedYWco-UjtV_MBWkvu_uOb3WroEpNkJs1vT-6HXp449kOLTR4Gg21f1vDcMlSn-oH4qK_9WaYq61Br17FriRK5qkZto4W-3DczMNUyyUsXeC2KN13c1FmbPJCeW1xWnGkSTfhOpVwZByeVHogl6NvCWAxGibg8LA8SeUfcBwrm9CqV_XNoq97mgNgxzB10YIQf0ut3GLgOnVAzCsV24i4h9SuqG35v8oTbd8XdJEA9e1fcrwkpXIsnJXF962gkR6RLRmUJkvxE"
-                                                    class="h-full object-contain"
-                                                    style="object-position: 0 -80px; transform: scale(3.5);"
-                                                    alt="GoPay"></div><span
-                                                class="font-body-md text-ink-primary">GoPay</span>
-                                        </div><input type="radio" name="payment_method" value="gopay"
-                                            class="w-5 h-5 text-primary-container focus:ring-primary-container border-border-strong">
-                                    </label></div>
-                            </div><!-- QRIS (Direct) --><label
-                                class="border border-border-strong rounded-xl p-md flex items-center justify-between bg-surface-canvas cursor-pointer hover:bg-surface-soft hover:border-primary-container transition-all">
-                                <div class="flex items-center gap-md">
-                                    <div
-                                        class="w-12 h-12 rounded-lg bg-surface-soft border border-border-hairline flex items-center justify-center text-ink-primary">
-                                        <span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div>
-                                    <div class="flex flex-col"><span
-                                            class="font-title-md text-title-md text-ink-primary">QRIS</span><span
-                                            class="font-body-sm text-body-sm text-ink-muted">Scan cepat dari semua
-                                            aplikasi pembayaran (GoPay, OVO, ShopeePay, BCA, dll)</span></div>
-                                </div><input
-                                    class="w-5 h-5 text-primary-container focus:ring-primary-container border-border-strong"
-                                    name="payment_method" type="radio" value="qris">
-                            </label>
+                            <div class="flex items-center gap-sm p-md text-ink-muted">
+                                <span
+                                    class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+                                <span class="font-body-sm text-body-sm">Memuat metode pembayaran...</span>
+                            </div>
                         </div>
-                        <script
-                            class="">function togglePaymentCategory(cat) { const vaContent = document.getElementById('va-content'); const ewContent = document.getElementById('ewallet-content'); const vaChevron = document.getElementById('va-chevron'); const ewChevron = document.getElementById('ewallet-chevron'); const vaBox = document.querySelector('[data-category="va"]'); const ewBox = document.querySelector('[data-category="ewallet"]'); if (cat === 'va') { const isHidden = vaContent.classList.contains('hidden'); vaContent.classList.toggle('hidden', !isHidden); vaChevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)'; vaBox.classList.toggle('border-primary-container', isHidden); vaBox.classList.toggle('bg-primary-fixed/10', isHidden); ewContent.classList.add('hidden'); ewChevron.style.transform = 'rotate(0deg)'; ewBox.classList.remove('border-primary-container', 'bg-primary-fixed/10'); } else if (cat === 'ewallet') { const isHidden = ewContent.classList.contains('hidden'); ewContent.classList.toggle('hidden', !isHidden); ewChevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)'; ewBox.classList.toggle('border-primary-container', isHidden); ewBox.classList.toggle('bg-primary-fixed/10', isHidden); vaContent.classList.add('hidden'); vaChevron.style.transform = 'rotate(0deg)'; vaBox.classList.remove('border-primary-container', 'bg-primary-fixed/10'); } }</script>
                     </div>
                 </div>
                 <!-- Payment Gateway Simulation -->
@@ -413,7 +199,7 @@
             <div class="lg:col-span-4 relative">
                 <div class="sticky top-[100px] flex flex-col gap-lg">
                     <div
-                        class="bg-surface-canvas rounded-xl shadow-subtle border border-border-hairline overflow-hidden flex flex-col">
+                        class="bg-surface-canvas rounded-xl shadow-sm border border-border-hairline overflow-hidden flex flex-col">
                         <!-- Room Image -->
                         <div class="h-48 w-full relative">
                             <img class="w-full h-full object-cover" id="summaryRoomImage"
@@ -435,7 +221,7 @@
                             </div>
                             <!-- Date Details -->
                             <div
-                                class="bg-surface-soft rounded-lg p-md border border-border-hairline flex flex-col gap-sm relative">
+                                class="bg-surface-soft rounded-xl shadow-sm p-md border border-border-hairline flex flex-col gap-sm relative">
                                 <div class="flex justify-between items-start mb-xs">
                                     <span
                                         class="font-tag-uppercase text-tag-uppercase text-ink-muted tracking-wider">Detail
@@ -461,12 +247,10 @@
                             <!-- Price Breakdown -->
                             <div class="flex flex-col gap-sm">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-body-sm text-body-md text-ink-secondary" id="summaryHargaLabel">Harga Sewa</span>
-                                    <span class="font-title-md text-body-md text-ink-primary" id="summaryHargaValue">-</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="font-body-sm text-body-md text-ink-secondary">Biaya Layanan</span>
-                                    <span class="font-title-md text-body-md text-ink-primary" id="summaryBiayaLayanan">-</span>
+                                    <span class="font-body-sm text-body-md text-ink-secondary"
+                                        id="summaryHargaLabel">Harga Sewa</span>
+                                    <span class="font-title-md text-body-md text-ink-primary"
+                                        id="summaryHargaValue">-</span>
                                 </div>
                             </div>
                             <!-- Total -->
@@ -485,7 +269,7 @@
                     </div>
                     <!-- Trust Badges -->
                     <div
-                        class="flex items-center justify-center gap-lg text-ink-secondary bg-surface-canvas rounded-xl shadow-subtle border border-border-hairline p-md">
+                        class="flex items-center justify-center gap-lg text-ink-secondary bg-surface-canvas rounded-xl shadow-sm border border-border-hairline p-md">
                         <div class="flex items-center gap-sm">
                             <span
                                 class="material-symbols-outlined text-[20px] text-status-available">verified_user</span>
@@ -503,41 +287,8 @@
         </div>
     </main>
     <!-- Footer from SCREEN_17 -->
-    <footer class="bg-surface border-t border-border-hairline py-xl px-base lg:px-xl mt-xl">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-xl">
-            <div class="col-span-1 md:col-span-2 flex flex-col gap-md">
-                <span class="font-display-md text-display-md text-primary-container tracking-tight">Pilar Pandawa</span>
-                <p class="font-body-md text-body-md text-ink-secondary max-w-md">Platform manajemen properti kos yang
-                    andal, aman, dan profesional untuk pengalaman sewa yang lebih baik.</p>
-            </div>
-            <div class="flex flex-col gap-md">
-                <h4 class="font-title-md text-title-md text-ink-primary">Perusahaan</h4>
-                <ul class="flex flex-col gap-sm">
-                    <li class=""><a
-                            class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors"
-                            href="#">Tentang Kami</a></li>
-                    <li class=""><a
-                            class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors"
-                            href="#">Syarat &amp; Ketentuan</a></li>
-                    <li class=""><a
-                            class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors"
-                            href="#">Kebijakan Privasi</a></li>
-                </ul>
-            </div>
-            <div class="flex flex-col gap-md">
-                <h4 class="font-title-md text-title-md text-ink-primary">Hubungi Kami</h4>
-                <ul class="flex flex-col gap-sm">
-                    <li class="flex items-center gap-sm font-body-md text-body-md text-ink-secondary"><span
-                            class="material-symbols-outlined text-[18px]">email</span> support@pilarpandawa.com</li>
-                    <li class="flex items-center gap-sm font-body-md text-body-md text-ink-secondary"><span
-                            class="material-symbols-outlined text-[18px]">call</span> +62 811-1234-5678</li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto mt-xl pt-lg border-t border-border-hairline text-center">
-            <p class="font-body-sm text-body-sm text-ink-muted">© 2024 Pilar Pandawa. Semua Hak Dilindungi.</p>
-        </div>
-    </footer>
+    <!-- Footer: customer/partials/footer.html (dimuat js/komponen.js) -->
+    <div id="footer-placeholder"></div>
     <!-- Success Modal Simulation -->
     <div class="fixed inset-0 bg-ink-primary/50 backdrop-blur-sm z-50 flex items-center justify-center p-base hidden">
         <div
@@ -555,7 +306,7 @@
                         digital telah dikirim ke WhatsApp Anda.</p>
                 </div>
                 <div
-                    class="w-full bg-surface-soft border border-border-hairline rounded-lg p-md flex flex-col gap-sm text-left my-sm">
+                    class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm p-md flex flex-col gap-sm text-left my-sm">
                     <div class="flex justify-between items-center border-b border-border-hairline pb-xs">
                         <span class="font-label-md text-label-md text-ink-muted">Kode Booking</span>
                         <span class="font-title-md text-title-md text-ink-primary tracking-wider">PLR-88A92K</span>
@@ -566,15 +317,15 @@
                     </p>
                 </div>
                 <div class="flex flex-col w-full gap-sm mt-sm">
-                    <button
-                        class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-md rounded-lg hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm">
+                    <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+                        class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-md rounded-lg hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm no-underline">
                         <span class="material-symbols-outlined text-[20px]">chat</span>
                         Hubungi Admin (WhatsApp)
-                    </button>
-                    <button
-                        class="w-full bg-transparent border border-primary-container text-primary-container font-button-md text-button-md py-md rounded-lg hover:bg-primary-fixed transition-colors">
+                    </a>
+                    <a href="../../index.html"
+                        class="w-full bg-transparent border border-primary-container text-primary-container font-button-md text-button-md py-md rounded-lg hover:bg-primary-fixed transition-colors flex items-center justify-center no-underline">
                         Kembali ke Beranda
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -582,6 +333,10 @@
     <!-- Menyambungkan halaman ini ke data pemesanan -->
     <script type="module" src="../../js/order-step1.js"></script>
 
+
+
+    <!-- Pemuat komponen bersama (footer) -->
+    <script type="module" src="../../js/komponen.js"></script>
 
 </body>
 

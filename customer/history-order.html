@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Riwayat Pesanan - Pilar Pandawa</title>
+
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+<script src="../js/head-bersama.js"></script>
+</head>
+<body data-halaman="riwayat" class="bg-surface-soft min-h-screen flex flex-col md:flex-row font-body-md text-on-surface">
+<!-- SideNavBar (Desktop) -->
+<!-- Sidebar: customer/partials/sidebar.html -->
+<div id="sidebar-placeholder"></div>
+<!-- TopNavBar (Mobile) -->
+<!-- Bilah atas layar kecil: customer/partials/top-bar-mobile.html -->
+<div id="top-bar-mobile-placeholder"></div>
+<!-- Main Content -->
+<main class="flex-1 w-full lg:ml-64 pt-16 lg:pt-0 p-base lg:p-xl max-w-5xl mx-auto flex flex-col gap-lg">
+<div class="flex flex-col gap-sm lg:mt-lg mt-base">
+<h2 class="font-display-xl text-display-xl text-on-surface">Riwayat Pesanan</h2>
+<p class="font-body-md text-body-md text-on-surface-variant" id="ringkasanRiwayat">Memuat riwayat pemesanan Anda...</p>
+</div>
+<div class="flex flex-col gap-base" id="daftarRiwayat">
+<div class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm p-xl flex flex-col items-center gap-sm">
+<span class="material-symbols-outlined animate-spin text-[32px] text-primary-container">progress_activity</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Memuat data...</p>
+</div>
+</div>
+<!-- Penyangga agar isi terakhir tidak tertutup bilah navigasi bawah -->
+<div class="h-24 lg:hidden" aria-hidden="true"></div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<!-- Bilah bawah layar kecil: customer/partials/bottom-nav.html -->
+<div id="bottom-nav-placeholder"></div>
+
+<!-- Pustaka pembuat kuitansi PDF, sama seperti pada order/step-4.html -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Mengambil riwayat pesanan dari Firestore -->
+<script type="module" src="../js/history-order.js"></script>
+
+
+<!-- Sidebar, bilah atas, dan bilah bawah dari customer/partials/ -->
+<script type="module" src="../js/komponen.js"></script>
+
+</body></html>

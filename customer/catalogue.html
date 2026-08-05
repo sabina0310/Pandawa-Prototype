@@ -2,171 +2,22 @@
 <html lang="id">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Room Catalog - Pilar Pandawa</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <style>
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
-    </style>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "status-occupied": "#ef4444",
-                        "surface-container-highest": "#e5e2e1",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "whatsapp-green": "#25d366",
-                        "background": "#fcf9f8",
-                        "on-background": "#1b1c1c",
-                        "ink-muted": "#6a6a6a",
-                        "ink-primary": "#222222",
-                        "on-tertiary": "#ffffff",
-                        "inverse-primary": "#b2c5ff",
-                        "status-warning": "#f59e0b",
-                        "surface-container-lowest": "#ffffff",
-                        "status-available": "#10b981",
-                        "error-container": "#ffdad6",
-                        "surface": "#fcf9f8",
-                        "surface-container-high": "#eae7e7",
-                        "surface-variant": "#e5e2e1",
-                        "on-tertiary-fixed": "#2a1700",
-                        "surface-tint": "#0055d5",
-                        "secondary-container": "#5dfd8a",
-                        "on-primary-fixed": "#001849",
-                        "secondary": "#006d2f",
-                        "on-primary-container": "#cfd9ff",
-                        "outline": "#737686",
-                        "primary-container": "#0156d7",
-                        "on-surface-variant": "#424654",
-                        "surface-soft": "#f7f7f7",
-                        "surface-container": "#f0eded",
-                        "on-tertiary-container": "#ffd4a2",
-                        "primary": "#0040a6",
-                        "on-surface": "#1b1c1c",
-                        "surface-canvas": "#ffffff",
-                        "on-primary": "#ffffff",
-                        "tertiary-fixed": "#ffddb8",
-                        "on-secondary-fixed-variant": "#005322",
-                        "primary-fixed-dim": "#b2c5ff",
-                        "border-hairline": "#dddddd",
-                        "secondary-fixed": "#66ff8e",
-                        "inverse-surface": "#303030",
-                        "whatsapp-hover": "#1da851",
-                        "on-error": "#ffffff",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "ink-secondary": "#3f3f3f",
-                        "tertiary-container": "#875500",
-                        "on-secondary": "#ffffff",
-                        "on-error-container": "#93000a",
-                        "inverse-on-surface": "#f3f0ef",
-                        "on-secondary-container": "#007232",
-                        "surface-dim": "#dcd9d9",
-                        "border-strong": "#c1c1c1",
-                        "surface-container-low": "#f6f3f2",
-                        "surface-bright": "#fcf9f8",
-                        "outline-variant": "#c3c6d7",
-                        "primary-fixed": "#dae2ff",
-                        "on-primary-fixed-variant": "#003fa3",
-                        "error": "#ba1a1a",
-                        "tertiary": "#674000",
-                        "on-secondary-fixed": "#002109",
-                        "secondary-fixed-dim": "#3de273"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "lg": "24px",
-                        "xl": "32px",
-                        "section": "64px",
-                        "md": "12px",
-                        "xxs": "2px",
-                        "xs": "4px",
-                        "sm": "8px",
-                        "base": "16px"
-                    },
-                    "fontFamily": {
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "stat-display": ["Plus Jakarta Sans"],
-                        "display-lg": ["Plus Jakarta Sans"],
-                        "title-md": ["Plus Jakarta Sans"],
-                        "display-md": ["Plus Jakarta Sans"],
-                        "tag-uppercase": ["Plus Jakarta Sans"],
-                        "badge": ["Plus Jakarta Sans"],
-                        "label-md": ["Plus Jakarta Sans"],
-                        "button-md": ["Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "body-sm": ["Plus Jakarta Sans"],
-                        "display-lg-mobile": ["Plus Jakarta Sans"]
-                    },
-                    "fontSize": {
-                        "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }],
-                        "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-                        "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-                        "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-                        "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-                        "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }]
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Room Catalog - Pilar Pandawa</title>
+
+<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+<script src="../js/head-bersama.js"></script>
 </head>
 
 <body class="bg-surface font-body-md text-ink-primary antialiased">
     <!-- Memuat Top Nav dari file terpisah -->
     <div id="top-nav-placeholder"></div>
-    <script>
-        fetch('top-nav.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('top-nav-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
+    <!-- Memuat top nav sekaligus mengatur tombol Masuk / ikon profil -->
+    <script type="module" src="../js/customer-topnav.js"></script>
     <main class="max-w-7xl mx-auto px-lg py-section grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
         <!-- Left Column (Sidebar Filter) -->
         <aside
@@ -232,35 +83,13 @@
             </div>
         </section>
     </main>
-    <!-- Memuat footer dari file terpisah -->
-    <div id="footer-placeholder"></div>
-    <script>
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                const placeholder = document.getElementById('footer-placeholder');
-                placeholder.innerHTML = data;
-                placeholder.querySelectorAll('script').forEach(function (oldScript) {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    oldScript.replaceWith(newScript);
-                });
-            });
-    </script>
+    <!-- Footer: customer/partials/footer.html (dimuat js/komponen.js) -->
+<div id="footer-placeholder"></div>
 
     <script>
         (function () {
-            const loginNavBtn = document.getElementById('loginNavBtn');
-            const profileNavBtn = document.getElementById('profileNavBtn');
-            if (localStorage.getItem('customerSession')) {
-                loginNavBtn.classList.add('hidden');
-                profileNavBtn.classList.remove('hidden');
-                profileNavBtn.classList.add('flex');
-            }
+            // Catatan: tombol Masuk / ikon profil pada top nav
+            // ditangani js/customer-topnav.js
 
             // Catatan: klik pada kartu kamar ditangani oleh js/catalogue.js
             // karena kartunya dibuat setelah data Firestore selesai dimuat.
@@ -269,6 +98,10 @@
 
     <!-- Mengambil data katalog dari Firestore -->
     <script type="module" src="../js/catalogue.js"></script>
+
+
+<!-- Pemuat komponen bersama (footer) -->
+<script type="module" src="../js/komponen.js"></script>
 
 </body>
 

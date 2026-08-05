@@ -1,0 +1,60 @@
+<!--
+    Footer bersama halaman customer.
+
+    Dipakai oleh index.html, customer/catalogue.html,
+    customer/room-detail.html, dan customer/order/step-1.html
+    melalui js/komponen.js.
+
+    Sebelumnya customer/order/step-1.html memuat salinan footer ini
+    secara inline; isinya terbukti sama persis, jadi salinan itu
+    diganti pemanggilan berkas ini.
+
+    Tautan Tentang Kami / Syarat & Ketentuan / Kebijakan Privasi
+    ditandai "belum-tersedia" karena halamannya memang belum dibuat.
+    Tandanya membuat tautan tampil redup dan tidak bisa diklik,
+    sehingga jelas bagi pengunjung -- bukan diam tanpa reaksi.
+-->
+<footer class="bg-surface-canvas border-t border-border-hairline py-xl px-base lg:px-xl mt-xl">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg lg:gap-xl">
+
+        <!-- Identitas -->
+        <div class="col-span-1 sm:col-span-2 flex flex-col gap-md">
+            <span class="flex items-center gap-sm font-display-md text-display-md text-primary-container tracking-tight">
+                <span class="material-symbols-outlined text-display-md"
+                    style="font-variation-settings: 'FILL' 1;">location_city</span>
+                Pilar Pandawa</span>
+            <p class="font-body-md text-body-md text-ink-secondary max-w-md">Platform manajemen properti kos yang
+                andal, aman, dan profesional untuk pengalaman sewa yang lebih baik.</p>
+        </div>
+
+        <!-- Perusahaan -->
+        <div class="flex flex-col gap-md">
+            <h4 class="font-title-md text-title-md text-ink-primary">Perusahaan</h4>
+            <ul class="flex flex-col gap-sm">
+                <li><a class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors belum-tersedia"
+                        href="#" aria-disabled="true" title="Halaman ini belum tersedia">Tentang Kami</a></li>
+                <li><a class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors belum-tersedia"
+                        href="#" aria-disabled="true" title="Halaman ini belum tersedia">Syarat &amp; Ketentuan</a></li>
+                <li><a class="font-body-md text-body-md text-ink-secondary hover:text-primary-container transition-colors belum-tersedia"
+                        href="#" aria-disabled="true" title="Halaman ini belum tersedia">Kebijakan Privasi</a></li>
+            </ul>
+        </div>
+
+        <!-- Kontak -->
+        <div class="flex flex-col gap-md">
+            <h4 class="font-title-md text-title-md text-ink-primary">Hubungi Kami</h4>
+            <ul class="flex flex-col gap-sm">
+                <li class="flex items-center gap-sm font-body-md text-body-md text-ink-secondary">
+                    <span class="material-symbols-outlined text-[18px] text-primary-container">email</span>
+                    support@pilarpandawa.com</li>
+                <li class="flex items-center gap-sm font-body-md text-body-md text-ink-secondary">
+                    <span class="material-symbols-outlined text-[18px] text-primary-container">call</span>
+                    +62 811-1234-5678</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-xl pt-lg border-t border-border-hairline text-center">
+        <p class="font-body-sm text-body-sm text-ink-muted">© 2024 Pilar Pandawa. Semua Hak Dilindungi.</p>
+    </div>
+</footer>

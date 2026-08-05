@@ -1,624 +1,128 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Pembayaran (Step 3)</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "inverse-primary": "#b2c5ff",
-                    "background": "#fcf9f8",
-                    "surface-container-highest": "#e5e2e1",
-                    "surface-container-low": "#f6f3f2",
-                    "surface-soft": "#f7f7f7",
-                    "tertiary-container": "#875500",
-                    "secondary-fixed": "#66ff8e",
-                    "inverse-on-surface": "#f3f0ef",
-                    "error": "#ba1a1a",
-                    "tertiary": "#674000",
-                    "on-tertiary": "#ffffff",
-                    "surface-tint": "#0055d5",
-                    "whatsapp-hover": "#1da851",
-                    "primary-fixed": "#dae2ff",
-                    "on-primary-fixed": "#001849",
-                    "surface-container-lowest": "#ffffff",
-                    "primary": "#0040a6",
-                    "on-secondary-container": "#007232",
-                    "ink-muted": "#6a6a6a",
-                    "surface": "#fcf9f8",
-                    "on-tertiary-fixed": "#2a1700",
-                    "status-available": "#10b981",
-                    "outline-variant": "#c3c6d7",
-                    "secondary-fixed-dim": "#3de273",
-                    "primary-fixed-dim": "#b2c5ff",
-                    "ink-secondary": "#3f3f3f",
-                    "tertiary-fixed-dim": "#ffb95f",
-                    "ink-primary": "#222222",
-                    "border-strong": "#c1c1c1",
-                    "on-secondary-fixed": "#002109",
-                    "on-background": "#1b1c1c",
-                    "surface-canvas": "#ffffff",
-                    "secondary-container": "#5dfd8a",
-                    "error-container": "#ffdad6",
-                    "secondary": "#006d2f",
-                    "on-tertiary-fixed-variant": "#653e00",
-                    "on-secondary-fixed-variant": "#005322",
-                    "whatsapp-green": "#25d366",
-                    "on-secondary": "#ffffff",
-                    "status-warning": "#f59e0b",
-                    "on-primary-container": "#cfd9ff",
-                    "on-tertiary-container": "#ffd4a2",
-                    "on-primary-fixed-variant": "#003fa3",
-                    "on-error-container": "#93000a",
-                    "primary-container": "#0156d7",
-                    "on-surface-variant": "#424654",
-                    "on-surface": "#1b1c1c",
-                    "surface-variant": "#e5e2e1",
-                    "surface-dim": "#dcd9d9",
-                    "on-error": "#ffffff",
-                    "surface-container": "#f0eded",
-                    "border-hairline": "#dddddd",
-                    "on-primary": "#ffffff",
-                    "tertiary-fixed": "#ffddb8",
-                    "surface-bright": "#fcf9f8",
-                    "outline": "#737686",
-                    "status-occupied": "#ef4444",
-                    "surface-container-high": "#eae7e7",
-                    "inverse-surface": "#303030"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "xs": "4px",
-                    "md": "12px",
-                    "sm": "8px",
-                    "lg": "24px",
-                    "xl": "32px",
-                    "xxs": "2px",
-                    "section": "64px",
-                    "base": "16px"
-            },
-            "fontFamily": {
-                    "stat-display": ["Plus Jakarta Sans"],
-                    "button-md": ["Plus Jakarta Sans"],
-                    "badge": ["Plus Jakarta Sans"],
-                    "tag-uppercase": ["Plus Jakarta Sans"],
-                    "title-md": ["Plus Jakarta Sans"],
-                    "body-md": ["Plus Jakarta Sans"],
-                    "display-md": ["Plus Jakarta Sans"],
-                    "display-xl": ["Plus Jakarta Sans"],
-                    "body-sm": ["Plus Jakarta Sans"],
-                    "label-md": ["Plus Jakarta Sans"],
-                    "display-lg-mobile": ["Plus Jakarta Sans"],
-                    "display-lg": ["Plus Jakarta Sans"]
-            },
-            "fontSize": {
-                    "stat-display": ["32px", {"lineHeight": "36px", "fontWeight": "700"}],
-                    "button-md": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
-                    "badge": ["11px", {"lineHeight": "14px", "fontWeight": "600"}],
-                    "tag-uppercase": ["10px", {"lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700"}],
-                    "title-md": ["16px", {"lineHeight": "20px", "fontWeight": "600"}],
-                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
-                    "display-md": ["20px", {"lineHeight": "26px", "fontWeight": "700"}],
-                    "display-xl": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
-                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
-                    "display-lg-mobile": ["20px", {"lineHeight": "26px", "fontWeight": "700"}],
-                    "display-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}]
-            }
-          }
-        }
-      }
-    </script>
-<style>
-      body {
-          font-family: 'Plus Jakarta Sans', sans-serif;
-      }
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      .material-symbols-outlined.filled {
-          font-variation-settings: 'FILL' 1;
-      }
-    </style>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Pembayaran (Step 3)</title>
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../../js/head-bersama.js"></script>
 </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col">
-<!-- Top Navigation Bar (Transactional/Simplified context, but retaining Brand Anchor for consistency if forced, otherwise hiding links as per shell logic. Given instruction says "Maintain Top Navigation Bar", will implement simplified version.) -->
-<header class="bg-surface shadow-sm sticky top-0 z-50 px-base lg:px-xl h-16 flex justify-between items-center border-b border-border-hairline">
-<div class="text-display-md font-display-md text-primary">Pilar Pandawa</div>
-<div class="hidden md:flex gap-lg items-center">
-<!-- Hidden nav links per transactional intent rules -->
-<button class="font-button-md text-button-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
-<span class="material-symbols-outlined">help</span> Bantuan
+
+<body class="bg-background text-ink-primary font-body-md antialiased min-h-screen flex flex-col">
+    <!-- Top Navigation Bar (Transactional/Simplified context, but retaining Brand Anchor for consistency if forced, otherwise hiding links as per shell logic. Given instruction says "Maintain Top Navigation Bar", will implement simplified version.) -->
+    <header
+        class="bg-surface-canvas border-b border-border-hairline px-base lg:px-xl h-16 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        <div class="flex-1 flex items-center justify-start">
+            <a href="step-2.html"
+                class="flex items-center gap-sm cursor-pointer hover:opacity-80 transition-opacity">
+                <span class="material-symbols-outlined text-primary text-[24px]">arrow_back</span>
+                <span class="font-button-md text-button-md text-primary">Kembali</span>
+            </a>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+            <div class="font-display-md text-display-md text-primary tracking-tight">
+                Pilar Pandawa
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end">
+            <button
+                class="text-ink-secondary hover:text-primary p-sm rounded-full hover:bg-surface-soft transition-colors belum-tersedia"
+                aria-disabled="true" title="Halaman ini belum tersedia">
+                <span class="material-symbols-outlined">help_outline</span>
             </button>
-</div>
-<button class="md:hidden text-on-surface">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</header>
-<main class="flex-grow w-full max-w-[1280px] mx-auto px-base lg:px-xl py-lg md:py-xl">
-<!-- Stepper -->
-<div class="w-full max-w-3xl mx-auto mb-xl">
-<div class="flex items-center justify-between relative">
-<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-surface-variant z-0"></div>
-<!-- Step 1 -->
-<div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs"><div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">1</div><span class="font-label-md text-label-md font-bold text-primary">Pilih Kamar</span></div>
-<!-- Step 2 -->
-<div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs"><div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">2</div><span class="font-label-md text-label-md font-bold text-primary">Data Diri</span></div>
-<!-- Step 3 (Active) -->
-<div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
-<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">3</div>
-<span class="font-label-md text-label-md font-bold text-primary">Pembayaran</span>
-</div>
-<!-- Step 4 (Upcoming) -->
-<div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
-<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-title-md">4</div>
-<span class="font-label-md text-label-md text-on-surface-variant">Selesai</span>
-</div>
-</div>
-</div>
-<div class="flex flex-col lg:flex-row gap-lg">
-<!-- Left Column: Payment Module -->
-<div class="w-full flex flex-col gap-lg">
-<!-- Countdown Alert -->
-<div class="bg-error-container/20 border border-error-container rounded-lg p-md flex items-start gap-md">
-<span class="material-symbols-outlined text-error mt-xs">timer</span>
-<div class="flex-grow flex flex-col sm:flex-row sm:items-center justify-between gap-sm">
-<p class="font-body-md text-body-md text-on-surface">Selesaikan Pembayaran Sebelum</p>
-<p class="font-display-md text-display-md text-error" id="countdown-timer">23:59:50</p>
-</div>
-</div>
-<!-- QRIS Payment Card -->
-<div class="bg-surface-canvas border border-border-hairline rounded-xl shadow-sm p-lg flex flex-col items-center text-center">
-<h2 class="font-display-md text-display-md text-on-surface mb-xs">Pembayaran via QRIS</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-md mx-auto max-w-2xl">
-                        Scan kode QR di bawah ini menggunakan aplikasi M-Banking atau E-Wallet pilihan Anda (BCA, Mandiri, GoPay, OVO, ShopeePay, DANA, dll).
-                    </p>
-<!-- Badge status pembayaran (diperbarui otomatis oleh polling) -->
-<div class="flex flex-wrap items-center justify-center gap-sm mb-md">
-<span id="statusBadge"
-    class="inline-flex items-center gap-xs bg-status-warning/10 text-status-warning border border-status-warning/30 px-md py-xs rounded-full font-badge text-badge">
-<span class="material-symbols-outlined text-[16px]" id="statusBadgeIcon">schedule</span>
-<span id="statusBadgeText">Menunggu Pembayaran</span>
-</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">ID Transaksi:
-<strong class="text-on-surface" id="orderIdText">-</strong></span>
-</div>
-<!-- Wadah kode QR -->
-<div class="bg-white p-4 rounded-lg border border-border-hairline shadow-sm mb-md flex flex-col items-center min-h-[240px] justify-center w-full max-w-[360px]">
-<!-- Tampilan saat QR sedang dimuat -->
-<div class="flex flex-col items-center gap-sm text-ink-muted" id="qrisLoading">
-<span class="material-symbols-outlined animate-spin text-[32px]">progress_activity</span>
-<span class="font-body-sm text-body-sm">Memuat kode QR...</span>
-</div>
-<!-- Gambar QR dari Midtrans (actions.url) -->
-<img alt="Kode QRIS Pembayaran" class="w-72 h-72 object-contain hidden" id="qrisImage">
-<!-- Cadangan: QR digambar dari qr_string bila URL tidak tersedia -->
-<canvas class="hidden" id="qrisCanvas"></canvas>
-<!-- Tampilan bila QR gagal dimuat -->
-<div class="hidden flex-col items-center gap-sm text-error px-md" id="qrisError">
-<span class="material-symbols-outlined text-[32px]">error</span>
-<span class="font-body-sm text-body-sm" id="qrisErrorText">Kode QR tidak tersedia.</span>
-</div>
-</div>
-<div class="flex items-center justify-center gap-sm bg-surface-soft py-sm px-md rounded-lg mb-lg">
-<span class="font-title-md text-title-md text-on-surface" id="nominalText">Nominal: Rp 0</span>
-<button aria-label="Salin nominal" id="copyNominalBtn" class="text-primary hover:text-primary-container transition-colors flex items-center">
-<span class="material-symbols-outlined text-[20px]">content_copy</span>
-</button>
-</div>
-<div class="w-full flex flex-col sm:flex-row gap-md justify-center">
-<button id="refreshPaymentBtn" class="flex items-center justify-center gap-xs px-base py-sm rounded border border-primary text-primary font-button-md hover:bg-primary/5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
-<span class="material-symbols-outlined text-[18px]" id="refreshIcon">refresh</span>
-<span id="refreshText">Refresh Status Pembayaran</span>
-                        </button>
-<a id="downloadQrBtn" download="qris-pilar-pandawa.png" class="flex items-center justify-center gap-xs px-base py-sm rounded bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors font-button-md border border-border-hairline no-underline">
-<span class="material-symbols-outlined text-[18px]">download</span>
-                            Unduh Kode QR
-                        </a>
-<!-- Tombol bantu pengujian: menyalin URL QR untuk ditempel di simulator sandbox -->
-<button id="copyQrUrlBtn" class="flex items-center justify-center gap-xs px-base py-sm rounded bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors font-button-md border border-border-hairline">
-<span class="material-symbols-outlined text-[18px]" id="copyQrUrlIcon">link</span>
-<span id="copyQrUrlText">Salin URL QR</span>
-                        </button>
-</div>
-<p class="font-body-sm text-body-sm text-ink-muted mt-md" id="pollingInfo">Status pembayaran dicek otomatis setiap 5 detik.</p>
-</div>
-<!-- Payment Guide Accordion (Simplified as static open list for clarity in this focused step) -->
-<div class="bg-surface-canvas border border-border-hairline rounded-xl p-lg">
-<h3 class="font-title-md text-title-md text-on-surface mb-md flex items-center gap-xs">
-<span class="material-symbols-outlined text-primary">info</span>
-                        Cara Melakukan Pembayaran
-                    </h3>
-<ol class="list-decimal list-outside ml-md space-y-sm font-body-sm text-body-sm text-on-surface-variant">
-<li class="pl-xs">Buka aplikasi M-Banking (BCA mobile, Livin', BRImo, dll) atau E-Wallet (GoPay, OVO, DANA, ShopeePay).</li>
-<li class="pl-xs">Pilih menu "Scan" atau "QRIS" pada aplikasi tersebut.</li>
-<li class="pl-xs">Arahkan kamera HP ke Kode QR di atas (atau unggah gambar QR jika diunduh).</li>
-<li class="pl-xs">Periksa kembali nama penerima <strong>"Pilar Pandawa"</strong> dan nominal tagihan <strong>"Rp 515.000"</strong>.</li>
-<li class="pl-xs">Masukkan PIN transaksi Anda dan selesaikan pembayaran.</li>
-<li class="pl-xs">Setelah berhasil, klik tombol "Refresh Status Pembayaran" di atas.</li>
-</ol>
-</div>
-</div>
-<!-- Right Column: Order Summary -->
-</div>
-</main>
-<!-- Footer - Excluded per transactional suppression rules (Linear flow) -->
+        </div>
+    </header>
+    <main class="flex-1 w-full max-w-7xl mx-auto px-base lg:px-xl py-lg lg:py-xl">
+        <!-- Stepper -->
+        <div class="w-full max-w-3xl mx-auto mb-xl">
+            <div class="flex items-center justify-between relative">
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-surface-variant z-0"></div>
+                <!-- Step 1 -->
+                <div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">
+                        1</div><span class="font-label-md text-label-md font-bold text-primary">Pilih Kamar</span>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">
+                        2</div><span class="font-label-md text-label-md font-bold text-primary">Data Diri</span>
+                </div>
+                <!-- Step 3 (Active) -->
+                <div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-title-md">
+                        3</div>
+                    <span class="font-label-md text-label-md font-bold text-primary">Pembayaran</span>
+                </div>
+                <!-- Step 4 (Upcoming) -->
+                <div class="relative z-10 flex flex-col items-center gap-sm bg-background px-xs">
+                    <div
+                        class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-title-md">
+                        4</div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Selesai</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-lg">
+            <!-- Left Column: Payment Module -->
+            <div class="w-full flex flex-col gap-lg">
+                <!-- Countdown Alert -->
+                <div
+                    class="bg-error-container/20 border border-error-container rounded-lg p-md flex items-start gap-md">
+                    <span class="material-symbols-outlined text-error mt-xs">timer</span>
+                    <div class="flex-grow flex flex-col sm:flex-row sm:items-center justify-between gap-sm">
+                        <p class="font-body-md text-body-md text-on-surface">Selesaikan Pembayaran Sebelum</p>
+                        <p class="font-display-md text-display-md text-error" id="countdown-timer">23:59:50</p>
+                    </div>
+                </div>
+                <!-- Kartu pembayaran: diisi js/pembayaran.js sesuai metode terpilih -->
+                <div id="kartuPembayaran"></div>
+                <!-- Langkah pembayaran: diisi js/pembayaran.js sesuai metode terpilih -->
+                <div id="caraPembayaran"></div>
+            </div>
+            <!-- Right Column: Order Summary -->
+        </div>
+    </main>
+    <!-- Footer - Excluded per transactional suppression rules (Linear flow) -->
 
-<!-- Payment Success Modal -->
-<div class="fixed inset-0 bg-ink-primary/50 backdrop-blur-sm z-50 hidden items-center justify-center p-base" id="paymentSuccessModal">
-<div class="bg-surface-canvas rounded-xl shadow-lg w-full max-w-md overflow-hidden flex flex-col">
-<div class="h-24 bg-primary relative flex items-center justify-center">
-<div class="absolute -bottom-6 w-12 h-12 rounded-full bg-surface-canvas flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-status-available text-[32px]">check_circle</span>
-</div>
-</div>
-<div class="p-lg pt-8 flex flex-col items-center text-center gap-md">
-<div class="flex flex-col gap-xs">
-<h3 class="font-display-md text-display-md text-ink-primary">Pembayaran Berhasil!</h3>
-<p class="font-body-md text-body-md text-ink-secondary">Pembayaran QRIS Anda telah kami terima. Silakan lanjut untuk melihat konfirmasi pesanan Anda.</p>
-</div>
-<p class="font-body-sm text-[12px] text-ink-muted text-center" id="statusSimpanDatabase"></p>
-<button id="goToStep4Btn" class="w-full bg-primary text-on-primary font-button-md text-button-md py-md rounded-lg hover:opacity-90 transition-colors shadow-sm mt-sm">
-                        Lihat Konfirmasi Pesanan
-                    </button>
-</div>
-</div>
-</div>
+    <!-- Payment Success Modal -->
+    <div class="fixed inset-0 bg-ink-primary/50 backdrop-blur-sm z-50 hidden items-center justify-center p-base"
+        id="paymentSuccessModal">
+        <div class="bg-surface-canvas rounded-xl shadow-lg w-full max-w-md overflow-hidden flex flex-col">
+            <div class="h-24 bg-primary relative flex items-center justify-center">
+                <div
+                    class="absolute -bottom-6 w-12 h-12 rounded-full bg-surface-canvas flex items-center justify-center shadow-sm">
+                    <span class="material-symbols-outlined text-status-available text-[32px]">check_circle</span>
+                </div>
+            </div>
+            <div class="p-lg pt-8 flex flex-col items-center text-center gap-md">
+                <div class="flex flex-col gap-xs">
+                    <h3 class="font-display-md text-display-md text-ink-primary">Pembayaran Berhasil!</h3>
+                    <p class="font-body-md text-body-md text-ink-secondary">Pembayaran Anda telah kami terima. Silakan
+                        lanjut untuk melihat konfirmasi pesanan Anda.</p>
+                </div>
+                <p class="font-body-sm text-[12px] text-ink-muted text-center" id="statusSimpanDatabase"></p>
+                <button id="goToStep4Btn"
+                    class="w-full bg-primary text-on-primary font-button-md text-button-md py-md rounded-lg hover:opacity-90 transition-colors shadow-sm mt-sm">
+                    Lihat Konfirmasi Pesanan
+                </button>
+            </div>
+        </div>
+    </div>
 
-<!-- Library pembuat QR (cadangan bila Midtrans hanya mengirim qr_string) -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<!-- Menyediakan window.simpanPesananKeDatabase() untuk script di bawah -->
-<script type="module" src="../../js/order-step3-simpan.js"></script>
+    <!-- Pustaka pembuat QR (cadangan bila Midtrans hanya mengirim qr_string) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
-<script>
-    // ==============================================================
-    // HALAMAN PEMBAYARAN QRIS - MIDTRANS SANDBOX
-    // Alur:
-    // 1. Ambil data transaksi dari localStorage (dibuat di step-2)
-    // 2. Tampilkan kode QR + nominal
-    // 3. Cek status pembayaran otomatis tiap 5 detik (polling)
-    // 4. Bila status settlement/capture -> tampilkan modal "Lunas"
-    // ==============================================================
+    <!-- Halaman pembayaran: kode QR / nomor Virtual Account, pengecekan status,
+     dan pencatatan pesanan ke Firestore setelah pembayaran lunas -->
+    <script type="module" src="../../js/order-step3.js"></script>
+</body>
 
-    // Biarkan kosong bila halaman dibuka lewat server lokal
-    // (jalankan "node server.js" lalu buka http://localhost:3000).
-    // Isi dengan "http://localhost:3000" hanya jika HTML dibuka dari
-    // Live Server sementara server API berjalan terpisah.
-    const API_BASE = '';
-
-    const JEDA_POLLING = 5000; // 5 detik
-    let idPolling = null;
-    let dataPembayaran = null;
-    let sudahLunas = false;
-
-    function formatRupiah(angka) {
-        return 'Rp ' + Number(angka || 0).toLocaleString('id-ID');
-    }
-
-    // ---------- 1. Menampilkan kode QR ----------
-    function tampilkanQr(data) {
-        const loading = document.getElementById('qrisLoading');
-        const gambar = document.getElementById('qrisImage');
-        const kanvas = document.getElementById('qrisCanvas');
-        const kotakError = document.getElementById('qrisError');
-        const tombolUnduh = document.getElementById('downloadQrBtn');
-
-        // Tombol "Salin URL QR" hanya berguna bila Midtrans mengirim URL gambar
-        if (!data.qr_url) {
-            document.getElementById('copyQrUrlBtn').classList.add('hidden');
-        }
-
-        function tampilkanGagal(pesan) {
-            loading.classList.add('hidden');
-            document.getElementById('qrisErrorText').textContent = pesan;
-            kotakError.classList.remove('hidden');
-            kotakError.classList.add('flex');
-            tombolUnduh.classList.add('hidden');
-        }
-
-        // Prioritas 1: gambar QR langsung dari Midtrans (actions.url)
-        if (data.qr_url) {
-            gambar.onload = function () {
-                loading.classList.add('hidden');
-                gambar.classList.remove('hidden');
-            };
-            gambar.onerror = function () {
-                // Bila URL gagal dimuat, coba pakai qr_string
-                if (data.qr_string) {
-                    gambarDariQrString(data.qr_string);
-                } else {
-                    tampilkanGagal('Kode QR gagal dimuat.');
-                }
-            };
-            gambar.src = data.qr_url;
-            tombolUnduh.href = data.qr_url;
-            return;
-        }
-
-        // Prioritas 2: gambar QR dibuat dari teks qr_string
-        if (data.qr_string) {
-            gambarDariQrString(data.qr_string);
-            return;
-        }
-
-        tampilkanGagal('Kode QR tidak tersedia dari Midtrans.');
-
-        function gambarDariQrString(teksQr) {
-            if (typeof QRCode === 'undefined') {
-                tampilkanGagal('Library QR gagal dimuat.');
-                return;
-            }
-            QRCode.toCanvas(kanvas, teksQr, { width: 288, margin: 1 }, function (err) {
-                if (err) {
-                    tampilkanGagal('Gagal membuat gambar QR.');
-                    return;
-                }
-                loading.classList.add('hidden');
-                gambar.classList.add('hidden');
-                kanvas.classList.remove('hidden');
-                tombolUnduh.href = kanvas.toDataURL('image/png');
-            });
-        }
-    }
-
-    // ---------- 2. Memperbarui tampilan status ----------
-    function perbaruiStatus(status, lunas, gagal) {
-        const badge = document.getElementById('statusBadge');
-        const ikon = document.getElementById('statusBadgeIcon');
-        const teks = document.getElementById('statusBadgeText');
-
-        badge.className = 'inline-flex items-center gap-xs px-md py-xs rounded-full font-badge text-badge border';
-
-        if (lunas) {
-            badge.classList.add('bg-status-available/10', 'text-status-available', 'border-status-available/30');
-            ikon.textContent = 'check_circle';
-            teks.textContent = 'Lunas';
-        } else if (gagal) {
-            badge.classList.add('bg-error/10', 'text-error', 'border-error/30');
-            ikon.textContent = 'cancel';
-            teks.textContent = status === 'expire' ? 'Kedaluwarsa' : 'Pembayaran Gagal';
-        } else {
-            badge.classList.add('bg-status-warning/10', 'text-status-warning', 'border-status-warning/30');
-            ikon.textContent = 'schedule';
-            teks.textContent = 'Menunggu Pembayaran';
-        }
-    }
-
-    // ---------- 3. Cek status ke server ----------
-    async function cekStatusPembayaran(dariTombol) {
-        if (!dataPembayaran || !dataPembayaran.order_id || sudahLunas) return;
-
-        const tombol = document.getElementById('refreshPaymentBtn');
-        const ikonRefresh = document.getElementById('refreshIcon');
-        const teksRefresh = document.getElementById('refreshText');
-
-        if (dariTombol) {
-            tombol.disabled = true;
-            ikonRefresh.classList.add('animate-spin');
-            teksRefresh.textContent = 'Mengecek...';
-        }
-
-        try {
-            const response = await fetch(
-                API_BASE + '/api/check-status?order_id=' + encodeURIComponent(dataPembayaran.order_id)
-            );
-            const hasil = await response.json();
-
-            if (!response.ok) {
-                throw new Error(hasil.error || 'Gagal mengecek status.');
-            }
-
-            perbaruiStatus(hasil.transaction_status, hasil.lunas, hasil.gagal);
-
-            if (hasil.lunas) {
-                sudahLunas = true;
-                hentikanPolling();
-
-                // Simpan status akhir agar bisa dipakai di halaman step-4
-                dataPembayaran.transaction_status = hasil.transaction_status;
-                dataPembayaran.payment_type = hasil.payment_type;
-                dataPembayaran.settlement_time = hasil.settlement_time;
-                localStorage.setItem('dataPembayaran', JSON.stringify(dataPembayaran));
-
-                tampilkanModalBerhasil();
-
-                // Catat pesanan ke Firestore agar muncul di halaman admin.
-                // Fungsi ini disediakan oleh js/order-step3-simpan.js
-                if (typeof window.simpanPesananKeDatabase === 'function') {
-                    window.simpanPesananKeDatabase();
-                }
-            } else if (hasil.gagal) {
-                hentikanPolling();
-                document.getElementById('pollingInfo').textContent =
-                    'Transaksi sudah tidak dapat dibayar. Silakan ulangi pemesanan.';
-            } else if (dariTombol) {
-                document.getElementById('pollingInfo').textContent =
-                    'Pembayaran belum masuk. Status dicek otomatis setiap 5 detik.';
-            }
-        } catch (err) {
-            document.getElementById('pollingInfo').textContent =
-                err.message === 'Failed to fetch'
-                    ? 'Tidak dapat menghubungi server. Jalankan "node server.js" lalu buka lewat http://localhost:3000'
-                    : 'Gagal mengecek status: ' + err.message;
-        } finally {
-            if (dariTombol) {
-                tombol.disabled = false;
-                ikonRefresh.classList.remove('animate-spin');
-                teksRefresh.textContent = 'Refresh Status Pembayaran';
-            }
-        }
-    }
-
-    function mulaiPolling() {
-        hentikanPolling();
-        idPolling = setInterval(function () { cekStatusPembayaran(false); }, JEDA_POLLING);
-    }
-
-    function hentikanPolling() {
-        if (idPolling) {
-            clearInterval(idPolling);
-            idPolling = null;
-        }
-    }
-
-    function tampilkanModalBerhasil() {
-        const modal = document.getElementById('paymentSuccessModal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-
-    // ---------- 4. Hitung mundur masa berlaku QR ----------
-    function mulaiHitungMundur(detik) {
-        const tampilan = document.getElementById('countdown-timer');
-        if (!tampilan) return;
-
-        let sisa = detik;
-        function render() {
-            if (sisa < 0) sisa = 0;
-            const jam = String(Math.floor(sisa / 3600)).padStart(2, '0');
-            const menit = String(Math.floor((sisa % 3600) / 60)).padStart(2, '0');
-            const dtk = String(sisa % 60).padStart(2, '0');
-            tampilan.textContent = jam + ':' + menit + ':' + dtk;
-            sisa--;
-        }
-        render();
-        setInterval(render, 1000);
-    }
-
-    // ---------- 5. Inisialisasi halaman ----------
-    document.addEventListener('DOMContentLoaded', function () {
-        const dataMentah = localStorage.getItem('dataPembayaran');
-
-        if (!dataMentah) {
-            document.getElementById('qrisLoading').classList.add('hidden');
-            const kotakError = document.getElementById('qrisError');
-            document.getElementById('qrisErrorText').textContent =
-                'Data pembayaran tidak ditemukan. Silakan ulangi dari halaman sebelumnya.';
-            kotakError.classList.remove('hidden');
-            kotakError.classList.add('flex');
-            document.getElementById('downloadQrBtn').classList.add('hidden');
-            document.getElementById('copyQrUrlBtn').classList.add('hidden');
-            document.getElementById('refreshPaymentBtn').disabled = true;
-            document.getElementById('pollingInfo').textContent = '';
-            return;
-        }
-
-        dataPembayaran = JSON.parse(dataMentah);
-
-        // Tampilkan informasi transaksi
-        document.getElementById('orderIdText').textContent = dataPembayaran.order_id || '-';
-        document.getElementById('nominalText').textContent =
-            'Nominal: ' + formatRupiah(dataPembayaran.gross_amount);
-
-        tampilkanQr(dataPembayaran);
-        perbaruiStatus(dataPembayaran.transaction_status || 'pending', false, false);
-
-        // Hitung mundur berdasarkan expiry_time dari Midtrans (default 15 menit)
-        let sisaDetik = 15 * 60;
-        if (dataPembayaran.expiry_time) {
-            // Format Midtrans: "2024-10-01 14:45:00" (zona waktu WIB / UTC+7)
-            const waktuHabis = new Date(dataPembayaran.expiry_time.replace(' ', 'T') + '+07:00');
-            const selisih = Math.floor((waktuHabis - new Date()) / 1000);
-            if (!isNaN(selisih)) sisaDetik = Math.max(0, selisih);
-        }
-        mulaiHitungMundur(sisaDetik);
-
-        // Mulai pengecekan otomatis
-        cekStatusPembayaran(false);
-        mulaiPolling();
-    });
-
-    // ---------- 6. Fungsi menyalin teks ke papan klip ----------
-    // Memakai Clipboard API bila tersedia. Bila tidak (misalnya halaman
-    // dibuka lewat alamat selain localhost), otomatis memakai cara cadangan.
-    async function salinTeks(teks) {
-        if (!teks) return false;
-
-        try {
-            if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(teks);
-                return true;
-            }
-        } catch (err) {
-            // abaikan, lanjut ke cara cadangan di bawah
-        }
-
-        // Cara cadangan: membuat kotak teks sementara lalu menyalinnya
-        const kotakSementara = document.createElement('textarea');
-        kotakSementara.value = teks;
-        kotakSementara.style.position = 'fixed';
-        kotakSementara.style.opacity = '0';
-        document.body.appendChild(kotakSementara);
-        kotakSementara.select();
-
-        let berhasil = false;
-        try {
-            berhasil = document.execCommand('copy');
-        } catch (err) {
-            berhasil = false;
-        }
-
-        document.body.removeChild(kotakSementara);
-        return berhasil;
-    }
-
-    // Menampilkan tanda "tersalin" sebentar pada tombol
-    function tandaiTersalin(idIkon, idTeks, ikonAwal, teksAwal, teksSukses) {
-        const ikon = document.getElementById(idIkon);
-        const teks = document.getElementById(idTeks);
-
-        ikon.textContent = 'check';
-        teks.textContent = teksSukses;
-
-        setTimeout(function () {
-            ikon.textContent = ikonAwal;
-            teks.textContent = teksAwal;
-        }, 2000);
-    }
-
-    // ---------- 7. Aksi tombol ----------
-    document.getElementById('refreshPaymentBtn').addEventListener('click', function () {
-        cekStatusPembayaran(true);
-    });
-
-    // Menyalin URL kode QR, dipakai untuk pengujian di simulator sandbox Midtrans
-    document.getElementById('copyQrUrlBtn').addEventListener('click', async function () {
-        if (!dataPembayaran || !dataPembayaran.qr_url) return;
-
-        const berhasil = await salinTeks(dataPembayaran.qr_url);
-
-        if (berhasil) {
-            tandaiTersalin('copyQrUrlIcon', 'copyQrUrlText', 'link', 'Salin URL QR', 'URL Tersalin!');
-        } else {
-            // Bila penyalinan otomatis gagal, tampilkan URL agar bisa disalin manual
-            window.prompt('Salin URL QR di bawah ini secara manual:', dataPembayaran.qr_url);
-        }
-    });
-
-    document.getElementById('copyNominalBtn').addEventListener('click', async function () {
-        const nominal = dataPembayaran ? String(dataPembayaran.gross_amount) : '';
-        const berhasil = await salinTeks(nominal);
-        if (berhasil) {
-            alert('Nominal ' + formatRupiah(nominal) + ' tersalin!');
-        }
-    });
-
-    document.getElementById('goToStep4Btn').addEventListener('click', function () {
-        window.location.href = 'step-4.html';
-    });
-
-    // Hentikan polling saat halaman ditutup
-    window.addEventListener('beforeunload', hentikanPolling);
-</script>
-</body></html>
+</html>

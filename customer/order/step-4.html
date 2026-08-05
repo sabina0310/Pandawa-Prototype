@@ -1,348 +1,281 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Booking Confirmation</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "primary-fixed": "#dae2ff",
-            "on-tertiary-container": "#ffd4a2",
-            "primary-fixed-dim": "#b2c5ff",
-            "background": "#fcf9f8",
-            "outline": "#737686",
-            "ink-secondary": "#3f3f3f",
-            "on-tertiary-fixed": "#2a1700",
-            "outline-variant": "#c3c6d7",
-            "border-hairline": "#dddddd",
-            "tertiary": "#674000",
-            "secondary-fixed-dim": "#3de273",
-            "ink-primary": "#222222",
-            "surface-container-highest": "#e5e2e1",
-            "inverse-primary": "#b2c5ff",
-            "surface-bright": "#fcf9f8",
-            "tertiary-fixed-dim": "#ffb95f",
-            "on-secondary-fixed-variant": "#005322",
-            "on-secondary-container": "#007232",
-            "whatsapp-green": "#25d366",
-            "secondary": "#006d2f",
-            "on-surface": "#1b1c1c",
-            "on-tertiary": "#ffffff",
-            "inverse-on-surface": "#f3f0ef",
-            "surface-container": "#f0eded",
-            "status-warning": "#f59e0b",
-            "primary": "#0040a6",
-            "tertiary-fixed": "#ffddb8",
-            "on-error-container": "#93000a",
-            "on-tertiary-fixed-variant": "#653e00",
-            "surface": "#fcf9f8",
-            "on-primary-fixed-variant": "#003fa3",
-            "on-primary": "#ffffff",
-            "surface-variant": "#e5e2e1",
-            "ink-muted": "#6a6a6a",
-            "status-available": "#10b981",
-            "surface-canvas": "#ffffff",
-            "surface-dim": "#dcd9d9",
-            "on-background": "#1b1c1c",
-            "surface-soft": "#f7f7f7",
-            "status-occupied": "#ef4444",
-            "surface-tint": "#0055d5",
-            "surface-container-lowest": "#ffffff",
-            "on-primary-container": "#cfd9ff",
-            "surface-container-high": "#eae7e7",
-            "on-surface-variant": "#424654",
-            "on-secondary-fixed": "#002109",
-            "secondary-fixed": "#66ff8e",
-            "on-secondary": "#ffffff",
-            "error": "#ba1a1a",
-            "surface-container-low": "#f6f3f2",
-            "primary-container": "#0156d7",
-            "error-container": "#ffdad6",
-            "tertiary-container": "#875500",
-            "on-primary-fixed": "#001849",
-            "border-strong": "#c1c1c1",
-            "inverse-surface": "#303030",
-            "whatsapp-hover": "#1da851",
-            "on-error": "#ffffff",
-            "secondary-container": "#5dfd8a"
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "xl": "32px",
-            "md": "12px",
-            "base": "16px",
-            "xxs": "2px",
-            "sm": "8px",
-            "lg": "24px",
-            "xs": "4px",
-            "section": "64px"
-          },
-          "fontFamily": {
-            "button-md": ["Plus Jakarta Sans"],
-            "body-md": ["Plus Jakarta Sans"],
-            "label-md": ["Plus Jakarta Sans"],
-            "display-md": ["Plus Jakarta Sans"],
-            "tag-uppercase": ["Plus Jakarta Sans"],
-            "display-lg-mobile": ["Plus Jakarta Sans"],
-            "badge": ["Plus Jakarta Sans"],
-            "body-sm": ["Plus Jakarta Sans"],
-            "display-xl": ["Plus Jakarta Sans"],
-            "display-lg": ["Plus Jakarta Sans"],
-            "title-md": ["Plus Jakarta Sans"],
-            "stat-display": ["Plus Jakarta Sans"]
-          },
-          "fontSize": {
-            "button-md": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
-            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
-            "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
-            "display-md": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-            "tag-uppercase": ["10px", { "lineHeight": "12px", "letterSpacing": "0.5px", "fontWeight": "700" }],
-            "display-lg-mobile": ["20px", { "lineHeight": "26px", "fontWeight": "700" }],
-            "badge": ["11px", { "lineHeight": "14px", "fontWeight": "600" }],
-            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-            "display-xl": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
-            "display-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
-            "title-md": ["16px", { "lineHeight": "20px", "fontWeight": "600" }],
-            "stat-display": ["32px", { "lineHeight": "36px", "fontWeight": "700" }]
-          }
-        },
-      }
-    }
-  </script>
-<style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .material-symbols-outlined.fill {
-      font-variation-settings: 'FILL' 1;
-    }
-  </style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Booking Confirmation</title>
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../../js/head-bersama.js"></script>
 </head>
-<body class="bg-background min-h-screen text-on-background">
-<!-- TopAppBar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-base h-16 bg-surface border-b border-border-hairline">
-<div class="flex items-center gap-xs cursor-pointer text-primary hover:bg-surface-container-low transition-colors rounded-DEFAULT p-xs">
-<span class="material-symbols-outlined">arrow_back</span>
-<span class="font-button-md text-button-md">Kembali</span>
-</div>
-<div class="font-display-md text-display-md text-primary tracking-tight">Pilar Pandawa</div>
-<div class="flex items-center">
-<span class="material-symbols-outlined cursor-pointer text-on-surface-variant hover:bg-surface-container-low transition-colors p-xs rounded-full">help</span>
-</div>
-</header>
-<main class="pt-[80px] pb-section px-base lg:px-lg max-w-7xl mx-auto">
-<!-- Stepper -->
-<div class="flex items-center justify-center mb-xl w-full max-w-3xl mx-auto">
-<div class="flex items-center w-full">
-<!-- Step 1 -->
-<div class="flex flex-col items-center relative z-10">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</div>
-<span class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Pilih Kamar</span>
-</div>
-<div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
-<!-- Step 2 -->
-<div class="flex flex-col items-center relative z-10">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</div>
-<span class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Isi Data</span>
-</div>
-<div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
-<!-- Step 3 -->
-<div class="flex flex-col items-center relative z-10">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</div>
-<span class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Pembayaran</span>
-</div>
-<div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
-<!-- Step 4 -->
-<div class="flex flex-col items-center relative z-10">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm font-label-md text-label-md">
-            4
-          </div>
-<span class="font-label-md text-label-md text-primary font-bold absolute -bottom-6 whitespace-nowrap">Konfirmasi</span>
-</div>
-</div>
-</div>
-<!-- Main Content Layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl mt-12">
-<!-- Left Column (Success & Details) -->
-<div class="lg:col-span-8 flex flex-col gap-lg">
-<!-- Success Header -->
-<div class="bg-surface-canvas rounded-xl p-lg border border-border-hairline shadow-sm flex flex-col items-center text-center">
-<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-base text-primary">
-<span class="material-symbols-outlined fill text-[40px]">check_circle</span>
-</div>
-<h1 class="font-display-lg text-display-lg text-ink-primary mb-sm">Pesanan Berhasil Dikonfirmasi</h1>
-<p class="font-body-md text-body-md text-ink-muted max-w-md">Terima kasih! Pesanan Anda telah berhasil diverifikasi dan dikonfirmasi. Anda dapat melihat detail pesanan di bawah ini.</p>
-</div>
-<!-- Transaction Card -->
-<div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
-<h2 class="font-title-md text-title-md text-ink-primary mb-base">Detail Transaksi</h2>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-base">
-<div class="flex flex-col gap-xs">
-<span class="font-label-md text-label-md text-ink-muted">Invoice ID</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="invoiceIdValue">INV/20241001/PP/001</span>
-</div>
-<div class="flex flex-col gap-xs">
-<span class="font-label-md text-label-md text-ink-muted">Tanggal Transaksi</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="transactionDateValue">1 Okt 2024, 14:30 WIB</span>
-</div>
-<div class="flex flex-col gap-xs">
-<span class="font-label-md text-label-md text-ink-muted">Metode Pembayaran</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="paymentMethodValue">Virtual Account - BCA</span>
-</div>
-<div class="flex flex-col gap-xs">
-<span class="font-label-md text-label-md text-ink-muted">Status Pembayaran</span>
-<div>
-<span class="inline-flex items-center px-2 py-1 rounded-full bg-status-available/10 text-status-available font-badge text-badge" id="paymentStatusValue">LUNAS</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Tenant Summary Card -->
-<div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
-<h2 class="font-title-md text-title-md text-ink-primary mb-base">Informasi Penyewa</h2>
-<div class="space-y-md">
-<div class="flex justify-between border-b border-border-hairline pb-sm">
-<span class="font-body-md text-body-md text-ink-muted">Nama Lengkap</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="confirmNama">Budi Santoso</span>
-</div>
-<div class="flex justify-between border-b border-border-hairline pb-sm">
-<span class="font-body-md text-body-md text-ink-muted">No. Handphone</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="confirmWhatsapp">+62 812 3456 7890</span>
-</div>
-<div class="flex justify-between border-b border-border-hairline pb-sm">
-<span class="font-body-md text-body-md text-ink-muted">NIK</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="confirmNik">3515XXXXXXXXXXXX</span>
-</div>
-<div class="flex justify-between">
-<span class="font-body-md text-body-md text-ink-muted">Penyewa Tambahan</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="confirmTenantsSummary">-</span>
-</div>
-</div>
-</div>
-<!-- Action Buttons -->
-<div class="flex flex-col sm:flex-row gap-base mt-sm">
-<button id="downloadReceiptBtn" class="flex-1 bg-primary-container text-white rounded-lg py-md px-lg font-button-md text-button-md flex items-center justify-center gap-sm hover:bg-primary transition-colors shadow-sm">
-<span class="material-symbols-outlined" id="downloadReceiptIcon">download</span>
-<span id="downloadReceiptText">Unduh Bukti Pemesanan</span>
-          </button>
-<button id="backToProfileBtn" class="flex-1 border-2 border-primary text-primary rounded-lg py-md px-lg font-button-md text-button-md flex items-center justify-center gap-sm hover:bg-primary/5 transition-colors">
-            Kembali ke Profil
-          </button>
-</div>
-</div>
-<!-- Right Column (Sticky Summary) -->
-<div class="lg:col-span-4">
-<div class="sticky top-[88px] flex flex-col gap-base">
-<!-- Property Summary Card -->
-<div class="bg-surface-canvas rounded-xl overflow-hidden border border-border-hairline shadow-sm">
-<div class="relative h-48 w-full">
-<img alt="Kamar Standar A01" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsYVQ9hb-30HtHBBbOGZ-8dWDbAwTsbop8zM5Lj2mCHT1Fqi2HRmoSCZhhl2qx_MB1pG4pzJHrUV1UBijD3I94BZm0QgC2fs9MNVfOqg6RwSH28HTUMYILbBvQyagrZMSmvmjBz7L2gNXBBnzrzGDtMMKN4hkAB7sIjlKA_9r_36dvBvUIoKucUtZYR5zMqnyLhH20vD_3C094O7-1GRxaF5sq6c0pWmeFD_I86RWOjMMUABqWMAuja6g">
-<div class="absolute top-sm left-sm bg-surface-canvas/90 backdrop-blur-sm px-2 py-1 rounded font-tag-uppercase text-tag-uppercase text-ink-primary tracking-wider" id="orderTypeBadge">
-                SEWA BULANAN
-              </div>
-</div>
-<div class="p-base">
-<h3 class="font-display-md text-display-md text-ink-primary mb-xs" id="roomNameValue">Kamar Standar A01</h3>
-<p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-base">
-<span class="material-symbols-outlined text-[16px]">location_on</span>
-                <span id="roomAddressValue">Cabang Utama, Jakarta Selatan</span>
-              </p>
-<div class="border-t border-border-hairline pt-base space-y-md">
-<div class="flex justify-between">
-<div class="flex flex-col">
-<span class="font-label-md text-label-md text-ink-muted">Check-in</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="summaryCheckin">1 Okt 2024</span>
-</div>
-<div class="flex flex-col text-right">
-<span class="font-label-md text-label-md text-ink-muted">Check-out</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="summaryCheckout">1 Nov 2024</span>
-</div>
-</div>
-<div class="bg-surface-soft p-sm rounded-DEFAULT flex justify-between items-center">
-<span class="font-body-sm text-body-sm text-ink-secondary">Durasi Sewa</span>
-<span class="font-body-md text-body-md text-ink-primary font-medium" id="summaryDuration">1 Bulan</span>
-</div>
-</div>
-<div class="border-t border-border-hairline mt-base pt-base space-y-sm">
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-ink-secondary" id="hargaSewaLabel">Harga Sewa (1 Bulan)</span>
-<span class="font-body-md text-body-md text-ink-primary" id="hargaSewaValue">Rp 500.000</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-ink-secondary">Biaya Layanan</span>
-<span class="font-body-md text-body-md text-ink-primary" id="biayaLayananValue">Rp 15.000</span>
-</div>
-<div class="flex justify-between items-center pt-sm border-t border-border-hairline border-dashed">
-<span class="font-title-md text-title-md text-ink-primary">Total Pembayaran</span>
-<span class="font-display-md text-display-md text-primary" id="totalPembayaranValue">Rp 515.000</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Trust Badges -->
-<div class="flex gap-sm justify-center">
-<div class="flex items-center gap-xs text-status-available">
-<span class="material-symbols-outlined text-[20px]">security</span>
-<span class="font-label-md text-label-md">Pembayaran Aman</span>
-</div>
-<div class="flex items-center gap-xs text-primary">
-<span class="material-symbols-outlined text-[20px]">support_agent</span>
-<span class="font-label-md text-label-md">Bantuan 24/7</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
+
+<body class="bg-background text-ink-primary font-body-md antialiased min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header
+        class="bg-surface-canvas border-b border-border-hairline px-base lg:px-xl h-16 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        <div class="flex-1 flex items-center justify-start">
+            <a href="../cust-profile.html"
+                class="flex items-center gap-sm cursor-pointer hover:opacity-80 transition-opacity">
+                <span class="material-symbols-outlined text-primary text-[24px]">arrow_back</span>
+                <span class="font-button-md text-button-md text-primary">Kembali</span>
+            </a>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+            <div class="font-display-md text-display-md text-primary tracking-tight">
+                Pilar Pandawa
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end">
+            <button
+                class="text-ink-secondary hover:text-primary p-sm rounded-full hover:bg-surface-soft transition-colors belum-tersedia"
+                aria-disabled="true" title="Halaman ini belum tersedia">
+                <span class="material-symbols-outlined">help_outline</span>
+            </button>
+        </div>
+    </header>
+    <main class="flex-1 w-full max-w-7xl mx-auto px-base lg:px-xl py-lg lg:py-xl">
+        <!-- Stepper -->
+        <div class="flex items-center justify-center mb-xl w-full max-w-3xl mx-auto">
+            <div class="flex items-center w-full">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center relative z-10">
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
+                        <span class="material-symbols-outlined text-[18px]">check</span>
+                    </div>
+                    <span class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Pilih
+                        Kamar</span>
+                </div>
+                <div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center relative z-10">
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
+                        <span class="material-symbols-outlined text-[18px]">check</span>
+                    </div>
+                    <span class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Isi
+                        Data</span>
+                </div>
+                <div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center relative z-10">
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm">
+                        <span class="material-symbols-outlined text-[18px]">check</span>
+                    </div>
+                    <span
+                        class="font-label-md text-label-md text-primary absolute -bottom-6 whitespace-nowrap">Pembayaran</span>
+                </div>
+                <div class="flex-1 h-[2px] bg-primary mx-xs mt-[-24px]"></div>
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center relative z-10">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white mb-sm font-label-md text-label-md">
+                        4
+                    </div>
+                    <span
+                        class="font-label-md text-label-md text-primary font-bold absolute -bottom-6 whitespace-nowrap">Konfirmasi</span>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl mt-12">
+            <!-- Left Column (Success & Details) -->
+            <div class="lg:col-span-8 flex flex-col gap-lg">
+                <!-- Success Header -->
+                <div
+                    class="bg-surface-canvas rounded-xl p-lg border border-border-hairline shadow-sm flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-base text-primary">
+                        <span class="material-symbols-outlined fill text-[40px]">check_circle</span>
+                    </div>
+                    <h1 class="font-display-lg text-display-lg text-ink-primary mb-sm">Pesanan Berhasil Dikonfirmasi
+                    </h1>
+                    <p class="font-body-md text-body-md text-ink-muted max-w-md">Terima kasih! Pesanan Anda telah
+                        berhasil diverifikasi dan dikonfirmasi. Anda dapat melihat detail pesanan di bawah ini.</p>
+                </div>
+                <!-- Transaction Card -->
+                <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                    <h2 class="font-title-md text-title-md text-ink-primary mb-base">Detail Transaksi</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-base">
+                        <div class="flex flex-col gap-xs">
+                            <span class="font-label-md text-label-md text-ink-muted">Invoice ID</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="invoiceIdValue">INV/20241001/PP/001</span>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <span class="font-label-md text-label-md text-ink-muted">Tanggal Transaksi</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="transactionDateValue">1 Okt 2024, 14:30 WIB</span>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <span class="font-label-md text-label-md text-ink-muted">Metode Pembayaran</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="paymentMethodValue">Virtual Account - BCA</span>
+                        </div>
+                        <div class="flex flex-col gap-xs">
+                            <span class="font-label-md text-label-md text-ink-muted">Status Pembayaran</span>
+                            <div>
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full bg-status-available/10 text-status-available font-badge text-badge"
+                                    id="paymentStatusValue">LUNAS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tenant Summary Card -->
+                <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                    <h2 class="font-title-md text-title-md text-ink-primary mb-base">Informasi Penyewa</h2>
+                    <div class="space-y-md">
+                        <div class="flex justify-between border-b border-border-hairline pb-sm">
+                            <span class="font-body-md text-body-md text-ink-muted">Nama Lengkap</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium" id="confirmNama">Budi
+                                Santoso</span>
+                        </div>
+                        <div class="flex justify-between border-b border-border-hairline pb-sm">
+                            <span class="font-body-md text-body-md text-ink-muted">No. Handphone</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="confirmWhatsapp">+62 812 3456 7890</span>
+                        </div>
+                        <div class="flex justify-between border-b border-border-hairline pb-sm">
+                            <span class="font-body-md text-body-md text-ink-muted">NIK</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="confirmNik">3515XXXXXXXXXXXX</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-body-md text-body-md text-ink-muted">Penyewa Tambahan</span>
+                            <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                id="confirmTenantsSummary">-</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-base mt-sm">
+                    <button id="downloadReceiptBtn"
+                        class="flex-1 bg-primary-container text-white rounded-lg py-md px-lg font-button-md text-button-md flex items-center justify-center gap-sm hover:bg-primary transition-colors shadow-sm">
+                        <span class="material-symbols-outlined" id="downloadReceiptIcon">download</span>
+                        <span id="downloadReceiptText">Unduh Bukti Pemesanan</span>
+                    </button>
+                    <button id="backToProfileBtn"
+                        class="flex-1 border-2 border-primary text-primary rounded-lg py-md px-lg font-button-md text-button-md flex items-center justify-center gap-sm hover:bg-primary/5 transition-colors">
+                        Kembali ke Profil
+                    </button>
+                </div>
+            </div>
+            <!-- Right Column (Sticky Summary) -->
+            <div class="lg:col-span-4">
+                <div class="sticky top-[88px] flex flex-col gap-base">
+                    <!-- Property Summary Card -->
+                    <div class="bg-surface-canvas rounded-xl overflow-hidden border border-border-hairline shadow-sm">
+                        <div class="relative h-48 w-full">
+                            <img alt="Kamar Standar A01" class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida/AP1WRLsYVQ9hb-30HtHBBbOGZ-8dWDbAwTsbop8zM5Lj2mCHT1Fqi2HRmoSCZhhl2qx_MB1pG4pzJHrUV1UBijD3I94BZm0QgC2fs9MNVfOqg6RwSH28HTUMYILbBvQyagrZMSmvmjBz7L2gNXBBnzrzGDtMMKN4hkAB7sIjlKA_9r_36dvBvUIoKucUtZYR5zMqnyLhH20vD_3C094O7-1GRxaF5sq6c0pWmeFD_I86RWOjMMUABqWMAuja6g">
+                            <div class="absolute top-sm left-sm bg-surface-canvas/90 backdrop-blur-sm px-2 py-1 rounded font-tag-uppercase text-tag-uppercase text-ink-primary tracking-wider"
+                                id="orderTypeBadge">
+                                SEWA BULANAN
+                            </div>
+                        </div>
+                        <div class="p-base">
+                            <h3 class="font-display-md text-display-md text-ink-primary mb-xs" id="roomNameValue">Kamar
+                                Standar A01</h3>
+                            <p class="font-body-sm text-body-sm text-ink-muted flex items-center gap-xs mb-base">
+                                <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                <span id="roomAddressValue">Cabang Utama, Jakarta Selatan</span>
+                            </p>
+                            <div class="border-t border-border-hairline pt-base space-y-md">
+                                <div class="flex justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-in</span>
+                                        <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                            id="summaryCheckin">1 Okt 2024</span>
+                                    </div>
+                                    <div class="flex flex-col text-right">
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-out</span>
+                                        <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                            id="summaryCheckout">1 Nov 2024</span>
+                                    </div>
+                                </div>
+                                <div class="bg-surface-soft p-sm rounded-DEFAULT flex justify-between items-center">
+                                    <span class="font-body-sm text-body-sm text-ink-secondary">Durasi Sewa</span>
+                                    <span class="font-body-md text-body-md text-ink-primary font-medium"
+                                        id="summaryDuration">1 Bulan</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-border-hairline mt-base pt-base space-y-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-ink-secondary" id="hargaSewaLabel">Harga
+                                        Sewa (1 Bulan)</span>
+                                    <span class="font-body-md text-body-md text-ink-primary" id="hargaSewaValue">Rp
+                                        500.000</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center pt-sm border-t border-border-hairline border-dashed">
+                                    <span class="font-title-md text-title-md text-ink-primary">Total Pembayaran</span>
+                                    <span class="font-display-md text-display-md text-primary"
+                                        id="totalPembayaranValue">Rp 515.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Trust Badges -->
+                    <div class="flex gap-sm justify-center">
+                        <div class="flex items-center gap-xs text-status-available">
+                            <span class="material-symbols-outlined text-[20px]">security</span>
+                            <span class="font-label-md text-label-md">Pembayaran Aman</span>
+                        </div>
+                        <div class="flex items-center gap-xs text-primary">
+                            <span class="material-symbols-outlined text-[20px]">support_agent</span>
+                            <span class="font-label-md text-label-md">Bantuan 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Hidden Receipt Template (captured for PDF generation) -->
     <div style="position:fixed; top:0; left:-9999px; z-index:-1;">
-        <div id="pdfReceipt" style="width:700px; padding:40px; background:#ffffff; font-family:'Plus Jakarta Sans', sans-serif; color:#1b1c1c;">
+        <div id="pdfReceipt"
+            style="width:700px; padding:40px; background:#ffffff; font-family:'Plus Jakarta Sans', sans-serif; color:#1b1c1c;">
             <!-- Header -->
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <div>
                     <div style="font-size:22px; font-weight:700; color:#0040a6;">Pilar Pandawa</div>
-                    <div style="font-size:13px; color:#6a6a6a; margin-top:2px;">Professional Boarding House Management</div>
+                    <div style="font-size:13px; color:#6a6a6a; margin-top:2px;">Professional Boarding House Management
+                    </div>
                 </div>
                 <div style="text-align:right;">
-                    <div style="font-size:14px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase;">Kuitansi Pembayaran</div>
-                    <div id="receiptInvoiceNo" style="display:inline-block; margin-top:6px; background:#f0eded; color:#6a6a6a; font-size:11px; padding:3px 10px; border-radius:4px;">INV/20241001/PP/001</div>
+                    <div
+                        style="font-size:14px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase;">
+                        Kuitansi Pembayaran</div>
+                    <div id="receiptInvoiceNo"
+                        style="display:inline-block; margin-top:6px; background:#f0eded; color:#6a6a6a; font-size:11px; padding:3px 10px; border-radius:4px;">
+                        INV/20241001/PP/001</div>
                 </div>
             </div>
             <hr style="border:none; border-top:1px solid #dddddd; margin:20px 0;">
             <!-- Data Penyewa & Detail Kamar -->
             <div style="display:flex; gap:32px;">
                 <div style="flex:1;">
-                    <div style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">Data Penyewa</div>
+                    <div
+                        style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                        Data Penyewa</div>
                     <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Nama Lengkap</div>
-                    <div id="receiptNama" style="font-size:14px; font-weight:600; margin-bottom:10px;">Budi Santoso</div>
+                    <div id="receiptNama" style="font-size:14px; font-weight:600; margin-bottom:10px;">Budi Santoso
+                    </div>
                     <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">WhatsApp</div>
                     <div id="receiptWhatsapp" style="font-size:14px; margin-bottom:10px;">+62 812 3456 7890</div>
                     <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">NIK</div>
                     <div id="receiptNik" style="font-size:14px;">3515XXXXXXXXXXXX</div>
                 </div>
                 <div style="flex:1;">
-                    <div style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">Detail Kamar</div>
+                    <div
+                        style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                        Detail Kamar</div>
                     <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Cabang</div>
-                    <div id="receiptBranch" style="font-size:14px; font-weight:600; margin-bottom:10px;">Cabang Utama</div>
+                    <div id="receiptBranch" style="font-size:14px; font-weight:600; margin-bottom:10px;">Cabang Utama
+                    </div>
                     <div style="display:flex; gap:24px;">
                         <div>
                             <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Nomor Kamar</div>
@@ -350,26 +283,35 @@
                         </div>
                         <div>
                             <div style="font-size:12px; color:#6a6a6a; margin-bottom:2px;">Tipe</div>
-                            <div id="receiptRoomType" style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; background:#f0eded; color:#3f3f3f; padding:2px 8px; border-radius:4px;">Standar</div>
+                            <div id="receiptRoomType"
+                                style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; background:#f0eded; color:#3f3f3f; padding:2px 8px; border-radius:4px;">
+                                Standar</div>
                         </div>
                     </div>
                 </div>
             </div>
             <hr style="border:none; border-top:1px solid #dddddd; margin:20px 0;">
             <!-- Detail Transaksi -->
-            <div style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">Detail Transaksi</div>
-            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:#6a6a6a; text-transform:uppercase; border-bottom:1px solid #dddddd; padding-bottom:8px; margin-bottom:4px;">
+            <div
+                style="font-size:11px; font-weight:700; letter-spacing:0.5px; color:#674000; text-transform:uppercase; margin-bottom:10px;">
+                Detail Transaksi</div>
+            <div
+                style="display:flex; justify-content:space-between; font-size:11px; font-weight:700; color:#6a6a6a; text-transform:uppercase; border-bottom:1px solid #dddddd; padding-bottom:8px; margin-bottom:4px;">
                 <span>Deskripsi</span>
                 <span>Jumlah</span>
             </div>
             <div id="receiptLineItems"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; background:#e8f0fe; padding:10px 12px; border-radius:6px; margin-top:8px;">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; background:#e8f0fe; padding:10px 12px; border-radius:6px; margin-top:8px;">
                 <span style="font-size:13px; font-weight:700; color:#1b1c1c;">Total Pembayaran</span>
                 <span id="receiptTotal" style="font-size:16px; font-weight:700; color:#0040a6;">Rp 515.000</span>
             </div>
-            <div id="receiptStatusLine" style="text-align:center; font-size:12px; font-weight:700; color:#10b981; text-transform:uppercase; margin-top:12px;">Lunas - Pembayaran via Virtual Account - BCA</div>
+            <div id="receiptStatusLine"
+                style="text-align:center; font-size:12px; font-weight:700; color:#10b981; text-transform:uppercase; margin-top:12px;">
+                Lunas - Pembayaran via Virtual Account - BCA</div>
             <!-- Informasi Penting -->
-            <div style="display:flex; gap:10px; align-items:flex-start; background:#f6f3f2; border-radius:8px; padding:12px 14px; margin-top:24px;">
+            <div
+                style="display:flex; gap:10px; align-items:flex-start; background:#f6f3f2; border-radius:8px; padding:12px 14px; margin-top:24px;">
                 <div style="font-size:13px; font-weight:700; color:#1b1c1c;">&#9432;</div>
                 <div>
                     <div style="font-size:13px; font-weight:700; margin-bottom:6px;">Informasi Penting</div>
@@ -415,13 +357,11 @@
 
                 const hargaSewaLabel = text('hargaSewaLabel');
                 const hargaSewaValue = text('hargaSewaValue');
-                const biayaLayananValue = text('biayaLayananValue');
                 const totalValue = text('totalPembayaranValue');
                 const paymentMethod = text('paymentMethodValue');
 
                 const lineItems = [
-                    { label: hargaSewaLabel, value: hargaSewaValue },
-                    { label: 'Biaya Layanan', value: biayaLayananValue }
+                    { label: hargaSewaLabel, value: hargaSewaValue }
                 ];
                 document.getElementById('receiptLineItems').innerHTML = lineItems.map(function (item) {
                     return '<div style="display:flex; justify-content:space-between; font-size:13px; padding:8px 0; border-bottom:1px solid #eaecf0;">' +
@@ -470,8 +410,10 @@
         })();
     </script>
 
-<!-- Menyambungkan halaman ini ke data pemesanan -->
-<script type="module" src="../../js/order-step4.js"></script>
+    <!-- Menyambungkan halaman ini ke data pemesanan -->
+    <script type="module" src="../../js/order-step4.js"></script>
 
 
-</body></html>
+</body>
+
+</html>

@@ -5,257 +5,38 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <title>Review &amp; Syarat - Pilar Pandawa</title>
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <link href="https://fonts.googleapis.com" rel="preconnect">
-        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-                rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-                rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-                rel="stylesheet">
-        <script id="tailwind-config">
-                tailwind.config = {
-                        darkMode: "class",
-                        theme: {
-                                extend: {
-                                        "colors": {
-                                                "tertiary-fixed": "#ffddb8",
-                                                "primary": "#0040a6",
-                                                "on-surface": "#1b1c1c",
-                                                "inverse-surface": "#303030",
-                                                "on-tertiary": "#ffffff",
-                                                "primary-fixed": "#dae2ff",
-                                                "secondary-container": "#5dfd8a",
-                                                "surface-tint": "#0055d5",
-                                                "error": "#ba1a1a",
-                                                "error-container": "#ffdad6",
-                                                "border-hairline": "#dddddd",
-                                                "primary-container": "#0156d7",
-                                                "on-tertiary-fixed-variant": "#653e00",
-                                                "on-error": "#ffffff",
-                                                "border-strong": "#c1c1c1",
-                                                "secondary": "#006d2f",
-                                                "ink-primary": "#222222",
-                                                "secondary-fixed-dim": "#3de273",
-                                                "secondary-fixed": "#66ff8e",
-                                                "status-occupied": "#ef4444",
-                                                "on-primary-container": "#cfd9ff",
-                                                "on-primary": "#ffffff",
-                                                "ink-muted": "#6a6a6a",
-                                                "surface-container-lowest": "#ffffff",
-                                                "surface-bright": "#fcf9f8",
-                                                "outline-variant": "#c3c6d7",
-                                                "primary-fixed-dim": "#b2c5ff",
-                                                "whatsapp-green": "#25d366",
-                                                "surface-container-highest": "#e5e2e1",
-                                                "surface-soft": "#f7f7f7",
-                                                "surface-container-low": "#f6f3f2",
-                                                "whatsapp-hover": "#1da851",
-                                                "on-tertiary-fixed": "#2a1700",
-                                                "inverse-on-surface": "#f3f0ef",
-                                                "inverse-primary": "#b2c5ff",
-                                                "background": "#fcf9f8",
-                                                "status-warning": "#f59e0b",
-                                                "tertiary": "#674000",
-                                                "surface": "#fcf9f8",
-                                                "tertiary-container": "#875500",
-                                                "on-secondary": "#ffffff",
-                                                "on-background": "#1b1c1c",
-                                                "status-available": "#10b981",
-                                                "on-primary-fixed-variant": "#003fa3",
-                                                "surface-canvas": "#ffffff",
-                                                "surface-container": "#f0eded",
-                                                "on-tertiary-container": "#ffd4a2",
-                                                "surface-variant": "#e5e2e1",
-                                                "outline": "#737686",
-                                                "on-secondary-fixed-variant": "#005322",
-                                                "on-secondary-fixed": "#002109",
-                                                "surface-container-high": "#eae7e7",
-                                                "on-secondary-container": "#007232",
-                                                "tertiary-fixed-dim": "#ffb95f",
-                                                "on-surface-variant": "#424654",
-                                                "ink-secondary": "#3f3f3f",
-                                                "on-error-container": "#93000a",
-                                                "surface-dim": "#dcd9d9",
-                                                "on-primary-fixed": "#001849"
-                                        },
-                                        "borderRadius": {
-                                                "DEFAULT": "0.25rem",
-                                                "lg": "0.5rem",
-                                                "xl": "0.75rem",
-                                                "full": "9999px"
-                                        },
-                                        "spacing": {
-                                                "xs": "4px",
-                                                "section": "64px",
-                                                "xl": "32px",
-                                                "base": "16px",
-                                                "xxs": "2px",
-                                                "sm": "8px",
-                                                "md": "12px",
-                                                "lg": "24px"
-                                        },
-                                        "fontFamily": {
-                                                "display-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-lg": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "body-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "badge": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "button-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "body-sm": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "title-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "label-md": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "tag-uppercase": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "stat-display": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-xl": [
-                                                        "Plus Jakarta Sans"
-                                                ],
-                                                "display-lg-mobile": [
-                                                        "Plus Jakarta Sans"
-                                                ]
-                                        },
-                                        "fontSize": {
-                                                "display-md": [
-                                                        "20px",
-                                                        {
-                                                                "lineHeight": "26px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "display-lg": [
-                                                        "22px",
-                                                        {
-                                                                "lineHeight": "28px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "body-md": [
-                                                        "15px",
-                                                        {
-                                                                "lineHeight": "22px",
-                                                                "fontWeight": "400"
-                                                        }
-                                                ],
-                                                "badge": [
-                                                        "11px",
-                                                        {
-                                                                "lineHeight": "14px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "button-md": [
-                                                        "15px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "body-sm": [
-                                                        "14px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "400"
-                                                        }
-                                                ],
-                                                "title-md": [
-                                                        "16px",
-                                                        {
-                                                                "lineHeight": "20px",
-                                                                "fontWeight": "600"
-                                                        }
-                                                ],
-                                                "label-md": [
-                                                        "13px",
-                                                        {
-                                                                "lineHeight": "18px",
-                                                                "fontWeight": "500"
-                                                        }
-                                                ],
-                                                "tag-uppercase": [
-                                                        "10px",
-                                                        {
-                                                                "lineHeight": "12px",
-                                                                "letterSpacing": "0.5px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "stat-display": [
-                                                        "32px",
-                                                        {
-                                                                "lineHeight": "36px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "display-xl": [
-                                                        "28px",
-                                                        {
-                                                                "lineHeight": "36px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ],
-                                                "display-lg-mobile": [
-                                                        "20px",
-                                                        {
-                                                                "lineHeight": "26px",
-                                                                "fontWeight": "700"
-                                                        }
-                                                ]
-                                        }
-                                },
-                        },
-                }
-        </script>
-        <style>
-                .material-symbols-outlined {
-                        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-                }
 
-                .material-symbols-outlined[data-weight="fill"] {
-                        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-                }
-        </style>
+        <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+        <script src="../../js/head-bersama.js"></script>
 </head>
 
-<body class="bg-surface text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-white">
+<body class="bg-background text-ink-primary font-body-md antialiased min-h-screen flex flex-col">
         <!-- Top Navbar -->
         <header
-                class="bg-surface-container-lowest sticky top-0 w-full z-50 border-b border-border-hairline shadow-sm px-lg py-md">
-                <div class="max-w-[1280px] mx-auto flex justify-between items-center">
-                        <button aria-label="Kembali"
-                                class="flex items-center gap-2 text-primary font-button-md text-button-md hover:opacity-80 transition-opacity">
-                                <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
-                                Kembali
-                        </button>
-                        <div class="font-display-md text-display-md text-primary font-bold">
+                class="bg-surface-canvas border-b border-border-hairline px-base lg:px-xl h-16 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+                <div class="flex-1 flex items-center justify-start">
+                        <a href="step-1.html"
+                                class="flex items-center gap-sm cursor-pointer hover:opacity-80 transition-opacity">
+                                <span class="material-symbols-outlined text-primary text-[24px]">arrow_back</span>
+                                <span class="font-button-md text-button-md text-primary">Kembali</span>
+                        </a>
+                </div>
+                <div class="flex-1 flex items-center justify-center">
+                        <div class="font-display-md text-display-md text-primary tracking-tight">
                                 Pilar Pandawa
                         </div>
-                        <button aria-label="Bantuan"
-                                class="text-on-surface-variant hover:text-primary transition-colors p-2">
-                                <span class="material-symbols-outlined" data-icon="help">help</span>
+                </div>
+                <div class="flex-1 flex items-center justify-end">
+                        <button class="text-ink-secondary hover:text-primary p-sm rounded-full hover:bg-surface-soft transition-colors belum-tersedia"
+                                aria-disabled="true" title="Halaman ini belum tersedia">
+                                <span class="material-symbols-outlined">help_outline</span>
                         </button>
                 </div>
         </header>
-        <main class="max-w-[1280px] mx-auto px-base md:px-lg py-section">
+        <main class="flex-1 w-full max-w-7xl mx-auto px-base lg:px-xl py-lg lg:py-xl">
                 <!-- Stepper -->
                 <div class="mb-xl max-w-3xl mx-auto">
                         <div class="flex items-center justify-between relative">
@@ -307,7 +88,7 @@
                         <div class="lg:col-span-8 flex flex-col gap-lg">
                                 <!-- Review Data Diri -->
                                 <section
-                                        class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm p-base">
+                                        class="bg-surface-container-lowest rounded-xl border border-border-hairline shadow-sm p-base">
                                         <div
                                                 class="flex justify-between items-center mb-md border-b border-border-hairline pb-sm">
                                                 <h2
@@ -317,9 +98,9 @@
                                                         Review Data Diri Penyewa
                                                 </h2>
                                                 <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="#">Ubah Data</a>
+                                                        href="step-1.html">Ubah Data</a>
                                         </div>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
                                                 <div>
                                                         <p class="font-label-md text-label-md text-ink-muted mb-xxs">
                                                                 Nama Lengkap</p>
@@ -340,7 +121,7 @@
                                                 </div>
                                         </div>
                                 </section>
-                                <section class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm p-base"
+                                <section class="bg-surface-container-lowest rounded-xl border border-border-hairline shadow-sm p-base"
                                         id="tenantsReviewSection">
                                         <div
                                                 class="flex justify-between items-center mb-md border-b border-border-hairline pb-sm">
@@ -351,7 +132,7 @@
                                                         Review Data Penghuni Tambahan
                                                 </h2>
                                                 <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="#">Ubah Data</a>
+                                                        href="step-1.html">Ubah Data</a>
                                         </div>
                                         <div class="space-y-md" id="tenantsReviewContainer">
                                                 <div
@@ -359,7 +140,7 @@
                                                         <p
                                                                 class="font-label-md text-label-md text-ink-primary font-bold mb-sm">
                                                                 Penghuni Tambahan 1</p>
-                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
                                                                 <div>
                                                                         <p
                                                                                 class="font-label-md text-label-md text-ink-muted mb-xxs">
@@ -397,7 +178,7 @@
                                         </div>
                                 </section>
                                 <section
-                                        class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm p-base">
+                                        class="bg-surface-container-lowest rounded-xl border border-border-hairline shadow-sm p-base">
                                         <div
                                                 class="flex justify-between items-center mb-md border-b border-border-hairline pb-sm">
                                                 <h2
@@ -407,27 +188,22 @@
                                                         Metode Pembayaran Dipilih
                                                 </h2>
                                                 <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="#">Ubah</a>
+                                                        href="step-1.html">Ubah</a>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                                <div
-                                                        class="w-16 h-10 border border-border-hairline rounded flex items-center justify-center p-1 overflow-hidden">
-                                                        <img alt="BCA Logo" class="max-w-full max-h-full object-contain"
-                                                                src="https://lh3.googleusercontent.com/aida/AP1WRLtnqdtSq9T5zvD75OQ5RjJEBeyB5brHX-eqXQFLOi0Hec-0JPOfNCT6rGfS8k-bVEYEpv03VRu7E8xT7BBfo8unO5g7Bkk2LLOv5ipWbQLzq4I1vk3xMYK7UDiiZBa1vyzec2O6x5FzRktbabmzFS_i-hew0I09BLoUzjirRlynixVvfHVUFWBPlfY2Dh6KuWyZHDEGbjJTN7mZlh1V8yZS5ROK7xS9_q115I9fP7A_XQadKO6YjZhYDw"
-                                                                style="object-position: 0 0;">
-                                                </div>
+                                                <div class="w-16 h-10 bg-white border border-border-hairline rounded flex items-center justify-center"
+                                                        id="metodeLogo"></div>
                                                 <div>
-                                                        <p
-                                                                class="font-body-md text-body-md text-ink-primary font-medium">
-                                                                QRIS</p>
-                                                        <p class="font-label-md text-label-md text-ink-muted">Dicek
-                                                                otomatis</p>
+                                                        <p class="font-body-md text-body-md text-ink-primary font-medium"
+                                                                id="metodeLabel">-</p>
+                                                        <p class="font-label-md text-label-md text-ink-muted">Status
+                                                                pembayaran dicek otomatis</p>
                                                 </div>
                                         </div>
                                 </section>
                                 <!-- Syarat & Ketentuan -->
                                 <section
-                                        class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm p-base flex flex-col h-full">
+                                        class="bg-surface-container-lowest rounded-xl border border-border-hairline shadow-sm p-base flex flex-col h-full">
                                         <div
                                                 class="flex items-center gap-2 mb-md border-b border-border-hairline pb-sm">
                                                 <span class="material-symbols-outlined text-primary-container"
@@ -487,7 +263,7 @@
                         <!-- Right Column: Sticky Order Summary -->
                         <aside class="lg:col-span-4">
                                 <div
-                                        class="bg-surface-container-lowest rounded-lg border border-border-hairline shadow-sm sticky top-24 overflow-hidden">
+                                        class="bg-surface-container-lowest rounded-xl border border-border-hairline shadow-sm sticky top-24 overflow-hidden">
                                         <!-- Property Image & Badge -->
                                         <div class="relative h-48 w-full bg-surface-container-highest">
                                                 <img id="summaryRoomImage" class="w-full h-full object-cover"
@@ -504,7 +280,8 @@
                                                 <!-- Property Info -->
                                                 <div>
                                                         <h3 id="summaryRoomName"
-                                                                class="font-display-md text-display-md text-ink-primary mb-1">-</h3>
+                                                                class="font-display-md text-display-md text-ink-primary mb-1">
+                                                                -</h3>
                                                         <p
                                                                 class="font-body-sm text-body-sm text-ink-muted flex items-center gap-1">
                                                                 <span class="material-symbols-outlined text-sm"
@@ -538,20 +315,10 @@
                                                 <!-- Price Breakdown -->
                                                 <div class="space-y-xs">
                                                         <div class="flex justify-between items-center">
-                                                                <span
-                                                                        class="font-body-sm text-body-sm text-ink-secondary"
+                                                                <span class="font-body-sm text-body-sm text-ink-secondary"
                                                                         id="summaryHargaLabel">Harga Sewa</span>
-                                                                <span
-                                                                        class="font-body-sm text-body-sm text-ink-primary"
+                                                                <span class="font-body-sm text-body-sm text-ink-primary"
                                                                         id="summaryHargaValue">-</span>
-                                                        </div>
-                                                        <div class="flex justify-between items-center">
-                                                                <span
-                                                                        class="font-body-sm text-body-sm text-ink-secondary">Biaya
-                                                                        Layanan</span>
-                                                                <span
-                                                                        class="font-body-sm text-body-sm text-ink-primary"
-                                                                        id="summaryBiayaLayanan">-</span>
                                                         </div>
                                                 </div>
                                                 <!-- Total -->
@@ -572,9 +339,8 @@
                                                 </div>
                                                 <!-- CTA -->
                                                 <button id="lanjutStep3Btn"
-                                                        class="w-full bg-primary-container text-white font-button-md text-button-md py-3 rounded-md hover:bg-surface-tint transition-colors shadow-sm flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed">
-                                                        <span
-                                                                class="material-symbols-outlined animate-spin hidden text-[20px]"
+                                                        class="w-full bg-primary-container text-white font-button-md text-button-md py-lg rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                                                        <span class="material-symbols-outlined animate-spin hidden text-[20px]"
                                                                 id="lanjutStep3Spinner">progress_activity</span>
                                                         <span id="lanjutStep3Text">Lanjut ke Pembayaran</span>
                                                         <span class="material-symbols-outlined"

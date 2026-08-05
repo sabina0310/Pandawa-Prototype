@@ -7,7 +7,8 @@
  *      (disimpan oleh halaman detail cabang)
  *   2. Menampilkan ringkasan pesanan beserta rincian biayanya
  *   3. Menyesuaikan form dengan tipe sewa yang dipilih
- *   4. Memeriksa seluruh isian sebelum lanjut ke langkah 2
+ *   4. Menampilkan pilihan metode pembayaran (QRIS / Virtual Account)
+ *   5. Memeriksa seluruh isian sebelum lanjut ke langkah 2
  *
  * Aturan tipe sewa:
  *   - HARIAN  : hanya untuk satu penyewa, khusus pria. Bagian
@@ -18,6 +19,7 @@
  */
 
 import { formatRupiah } from '../js/format.js';
+import { gambarPilihanMetode } from '../js/metode-bayar.js';
 
 const MAKS_PENGHUNI_TAMBAHAN = 3;
 
@@ -291,7 +293,6 @@ function tampilkanRingkasan() {
   isiTeks('summaryHargaLabel',
     'Harga Sewa (' + bookingData.durasi + ' ' + bookingData.satuanDurasi + ')');
   isiTeks('summaryHargaValue', formatRupiah(bookingData.hargaSewa));
-  isiTeks('summaryBiayaLayanan', formatRupiah(bookingData.biayaLayanan));
   isiTeks('summaryTotalValue', formatRupiah(bookingData.total));
 
   // Foto cabang pada kartu ringkasan
@@ -398,7 +399,36 @@ function lanjutKeStep2() {
 }
 
 // =====================================================================
-// 8. PROSES UTAMA
+// 8. TOMBOL KEMBALI
+// ---------------------------------------------------------------------
+// Sebelumnya tombol ini memanggil history.back(), yang hanya mundur
+// satu langkah di riwayat peramban. Akibatnya tujuannya tidak menentu:
+// bila pengunjung sampai ke sini lewat muat ulang, tombol Kembali
+// justru membawanya ke halaman lain -- bahkan ke luar situs.
+//
+// Sekarang alamatnya dirakit dari pilihan yang tersimpan, sehingga
+// selalu mendarat di halaman cabang yang tadi dibuka:
+//
+//     ../room-detail.html?cabang=<id cabang>&tipe=<harian|bulanan>
+//
+// Tipe sewa ikut dibawa agar pilihan itu kembali seperti semula,
+// tidak perlu dipilih ulang.
+// =====================================================================
+function arahkanTombolKembali() {
+  const tombol = document.getElementById('kembaliBtn');
+  if (!tombol || !bookingData.cabangId) return;
+
+  let alamat = '../room-detail.html?cabang=' + encodeURIComponent(bookingData.cabangId);
+  if (bookingData.tipeSewa) {
+    alamat += '&tipe=' + encodeURIComponent(bookingData.tipeSewa);
+  }
+
+  tombol.href = alamat;
+  tombol.title = 'Kembali ke ' + (bookingData.namaCabang || 'halaman cabang');
+}
+
+// =====================================================================
+// 9. PROSES UTAMA
 // =====================================================================
 function mulai() {
   const mentah = localStorage.getItem('bookingData');
@@ -412,6 +442,13 @@ function mulai() {
   }
 
   tampilkanRingkasan();
+  arahkanTombolKembali();
+
+  // Pilihan metode pembayaran digambar dari js/metode-bayar.js, sama
+  // persis dengan yang dipakai Form Perpanjang. Pilihannya langsung
+  // tersimpan setiap kali diubah, jadi tidak hilang meski halaman
+  // dimuat ulang atau pengunjung kembali dari langkah berikutnya.
+  gambarPilihanMetode(document.getElementById('payment-accordion-container'));
 
   // Sewa bulanan dimulai dengan satu kartu penghuni tambahan
   if (bookingData.tipeSewa === 'bulanan') {
