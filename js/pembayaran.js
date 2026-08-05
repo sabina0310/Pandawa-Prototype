@@ -498,7 +498,7 @@ export function mulaiPembayaran(opsi) {
   if (tombolSalinQr) {
     tombolSalinQr.addEventListener("click", async function () {
       // Simulator menerima teks QR; bila tidak ada, URL gambarnya dipakai
-      const isi = data.qr_string || data.qr_url || "";
+      const isi = data.qr_url || "";
       const berhasil = await salinTeks(isi);
       if (berhasil) tandaiTersalin(tombolSalinQr, "content_copy", "Salin Data QR");
       else window.prompt("Salin data QR di bawah ini:", isi);
