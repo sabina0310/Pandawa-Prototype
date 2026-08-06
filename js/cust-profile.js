@@ -29,6 +29,7 @@ import { siapkanSidebar } from "./customer-sidebar.js";
 import {
   formatTanggal, formatRupiah, sisaHari, labelSisaHari, keDate, amankanTeks
 } from "./admin-util.js";
+import { pesananUji, keteranganPesananUji } from "./status-pesanan.js";
 
 // Halaman ini wajib login
 siapkanSidebar(true);
@@ -114,6 +115,22 @@ function tampilkanSewa(transaksi, cabang) {
     badge.classList.remove("flex");
     banner.classList.add("hidden");
     banner.classList.remove("flex");
+  }
+
+  // --- Keterangan pesanan hasil generate untuk pengujian ---
+  // Sewa uji selalu bertenggat H-7, jadi banner "Perhatian" di atas
+  // pasti ikut muncul. Tanpa keterangan ini, penyewa akan mengira
+  // dirinya benar-benar punya sewa yang akan jatuh tempo.
+  const catatanUji = el("catatanPesananUji");
+
+  if (catatanUji) {
+    if (pesananUji(transaksi)) {
+      catatanUji.innerHTML = keteranganPesananUji("ringkas");
+      catatanUji.classList.remove("hidden");
+    } else {
+      catatanUji.innerHTML = "";
+      catatanUji.classList.add("hidden");
+    }
   }
 }
 

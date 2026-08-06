@@ -89,3 +89,50 @@ export function labelPerpanjangan(nilai) {
 export function tidakDilanjutkan(transaksi) {
   return transaksi && transaksi.status_perpanjangan === "tidak_lanjut";
 }
+
+// ---------------------------------------------------------------------
+// PESANAN HASIL PENGUJIAN (UAT)
+// ---------------------------------------------------------------------
+// api/uat-dummy-booking.js membuat salinan pesanan bertenggat H-7
+// dengan order_id berawalan "UAT-", semata-mata agar notifikasi
+// WhatsApp bisa diuji tanpa menunggu tanggal jatuh temponya tiba.
+//
+// Pesanan itu ikut muncul di Dashboard dan Riwayat Pesanan penyewa,
+// dan tanpa keterangan apa pun akan terbaca sebagai pesanan sungguhan.
+// Karena itu tiap kartunya diberi keterangan yang jelas.
+//
+// Awalannya ditulis di sini agar sisi penyewa tidak perlu mengimpor
+// berkas di folder api/ -- berkas itu memakai CommonJS dan hanya
+// berjalan di server.
+// ---------------------------------------------------------------------
+
+/** Awalan order_id yang dibuat api/uat-dummy-booking.js. */
+export const AWALAN_ORDER_UJI = "UAT-";
+
+/** true bila pesanan ini data uji hasil generate otomatis. */
+export function pesananUji(transaksi) {
+  const orderId = transaksi && transaksi.order_id ? transaksi.order_id : "";
+  return String(orderId).indexOf(AWALAN_ORDER_UJI) === 0;
+}
+
+/**
+ * Keterangan yang ditempelkan pada kartu pesanan uji.
+ *
+ * @param {string} bentuk - "kartu" untuk Riwayat Pesanan (lebar penuh),
+ *                          "ringkas" untuk Dashboard (ruangnya sempit)
+ */
+export function keteranganPesananUji(bentuk) {
+  const pesan = bentuk === "ringkas"
+    ? "Data pengujian: dibuat otomatis untuk menguji notifikasi WhatsApp " +
+      "tenggat pemesanan H-7."
+    : "Pesanan ini <strong>dibuat otomatis oleh sistem</strong> untuk menguji " +
+      "pengiriman notifikasi WhatsApp tenggat pemesanan <strong>H-7</strong>. " +
+      "Bukan pesanan sungguhan, dan tidak menagih pembayaran apa pun.";
+
+  return '<div class="flex items-start gap-sm bg-surface-container-high ' +
+    'border border-border-hairline rounded-lg px-base py-sm">' +
+    '<span class="material-symbols-outlined text-[18px] text-ink-muted shrink-0 mt-xxs">' +
+    "science</span>" +
+    '<p class="font-body-sm text-body-sm text-ink-secondary">' + pesan + "</p>" +
+    "</div>";
+}

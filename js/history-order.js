@@ -23,7 +23,9 @@ import {
 import { db, COL_TRANSAKSI } from "./firebase-init.js";
 import { ambilPeta, COL_CABANG } from "./admin-data.js";
 import { ambilSesi } from "./customer-auth.js";
-import { tentukanStatus } from "./status-pesanan.js";
+import {
+  tentukanStatus, pesananUji, keteranganPesananUji
+} from "./status-pesanan.js";
 import { unduhKuitansi } from "./kuitansi.js";
 import {
   formatTanggal,
@@ -65,8 +67,17 @@ function kartuPesanan(t, petaCabang) {
       '<span class="material-symbols-outlined text-[16px]">meeting_room</span>' +
       'Nomor kamar ditentukan admin</div>';
 
+  // Pesanan hasil generate untuk pengujian notifikasi diberi keterangan
+  // di bagian paling atas kartu, sebelum apa pun yang lain, supaya
+  // pembacanya tahu lebih dulu bahwa ini bukan pesanan sungguhan.
+  const catatanUji = pesananUji(t)
+    ? '<div class="p-base pb-0">' + keteranganPesananUji("kartu") + '</div>'
+    : '';
+
   return '' +
     '<section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm overflow-hidden">' +
+
+      catatanUji +
 
       // --- Kepala kartu: nama kos + status ---
       '<div class="p-base border-b border-border-hairline flex flex-wrap justify-between items-start gap-sm">' +
