@@ -2,15 +2,15 @@
 <html lang="id" style="">
 
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Reliable Boarding Management</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Reliable Boarding Management</title>
 
-<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
-<script src="js/head-bersama.js"></script>
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="js/head-bersama.js"></script>
 </head>
 
 <body class="bg-surface-canvas text-on-surface font-body-md antialiased min-h-screen flex flex-col pt-16">
@@ -21,20 +21,21 @@
     <!-- Main Content -->
     <main class="flex-grow flex flex-col w-full relative">
         <!-- Hero Section -->
-        <section class="relative w-full h-[80vh] min-h-[600px] flex flex-col justify-end overflow-hidden pb-section">
+        <section
+            class="relative w-full h-[70vh] min-h-[420px] sm:min-h-[500px] lg:h-[80vh] lg:min-h-[600px] flex flex-col justify-end overflow-hidden pb-section">
             <div class="absolute inset-0 z-0">
-                <div class="bg-cover bg-center w-full h-full"
-                    data-alt="A brightly lit, modern boarding house room with clean white walls, a neatly made bed with crisp white linens, a wooden desk with a small potted plant, and sunlight streaming through a large window, conveying a sense of organized, reliable, and accessible living space in a corporate Flat-Plus aesthetic."
-                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqfFqp_3jjeJncOlfTYg63KOCbwuNG5PP0RoJYmumPEQAnL34FRESSlsDEUES_gOifArNNw_Szk7AbYs7LDWDI7K6C_s74YkD-t5R8_kvJwPTEg6OJzpSEQn7oXoppfPtpIVGoRgB6eKMkDIuzUrciOU-ocqL-1ZkNVI1BvkQ6f9FjiQtR0-F2ut_czI3NhjocUnkt6xejWWP4tQYO4WY9jrbstS-97US2Ps-sZiog8nD6HmZu9mL_h3IxYFSmUoKVOAVTEXek1us')">
-                </div>
+                <!-- object-cover membuat gambar selalu memenuhi bingkai tanpa
+                     gepeng, berapa pun lebar layarnya -->
+                <img src="img/home.png" alt="Suasana hunian Pilar Pandawa"
+                    class="w-full h-full object-cover object-center" />
                 <div class="absolute inset-0 bg-black/30"></div>
             </div>
             <div
                 class="relative z-10 w-full max-w-7xl mx-auto px-base lg:px-xl flex items-center justify-between pb-xl">
                 <h1 class="hero-title text-white font-bold max-w-3xl">Temukan Kos Nyaman &amp; Terpercaya</h1>
                 <div class="hidden md:flex flex-col items-center gap-xs text-white">
-                    <span class="font-body-sm text-body-sm uppercase tracking-wider">Scroll Down</span>
-                    <div class="w-[1px] h-12 bg-white/50"></div>
+                    <!-- <span class="font-body-sm text-body-sm uppercase tracking-wider">Scroll Down</span> -->
+                    <!-- <div class="w-[1px] h-12 bg-white/50"></div> -->
                 </div>
             </div>
         </section>
@@ -62,7 +63,10 @@
                         </button>
                     </div>
                     <!-- Form Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-md items-end">
+                    <!-- Jumlah kolom mengikuti tipe sewa: sewa harian tidak
+                         memakai kolom durasi, jadi kolomnya 4 (diatur
+                         js/index-katalog.js) -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-md items-end" id="panelFilterGrid">
                         <!-- Branch Selector -->
                         <div class="flex flex-col gap-xs">
                             <label class="font-label-md text-label-md text-ink-muted ml-xs">Pilih Cabang</label>
@@ -83,24 +87,26 @@
                             <div class="relative">
                                 <span
                                     class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted">calendar_today</span>
-                                <input
+                                <input id="filterMulaiBeranda"
                                     class="w-full bg-surface-soft border border-transparent rounded-lg py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-primary-container focus:bg-surface-canvas focus:ring-1 focus:ring-primary-container outline-none transition-colors"
                                     type="date">
                             </div>
                         </div>
+
                         <!-- Date Picker (End) -->
                         <div class="flex flex-col gap-xs">
                             <label class="font-label-md text-label-md text-ink-muted ml-xs">Akhir Sewa</label>
                             <div class="relative">
                                 <span
                                     class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted">calendar_today</span>
-                                <input
+                                <input id="filterSelesaiBeranda"
                                     class="w-full bg-surface-soft border border-transparent rounded-lg py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-primary-container focus:bg-surface-canvas focus:ring-1 focus:ring-primary-container outline-none transition-colors"
                                     type="date">
                             </div>
                         </div>
-                        <!-- Duration -->
-                        <div class="flex flex-col gap-xs">
+                        <!-- Duration: hanya dipakai sewa bulanan, karena akhir
+                                                     sewa bulanan dihitung dari durasi ini -->
+                        <div class="hidden flex-col gap-xs" id="durasiSewaGroup">
                             <label class="font-label-md text-label-md text-ink-muted ml-xs">Durasi Sewa</label>
                             <div class="relative">
                                 <span
@@ -108,10 +114,9 @@
                                 <select
                                     class="w-full bg-surface-soft border border-transparent rounded-lg py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-primary-container focus:bg-surface-canvas focus:ring-1 focus:ring-primary-container appearance-none outline-none transition-colors"
                                     id="duration-select">
-                                    <option value="1">1 Hari</option>
-                                    <option value="2">2 Hari</option>
-                                    <option value="3">3 Hari</option>
-                                    <option value="7">1 Minggu</option>
+                                    <option value="1">1 Bulan</option>
+                                    <option value="3">3 Bulan</option>
+                                    <option value="6">6 Bulan</option>
                                 </select>
                                 <span
                                     class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">expand_more</span>
@@ -260,7 +265,7 @@
         </div>
     </main>
     <!-- Footer: customer/partials/footer.html (dimuat js/komponen.js) -->
-<div id="footer-placeholder"></div>
+    <div id="footer-placeholder"></div>
     <!-- Floating WhatsApp Widget -->
     <a aria-label="Konsultasi Petugas via WhatsApp" href="https://wa.me/6281234567890" target="_blank"
         rel="noopener noreferrer"
@@ -271,62 +276,26 @@
         <span class="font-button-md text-button-md hidden md:block">Konsultasi Petugas</span>
     </a>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabHarian = document.getElementById('tab-harian');
-            const tabBulanan = document.getElementById('tab-bulanan');
-            const durationSelect = document.getElementById('duration-select');
+    <!--
+        Catatan: seluruh perilaku panel pencarian di atas ditangani
+        js/index-katalog.js -- pergantian tab Harian/Bulanan, pengosongan
+        isian, perhitungan akhir sewa, sampai tombol "Cari Kamar".
 
-            const activeClasses = ['bg-surface-canvas', 'text-primary-container', 'shadow-sm', 'border', 'border-border-hairline', 'font-bold'];
-            const inactiveClasses = ['text-ink-muted', 'hover:text-ink-primary'];
+        Sebelumnya sebagian diatur script sebaris di sini dan sebagian di
+        berkas modul, sehingga keduanya harus dijaga tetap sejalan.
+        Sekarang disatukan agar hanya ada satu sumber aturan.
 
-            function switchTab(mode) {
-                if (mode === 'harian') {
-                    tabHarian.classList.add(...activeClasses);
-                    tabHarian.classList.remove(...inactiveClasses);
-                    tabBulanan.classList.remove(...activeClasses);
-                    tabBulanan.classList.add(...inactiveClasses);
-
-                    durationSelect.innerHTML = `
-                        <option value="1">1 Hari</option>
-                        <option value="2">2 Hari</option>
-                        <option value="3">3 Hari</option>
-                        <option value="7">1 Minggu</option>
-                    `;
-                } else {
-                    tabBulanan.classList.add(...activeClasses);
-                    tabBulanan.classList.remove(...inactiveClasses);
-                    tabHarian.classList.remove(...activeClasses);
-                    tabHarian.classList.add(...inactiveClasses);
-
-                    durationSelect.innerHTML = `
-                        <option value="1">1 Bulan</option>
-                        <option value="3">3 Bulan</option>
-                        <option value="6">6 Bulan</option>
-                    `;
-                }
-            }
-
-            tabHarian.addEventListener('click', () => switchTab('harian'));
-            tabBulanan.addEventListener('click', () => switchTab('bulanan'));
-
-            // Catatan: tombol "Cari Kamar" dan "Lihat Semua" ditangani
-            // js/index-katalog.js supaya bisa membawa cabang & tipe sewa
-            // yang sedang dipilih pada panel ini.
-
-            // Catatan: klik pada kartu katalog ditangani oleh js/index-katalog.js
-            // karena kartunya dibuat setelah data Firestore selesai dimuat.
-
-            // Catatan: tombol Masuk / ikon profil pada top nav
-            // ditangani js/customer-topnav.js
-        });
-    </script>
+        Klik kartu katalog juga ditangani berkas yang sama, karena
+        kartunya baru dibuat setelah data Firestore selesai dimuat.
+        Tombol Masuk / ikon profil pada top nav ditangani
+        js/customer-topnav.js.
+    -->
 
     <!-- Mengambil data katalog dari Firestore -->
     <script type="module" src="js/index-katalog.js"></script>
 
-<!-- Pemuat komponen bersama (footer) -->
-<script type="module" src="js/komponen.js"></script>
+    <!-- Pemuat komponen bersama (footer) -->
+    <script type="module" src="js/komponen.js"></script>
 
 </body>
 

@@ -13,6 +13,21 @@
  * supaya query cukup memakai satu filter kesamaan, sehingga tidak
  * memerlukan composite index. Jumlah pesanan per orang sedikit,
  * jadi tidak berpengaruh pada kecepatan.
+ *
+ * ---------------------------------------------------------------------
+ * PESANAN UJI TIDAK DITAMPILKAN DI SINI
+ * ---------------------------------------------------------------------
+ * api/uat-dummy-booking.js membuat salinan pesanan ber-order_id "UAT-"
+ * untuk menguji notifikasi WhatsApp. Pesanan itu tidak pernah benar-
+ * benar dibuat penyewa, jadi disaring keluar dari riwayat.
+ *
+ * Penyaringannya dilakukan di browser, bukan di kueri Firestore:
+ * "berawalan UAT-" adalah kueri rentang, dan menggabungkannya dengan
+ * filter customer_username akan memerlukan composite index. Jumlah
+ * pesanan per orang sedikit, jadi menyaring di sini tidak terasa.
+ *
+ * Data uji tetap tampil di Dashboard, lengkap dengan keterangannya --
+ * di sana memang perlu, karena justru sewa itulah yang bertenggat H-7.
  * =====================================================================
  */
 
@@ -23,9 +38,7 @@ import {
 import { db, COL_TRANSAKSI } from "./firebase-init.js";
 import { ambilPeta, COL_CABANG } from "./admin-data.js";
 import { ambilSesi } from "./customer-auth.js";
-import {
-  tentukanStatus, pesananUji, keteranganPesananUji
-} from "./status-pesanan.js";
+import { tentukanStatus, pesananUji } from "./status-pesanan.js";
 import { unduhKuitansi } from "./kuitansi.js";
 import {
   formatTanggal,
@@ -67,17 +80,8 @@ function kartuPesanan(t, petaCabang) {
       '<span class="material-symbols-outlined text-[16px]">meeting_room</span>' +
       'Nomor kamar ditentukan admin</div>';
 
-  // Pesanan hasil generate untuk pengujian notifikasi diberi keterangan
-  // di bagian paling atas kartu, sebelum apa pun yang lain, supaya
-  // pembacanya tahu lebih dulu bahwa ini bukan pesanan sungguhan.
-  const catatanUji = pesananUji(t)
-    ? '<div class="p-base pb-0">' + keteranganPesananUji("kartu") + '</div>'
-    : '';
-
   return '' +
     '<section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm overflow-hidden">' +
-
-      catatanUji +
 
       // --- Kepala kartu: nama kos + status ---
       '<div class="p-base border-b border-border-hairline flex flex-wrap justify-between items-start gap-sm">' +
@@ -225,9 +229,19 @@ async function muatRiwayat() {
       where("customer_username", "==", sesi.username)
     ));
 
+    // Pesanan hasil generate untuk pengujian notifikasi (order_id
+    // berawalan "UAT-") TIDAK ditampilkan di sini. Bagi penyewa,
+    // pesanan itu tidak pernah benar-benar ia buat, sehingga
+    // memunculkannya di riwayat hanya membingungkan.
+    //
+    // Data uji tetap terlihat di Dashboard -- di sana memang perlu,
+    // karena justru sewa itulah yang bertenggat H-7 dan menjadi bahan
+    // pengujian notifikasi. Di sana pun sudah diberi keterangan.
     const daftar = [];
     cuplikan.forEach(function (dokumen) {
       const data = Object.assign({ id: dokumen.id }, dokumen.data());
+      if (pesananUji(data)) return;
+
       daftar.push(data);
 
       // Disimpan supaya tombol "Unduh Kuitansi" bisa langsung memakainya

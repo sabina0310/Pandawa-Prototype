@@ -10,11 +10,31 @@
  *
  * Cabang yang seluruh kamarnya terisi ditandai "Penuh" dan tidak
  * bisa diklik untuk memesan.
+ *
+ * Panel pencarian di atas halaman tidak menyaring daftar cabang, tetapi
+ * isiannya dibawa ke halaman berikutnya lewat parameter alamat supaya
+ * pengunjung tidak perlu mengisi tanggal yang sama dua kali. Aturan
+ * pembawaannya ada di js/filter-tanggal.js.
+ *
+ * Panel itu berperilaku berbeda mengikuti tipe sewa:
+ *
+ *   HARIAN  -> tanpa kolom durasi. Pengunjung mengisi sendiri tanggal
+ *              mulai dan akhir sewanya.
+ *   BULANAN -> ada kolom durasi (1 / 3 / 6 bulan, bawaan 1 bulan).
+ *              Tanggal akhir sewa dihitung otomatis dari tanggal mulai
+ *              ditambah durasi, dan kolomnya dikunci supaya tidak ada
+ *              dua sumber kebenaran.
+ *
+ * Berpindah tab mengosongkan seluruh isian, karena isian kedua tipe
+ * sewa tidak bisa saling dipakai.
  * =====================================================================
  */
 
 import { ambilCabangDenganKetersediaan } from './customer-data.js';
 import { formatRupiahSingkat } from './format.js';
+import {
+  bacaKolomTanggal, isiKolomTanggal, rangkaiPilihanTanggal, akhirSewaBulanan
+} from './filter-tanggal.js';
 
 const wadahKartu = document.getElementById('katalogPreviewGrid');
 const pilihanCabang = document.getElementById('filterCabangBeranda');
@@ -22,6 +42,12 @@ const tombolCari = document.getElementById('searchKamarBtn');
 const tombolLihatSemua = document.getElementById('viewAllRoomsBtn');
 const tabHarian = document.getElementById('tab-harian');
 const tabBulanan = document.getElementById('tab-bulanan');
+const pilihanDurasi = document.getElementById('duration-select');
+const grupDurasi = document.getElementById('durasiSewaGroup');
+const panelGrid = document.getElementById('panelFilterGrid');
+
+const ID_MULAI = 'filterMulaiBeranda';
+const ID_SELESAI = 'filterSelesaiBeranda';
 
 let daftarCabang = [];
 let modeSewa = 'harian';
@@ -141,23 +167,162 @@ function isiPilihanCabang() {
     }).join('');
 }
 
+/**
+ * Membaca isian panel pencarian yang perlu dibawa ke halaman berikutnya.
+ *
+ * Nilai "Durasi Sewa" hanya ada pada sewa bulanan; pada sewa harian
+ * pengunjung mengisi sendiri tanggal akhir sewanya.
+ */
+function pilihanTanggalBeranda() {
+  const pilihan = bacaKolomTanggal(ID_MULAI, ID_SELESAI);
+  pilihan.durasi = (modeSewa === 'bulanan' && pilihanDurasi)
+    ? Number(pilihanDurasi.value)
+    : 0;
+  return pilihan;
+}
+
+// ---------------------------------------------------------------------
+// PERILAKU PANEL MENGIKUTI TIPE SEWA
+// ---------------------------------------------------------------------
+
+const KELAS_TAB_AKTIF = [
+  'bg-surface-canvas', 'text-primary-container', 'shadow-sm',
+  'border', 'border-border-hairline', 'font-bold'
+];
+const KELAS_TAB_PASIF = ['text-ink-muted', 'hover:text-ink-primary'];
+
+/** Menyorot tab tipe sewa yang sedang dipilih. */
+function perbaruiTampilanTab() {
+  [[tabHarian, 'harian'], [tabBulanan, 'bulanan']].forEach(function (pasangan) {
+    const tombol = pasangan[0];
+    if (!tombol) return;
+
+    const aktif = modeSewa === pasangan[1];
+    tombol.classList.add.apply(tombol.classList, aktif ? KELAS_TAB_AKTIF : KELAS_TAB_PASIF);
+    tombol.classList.remove.apply(tombol.classList, aktif ? KELAS_TAB_PASIF : KELAS_TAB_AKTIF);
+  });
+}
+
+/**
+ * Menghitung tanggal akhir sewa bulanan dari tanggal mulai ditambah
+ * durasi yang dipilih.
+ *
+ * Hanya berlaku untuk sewa bulanan. Pada sewa harian tanggal akhir diisi
+ * sendiri oleh pengunjung, jadi tidak boleh ditimpa.
+ */
+function hitungAkhirSewa() {
+  const kolomMulai = document.getElementById(ID_MULAI);
+  const kolomSelesai = document.getElementById(ID_SELESAI);
+
+  if (!kolomMulai || !kolomSelesai || modeSewa !== 'bulanan') return;
+
+  kolomSelesai.value = akhirSewaBulanan(
+    kolomMulai.value,
+    pilihanDurasi ? pilihanDurasi.value : 1
+  );
+}
+
+/**
+ * Menyesuaikan susunan panel dengan tipe sewa:
+ *
+ *   harian  -> kolom durasi disembunyikan (4 kolom), akhir sewa diisi
+ *              sendiri oleh pengunjung
+ *   bulanan -> kolom durasi muncul (5 kolom), akhir sewa dikunci karena
+ *              dihitung otomatis dari durasi
+ */
+function perbaruiTampilanTipeSewa() {
+  const bulanan = modeSewa === 'bulanan';
+  const kolomSelesai = document.getElementById(ID_SELESAI);
+
+  if (grupDurasi) {
+    grupDurasi.classList.toggle('hidden', !bulanan);
+    grupDurasi.classList.toggle('flex', bulanan);
+  }
+
+  if (panelGrid) {
+    panelGrid.classList.toggle('md:grid-cols-5', bulanan);
+    panelGrid.classList.toggle('md:grid-cols-4', !bulanan);
+  }
+
+  if (kolomSelesai) {
+    kolomSelesai.disabled = bulanan;
+    kolomSelesai.classList.toggle('cursor-not-allowed', bulanan);
+    kolomSelesai.classList.toggle('opacity-70', bulanan);
+  }
+}
+
+/**
+ * Mengosongkan seluruh isian panel.
+ *
+ * Dipanggil setiap kali pengunjung berpindah tab, karena isian sewa
+ * harian dan sewa bulanan punya arti yang berbeda: tanggal akhir sewa
+ * harian diketik sendiri, sedangkan pada sewa bulanan dihitung dari
+ * durasi. Membawa sisa isian tab sebelumnya hanya menimbulkan kombinasi
+ * yang tidak pernah benar-benar dipilih pengunjung.
+ */
+function kosongkanPanel() {
+  const kolomMulai = document.getElementById(ID_MULAI);
+  const kolomSelesai = document.getElementById(ID_SELESAI);
+
+  if (pilihanCabang) pilihanCabang.value = 'semua';
+  if (pilihanDurasi) pilihanDurasi.selectedIndex = 0;
+  if (kolomMulai) kolomMulai.value = '';
+  if (kolomSelesai) kolomSelesai.value = '';
+
+  // Memasang ulang batas minimal hari ini pada kedua kolom
+  isiKolomTanggal(ID_MULAI, ID_SELESAI, {});
+}
+
+/** Berpindah tab: tipe sewa berganti dan seluruh isian dikosongkan. */
+function gantiTipeSewa(tipe) {
+  modeSewa = tipe;
+  perbaruiTampilanTab();
+  kosongkanPanel();
+  perbaruiTampilanTipeSewa();
+}
+
 /** Membuka halaman detail sambil membawa pilihan tipe sewa dari beranda. */
 function bukaDetailCabang(idCabang) {
   window.location.href =
     'customer/room-detail.html?cabang=' + encodeURIComponent(idCabang) +
-    '&tipe=' + encodeURIComponent(modeSewa);
+    '&tipe=' + encodeURIComponent(modeSewa) +
+    rangkaiPilihanTanggal(pilihanTanggalBeranda());
 }
 
 function pasangAksiPanelPencarian() {
-  // Tab Harian / Bulanan.
-  // Tampilan tombol dan isi pilihan durasi diatur oleh script bawaan
-  // index.html; di sini kita hanya mencatat tipe sewa yang dipilih
-  // agar bisa dibawa ke halaman berikutnya.
+  // Tanggal yang sudah lewat tidak bisa dipilih
+  isiKolomTanggal(ID_MULAI, ID_SELESAI, {});
+  perbaruiTampilanTipeSewa();
+
+  const kolomMulai = document.getElementById(ID_MULAI);
+  const kolomSelesai = document.getElementById(ID_SELESAI);
+
+  if (kolomMulai) {
+    kolomMulai.addEventListener('change', function () {
+      isiKolomTanggal(ID_MULAI, ID_SELESAI, { mulai: kolomMulai.value });
+
+      // Sewa harian: akhir sewa yang jadi lebih awal daripada tanggal
+      // mulai dikosongkan, supaya tidak terbawa sebagai isian yang salah.
+      if (modeSewa === 'harian' && kolomSelesai &&
+          kolomSelesai.value && kolomSelesai.value <= kolomMulai.value) {
+        kolomSelesai.value = '';
+      }
+
+      hitungAkhirSewa();
+    });
+  }
+
+  // Mengubah durasi langsung menggeser tanggal akhir sewa
+  if (pilihanDurasi) {
+    pilihanDurasi.addEventListener('change', hitungAkhirSewa);
+  }
+
+  // Tab Harian / Bulanan
   if (tabHarian) {
-    tabHarian.addEventListener('click', function () { modeSewa = 'harian'; });
+    tabHarian.addEventListener('click', function () { gantiTipeSewa('harian'); });
   }
   if (tabBulanan) {
-    tabBulanan.addEventListener('click', function () { modeSewa = 'bulanan'; });
+    tabBulanan.addEventListener('click', function () { gantiTipeSewa('bulanan'); });
   }
 
   // Tombol "Cari Kamar": langsung ke detail bila cabang sudah dipilih,
@@ -169,7 +334,8 @@ function pasangAksiPanelPencarian() {
       if (dipilih && dipilih !== 'semua') {
         bukaDetailCabang(dipilih);
       } else {
-        window.location.href = 'customer/catalogue.html?tipe=' + encodeURIComponent(modeSewa);
+        window.location.href = 'customer/catalogue.html?tipe=' + encodeURIComponent(modeSewa) +
+          rangkaiPilihanTanggal(pilihanTanggalBeranda());
       }
     });
   }

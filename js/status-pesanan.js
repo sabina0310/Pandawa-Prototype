@@ -97,9 +97,13 @@ export function tidakDilanjutkan(transaksi) {
 // dengan order_id berawalan "UAT-", semata-mata agar notifikasi
 // WhatsApp bisa diuji tanpa menunggu tanggal jatuh temponya tiba.
 //
-// Pesanan itu ikut muncul di Dashboard dan Riwayat Pesanan penyewa,
-// dan tanpa keterangan apa pun akan terbaca sebagai pesanan sungguhan.
-// Karena itu tiap kartunya diberi keterangan yang jelas.
+// Penanda di bawah dipakai dua halaman dengan cara berbeda:
+//
+//   Dashboard        -> pesanan uji TETAP ditampilkan, karena justru
+//                       sewa itulah yang bertenggat H-7. Diberi
+//                       keterangan lewat keteranganPesananUji().
+//   Riwayat Pesanan  -> pesanan uji DISARING KELUAR, karena penyewa
+//                       tidak pernah benar-benar membuatnya.
 //
 // Awalannya ditulis di sini agar sisi penyewa tidak perlu mengimpor
 // berkas di folder api/ -- berkas itu memakai CommonJS dan hanya

@@ -34,22 +34,18 @@
                     </select>
                 </div>
                 <!-- Rental Type -->
+                <!-- Sama seperti panel Beranda: hanya Harian atau Bulanan -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-ink-muted">Tipe Sewa</label>
                     <div class="flex flex-col gap-sm">
                         <label class="inline-flex items-center">
                             <input checked="" class="form-radio text-primary focus:ring-primary" name="rentalType"
-                                type="radio" value="Semua">
-                            <span class="ml-2 font-body-md text-ink-primary">Semua</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio"
-                                value="Harian">
+                                type="radio" value="harian">
                             <span class="ml-2 font-body-md text-ink-primary">Harian (Pria)</span>
                         </label>
                         <label class="inline-flex items-center">
                             <input class="form-radio text-primary focus:ring-primary" name="rentalType" type="radio"
-                                value="Bulanan">
+                                value="bulanan">
                             <span class="ml-2 font-body-md text-ink-primary">Bulanan (Keluarga)</span>
                         </label>
                     </div>
@@ -57,15 +53,27 @@
                 <!-- Date Pickers -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-ink-muted">Tanggal Mulai</label>
-                    <input
+                    <input id="filterTanggalMulai"
                         class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary"
                         type="date">
                 </div>
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-ink-muted">Tanggal Selesai</label>
-                    <input
+                    <input id="filterTanggalSelesai"
                         class="form-input w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary"
                         type="date">
+                </div>
+                <!-- Durasi Sewa: hanya dipakai sewa bulanan, karena tanggal
+                     selesai bulanan dihitung dari durasi ini. Urutannya
+                     mengikuti panel Beranda -->
+                <div class="hidden flex-col gap-xs" id="durasiSewaGroup">
+                    <label class="font-label-md text-label-md text-ink-muted">Durasi Sewa</label>
+                    <select id="filterDurasiSewa"
+                        class="form-select w-full rounded-md border-strong text-ink-primary font-body-md focus:border-primary focus:ring-1 focus:ring-primary">
+                        <option value="1">1 Bulan</option>
+                        <option value="3">3 Bulan</option>
+                        <option value="6">6 Bulan</option>
+                    </select>
                 </div>
                 <!-- Apply Button -->
                 <button id="btnTerapkanFilter"

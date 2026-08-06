@@ -17,6 +17,10 @@
  *   - Sewa HARIAN : pengunjung memilih sendiri tanggal check-out,
  *     minimal satu hari setelah check-in.
  *
+ * Tanggal yang sudah diisi pengunjung pada panel filter Beranda atau
+ * Katalog dibawa ke sini lewat parameter alamat &mulai= dan &selesai=,
+ * lalu langsung mengisi form pemesanan. Lihat js/filter-tanggal.js.
+ *
  * Catatan model data:
  * Pengunjung memesan CABANG, bukan nomor kamar. Nomor kamar baru
  * ditentukan admin pada halaman Alokasi Kamar setelah pembayaran.
@@ -26,6 +30,10 @@
 import { ambilSatuCabang, hitungBiaya, selisihHari } from '../js/customer-data.js';
 import { formatRupiah, ikonFasilitas } from '../js/format.js';
 import { KUNCI_TUJUAN, KUNCI_CABANG_DIBUKA } from '../js/customer-auth.js';
+import {
+  keTeksTanggal, bacaPilihanTanggal, rangkaiPilihanTanggal,
+  bulanAntara, DURASI_BULAN_TERSEDIA
+} from '../js/filter-tanggal.js';
 
 // Menyimpan data cabang agar bisa dipakai saat menekan "Pesan Sekarang"
 let cabangAktif = null;
@@ -70,12 +78,9 @@ function tampilkanError(judul, keterangan) {
     '</div>';
 }
 
-/** Mengubah objek Date menjadi teks "YYYY-MM-DD" untuk input tanggal. */
-function keTeksTanggal(tanggal) {
-  const bulan = String(tanggal.getMonth() + 1).padStart(2, '0');
-  const hari = String(tanggal.getDate()).padStart(2, '0');
-  return tanggal.getFullYear() + '-' + bulan + '-' + hari;
-}
+// Catatan: keTeksTanggal() kini diambil dari js/filter-tanggal.js agar
+// perhitungan tanggal di halaman ini dan di panel filter Beranda /
+// Katalog memakai aturan yang persis sama.
 
 // =====================================================================
 // 2. MENGISI DATA CABANG KE ELEMEN HTML
@@ -239,6 +244,57 @@ function aturBatasTanggal() {
 }
 
 /**
+ * Mengisi form pemesanan dengan tanggal yang dibawa dari panel filter
+ * Beranda atau Katalog, supaya pengunjung tidak mengetik ulang.
+ *
+ * Dijalankan SEBELUM perbaruiTampilanTipeSewa(), karena pada sewa
+ * bulanan fungsi itulah yang menghitung tanggal check-out dari
+ * durasiBulanTerpilih. Jadi di sini yang diisi hanya check-in dan
+ * durasinya; check-out bulanan dibiarkan dihitung oleh aturan yang
+ * sudah ada agar tidak ada dua sumber kebenaran.
+ *
+ * Tanggal yang tidak sah atau sudah lewat sudah dibuang lebih dulu oleh
+ * bacaPilihanTanggal(), sehingga form tidak pernah terisi nilai yang
+ * langsung ditolak validasinya sendiri.
+ */
+function terapkanPilihanTanggal(parameter) {
+  const pilihan = bacaPilihanTanggal(parameter);
+  if (!pilihan.mulai && !pilihan.selesai) return;
+
+  const checkinInput = document.getElementById('checkinInput');
+  const checkoutInput = document.getElementById('checkoutInput');
+  const bulanan = document.getElementById('tipeSewaSelect').value === 'bulanan';
+
+  if (pilihan.mulai) checkinInput.value = pilihan.mulai;
+
+  if (bulanan) {
+    // Yang dibawa ke sewa bulanan bukan tanggal check-out-nya, melainkan
+    // berapa bulan lamanya. Jarak dua tanggal dipakai lebih dulu karena
+    // itu yang benar-benar dipilih pengunjung; nilai "durasi" hanya
+    // dipakai bila tanggal selesai memang dikosongkan.
+    const bulan = bulanAntara(pilihan.mulai, pilihan.selesai) || pilihan.durasi;
+    if (DURASI_BULAN_TERSEDIA.indexOf(bulan) !== -1) {
+      durasiBulanTerpilih = bulan;
+    }
+    return;
+  }
+
+  // Sewa harian: tanggal check-out dipakai apa adanya selama masuk akal.
+  if (pilihan.selesai &&
+      (!pilihan.mulai || selisihHari(pilihan.mulai, pilihan.selesai) > 0)) {
+    checkoutInput.value = pilihan.selesai;
+    return;
+  }
+
+  // Tanggal selesai dikosongkan -> dihitung dari durasi panel Beranda.
+  if (pilihan.mulai && pilihan.durasi > 0) {
+    const akhir = new Date(pilihan.mulai + 'T00:00:00');
+    akhir.setDate(akhir.getDate() + pilihan.durasi);
+    checkoutInput.value = keTeksTanggal(akhir);
+  }
+}
+
+/**
  * Menyesuaikan tampilan form mengikuti tipe sewa yang dipilih:
  * tombol durasi bulan hanya muncul pada sewa bulanan, dan pada sewa
  * bulanan tanggal check-out dikunci karena dihitung otomatis.
@@ -328,9 +384,12 @@ function pasangTombolPesan() {
     if (!localStorage.getItem('customerSession')) {
       // Titipkan alamat halaman ini supaya setelah login pengunjung
       // dikembalikan ke cabang yang sedang dilihatnya, bukan ke beranda.
+      // Tanggal yang sudah diisi ikut dititipkan agar tidak hilang saat
+      // pengunjung mampir ke halaman login.
       localStorage.setItem(KUNCI_TUJUAN,
         'room-detail.html?cabang=' + encodeURIComponent(cabangAktif.id) +
-        '&tipe=' + encodeURIComponent(tipeSewa));
+        '&tipe=' + encodeURIComponent(tipeSewa) +
+        rangkaiPilihanTanggal({ mulai: checkin, selesai: checkout }));
 
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -444,6 +503,10 @@ async function muatDetail() {
     if (tipeDibawa === 'bulanan' || tipeDibawa === 'harian') {
       document.getElementById('tipeSewaSelect').value = tipeDibawa;
     }
+
+    // Tanggal dari panel filter halaman sebelumnya, contoh:
+    // room-detail.html?cabang=x&tipe=bulanan&mulai=2026-09-01
+    terapkanPilihanTanggal(parameter);
 
     pasangAksiForm();
     perbaruiTombolDurasi();
