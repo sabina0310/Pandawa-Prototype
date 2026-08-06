@@ -110,20 +110,18 @@ const HARI_SEBELUM_JATUH_TEMPO = 7;
 /** Pesan untuk penyewa bulanan yang masa sewanya akan berakhir. */
 function pesanBulanan(data) {
   return (
-    'Halo *' + data.nama + '*,\n\n' +
-    'Masa sewa kamar Anda di Pilar Pandawa akan berakhir dalam *' +
-    HARI_SEBELUM_JATUH_TEMPO + ' hari lagi*.\n\n' +
-    'Rincian sewa:\n' +
-    '- Nomor pesanan : ' + data.orderId + '\n' +
-    '- Kamar         : ' + data.kamar + '\n' +
-    '- Tanggal berakhir : ' + data.tanggalKeluar + '\n\n' +
-    'Bila ingin melanjutkan sewa, mohon lakukan *perpanjangan* sebelum ' +
-    'tanggal tersebut agar kamar Anda tidak dialihkan ke penyewa lain.\n\n' +
-    'Bila tidak melanjutkan, mohon bersiap untuk check-out pada tanggal ' +
-    'tersebut.\n\n' +
-    'Terima kasih.\n' +
-    '_Pesan otomatis dari sistem Pilar Pandawa._'
-  );
+  'Halo *' + data.nama + '*,\n\n' +
+  'Kami menginformasikan bahwa masa sewa kamar Anda di Pilar Pandawa akan berakhir dalam *' + HARI_SEBELUM_JATUH_TEMPO + ' hari lagi*.\n\n' +
+  'Rincian sewa Anda:\n' +
+  '- Nomor pesanan : ' + data.orderId + '\n' +
+  '- Kamar         : ' + data.kamar + '\n' +
+  '- Berakhir pada : ' + data.tanggalKeluar + '\n\n' +
+  'Mohon segera melakukan *konfirmasi status sewa (baik lanjut maupun tidak)* melalui portal website Pilar Pandawa.\n\n' +
+  'Konfirmasi perpanjangan sebelum batas waktu sangat penting agar kamar Anda tidak dialihkan kepada calon penyewa lain. ' +
+  'Apabila Anda memutuskan untuk tidak melanjutkan, mohon bersiap untuk proses check-out pada tanggal yang tertera di atas.\n\n' +
+  'Terima kasih atas kerja samanya.\n\n' +
+  '_Pesan otomatis dari sistem Pilar Pandawa._'
+);
 }
 
 /** Pesan untuk penyewa harian yang harus check-out hari ini. */

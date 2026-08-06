@@ -30,7 +30,13 @@
  * =====================================================================
  */
 
+// Kedua kunci ini ditulis ulang di sini, TIDAK diimpor dari
+// customer-auth.js, karena berkas itu ikut memuat Firebase. Top nav
+// tampil di setiap halaman termasuk beranda, jadi memuat Firebase hanya
+// untuk membaca dua nama kunci akan memperlambat halaman tanpa guna.
+// Nilainya harus sama persis dengan yang ada di js/customer-auth.js.
 const KUNCI_SESI = "customerSession";
+const KUNCI_TUJUAN = "tujuanSetelahLogin";
 
 /**
  * Menentukan posisi halaman pemanggil.
@@ -38,6 +44,56 @@ const KUNCI_SESI = "customerSession";
  */
 function diDalamFolderCustomer() {
   return window.location.pathname.replace(/\\/g, "/").indexOf("/customer/") !== -1;
+}
+
+/**
+ * Alamat halaman yang sedang dibuka, DILIHAT DARI halaman login.
+ *
+ * Halaman login berada di customer/, sehingga:
+ *
+ *   customer/catalogue.html?tipe=bulanan  -> "catalogue.html?tipe=bulanan"
+ *   customer/room-detail.html?cabang=x    -> "room-detail.html?cabang=x"
+ *   index.html                            -> "../index.html"
+ *
+ * Query string ikut dibawa apa adanya. Itu yang membuat pengunjung
+ * kembali ke cabang dan tipe sewa yang sedang dilihatnya, bukan sekadar
+ * ke halaman katalog kosong.
+ *
+ * @returns {string|null} null bila halaman ini tidak layak dijadikan
+ *          tujuan kembali (halaman login/registrasi itu sendiri).
+ */
+export function alamatKembali() {
+  const jalur = window.location.pathname.replace(/\\/g, "/");
+  const berkas = jalur.slice(jalur.lastIndexOf("/") + 1) || "index.html";
+  const cari = window.location.search || "";
+
+  // Kembali ke halaman login/registrasi setelah berhasil login jelas
+  // tidak masuk akal, jadi keduanya tidak pernah dititipkan.
+  if (berkas === "login-customer.html" || berkas === "register-customer.html") {
+    return null;
+  }
+
+  if (!diDalamFolderCustomer()) {
+    // Halaman di akar proyek, contohnya index.html
+    return "../" + berkas + cari;
+  }
+
+  // Halaman di dalam customer/. Sub-folder seperti order/ dan extend/
+  // tidak ikut, karena halaman itu memang hanya bisa dibuka setelah
+  // login -- penanganannya sudah ada di js/sesi-valid.js.
+  const sisa = jalur.slice(jalur.indexOf("/customer/") + "/customer/".length);
+  if (sisa.indexOf("/") !== -1) return null;
+
+  return berkas + cari;
+}
+
+/**
+ * Menitipkan halaman yang sedang dibuka sebagai tujuan setelah login.
+ * Dibaca kembali oleh js/login-customer.js lewat kunci yang sama.
+ */
+function titipkanTujuan() {
+  const tujuan = alamatKembali();
+  if (tujuan) localStorage.setItem(KUNCI_TUJUAN, tujuan);
 }
 
 /** Kumpulan alamat yang menyesuaikan posisi halaman. */
@@ -85,6 +141,15 @@ function siapkanIsiNav() {
   if (tautanLogo) tautanLogo.href = jalur.beranda;
   if (tombolMasuk) tombolMasuk.href = jalur.login;
   if (ikonProfil) ikonProfil.href = jalur.profil;
+
+  // Halaman yang sedang dibuka dititipkan tepat sebelum berpindah ke
+  // halaman login, supaya pengunjung dikembalikan ke sini setelah
+  // berhasil masuk -- lengkap dengan parameter cabang & tipe sewanya.
+  //
+  // Dititipkan saat DIKLIK, bukan saat halaman dimuat, agar tujuan yang
+  // sudah dititipkan tombol "Pesan Sekarang" di halaman detail tidak
+  // tertimpa hanya karena pengunjung membuka halaman lain.
+  if (tombolMasuk) tombolMasuk.addEventListener("click", titipkanTujuan);
 
   // --- Tampilan tombol ---
   if (sesi) {

@@ -1,116 +1,160 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Portal Petugas Kos</title>
+<!DOCTYPE html>
+<html lang="id">
 
-<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Portal Petugas Kos</title>
 
-<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
-<script src="../js/head-bersama.js"></script>
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+    <script src="../js/head-bersama.js"></script>
 </head>
+
 <body class="bg-surface-canvas min-h-screen flex flex-col md:flex-row font-body-md text-on-surface antialiased m-0 p-0">
-<!-- Left Panel: Visual/Image -->
-<div class="relative w-full h-64 md:h-screen md:w-1/2 lg:w-[55%] xl:w-[60%] bg-surface-dim order-1 md:order-1 flex-shrink-0">
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCD71eQVVetPo1Y6nF-vXXtULdcDHJIKV0CZB7OGDlVe0TGc8du86sK31IQGzR4wQ0Jr1LTjrrU0lPrAFUYHn11Axiq6RcsXI1HjaCoI5kgp1D8OAgq2YcUMPSR0J6klorZkCN1jvkSaeR1Nn-2tariS1l19Hu8vu8U_CteygLhlZPfU1AFchfAJPByPttxGRjJfnFBm0xVzyqUxxN6g5sofb2qAsvgyhJj_mfLAJnSz6GJ-SzNvTKxWO1S9XBesLwDRCCU-HzmKx4&quot;);"></div>
-<!-- Overlay Gradient -->
-<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent mix-blend-multiply"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-on-primary-fixed/80 via-transparent to-transparent"></div>
-<!-- Glassmorphism Metric / branding -->
-<div class="absolute bottom-lg left-base right-base md:left-xl md:right-xl p-lg bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl text-white transition-all duration-300 hover:bg-white/15">
-<div class="flex items-center gap-sm mb-sm">
-<span class="material-symbols-outlined text-secondary-container text-[24px]">verified</span>
-<h3 class="font-display-md text-display-md text-white tracking-tight">Manajemen Kos Terintegrasi</h3>
-</div>
-<p class="font-body-md text-body-md text-white/90 leading-relaxed max-w-lg">Sistem terpusat untuk efisiensi operasional dan kenyamanan penghuni Pilar Pandawa.</p>
-</div>
-</div>
-<!-- Right Panel: Login Form -->
-<div class="w-full md:w-1/2 lg:w-[45%] xl:w-[40%] p-lg md:p-xl lg:px-section flex flex-col justify-center order-2 md:order-2 bg-surface-canvas shadow-[-10px_0_30px_rgba(0,0,0,0.02)] z-10">
-<div class="w-full max-w-[420px] mx-auto">
-<!-- Header -->
-<div class="mb-xl">
-<div class="flex items-center gap-xs mb-md">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mr-xs py-sm px-base">
-<span class="material-symbols-outlined text-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">domain</span>
-</div>
-<span class="font-display-md text-display-md text-primary font-bold tracking-tight">Pilar Pandawa</span>
-</div>
-<h1 class="font-display-xl text-display-xl text-ink-primary mb-xs tracking-tight">Masuk Portal Admin</h1>
-<p class="font-body-md text-body-md text-ink-muted">Silakan masuk menggunakan kredensial petugas Anda.</p>
-</div>
-<!-- Form -->
-<form action="#" class="space-y-lg" id="loginForm" method="POST">
-<!-- Input Group: ID Petugas -->
-<div class="space-y-xs">
-<label class="block font-label-md text-label-md text-ink-secondary" for="username">Username / ID Petugas</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-<span class="material-symbols-outlined text-outline group-focus-within:text-primary">person</span>
-</div>
-<input class="w-full pl-[44px] pr-md py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm" id="username" name="username" placeholder="Masukkan ID Petugas" required="" type="text">
-</div>
-</div>
-<!-- Input Group: Password -->
-<div class="space-y-xs">
-<label class="block font-label-md text-label-md text-ink-secondary" for="password">Password</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
-<span class="material-symbols-outlined text-outline group-focus-within:text-primary">lock</span>
-</div>
-<input class="w-full pl-[44px] pr-[44px] py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm" id="password" name="password" placeholder="••••••••" required="" type="password">
-<div class="absolute inset-y-0 right-0 pr-md flex items-center cursor-pointer" id="togglePassword">
-<span class="material-symbols-outlined text-outline hover:text-ink-primary transition-colors" id="togglePasswordIcon">visibility</span>
-</div>
-</div>
-</div>
-<!-- Remember Me & Forgot Password -->
-<div class="flex items-center justify-between pt-xs">
-<label class="flex items-center gap-sm cursor-pointer group">
-<div class="relative flex items-center justify-center">
-<input class="peer w-5 h-5 appearance-none border border-outline-variant rounded bg-surface-bright checked:bg-primary checked:border-primary focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer rounded-lg py-sm px-base" type="checkbox">
-<span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
-</div>
-<span class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Ingat Saya</span>
-</label>
-<a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="#">Lupa Password?</a>
-</div>
-<!-- Submit Button -->
-<button class="w-full mt-xl py-sm bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.99] active:translate-y-0 flex justify-center items-center gap-sm disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md px-base" id="loginBtn" type="submit">
-<span class="material-symbols-outlined text-[18px] animate-spin hidden" id="loginBtnSpinner">progress_activity</span>
-<span id="loginBtnText">Masuk</span>
-<span class="material-symbols-outlined text-[18px]" id="loginBtnArrow">arrow_forward</span>
-</button>
-</form>
-<!-- Footer Note -->
-<div class="mt-xl pt-lg border-t border-border-hairline text-center">
-<p class="font-body-sm text-label-md leading-[20px] text-ink-muted">Akses khusus petugas. Jika mengalami kendala, hubungi <span class="font-medium text-ink-primary">Super Admin</span>.</p>
-</div>
-</div>
-</div>
+    <!-- Left Panel: Visual/Image -->
+    <div
+        class="relative w-full h-64 md:h-screen md:w-1/2 lg:w-[55%] xl:w-[60%] bg-surface-dim order-1 md:order-1 flex-shrink-0">
+        <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCD71eQVVetPo1Y6nF-vXXtULdcDHJIKV0CZB7OGDlVe0TGc8du86sK31IQGzR4wQ0Jr1LTjrrU0lPrAFUYHn11Axiq6RcsXI1HjaCoI5kgp1D8OAgq2YcUMPSR0J6klorZkCN1jvkSaeR1Nn-2tariS1l19Hu8vu8U_CteygLhlZPfU1AFchfAJPByPttxGRjJfnFBm0xVzyqUxxN6g5sofb2qAsvgyhJj_mfLAJnSz6GJ-SzNvTKxWO1S9XBesLwDRCCU-HzmKx4&quot;);">
+        </div>
+        <!-- Overlay Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent mix-blend-multiply">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-on-primary-fixed/80 via-transparent to-transparent"></div>
+        <!-- Glassmorphism Metric / branding -->
+        <div
+            class="absolute bottom-lg left-base right-base md:left-xl md:right-xl p-lg bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl text-white transition-all duration-300 hover:bg-white/15">
+            <div class="flex items-center gap-sm mb-sm">
+                <span class="material-symbols-outlined text-secondary-container text-[24px]">verified</span>
+                <h3 class="font-display-md text-display-md text-white tracking-tight">Manajemen Kos Terintegrasi</h3>
+            </div>
+            <p class="font-body-md text-body-md text-white/90 leading-relaxed max-w-lg">Sistem terpusat untuk efisiensi
+                operasional dan kenyamanan penghuni Pilar Pandawa.</p>
+        </div>
+    </div>
+    <!-- Right Panel: Login Form -->
+    <div
+        class="w-full md:w-1/2 lg:w-[45%] xl:w-[40%] p-lg md:p-xl lg:px-section flex flex-col justify-center order-2 md:order-2 bg-surface-canvas shadow-[-10px_0_30px_rgba(0,0,0,0.02)] z-10">
+        <div class="w-full max-w-[420px] mx-auto">
+            <!-- Header -->
+            <div class="mb-xl">
+                <div class="flex items-center gap-xs mb-md">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mr-xs py-sm px-base">
+                        <span class="material-symbols-outlined text-primary text-[24px]"
+                            style="font-variation-settings: 'FILL' 1;">domain</span>
+                    </div>
+                    <span class="font-display-md text-display-md text-primary font-bold tracking-tight">Pilar
+                        Pandawa</span>
+                </div>
+                <h1 class="font-display-xl text-display-xl text-ink-primary mb-xs tracking-tight">Masuk Portal Admin
+                </h1>
+                <p class="font-body-md text-body-md text-ink-muted">Silakan masuk menggunakan kredensial petugas Anda.
+                </p>
+            </div>
+            <!-- Form -->
+            <form action="#" class="space-y-lg" id="loginForm" method="POST">
+                <!-- Input Group: ID Petugas -->
+                <div class="space-y-xs">
+                    <label class="block font-label-md text-label-md text-ink-secondary" for="username">Username / ID
+                        Petugas</label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
+                            <span
+                                class="material-symbols-outlined text-outline group-focus-within:text-primary">person</span>
+                        </div>
+                        <input
+                            class="w-full pl-[44px] pr-md py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm"
+                            id="username" name="username" placeholder="Masukkan ID Petugas" required="" type="text">
+                    </div>
+                </div>
+                <!-- Input Group: Password -->
+                <div class="space-y-xs">
+                    <label class="block font-label-md text-label-md text-ink-secondary" for="password">Password</label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none transition-colors group-focus-within:text-primary">
+                            <span
+                                class="material-symbols-outlined text-outline group-focus-within:text-primary">lock</span>
+                        </div>
+                        <input
+                            class="w-full pl-[44px] pr-[44px] py-[12px] bg-surface-bright border border-outline-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all shadow-sm"
+                            id="password" name="password" placeholder="••••••••" required="" type="password">
+                        <div class="absolute inset-y-0 right-0 pr-md flex items-center cursor-pointer"
+                            id="togglePassword">
+                            <span
+                                class="material-symbols-outlined text-outline hover:text-ink-primary transition-colors"
+                                id="togglePasswordIcon">visibility</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between pt-xs">
+                    <label class="flex items-center gap-sm cursor-pointer group">
+                        <div class="relative flex items-center justify-center">
+                            <input
+                                class="peer w-5 h-5 appearance-none border border-outline-variant rounded bg-surface-bright checked:bg-primary checked:border-primary focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer rounded-lg py-sm px-base"
+                                type="checkbox">
+                            <span
+                                class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px] transition-opacity">check</span>
+                        </div>
+                        <span
+                            class="font-body-sm text-body-sm text-ink-secondary group-hover:text-ink-primary transition-colors">Ingat
+                            Saya</span>
+                    </label>
+                    <a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors"
+                        href="#">Lupa Password?</a>
+                </div>
+                <!-- Submit Button -->
+                <button
+                    class="w-full mt-xl py-sm bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.99] active:translate-y-0 flex justify-center items-center gap-sm disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md px-base"
+                    id="loginBtn" type="submit">
+                    <span class="material-symbols-outlined text-[18px] animate-spin hidden"
+                        id="loginBtnSpinner">progress_activity</span>
+                    <span id="loginBtnText">Masuk</span>
+                    <span class="material-symbols-outlined text-[18px]" id="loginBtnArrow">arrow_forward</span>
+                </button>
+            </form>
+            <!-- Footer Note -->
+            <div class="mt-xl pt-lg border-t border-border-hairline text-center">
+                <p class="font-body-sm text-label-md leading-[20px] text-ink-muted">Akses khusus petugas. Jika mengalami
+                    kendala, hubungi <span class="font-medium text-ink-primary">Super Admin</span>.</p>
+            </div>
+        </div>
+    </div>
 
-<!-- Error Modal -->
-<div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="errorModal">
-<div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="errorModalOverlay"></div>
-<div class="relative w-full max-w-[380px] bg-surface-canvas rounded-xl shadow-2xl p-lg text-center transform transition-all">
-<div class="mx-auto mb-md w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
-<span class="material-symbols-outlined text-error text-[32px]">error</span>
-</div>
-<h3 class="font-display-md text-display-md text-ink-primary mb-xs">Login Gagal</h3>
-<p class="font-body-md text-body-md text-ink-muted mb-lg">Username atau password yang Anda masukkan salah. Silakan coba lagi.</p>
-<button class="w-full py-sm bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg px-base" id="errorModalClose" type="button">Tutup</button>
-</div>
-</div>
+    <!-- Error Modal -->
+    <div class="fixed inset-0 z-50 hidden items-center justify-center px-base" id="errorModal">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="errorModalOverlay"></div>
+        <div
+            class="relative w-full max-w-[380px] bg-surface-canvas rounded-xl shadow-2xl p-lg text-center transform transition-all">
+            <div class="mx-auto mb-md w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-error text-[32px]">error</span>
+            </div>
+            <h3 class="font-display-md text-display-md text-ink-primary mb-xs">Login Gagal</h3>
+            <p class="font-body-md text-body-md text-ink-muted mb-lg">Username atau password yang Anda masukkan salah.
+                Silakan coba lagi.</p>
+            <button
+                class="w-full py-sm bg-primary hover:bg-surface-tint text-on-primary font-button-md text-button-md rounded-lg transition-all shadow-md hover:shadow-lg px-base"
+                id="errorModalClose" type="button">Tutup</button>
+        </div>
+    </div>
 
-<!-- Memeriksa akun ke collection "user" di Firestore (peran "admin") -->
-<script type="module">
-    import { pasangLoginPengelola } from "../js/login-pengelola.js";
+    <!-- Memeriksa akun ke collection "user" di Firestore (peran "admin") -->
+    <script type="module">
+        import { pasangLoginPengelola } from "../js/login-pengelola.js";
 
-    pasangLoginPengelola({
-        peran: ["admin"],
-        kunciSesi: "adminSession",
-        tujuan: "dashboard-admin.html"
-    });
-</script>
+        pasangLoginPengelola({
+            peran: ["admin"],
+            kunciSesi: "adminSession",
+            tujuan: "dashboard-admin.html"
+        });
+    </script>
 
-</body></html>
+</body>
+
+</html>
