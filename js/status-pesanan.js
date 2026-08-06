@@ -126,8 +126,7 @@ export function keteranganPesananUji(bentuk) {
     ? "Data pengujian: dibuat otomatis untuk menguji notifikasi WhatsApp " +
       "tenggat pemesanan H-7."
     : "Pesanan ini <strong>dibuat otomatis oleh sistem</strong> untuk menguji " +
-      "pengiriman notifikasi WhatsApp tenggat pemesanan <strong>H-7</strong>. " +
-      "Bukan pesanan sungguhan, dan tidak menagih pembayaran apa pun.";
+      "pengiriman notifikasi WhatsApp tenggat pemesanan <strong>H-7</strong>. ";
 
   return '<div class="flex items-start gap-sm bg-surface-container-high ' +
     'border border-border-hairline rounded-lg px-base py-sm">' +
