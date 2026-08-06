@@ -5,7 +5,7 @@
  * Alur:
  *   1. Periksa seluruh isian di sisi browser
  *   2. Pastikan username belum dipakai (query ke Firestore)
- *   3. Acak kata sandi, lalu simpan ke collection "customers"
+ *   3. Acak kata sandi, lalu simpan ke collection "user"
  *   4. Arahkan ke halaman login
  *
  * Pengguna TIDAK langsung dilogin-kan. Setelah mendaftar ia diminta

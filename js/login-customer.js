@@ -4,7 +4,7 @@
  * =====================================================================
  * Sebelumnya halaman ini menerima username dan kata sandi apa pun,
  * lalu menyimpannya begitu saja ke localStorage. Sekarang keduanya
- * diperiksa terlebih dahulu ke collection "customers".
+ * diperiksa terlebih dahulu ke collection "user".
  *
  * Alur setelah berhasil tetap sama seperti sebelumnya: sesi disimpan
  * pada kunci "customerSession", lalu pengguna diarahkan ke halaman

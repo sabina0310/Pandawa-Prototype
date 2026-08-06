@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Data Penghuni</title>
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+    <script src="../js/head-bersama.js"></script>
+</head>
+
+<body class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
+    <!-- Memuat Top Nav dari file terpisah -->
+    <div id="top-nav-placeholder"></div>
+    <script>
+        fetch('top-nav.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('top-nav-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
+            });
+    </script>
+    <!-- Main Content Wrapper -->
+    <!-- Wadah isi. Jarak kiri, jarak atas, dan latar diatur <main> di dalamnya -->
+    <div class="flex flex-col">
+        <!-- Page Content -->
+        <main class="md:ml-[260px] pt-[96px] px-base md:px-lg lg:px-xl pb-xl min-h-screen flex flex-col gap-lg">
+            <!-- Tampilan Daftar (halaman utama) -->
+            <div class="flex flex-col gap-lg" id="tenantsListView">
+                <!-- Header Section -->
+                <div class="flex flex-col gap-1">
+                    <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">Data
+                        Penghuni</h1>
+                    <p class="text-ink-secondary font-body-sm mt-1">Pantau penghuni aktif beserta masa sewanya di
+                        seluruh cabang.</p>
+                </div>
+
+                <!-- Metric Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                    <!-- Penghuni Aktif -->
+                    <div class="bg-surface-canvas p-lg rounded-2xl border-none shadow-card flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-status-available/10 flex items-center justify-center text-status-available py-sm px-base">
+                            <span class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div>
+                            <p class="font-label-md text-body-sm text-ink-muted font-semibold">Penghuni Aktif</p>
+                            <p class="font-stat-display text-stat-display text-ink-primary font-bold"
+                                id="statPenghuniAktif">0</p>
+                        </div>
+                    </div>
+                    <!-- Penghuni Bulanan -->
+                    <div class="bg-surface-canvas p-lg rounded-2xl border-none shadow-card flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary-container py-sm px-base">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                        </div>
+                        <div>
+                            <p class="font-label-md text-body-sm text-ink-muted font-semibold">Penghuni Bulanan</p>
+                            <p class="font-stat-display text-stat-display text-ink-primary font-bold"
+                                id="statPenghuniBulanan">0</p>
+                        </div>
+                    </div>
+                    <!-- Penghuni Harian -->
+                    <div class="bg-surface-canvas p-lg rounded-2xl border-none shadow-card flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-status-warning/10 flex items-center justify-center text-status-warning py-sm px-base">
+                            <span class="material-symbols-outlined">today</span>
+                        </div>
+                        <div>
+                            <p class="font-label-md text-body-sm text-ink-muted font-semibold">Penghuni Harian</p>
+                            <p class="font-stat-display text-stat-display text-ink-primary font-bold"
+                                id="statPenghuniHarian">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="flex flex-col gap-md bg-surface-canvas p-4 rounded-xl border-none shadow-card">
+                    <div class="relative w-full">
+                        <input id="searchTenant"
+                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm pl-10 pr-base text-body-sm focus:ring-primary"
+                            placeholder="Cari nama penghuni, nomor kamar, atau No. WhatsApp..." type="text">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">search</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+                        <select id="filterTipeSewa"
+                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
+                            <option value="semua">Semua Tipe Sewa</option>
+                            <option value="bulanan">Bulanan</option>
+                            <option value="harian">Harian</option>
+                        </select>
+                        <select id="filterCabangPenghuni"
+                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
+                            <option value="semua">Semua Cabang</option>
+                        </select>
+                        <select id="filterStatusSewa"
+                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
+                            <option value="semua">Semua Status</option>
+                            <option value="menghuni">Sedang Menghuni</option>
+                            <option value="akan-masuk">Akan Masuk</option>
+                            <option value="selesai">Selesai</option>
+                            <option value="diarsipkan">Diarsipkan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div class="bg-surface-canvas rounded-2xl border-none shadow-card overflow-hidden">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[1100px] tabel-data">
+                            <thead class="bg-surface-soft border-b border-border-hairline">
+                                <tr class="border-b border-border-hairline">
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap w-1/4">
+                                        Nama</th>
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        No. WhatsApp</th>
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        Cabang &amp; Kamar</th>
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        Tipe Sewa</th>
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        Masa Sewa</th>
+                                    <th
+                                        class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        Status Sewa</th>
+                                    <th
+                                        class="px-base py-sm text-right font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                        Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border-hairline" id="tenantsTableBody"></tbody>
+                        </table>
+                    </div>
+                    <!-- Ringkasan Jumlah -->
+                    <div
+                        class="p-4 px-lg border-t border-border-hairline flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <span class="font-body-sm text-body-sm text-ink-muted" id="tenantsInfoJumlah">Memuat...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 Halaman: Edit Data Diri Penghuni (tersembunyi awalnya)
+
+                 Hanya data diri yang bisa diubah di sini. Data yang
+                 melekat pada transaksi (cabang, kamar, tipe sewa, masa
+                 sewa, status, pembayaran) ditampilkan sebagai keterangan
+                 saja dan tidak punya isian.
+                 ========================================================= -->
+            <div class="hidden flex-col gap-lg" id="tenantFormPage">
+                <!-- Bagian judul: pola Detail Booking (Kembali, judul, keterangan) -->
+                <div>
+                    <button
+                        class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                        id="tenantFormTutup" type="button">
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Kembali
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                        <div class="min-w-0">
+                            <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight"
+                                id="tenantFormJudul">Edit Data Diri Penghuni</h1>
+                            <p class="font-body-md text-body-md text-ink-muted mt-xs">Hanya data diri yang dapat
+                                diubah. Data sewa dan pembayaran mengikuti transaksi dan tidak dapat disunting dari
+                                halaman ini.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="tenantForm">
+                    <!-- KOLOM KIRI -->
+                    <div class="lg:col-span-8 flex flex-col gap-lg">
+                        <!-- Card: Data Penyewa Utama -->
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                            <h2
+                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                Data Penyewa Utama</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                                <div class="md:col-span-2">
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                        for="tenantFormNama">Nama Lengkap (Sesuai KTP)</label>
+                                    <input
+                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                        id="tenantFormNama" placeholder="Nama lengkap penyewa" type="text">
+                                </div>
+                                <div>
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                        for="tenantFormNik">NIK</label>
+                                    <input
+                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                        id="tenantFormNik" placeholder="16 digit angka" inputmode="numeric"
+                                        type="text">
+                                </div>
+                                <div>
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                        for="tenantFormWa">No. WhatsApp</label>
+                                    <div class="relative flex items-center">
+                                        <span
+                                            class="absolute left-3 font-body-sm text-ink-secondary pr-sm border-r border-border-hairline">+62</span>
+                                        <input
+                                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm pl-[60px] pr-base text-body-sm focus:ring-primary outline-none transition-all"
+                                            id="tenantFormWa" placeholder="81234567890" inputmode="numeric"
+                                            type="tel">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card: Penghuni Tambahan -->
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm"
+                            id="tenantFormBarisPenghuni">
+                            <div
+                                class="flex justify-between items-center gap-sm flex-wrap border-b border-border-hairline pb-sm mb-md">
+                                <h2 class="font-title-md text-title-md text-ink-primary">Penghuni Tambahan</h2>
+                                <button
+                                    class="inline-flex items-center gap-xs px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                                    id="tenantFormTambahPenghuni" type="button">
+                                    <span class="material-symbols-outlined text-[18px]">person_add</span>
+                                    Tambah Penghuni
+                                </button>
+                            </div>
+                            <p class="font-body-sm text-body-sm text-ink-muted mb-sm"
+                                id="tenantFormCatatanPenghuni">Anggota lain dalam satu unit sewa. Maksimal 3 orang.</p>
+                            <div class="flex flex-col gap-sm" id="tenantFormPenghuni"></div>
+                        </div>
+                    </div>
+
+                    <!-- KOLOM KANAN: keterangan transaksi (tidak dapat diubah) -->
+                    <div class="lg:col-span-4 flex flex-col gap-lg">
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm"
+                            id="tenantFormRingkasan"></div>
+                    </div>
+                </form>
+
+                <!-- Tombol aksi: kanan bawah -->
+                <div class="flex justify-end gap-sm">
+                    <button
+                        class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                        id="tenantFormBatal" type="button">Batal</button>
+                    <button
+                        class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                        id="tenantFormSimpan" type="button">Simpan Perubahan</button>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 Halaman: Detail Penghuni (tersembunyi awalnya)
+                 ========================================================= -->
+            <div class="hidden flex-col gap-lg" id="tenantDetailPage">
+                <div>
+                    <button
+                        class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                        id="tenantDetailTutup" type="button">
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Kembali
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                        <div class="min-w-0">
+                            <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight"
+                                id="tenantDetailJudul">Detail Penghuni</h1>
+                            <p class="font-body-md text-body-md text-ink-muted mt-xs">Data lengkap penyewa utama,
+                                unit yang ditempati, penghuni tambahan, dan riwayat sewanya.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kartu-kartu digambar js/tenants-crud.js mengikuti pola Detail Booking -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="tenantDetailIsi"></div>
+
+                <div class="flex justify-end gap-sm">
+                    <button
+                        class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                        id="tenantDetailTutup2" type="button">Tutup</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- =================================================================
+         MODAL: KONFIRMASI ARSIP / PULIHKAN
+         ================================================================= -->
+    <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+        id="konfirmasiModal">
+        <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+            <div class="px-lg pt-lg pb-md text-center">
+                <div
+                    class="w-16 h-16 rounded-full bg-status-warning/10 flex items-center justify-center mx-auto mb-md">
+                    <span class="material-symbols-outlined text-status-warning text-[32px]">inventory_2</span>
+                </div>
+                <h3 class="font-display-md text-display-md text-ink-primary mb-xs" id="konfirmasiJudul">Arsipkan
+                    penghuni ini?</h3>
+                <p class="font-body-sm text-body-sm text-ink-muted" id="konfirmasiPesan"></p>
+            </div>
+            <div class="px-lg py-base bg-surface-soft flex justify-end gap-sm">
+                <button
+                    class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                    id="konfirmasiBatal" type="button">Batal</button>
+                <button
+                    class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                    id="konfirmasiLanjut" type="button">Ya, Arsipkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kotak notifikasi hasil aksi (muncul sebentar lalu hilang) -->
+    <div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-sm items-end" id="notifikasiAksi"></div>
+
+    <!-- Menyambungkan halaman ini ke data Firestore -->
+    <script type="module" src="../js/tenants.js"></script>
+
+</body>
+
+</html>

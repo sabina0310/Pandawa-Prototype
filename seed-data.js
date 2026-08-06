@@ -8,10 +8,17 @@
  * SIFAT  : ALAT BANTU SEKALI PAKAI, bukan bagian dari sistem final.
  * PAKAI  : buka seed.html di browser, klik tombol "Mulai Seeding".
  *
- * MENGISI 3 COLLECTION:
+ * MENGISI 4 COLLECTION:
  *   1. cabang              -> 4 dokumen  (induk / master data)
  *   2. kamar               -> 40-60 dokumen (mereferensikan cabang_id)
- *   3. transaksi_pemesanan -> 50 dokumen (mereferensikan cabang & kamar)
+ *   3. transaksi_pemesanan -> 50 dokumen (mereferensikan cabang & kamar,
+ *                             sewa bulanan ikut membawa penghuni tambahan)
+ *   4. user                -> 2 dokumen  (akun admin & super admin)
+ *
+ * CATATAN PENTING TENTANG COLLECTION "user":
+ * Seeding HANYA menulis dua dokumen berid "admin" dan "superadmin".
+ * Akun penyewa hasil registrasi TIDAK ikut terhapus maupun tertimpa,
+ * karena Document ID-nya memakai username masing-masing.
  *
  * ALUR BISNIS YANG DICERMINKAN:
  *   1. Penyewa memesan di level CABANG      -> kamar_id masih null
@@ -31,6 +38,11 @@ import {
   getDocs,
   Timestamp
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+// Cara pengacakan kata sandi diambil dari berkas yang sama dengan yang
+// dipakai halaman login, supaya akun hasil seeding pasti bisa dipakai
+// masuk. Berkas itu tidak memuat Firebase, jadi aman diimpor di sini.
+import { acakKataSandi } from "./js/sandi.js";
 
 // =====================================================================
 // KONFIGURASI FIREBASE
@@ -54,6 +66,7 @@ const db = getFirestore(app);
 const COL_CABANG = "cabang";
 const COL_KAMAR = "kamar";
 const COL_TRANSAKSI = "transaksi_pemesanan";
+const COL_USER = "user";
 
 // =====================================================================
 // BAGIAN 1 - KONFIGURASI 4 CABANG
@@ -198,6 +211,108 @@ function buatNikDummy() {
   return nik;
 }
 
+// =====================================================================
+// BAGIAN 3B - PENGHUNI TAMBAHAN (KHUSUS SEWA BULANAN)
+// ---------------------------------------------------------------------
+// Satu unit sewa bulanan boleh dihuni lebih dari satu orang. Penyewa
+// utama mengisikan anggota lainnya lewat form order step-1, dan hasilnya
+// tersimpan pada field "penghuni_tambahan".
+//
+// Bentuk tiap anggota HARUS sama persis dengan yang dihasilkan
+// bacaPenghuni() di js/order-step1.js:
+//
+//     { nik: "...", nama: "...", hubungan: "...", whatsapp: "..." }
+//
+// Dua hal yang ditiru dari form aslinya:
+//   1. "hubungan" hanya boleh "suami" | "istri" | "anak" (huruf kecil),
+//      persis nilai <option> pada form.
+//   2. "whatsapp" disimpan TANPA awalan +62, karena pada form angka
+//      "+62" hanyalah hiasan di sebelah kiri kotak isian. Ini berbeda
+//      dengan "kontak_penyewa" milik penyewa utama yang memang memakai
+//      awalan "+62 ".
+//
+// Sewa harian tidak pernah punya penghuni tambahan, tetapi tetap diberi
+// array kosong agar bentuk datanya seragam untuk kedua tipe sewa.
+// =====================================================================
+
+// Maksimal penghuni tambahan, mengikuti MAKS_PENGHUNI_TAMBAHAN
+// pada js/order-step1.js
+const MAKS_PENGHUNI_TAMBAHAN = 3;
+
+const NAMA_PASANGAN = [
+  "Ratih Kusuma", "Bagas Nugraha", "Wulan Sari", "Adi Nugroho",
+  "Yuni Rahmawati", "Panji Saputra", "Mega Utami", "Rizal Fauzi"
+];
+
+const NAMA_ANAK = [
+  "Aditya Pratama", "Nabila Zahra", "Farel Ardiansyah", "Kayla Aurellia",
+  "Bintang Mahesa", "Alika Syifa", "Danish Alfarizi", "Naura Khalisa"
+];
+
+// Nomor WhatsApp tanpa awalan +62, sama seperti isian pada form
+function buatWaTanpaAwalan() {
+  return String(acakAngka(811, 859)) + String(acakAngka(10000000, 99999999));
+}
+
+/**
+ * Membuat daftar penghuni tambahan yang masuk akal sebagai satu keluarga.
+ *
+ * Susunannya sengaja tidak diacak sepenuhnya: yang pertama selalu
+ * pasangan (suami/istri), sisanya anak. Kalau hubungan diacak bebas,
+ * bisa muncul data ganjil seperti dua "istri" dalam satu unit.
+ *
+ * Sebaran jumlahnya dibuat menyerupai keadaan nyata -- sebagian besar
+ * penyewa tinggal sendiri, dan makin banyak anggota makin jarang.
+ */
+function buatPenghuniTambahan(tipeSewa) {
+  if (tipeSewa !== "bulanan") return [];
+
+  // 40% sendiri, 30% berdua, 20% bertiga, 10% berempat
+  const undian = Math.random();
+  let jumlah = 0;
+  if (undian >= 0.4 && undian < 0.7) jumlah = 1;
+  else if (undian >= 0.7 && undian < 0.9) jumlah = 2;
+  else if (undian >= 0.9) jumlah = 3;
+
+  if (jumlah === 0) return [];
+
+  jumlah = Math.min(jumlah, MAKS_PENGHUNI_TAMBAHAN);
+
+  const hasil = [];
+  const anakTerpakai = [];
+
+  for (let i = 0; i < jumlah; i++) {
+    if (i === 0) {
+      // Anggota pertama selalu pasangan penyewa utama
+      hasil.push({
+        nik: buatNikDummy(),
+        nama: acakDari(NAMA_PASANGAN),
+        hubungan: Math.random() < 0.5 ? "istri" : "suami",
+        whatsapp: buatWaTanpaAwalan()
+      });
+      continue;
+    }
+
+    // Sisanya anak, dan namanya tidak boleh terulang dalam satu keluarga
+    let nama = acakDari(NAMA_ANAK);
+    let percobaan = 0;
+    while (anakTerpakai.indexOf(nama) !== -1 && percobaan < 10) {
+      nama = acakDari(NAMA_ANAK);
+      percobaan++;
+    }
+    anakTerpakai.push(nama);
+
+    hasil.push({
+      nik: buatNikDummy(),
+      nama: nama,
+      hubungan: "anak",
+      whatsapp: buatWaTanpaAwalan()
+    });
+  }
+
+  return hasil;
+}
+
 // Menghitung nominal transaksi: harga cabang x lama sewa (tanpa biaya layanan)
 function hitungNominal(cabang, tipeSewa, durasi) {
   const hargaSatuan = tipeSewa === "bulanan" ? cabang.harga_bulanan : HARGA_HARIAN_SEMUA_CABANG;
@@ -339,7 +454,13 @@ function buatDataTransaksi(daftarKamar) {
 
       status_checkin: opsi.status_checkin,
       tanggal_aktual_checkin: opsi.tanggal_aktual_checkin ? Timestamp.fromDate(opsi.tanggal_aktual_checkin) : null,
-      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null
+      tanggal_aktual_checkout: opsi.tanggal_aktual_checkout ? Timestamp.fromDate(opsi.tanggal_aktual_checkout) : null,
+
+      // Anggota lain dalam satu unit sewa. Selalu ditulis -- berisi
+      // array kosong untuk sewa harian -- supaya halaman Data Penghuni
+      // tidak perlu membedakan "tidak punya anggota" dari "field-nya
+      // memang belum pernah dibuat".
+      penghuni_tambahan: buatPenghuniTambahan(opsi.tipe_sewa)
     };
 
     // -----------------------------------------------------------------
@@ -626,6 +747,57 @@ function buatDataTransaksi(daftarKamar) {
 }
 
 // =====================================================================
+// BAGIAN 6B - MEMBUAT DATA COLLECTION "user"
+// ---------------------------------------------------------------------
+// Hanya akun pengelola yang dibuat di sini. Akun penyewa TIDAK dibuat
+// oleh seeder karena penyewa mendaftar sendiri lewat halaman registrasi.
+//
+// Kata sandi diacak memakai fungsi yang sama dengan halaman login
+// (js/sandi.js), jadi yang tersimpan di Firestore adalah hasil hash,
+// bukan "12345678" apa adanya.
+// =====================================================================
+
+// Kata sandi awal kedua akun pengelola. Sengaja ditulis di sini karena
+// berkas ini memang alat bantu yang tidak ikut di-deploy.
+const SANDI_AWAL_PENGELOLA = "12345678";
+
+async function buatDataUser() {
+  // Admin ditugaskan ke SELURUH cabang karena untuk saat ini hanya ada
+  // satu admin. Bentuknya tetap array supaya penambahan admin kedua
+  // nanti tidak perlu mengubah struktur data.
+  const semuaCabang = DAFTAR_CABANG.map(function (cabang) { return cabang.id; });
+
+  // Hash dihitung terpisah agar kedua akun punya garam yang berbeda,
+  // walaupun kata sandinya kebetulan sama.
+  const sandiSuperAdmin = await acakKataSandi(SANDI_AWAL_PENGELOLA);
+  const sandiAdmin = await acakKataSandi(SANDI_AWAL_PENGELOLA);
+
+  const sekarang = Timestamp.fromDate(new Date());
+
+  return [
+    {
+      _id: "superadmin",
+      fullName: "Super Admin Pilar Pandawa",
+      username: "superadmin",
+      password: sandiSuperAdmin,
+      createdAt: sekarang,
+      role: "superadmin"
+      // Super admin TIDAK punya field cabang: wewenangnya mencakup
+      // seluruh cabang, jadi tidak perlu didaftar satu per satu.
+    },
+    {
+      _id: "admin",
+      fullName: "Admin Pilar Pandawa",
+      username: "admin",
+      password: sandiAdmin,
+      createdAt: sekarang,
+      role: "admin",
+      cabang: semuaCabang
+    }
+  ];
+}
+
+// =====================================================================
 // BAGIAN 7 - PROSES PENULISAN KE FIRESTORE
 // =====================================================================
 
@@ -662,11 +834,16 @@ export async function jalankanSeeding(tulisLog, paksa) {
   const jumlahCabangLama = await hitungDokumen(COL_CABANG);
   const jumlahKamarLama = await hitungDokumen(COL_KAMAR);
   const jumlahTransaksiLama = await hitungDokumen(COL_TRANSAKSI);
+  const jumlahUserLama = await hitungDokumen(COL_USER);
 
   tulisLog("Data saat ini -> cabang: " + jumlahCabangLama +
            ", kamar: " + jumlahKamarLama +
-           ", transaksi_pemesanan: " + jumlahTransaksiLama);
+           ", transaksi_pemesanan: " + jumlahTransaksiLama +
+           ", user: " + jumlahUserLama);
 
+  // Collection "user" sengaja TIDAK ikut menentukan pembatalan di bawah.
+  // Isinya berisi akun penyewa yang mendaftar sendiri, sehingga
+  // keberadaannya bukan tanda bahwa seeding sudah pernah dijalankan.
   const sudahAdaIsi = jumlahCabangLama > 0 || jumlahKamarLama > 0 || jumlahTransaksiLama > 0;
 
   if (sudahAdaIsi && !paksa) {
@@ -686,6 +863,7 @@ export async function jalankanSeeding(tulisLog, paksa) {
   // Catatan: buatDataTransaksi() juga MENGUBAH field "tersedia" pada
   // dataKamar agar konsisten dengan transaksi yang dibuat.
   const dataTransaksi = buatDataTransaksi(dataKamar);
+  const dataUser = await buatDataUser();
 
   const kamarTerisi = dataKamar.filter(function (k) { return !k.tersedia; }).length;
 
@@ -693,6 +871,19 @@ export async function jalankanSeeding(tulisLog, paksa) {
   tulisLog("  - " + dataKamar.length + " kamar (" +
            (dataKamar.length - kamarTerisi) + " tersedia, " + kamarTerisi + " terisi)");
   tulisLog("  - " + dataTransaksi.length + " transaksi");
+
+  // Ringkasan penghuni tambahan, supaya mudah dipastikan datanya benar
+  // terbentuk tanpa harus membuka Firebase Console satu per satu.
+  const denganAnggota = dataTransaksi.filter(function (t) {
+    return t.penghuni_tambahan.length > 0;
+  });
+  const totalAnggota = denganAnggota.reduce(function (jumlah, t) {
+    return jumlah + t.penghuni_tambahan.length;
+  }, 0);
+
+  tulisLog("      " + denganAnggota.length + " di antaranya punya penghuni tambahan (" +
+           totalAnggota + " orang)");
+  tulisLog("  - " + dataUser.length + " akun pengelola");
 
   // --- Langkah 3: tulis ketiga collection ---
   tulisLog("");
@@ -709,6 +900,12 @@ export async function jalankanSeeding(tulisLog, paksa) {
   tulisLog("Menulis collection 'transaksi_pemesanan'...");
   await tulisCollection(COL_TRANSAKSI, dataTransaksi);
   tulisLog("  Selesai: " + dataTransaksi.length + " dokumen.");
+
+  tulisLog("");
+  tulisLog("Menulis collection 'user'...");
+  await tulisCollection(COL_USER, dataUser);
+  tulisLog("  Selesai: " + dataUser.length + " dokumen (hanya akun pengelola).");
+  tulisLog("  Akun penyewa yang sudah terdaftar tidak tersentuh.");
 
   // --- Langkah 4: ringkasan untuk pemeriksaan ---
   const ringkasanStatus = {};
@@ -754,12 +951,23 @@ export async function jalankanSeeding(tulisLog, paksa) {
     });
 
   tulisLog("");
+  tulisLog("Akun pengelola yang dibuat:");
+  dataUser.forEach(function (u) {
+    const cabang = Array.isArray(u.cabang) ? u.cabang.length + " cabang" : "seluruh cabang";
+    tulisLog("  - " + u.username + " / " + SANDI_AWAL_PENGELOLA +
+             "  (" + u.role + ", " + cabang + ")");
+  });
+  tulisLog("  Kata sandi tersimpan dalam bentuk hash, bukan teks asli.");
+  tulisLog("  Segera ganti kata sandinya sebelum dipakai di luar pengujian.");
+
+  tulisLog("");
   tulisLog("Silakan periksa di Firebase Console > Firestore Database.");
 
   return {
     berhasil: true,
     jumlahCabang: dataCabang.length,
     jumlahKamar: dataKamar.length,
-    jumlahTransaksi: dataTransaksi.length
+    jumlahTransaksi: dataTransaksi.length,
+    jumlahUser: dataUser.length
   };
 }

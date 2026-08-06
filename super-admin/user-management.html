@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Manajemen Pengguna</title>
+
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman -->
+    <script src="../js/head-bersama.js"></script>
+</head>
+
+<body class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
+    <!-- Memuat Top Nav dari file terpisah -->
+    <div id="top-nav-placeholder"></div>
+    <script>
+        fetch('top-nav.html')
+            .then(response => response.text())
+            .then(data => {
+                const placeholder = document.getElementById('top-nav-placeholder');
+                placeholder.innerHTML = data;
+                placeholder.querySelectorAll('script').forEach(function (oldScript) {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    oldScript.replaceWith(newScript);
+                });
+            });
+    </script>
+    <!-- Main Content Wrapper -->
+    <!-- Wadah isi. Jarak kiri, jarak atas, dan latar diatur <main> di dalamnya -->
+    <div class="flex flex-col">
+        <!-- Page Content -->
+        <main class="md:ml-[260px] pt-[96px] px-base md:px-lg lg:px-xl pb-xl min-h-screen flex flex-col gap-lg">
+            <!-- Tampilan Daftar (halaman utama) -->
+            <div class="flex flex-col gap-lg" id="userListView">
+            <!-- Header Section -->
+            <div class="flex flex-col gap-1">
+                <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">Manajemen
+                    Pengguna</h1>
+                <p class="text-ink-secondary font-body-sm mt-1">Kelola akun admin dan pantau akun pelanggan yang
+                    terdaftar.</p>
+            </div>
+
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                <!-- Total Admin -->
+                <div class="bg-surface-canvas p-lg rounded-2xl border-none shadow-card flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-status-warning/10 flex items-center justify-center text-status-warning py-sm px-base">
+                        <span class="material-symbols-outlined">admin_panel_settings</span>
+                    </div>
+                    <div>
+                        <p class="font-label-md text-body-sm text-ink-muted font-semibold">Total Admin</p>
+                        <p class="font-stat-display text-stat-display text-ink-primary font-bold" id="statTotalAdmin">0
+                        </p>
+                    </div>
+                </div>
+                <!-- Total Pelanggan -->
+                <div class="bg-surface-canvas p-lg rounded-2xl border-none shadow-card flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-status-available/10 flex items-center justify-center text-status-available py-sm px-base">
+                        <span class="material-symbols-outlined">groups</span>
+                    </div>
+                    <div>
+                        <p class="font-label-md text-body-sm text-ink-muted font-semibold">Total Pelanggan</p>
+                        <p class="font-stat-display text-stat-display text-ink-primary font-bold"
+                            id="statTotalPelanggan">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-md bg-surface-canvas p-4 rounded-xl border-none shadow-card">
+                <div class="flex flex-col sm:flex-row gap-md items-stretch sm:items-center flex-1 min-w-0">
+                    <div class="relative flex-1 w-full">
+                        <input id="searchUser"
+                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm pl-10 pr-base text-body-sm focus:ring-primary"
+                            placeholder="Cari nama atau username..." type="text">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">search</span>
+                    </div>
+                    <select id="filterPeran"
+                        class="w-full sm:w-48 h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
+                        <option value="semua">Semua Peran</option>
+                        <option value="admin">Admin</option>
+                        <option value="customer">Pelanggan</option>
+                    </select>
+                </div>
+                <button
+                    class="h-[44px] shrink-0 bg-primary text-on-primary font-button-md text-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm inline-flex items-center justify-center gap-sm py-sm px-base"
+                    id="tambahAdminBtn" type="button">
+                    <span class="material-symbols-outlined text-[20px]">person_add</span>
+                    Tambah User
+                </button>
+            </div>
+
+            <!-- Table Section -->
+            <div class="bg-surface-canvas rounded-2xl border-none shadow-card overflow-hidden">
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse min-w-[720px] tabel-data">
+                        <thead class="bg-surface-soft border-b border-border-hairline">
+                            <tr class="border-b border-border-hairline">
+                                <th
+                                    class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap w-1/3">
+                                    Nama</th>
+                                <th
+                                    class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                    Peran</th>
+                                <th
+                                    class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                    Cabang</th>
+                                <th
+                                    class="px-base py-sm text-right font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border-hairline" id="userTableBody"></tbody>
+                    </table>
+                </div>
+                <!-- Ringkasan Jumlah -->
+                <div
+                    class="p-4 px-lg border-t border-border-hairline flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <span class="font-body-sm text-body-sm text-ink-muted" id="userInfoJumlah">Memuat...</span>
+                </div>
+            </div>
+            </div>
+
+            <!-- =========================================================
+                 Halaman: Tambah / Edit Pengguna (tersembunyi awalnya)
+                 ========================================================= -->
+            <div class="hidden flex-col gap-lg" id="userFormPage">
+                <!-- Bagian judul: pola Detail Booking (Kembali, judul, keterangan) -->
+                <div>
+                    <button
+                        class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                        id="userFormTutup" type="button">
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Kembali
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                        <div>
+                            <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight"
+                                id="userFormJudul">Tambah Admin Baru</h1>
+                            <p class="font-body-md text-body-md text-ink-muted mt-xs" id="userFormKeterangan">Hanya
+                                akun admin yang dapat dibuat di sini. Pelanggan mendaftar sendiri lewat halaman
+                                registrasi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="userForm">
+                    <!-- KOLOM KIRI -->
+                    <div class="lg:col-span-8 flex flex-col gap-lg">
+                        <!-- Card: Data Profil -->
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                            <h2
+                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                Data Profil</h2>
+                            <div>
+                                <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                    for="userFormNama">Nama Lengkap</label>
+                                <input
+                                    class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                    placeholder="e.g., Budi Santoso" type="text" id="userFormNama">
+                            </div>
+                        </div>
+
+                        <!-- Card: Data Akun / Login -->
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                            <h2
+                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                Data Akun / Login</h2>
+                            <div class="space-y-md">
+                                <div id="userFormBarisUsername">
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                        for="userFormUsername">Username</label>
+                                    <input
+                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                                        placeholder="e.g., budi.admin" type="text" id="userFormUsername">
+                                    <span class="font-body-sm text-body-sm text-ink-muted mt-xxs block">Hanya huruf,
+                                        angka, titik, dan garis bawah. Tidak dapat diubah setelah akun dibuat.</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                                    <div>
+                                        <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                            id="userFormLabelSandi" for="userFormSandi">Kata Sandi</label>
+                                        <input
+                                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                            placeholder="Minimal 8 karakter" type="password" id="userFormSandi">
+                                    </div>
+                                    <div>
+                                        <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                            for="userFormKonfirmasi">Konfirmasi Kata Sandi</label>
+                                        <input
+                                            class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                            placeholder="Ulangi kata sandi" type="password" id="userFormKonfirmasi">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KOLOM KANAN -->
+                    <div class="lg:col-span-4 flex flex-col gap-lg">
+                        <!-- Card: Role & Akses -->
+                        <div class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                            <h2
+                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                Role &amp; Akses</h2>
+                            <div class="space-y-md">
+                                <div id="userFormBarisRole">
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                        for="userFormRole">Peran</label>
+                                    <select
+                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                                        id="userFormRole">
+                                        <option value="admin">Admin</option>
+                                        <option value="customer">Pelanggan</option>
+                                    </select>
+                                    <span class="font-body-sm text-body-sm text-ink-muted mt-xxs block"
+                                        id="userFormCatatanRole">Admin ditugaskan ke cabang tertentu. Peran tidak
+                                        dapat diubah setelah akun dibuat.</span>
+                                </div>
+
+                                <div class="pt-sm border-t border-border-hairline" id="userFormBarisCabang">
+                                    <label class="font-label-md text-label-md text-ink-muted mb-xxs block">Cabang yang
+                                        Ditugaskan</label>
+                                    <p class="font-body-sm text-body-sm text-ink-muted mb-sm">Pilih satu atau lebih
+                                        cabang. Satu admin boleh mengelola lebih dari satu cabang.</p>
+                                    <div class="grid grid-cols-1 gap-sm" id="userFormCabang"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Tombol aksi: kanan bawah -->
+                <div class="flex justify-end gap-sm">
+                    <button
+                        class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                        id="userFormBatal" type="button">Batal</button>
+                    <button
+                        class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                        id="userFormSimpan" type="button">Simpan Admin</button>
+                </div>
+            </div>
+
+            <!-- =========================================================
+                 Halaman: Detail Pengguna (tersembunyi awalnya)
+                 ========================================================= -->
+            <div class="hidden flex-col gap-lg" id="userDetailPage">
+                <div>
+                    <button
+                        class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                        id="userDetailTutup" type="button">
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Kembali
+                    </button>
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                        <div>
+                            <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
+                                Detail Pengguna</h1>
+                            <p class="font-body-md text-body-md text-ink-muted mt-xs">Data lengkap akun, peran, dan
+                                riwayat yang terhubung dengan pengguna ini.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kartu-kartu digambar js/user-crud.js mengikuti pola Detail Booking -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="userDetailIsi"></div>
+
+                <div class="flex justify-end gap-sm">
+                    <button
+                        class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                        id="userDetailTutup2" type="button">Tutup</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- =================================================================
+         MODAL: KONFIRMASI HAPUS
+         ================================================================= -->
+    <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+        id="konfirmasiModal">
+        <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+            <div class="px-lg pt-lg pb-md text-center">
+                <div class="w-16 h-16 rounded-full bg-error-container flex items-center justify-center mx-auto mb-md">
+                    <span class="material-symbols-outlined text-error text-[32px]">warning</span>
+                </div>
+                <h3 class="font-display-md text-display-md text-ink-primary mb-xs" id="konfirmasiJudul">Hapus pengguna
+                    ini?</h3>
+                <p class="font-body-sm text-body-sm text-ink-muted" id="konfirmasiPesan"></p>
+            </div>
+            <div class="px-lg py-base bg-surface-soft flex justify-end gap-sm">
+                <button
+                    class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                    id="konfirmasiBatal" type="button">Batal</button>
+                <button
+                    class="px-base py-sm bg-error text-on-error font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                    id="konfirmasiHapus" type="button">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kotak notifikasi hasil aksi (muncul sebentar lalu hilang) -->
+    <div class="fixed bottom-6 right-6 z-[60] flex flex-col gap-sm items-end" id="notifikasiAksi"></div>
+
+    <!-- Menyambungkan halaman ini ke data Firestore -->
+    <script type="module" src="../js/user-management.js"></script>
+
+</body>
+
+</html>

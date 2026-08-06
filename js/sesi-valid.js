@@ -5,7 +5,7 @@
  * Sesi login disimpan di localStorage peramban, sedangkan akunnya ada
  * di Firestore. Keduanya bisa tidak sinkron:
  *
- *   - collection "customers" dihapus / dibuat ulang saat seeding
+ *   - collection "user" dihapus / dibuat ulang saat seeding
  *   - akun dihapus admin lewat Firebase Console
  *   - basis data ditukar ke proyek Firebase lain
  *

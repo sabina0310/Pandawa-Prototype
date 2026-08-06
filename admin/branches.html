@@ -13,7 +13,11 @@
 <script src="../js/head-bersama.js"></script>
 </head>
 
-<body class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
+<!-- data-tanpa-ubah: menandai halaman ini hanya-baca. js/admin-branches.js
+     membacanya untuk tidak menggambar tombol tambah/edit/hapus, karena
+     berkas JS-nya dipakai bersama dengan portal Super Admin. -->
+<body data-tanpa-ubah
+        class="bg-surface-soft text-ink-primary font-body-md antialiased min-h-screen overflow-x-hidden">
         <!-- Memuat Top Nav dari file terpisah -->
         <div id="top-nav-placeholder"></div>
         <script>
@@ -84,17 +88,10 @@
                                                                                 class="font-display-md text-display-md text-ink-primary">Memuat...</h2>
                                                                         <p id="branchDetailAddress" class="text-ink-muted text-body-sm"></p>
                                                                 </div>
-                                                                <div class="flex gap-sm">
-                                                                        <!-- <button id="editBranchInfoBtn"
-                                                                                class="px-base py-2 border border-border-strong text-ink-primary font-button-md rounded-lg hover:bg-surface-soft transition-colors">Edit
-                                                                                Info Cabang</button>
-                                                                        <button id="openAddRoomBtn"
-                                                                                class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors flex items-center gap-xs shadow-sm">
-                                                                                <span
-                                                                                        class="material-symbols-outlined">add</span>
-                                                                                Tambah Kamar
-                                                                        </button> -->
-                                                                </div>
+                                                                <!-- Portal Admin hanya menampilkan data cabang & kamar.
+                                                                     Menambah, mengubah, dan menghapusnya adalah
+                                                                     wewenang Super Admin. -->
+                                                                <div class="flex gap-sm"></div>
                                                         </div>
                                                         <div class="flex flex-col md:flex-row gap-md items-center">
                                                                 <div class="relative flex-1 w-full">
@@ -116,169 +113,6 @@
                                                 <!-- Room Grid -->
                                                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-base" id="roomGrid"></div>
                                         </div>
-                                </div>
-                        </div>
-                        <!-- Page: Tambah Kamar Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
-                                id="addRoomPage">
-                                <div
-                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary">Tambah Kamar Baru
-                                        </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
-                                                id="closeAddRoomBtn">
-                                                <span class="material-symbols-outlined">close</span>
-                                        </button>
-                                </div>
-                                <div class="p-lg overflow-y-auto flex-1">
-                                        <form class="flex flex-col gap-lg" id="addRoomForm">
-                                                <div class="grid grid-cols-1 gap-base">
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Pilih
-                                                                        Cabang</label>
-                                                                <select id="addRoomBranchSelect"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
-                                                                </select>
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Nomor/Nama
-                                                                        Kamar</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., A-101" type="text">
-                                                        </div>
-                                                </div>
-                                                <!-- <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
-                                                        <label class="font-label-md text-label-md text-ink-muted">Fasilitas
-                                                                Kamar</label>
-                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm">
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox">
-                                                                        <span class="font-body-sm text-body-sm">AC</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox">
-                                                                        <span class="font-body-sm text-body-sm">Kamar Mandi
-                                                                                Dalam</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox">
-                                                                        <span class="font-body-sm text-body-sm">TV</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox">
-                                                                        <span class="font-body-sm text-body-sm">Water
-                                                                                Heater</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox">
-                                                                        <span class="font-body-sm text-body-sm">Kulkas
-                                                                                Mini</span>
-                                                                </label>
-                                                        </div>
-                                                </div> -->
-                                        </form>
-                                </div>
-                                <div
-                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
-                                        <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
-                                                id="cancelAddRoomBtn">Batal</button>
-                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
-                                                id="saveAddRoomBtn">Simpan
-                                                Data Kamar</button>
-                                </div>
-                        </div>
-                        <!-- Page: Tambah Cabang Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
-                                id="addBranchPage">
-                                <div
-                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary" id="addBranchPageTitle">Tambah Cabang Baru
-                                        </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
-                                                id="closeAddBranchBtn">
-                                                <span class="material-symbols-outlined">close</span>
-                                        </button>
-                                </div>
-                                <div class="p-lg overflow-y-auto flex-1">
-                                        <form class="flex flex-col gap-lg" id="addBranchForm">
-                                                <div class="grid grid-cols-1 gap-base">
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Nama
-                                                                        Cabang</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., Pesona Kos" type="text" id="branchNameInput">
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Alamat</label>
-                                                                <textarea class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
-                                                                        placeholder="Jl. Melati No. 45, Jakarta Selatan" rows="3" id="branchAddressInput"></textarea>
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">URL
-                                                                        Google Maps</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="https://maps.google.com/..." type="url" id="branchMapsUrlInput">
-                                                        </div>
-                                                </div>
-                                                <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
-                                                        <label class="font-label-md text-label-md text-ink-muted">Fasilitas
-                                                                Cabang</label>
-                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm" id="branchFacilitiesGroup">
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="WiFi">
-                                                                        <span class="font-body-sm text-body-sm">WiFi</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Parkir Kendaraan">
-                                                                        <span class="font-body-sm text-body-sm">Parkir
-                                                                                Kendaraan</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="CCTV 24 Jam">
-                                                                        <span class="font-body-sm text-body-sm">CCTV 24
-                                                                                Jam</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Dapur Bersama">
-                                                                        <span class="font-body-sm text-body-sm">Dapur
-                                                                                Bersama</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Laundry">
-                                                                        <span class="font-body-sm text-body-sm">Laundry</span>
-                                                                </label>
-                                                                <label class="flex items-center gap-sm">
-                                                                        <input class="text-primary focus:ring-primary rounded"
-                                                                                type="checkbox" data-facility="Keamanan Malam">
-                                                                        <span class="font-body-sm text-body-sm">Keamanan
-                                                                                Malam</span>
-                                                                </label>
-                                                        </div>
-                                                </div>
-                                        </form>
-                                </div>
-                                <div
-                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
-                                        <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
-                                                id="cancelAddBranchBtn">Batal</button>
-                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
-                                                id="saveAddBranchBtn">Simpan
-                                                Data Cabang</button>
                                 </div>
                         </div>
                 </main>

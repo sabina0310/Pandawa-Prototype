@@ -31,7 +31,11 @@ const {
   kirimWhatsapp,
   formatTanggal,
   sisaHariMenuju,
-  aksesDiizinkan
+  aksesDiizinkan,
+  AWALAN_ORDER_UAT,
+  modeUjiAktif,
+  pesananUji,
+  ringkasanPengaturan
 } = require('./_notifikasi-lib');
 
 // =====================================================================
@@ -135,6 +139,10 @@ module.exports = async (req, res) => {
     return res.status(401).json({ error: 'Akses ditolak. Sertakan CRON_SECRET yang benar.' });
   }
 
+  // Keterangan pengaturan ditulis ke log supaya jelas terlihat pesan
+  // akan mendarat ke mana. Bukan penolakan -- cron tetap berjalan.
+  console.log('[PENGATURAN] ' + ringkasanPengaturan().keterangan);
+
   const mulai = Date.now();
   console.log('=== CRON NOTIFIKASI TENGGAT dimulai ===');
 
@@ -162,7 +170,14 @@ module.exports = async (req, res) => {
     // -----------------------------------------------------------------
     // 2. Periksa satu per satu
     // -----------------------------------------------------------------
-    for (const dokumen of cuplikan.docs) {
+    // Saat mode uji menyala, hanya pesanan "UAT-..." yang diproses.
+    // Disaring di sini, bukan di kueri: Firestore melarang dua field
+    // rentang dalam satu kueri.
+    const kandidat = modeUjiAktif()
+      ? cuplikan.docs.filter(function (d) { return pesananUji(d.data().order_id || d.id); })
+      : cuplikan.docs;
+
+    for (const dokumen of kandidat) {
       const data = dokumen.data();
       const penanda = data.status_notifikasi_tenggat || {};
       const sisaHari = sisaHariMenuju(data.tanggal_checkout);

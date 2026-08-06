@@ -1,19 +1,35 @@
 /**
  * =====================================================================
- * REGISTRASI & LOGIN PENYEWA (collection "customers")
+ * REGISTRASI & LOGIN (collection "user")
  * =====================================================================
  * Dipakai oleh:
  *   customer/register-customer.html
  *   customer/login-customer.html
+ *   admin/login.html
+ *   super-admin/login-super-admin.html
+ *   super-admin/user-management.html
  *
- * Struktur dokumen pada collection "customers":
+ * Struktur dokumen pada collection "user":
  *   {
  *     fullName  : string,
  *     username  : string   (unik, disimpan huruf kecil)
  *     password  : string   (hasil hash, BUKAN teks asli)
  *     createdAt : timestamp,
- *     role      : "customer"
+ *     role      : "superadmin" | "admin" | "customer",
+ *     cabang    : string[]  -- HANYA untuk role admin
  *   }
+ *
+ * ---------------------------------------------------------------------
+ * CATATAN TENTANG FIELD "cabang"
+ * ---------------------------------------------------------------------
+ * Field ini hanya ada pada dokumen ber-role admin, berisi daftar id
+ * cabang yang ditugaskan kepadanya. Bentuknya array sejak awal supaya
+ * satu admin bisa memegang lebih dari satu cabang tanpa perlu mengubah
+ * struktur data di kemudian hari.
+ *
+ * Penyewa TIDAK punya field ini. Cabang seorang penyewa dihitung
+ * saat ditampilkan dari transaksi aktif terkininya (lihat
+ * js/user-management.js), sehingga selalu mengikuti keadaan terbaru.
  *
  * ---------------------------------------------------------------------
  * CATATAN PENTING TENTANG KEAMANAN KATA SANDI
@@ -40,61 +56,47 @@ import {
   collection, doc, setDoc, updateDoc, getDocs, query, where, Timestamp
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-import { db, COL_CUSTOMERS } from "./firebase-init.js";
+import { db, COL_USER } from "./firebase-init.js";
+
+import {
+  acakKataSandi, cocokkanKataSandi, PANJANG_MINIMAL_SANDI
+} from "./sandi.js";
+
+// =====================================================================
+// 0. PERAN PENGGUNA
+// ---------------------------------------------------------------------
+// Ditulis satu kali di sini agar tidak ada salah ketik "super_admin"
+// atau "Admin" yang menyebabkan hak akses tidak terbaca.
+// =====================================================================
+export const ROLE_SUPERADMIN = "superadmin";
+export const ROLE_ADMIN = "admin";
+export const ROLE_CUSTOMER = "customer";
+
+/** Nama peran dalam bahasa Indonesia, untuk ditampilkan di layar. */
+export const LABEL_ROLE = {
+  superadmin: "Super Admin",
+  admin: "Admin",
+  customer: "Pelanggan"
+};
+
+/** true bila peran ini memegang penugasan cabang. */
+export function pakaiCabang(role) {
+  return role === ROLE_ADMIN;
+}
 
 // =====================================================================
 // 1. PENGACAKAN KATA SANDI
+// ---------------------------------------------------------------------
+// Cara pengacakannya dipindahkan ke js/sandi.js supaya seed-data.js dan
+// migrasi-user.js bisa memakai cara yang persis sama tanpa ikut memuat
+// Firebase. Diekspor ulang di sini agar berkas yang sudah mengimpornya
+// dari customer-auth.js tetap berjalan seperti sebelumnya.
 // =====================================================================
-
-/** Mengubah ArrayBuffer menjadi teks heksadesimal. */
-function keHeks(buffer) {
-  return Array.from(new Uint8Array(buffer))
-    .map(function (b) { return b.toString(16).padStart(2, "0"); })
-    .join("");
-}
-
-/** Membuat garam acak sepanjang 16 karakter heksadesimal. */
-function buatGaram() {
-  const acak = new Uint8Array(8);
-  crypto.getRandomValues(acak);
-  return keHeks(acak.buffer);
-}
-
-/** Menghitung SHA-256 dari gabungan garam dan kata sandi. */
-async function hitungHash(garam, kataSandi) {
-  const data = new TextEncoder().encode(garam + ":" + kataSandi);
-  const hasil = await crypto.subtle.digest("SHA-256", data);
-  return keHeks(hasil);
-}
-
-/**
- * Mengacak kata sandi untuk disimpan.
- * Hasilnya berbentuk "sha256$<garam>$<hash>" sehingga cara pengacakan
- * ikut tercatat -- berguna bila suatu saat metodenya diganti.
- */
-export async function acakKataSandi(kataSandi) {
-  const garam = buatGaram();
-  const hash = await hitungHash(garam, kataSandi);
-  return "sha256$" + garam + "$" + hash;
-}
-
-/** Memeriksa apakah kata sandi cocok dengan yang tersimpan. */
-export async function cocokkanKataSandi(kataSandi, tersimpan) {
-  const bagian = String(tersimpan || "").split("$");
-
-  if (bagian.length !== 3 || bagian[0] !== "sha256") {
-    return false; // format tidak dikenali
-  }
-
-  const hash = await hitungHash(bagian[1], kataSandi);
-  return hash === bagian[2];
-}
+export { acakKataSandi, cocokkanKataSandi, PANJANG_MINIMAL_SANDI };
 
 // =====================================================================
 // 2. PEMERIKSAAN ISIAN
 // =====================================================================
-
-export const PANJANG_MINIMAL_SANDI = 8;
 
 /**
  * Memeriksa seluruh isian form registrasi.
@@ -136,7 +138,7 @@ export function periksaFormRegistrasi(data) {
 }
 
 // =====================================================================
-// 3. AKSES COLLECTION "customers"
+// 3. AKSES COLLECTION "user"
 // =====================================================================
 
 /**
@@ -146,7 +148,7 @@ export function periksaFormRegistrasi(data) {
  */
 export async function cariPengguna(username) {
   const kueri = query(
-    collection(db, COL_CUSTOMERS),
+    collection(db, COL_USER),
     where("username", "==", String(username || "").trim().toLowerCase())
   );
 
@@ -166,6 +168,10 @@ export async function usernameSudahDipakai(username) {
  * Mendaftarkan pengguna baru.
  * Document ID memakai username huruf kecil, sehingga Firestore sendiri
  * ikut menjamin tidak ada dua akun dengan username sama.
+ *
+ * Karena admin dan penyewa kini berada di satu collection, pemeriksaan
+ * username berlaku menyeluruh: pengunjung tidak bisa mendaftar memakai
+ * username "admin" atau "superadmin" yang sudah terpakai.
  */
 export async function daftarkanPengguna(data) {
   const username = data.username.trim().toLowerCase();
@@ -179,10 +185,10 @@ export async function daftarkanPengguna(data) {
     username: username,
     password: await acakKataSandi(data.password),
     createdAt: Timestamp.fromDate(new Date()),
-    role: "customer"
+    role: ROLE_CUSTOMER
   };
 
-  await setDoc(doc(db, COL_CUSTOMERS, username), dokumen);
+  await setDoc(doc(db, COL_USER, username), dokumen);
 
   return Object.assign({ uid: username }, dokumen);
 }
@@ -212,7 +218,7 @@ export async function perbaruiProfil(username, perubahan) {
     data.password = await acakKataSandi(perubahan.kataSandiBaru);
   }
 
-  await updateDoc(doc(db, COL_CUSTOMERS, kunci), data);
+  await updateDoc(doc(db, COL_USER, kunci), data);
 
   return Object.assign({}, pengguna, data);
 }
@@ -238,6 +244,32 @@ export async function masukkanPengguna(username, kataSandi) {
   return pengguna;
 }
 
+/**
+ * Versi masukkanPengguna() untuk portal yang hanya boleh dimasuki peran
+ * tertentu. Dipakai halaman login admin dan super admin.
+ *
+ * Pesan kesalahannya sengaja dibuat sama untuk semua kegagalan
+ * ("username salah", "sandi salah", "peran tidak sesuai") supaya
+ * pengunjung tidak bisa menebak username mana yang benar-benar ada.
+ *
+ * @param {string}   username
+ * @param {string}   kataSandi
+ * @param {string[]} peranDiizinkan - contoh: ["superadmin"]
+ */
+export async function masukkanPenggunaBerperan(username, kataSandi, peranDiizinkan) {
+  const GAGAL = "Username atau kata sandi salah, atau akun ini tidak berhak masuk portal ini.";
+
+  const pengguna = await cariPengguna(username);
+  if (!pengguna) throw new Error(GAGAL);
+
+  if (peranDiizinkan.indexOf(pengguna.role) === -1) throw new Error(GAGAL);
+
+  const cocok = await cocokkanKataSandi(kataSandi, pengguna.password);
+  if (!cocok) throw new Error(GAGAL);
+
+  return pengguna;
+}
+
 // =====================================================================
 // 4. SESI PENGGUNA
 // ---------------------------------------------------------------------
@@ -259,14 +291,42 @@ export const KUNCI_TUJUAN = "tujuanSetelahLogin";
 // ke halaman yang sama setelah login.
 export const KUNCI_CABANG_DIBUKA = "cabangDibuka";
 
-export function simpanSesi(pengguna) {
-  localStorage.setItem(KUNCI_SESI, JSON.stringify({
+/**
+ * Menyusun isi sesi dari sebuah dokumen pengguna.
+ * Kata sandi TIDAK ikut, sengaja dibuang di sini supaya tidak ada satu
+ * pun pemanggil yang bisa lupa membuangnya.
+ */
+function bentukSesi(pengguna) {
+  const sesi = {
     uid: pengguna.uid,
     username: pengguna.username,
     fullName: pengguna.fullName,
-    role: pengguna.role || "customer",
+    role: pengguna.role || ROLE_CUSTOMER,
     loginTime: new Date().toISOString()
-  }));
+  };
+
+  // Hanya admin yang membawa daftar cabang. Disimpan di sesi agar
+  // halaman admin tidak perlu membaca Firestore ulang hanya untuk
+  // mengetahui cabang mana yang boleh dikelolanya.
+  if (pakaiCabang(sesi.role)) {
+    sesi.cabang = Array.isArray(pengguna.cabang) ? pengguna.cabang : [];
+  }
+
+  return sesi;
+}
+
+export function simpanSesi(pengguna) {
+  localStorage.setItem(KUNCI_SESI, JSON.stringify(bentukSesi(pengguna)));
+}
+
+/**
+ * Menyimpan sesi untuk portal selain penyewa.
+ * Kuncinya berbeda ("adminSession" / "superAdminSession") supaya satu
+ * peramban bisa membuka portal admin dan portal penyewa sekaligus tanpa
+ * keduanya saling menimpa.
+ */
+export function simpanSesiPortal(kunci, pengguna) {
+  localStorage.setItem(kunci, JSON.stringify(bentukSesi(pengguna)));
 }
 
 /** Membaca sesi yang tersimpan. null bila belum login. */

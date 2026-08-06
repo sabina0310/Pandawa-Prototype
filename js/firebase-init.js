@@ -36,4 +36,9 @@ export const db = getFirestore(app);
 export const COL_CABANG = "cabang";
 export const COL_KAMAR = "kamar";
 export const COL_TRANSAKSI = "transaksi_pemesanan";
-export const COL_CUSTOMERS = "customers";
+
+// Seluruh akun -- penyewa, admin, dan super admin -- disimpan pada satu
+// collection "user" dan dibedakan lewat field "role". Sebelumnya
+// collection ini bernama "customers" dan hanya berisi penyewa.
+// Lihat migrasi-user.js untuk memindahkan data lama.
+export const COL_USER = "user";

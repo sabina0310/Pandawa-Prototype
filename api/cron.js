@@ -55,6 +55,10 @@ const {
 const {
   ambilFirestore,
   COL_TRANSAKSI,
+  AWALAN_ORDER_UAT,
+  modeUjiAktif,
+  pesananUji,
+  ringkasanPengaturan,
   tentukanTujuan,
   kirimWhatsapp,
   formatTanggal,
@@ -63,6 +67,30 @@ const {
 } = require('./_notifikasi-lib');
 
 const COL_LOG = 'log_notifikasi';
+
+// =====================================================================
+// SARINGAN PESANAN UJI
+// ---------------------------------------------------------------------
+// Saat UAT_MODE menyala, hanya pesanan ber-order_id "UAT-..." yang
+// diproses. Selebihnya dilewati tanpa dikirimi apa pun.
+//
+// Penyaringannya dikerjakan DI SINI, bukan di dalam kueri Firestore.
+// Alasannya teknis: kedua kueri di bawah sudah memakai rentang pada
+// "tanggal_checkout", sedangkan "berawalan UAT-" juga berupa rentang
+// (>= "UAT-" dan < "UAT."). Firestore melarang dua field rentang dalam
+// satu kueri, jadi mustahil digabung.
+//
+// Biayanya nol pembacaan tambahan: dokumennya memang sudah terambil.
+// =====================================================================
+function saringKandidat(daftarDokumen) {
+  if (!modeUjiAktif()) return daftarDokumen;
+
+  return daftarDokumen.filter(function (dokumen) {
+    const data = dokumen.data();
+    // order_id dibaca dari isinya, dengan Document ID sebagai cadangan
+    return pesananUji(data.order_id || dokumen.id);
+  });
+}
 
 // =====================================================================
 // [A] PENGATURAN JOB BULANAN  <-- UBAH DI SINI
@@ -302,9 +330,10 @@ async function jobBulanan(db) {
   );
 
   const cuplikan = await getDocs(kueri);
+  const kandidat = saringKandidat(cuplikan.docs);
 
   const hasil = [];
-  for (const dokumen of cuplikan.docs) {
+  for (const dokumen of kandidat) {
     hasil.push(await prosesSatu(
       db, dokumen, 'bulanan', pesanBulanan,
       'Pengingat Jatuh Tempo (H-' + HARI_SEBELUM_JATUH_TEMPO + ')'
@@ -312,11 +341,12 @@ async function jobBulanan(db) {
   }
 
   const r = ringkas(hasil);
-  cetakRingkasan('BULANAN', cuplikan.size, r, Date.now() - mulai);
+  cetakRingkasan('BULANAN', kandidat.length, r, Date.now() - mulai);
 
   return {
     job: 'bulanan',
-    kandidat: cuplikan.size,
+    kandidat: kandidat.length,
+    disaring_mode_uji: cuplikan.size - kandidat.length,
     terkirim: r.terkirim.length,
     dilewati: r.dilewati.length,
     gagal: r.gagal.length,
@@ -353,9 +383,10 @@ async function jobHarian(db) {
   );
 
   const cuplikan = await getDocs(kueri);
+  const kandidat = saringKandidat(cuplikan.docs);
 
   const hasil = [];
-  for (const dokumen of cuplikan.docs) {
+  for (const dokumen of kandidat) {
     hasil.push(await prosesSatu(
       db, dokumen, 'harian', pesanHarian,
       'Pengingat Check-out Hari Ini'
@@ -363,11 +394,12 @@ async function jobHarian(db) {
   }
 
   const r = ringkas(hasil);
-  cetakRingkasan('HARIAN', cuplikan.size, r, Date.now() - mulai);
+  cetakRingkasan('HARIAN', kandidat.length, r, Date.now() - mulai);
 
   return {
     job: 'harian',
-    kandidat: cuplikan.size,
+    kandidat: kandidat.length,
+    disaring_mode_uji: cuplikan.size - kandidat.length,
     terkirim: r.terkirim.length,
     dilewati: r.dilewati.length,
     gagal: r.gagal.length,
@@ -395,6 +427,11 @@ module.exports = async (req, res) => {
 
   const mulai = Date.now();
   console.log('===== CRON NOTIFIKASI dipanggil (job=' + pilihanJob + ') =====');
+
+  // Kedua sakelar berdiri sendiri, jadi keduanya dicetak: UAT_MODE
+  // menentukan transaksi mana yang diproses, FONNTE_NOMOR_UJI
+  // menentukan nomor tujuannya.
+  console.log('[PENGATURAN] ' + ringkasanPengaturan().keterangan);
 
   try {
     const db = ambilFirestore();
@@ -429,6 +466,8 @@ module.exports = async (req, res) => {
       waktu: new Date().toISOString(),
       job_dijalankan: pilihanJob,
       total_terkirim: totalTerkirim,
+      mode_uji_aktif: modeUjiAktif(),
+      awalan_order_uji: modeUjiAktif() ? AWALAN_ORDER_UAT : null,
       pengalihan_nomor_aktif: !!process.env.FONNTE_NOMOR_UJI,
       laporan: laporan
     });

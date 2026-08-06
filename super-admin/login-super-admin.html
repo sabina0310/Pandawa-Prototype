@@ -150,69 +150,15 @@
         </div>
     </div>
 
-    <script>
-            (function () {
-                const VALID_USERNAME = "supadmin";
-                const VALID_PASSWORD = "supadmin123";
+    <!-- Memeriksa akun ke collection "user" di Firestore (peran "superadmin") -->
+    <script type="module">
+        import { pasangLoginPengelola } from "../js/login-pengelola.js";
 
-                const form = document.getElementById("loginForm");
-                const emailInput = document.getElementById("email");
-                const passwordInput = document.getElementById("password");
-                const toggleBtn = document.getElementById("togglePassword");
-                const toggleIcon = document.getElementById("togglePasswordIcon");
-                const loginBtn = document.getElementById("loginBtn");
-                const loginBtnText = document.getElementById("loginBtnText");
-                const loginBtnSpinner = document.getElementById("loginBtnSpinner");
-                const errorModal = document.getElementById("errorModal");
-                const errorModalOverlay = document.getElementById("errorModalOverlay");
-                const errorModalClose = document.getElementById("errorModalClose");
-
-                toggleBtn.addEventListener("click", function () {
-                    const isPassword = passwordInput.type === "password";
-                    passwordInput.type = isPassword ? "text" : "password";
-                    toggleIcon.textContent = isPassword ? "visibility_off" : "visibility";
-                });
-
-                function showErrorModal() {
-                    errorModal.classList.remove("hidden");
-                    errorModal.classList.add("flex");
-                }
-
-                function hideErrorModal() {
-                    errorModal.classList.add("hidden");
-                    errorModal.classList.remove("flex");
-                }
-
-                errorModalOverlay.addEventListener("click", hideErrorModal);
-                errorModalClose.addEventListener("click", hideErrorModal);
-
-                function setLoading(isLoading) {
-                    loginBtn.disabled = isLoading;
-                    loginBtnSpinner.classList.toggle("hidden", !isLoading);
-                    loginBtnText.textContent = isLoading ? "Memproses..." : "Masuk";
-                }
-
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-                    setLoading(true);
-
-                    setTimeout(function () {
-                        const username = emailInput.value.trim();
-                        const password = passwordInput.value;
-
-                        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                            localStorage.setItem("superAdminSession", JSON.stringify({
-                                username: username,
-                                loginTime: new Date().toISOString()
-                            }));
-                            window.location.href = "dashboard-super-admin.html";
-                        } else {
-                            setLoading(false);
-                            showErrorModal();
-                        }
-                    }, 800);
-                });
-            })();
+        pasangLoginPengelola({
+            peran: ["superadmin"],
+            kunciSesi: "superAdminSession",
+            tujuan: "dashboard-super-admin.html"
+        });
     </script>
 </body>
 

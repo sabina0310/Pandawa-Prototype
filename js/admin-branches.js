@@ -53,6 +53,16 @@ const elKamarTerisi = document.getElementById("statKamarTerisi");
 
 const elPilihCabangForm = document.getElementById("addRoomBranchSelect");
 
+// --- Hak ubah -------------------------------------------------------
+// Berkas ini dipakai bersama oleh portal Super Admin dan portal Admin.
+// Di portal Admin, data cabang & kamar hanya boleh DILIHAT: menambah,
+// mengubah, dan menghapusnya adalah wewenang Super Admin.
+//
+// Pembedanya ditulis di HTML (atribut data-tanpa-ubah pada <body>),
+// bukan ditebak dari alamat halaman, supaya niatnya terbaca jelas saat
+// membuka berkas HTML-nya dan mudah dipindah bila strukturnya berubah.
+const bolehUbah = !document.body.hasAttribute("data-tanpa-ubah");
+
 // --- Penyimpanan data terakhir --------------------------------------
 let petaCabang = {};
 let daftarKamar = [];
@@ -91,12 +101,14 @@ function gambarDaftarCabang() {
   }).join("")
   // Tombol tambah cabang ikut digambar di sini karena daftar cabang
   // seluruhnya dibuat ulang setiap kali data berubah.
-  + '<button id="openAddBranchBtn" ' +
-    'class="flex items-center justify-center gap-xs p-base border-2 border-dashed border-outline-variant ' +
-    'text-ink-muted rounded-xl hover:border-primary hover:text-primary hover:bg-primary-container/10 transition-all mt-sm">' +
-    '<span class="material-symbols-outlined">add_circle</span>' +
-    '<span class="font-button-md">Tambah Cabang</span>' +
-    '</button>';
+  + (bolehUbah
+    ? '<button id="openAddBranchBtn" ' +
+      'class="flex items-center justify-center gap-xs p-base border-2 border-dashed border-outline-variant ' +
+      'text-ink-muted rounded-xl hover:border-primary hover:text-primary hover:bg-primary-container/10 transition-all mt-sm">' +
+      '<span class="material-symbols-outlined">add_circle</span>' +
+      '<span class="font-button-md">Tambah Cabang</span>' +
+      '</button>'
+    : '');
 
   elDaftarCabang.querySelectorAll(".branch-select-btn").forEach(function (tombol) {
     tombol.addEventListener("click", function () {
@@ -182,12 +194,14 @@ function kartuKamarHtml(kamar, cabang) {
     '</div>' +
     '<div class="flex items-center gap-xs">' +
     '<span class="text-xs text-ink-muted mr-xs">' + amankanTeks(kamar.id) + '</span>' +
-    '<button data-edit-kamar="' + amankanTeks(kamar.id) + '" title="Edit kamar" ' +
-    'class="text-ink-muted hover:text-primary hover:bg-surface-soft p-1 rounded-full transition-colors">' +
-    '<span class="material-symbols-outlined text-[20px]">edit</span></button>' +
-    '<button data-hapus-kamar="' + amankanTeks(kamar.id) + '" title="Hapus kamar" ' +
-    'class="text-ink-muted hover:text-error hover:bg-error-container p-1 rounded-full transition-colors">' +
-    '<span class="material-symbols-outlined text-[20px]">delete</span></button>' +
+    (bolehUbah
+      ? '<button data-edit-kamar="' + amankanTeks(kamar.id) + '" title="Edit kamar" ' +
+        'class="text-ink-muted hover:text-primary hover:bg-surface-soft p-1 rounded-full transition-colors">' +
+        '<span class="material-symbols-outlined text-[20px]">edit</span></button>' +
+        '<button data-hapus-kamar="' + amankanTeks(kamar.id) + '" title="Hapus kamar" ' +
+        'class="text-ink-muted hover:text-error hover:bg-error-container p-1 rounded-full transition-colors">' +
+        '<span class="material-symbols-outlined text-[20px]">delete</span></button>'
+      : '') +
     '</div>' +
     '</div>' +
     '<div class="p-base flex flex-col gap-sm">' +

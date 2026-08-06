@@ -131,35 +131,54 @@
                                 </div>
                         </div>
                         <!-- Page: Tambah Kamar Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
-                                id="addRoomPage">
-                                <div
-                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary">Tambah Kamar Baru
-                                        </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
-                                                id="closeAddRoomBtn">
-                                                <span class="material-symbols-outlined">close</span>
+                        <div class="hidden flex-col gap-lg" id="addRoomPage">
+                                <!-- Bagian judul: pola Detail Booking -->
+                                <div>
+                                        <button class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                                                id="closeAddRoomBtn" type="button">
+                                                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                                                Kembali
                                         </button>
+                                        <div
+                                                class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                                                <div>
+                                                        <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
+                                                                Tambah Kamar Baru</h1>
+                                                        <p class="font-body-md text-body-md text-ink-muted mt-xs">
+                                                                Tentukan cabang dan nomor kamar yang akan
+                                                                ditambahkan.</p>
+                                                </div>
+                                        </div>
                                 </div>
-                                <div class="p-lg overflow-y-auto flex-1">
+
+                                <!-- Form pendek: satu kolom dengan lebar terbatas -->
+                                <div class="w-full max-w-3xl flex flex-col gap-lg">
                                         <form class="flex flex-col gap-lg" id="addRoomForm">
-                                                <div class="grid grid-cols-1 gap-base">
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Pilih
-                                                                        Cabang</label>
-                                                                <select id="addRoomBranchSelect"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
-                                                                </select>
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Nomor/Nama
-                                                                        Kamar</label>
-                                                                <input id="addRoomNumberInput"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., 101" type="text">
+                                                <!-- Card: Informasi Kamar -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Informasi Kamar</h2>
+                                                        <div class="space-y-md">
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="addRoomBranchSelect">Pilih
+                                                                                Cabang</label>
+                                                                        <select id="addRoomBranchSelect"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
+                                                                        </select>
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="addRoomNumberInput">Nomor/Nama
+                                                                                Kamar</label>
+                                                                        <input id="addRoomNumberInput"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 101" type="text">
+                                                                </div>
                                                         </div>
                                                 </div>
                                                 <!-- <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
@@ -197,88 +216,129 @@
                                                         </div>
                                                 </div> -->
                                         </form>
-                                </div>
-                                <div
-                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
-                                        <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
-                                                id="cancelAddRoomBtn">Batal</button>
-                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
-                                                id="saveAddRoomBtn">Simpan
-                                                Data Kamar</button>
+
+                                        <!-- Tombol aksi: kanan bawah -->
+                                        <div class="flex justify-end gap-sm">
+                                                <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                                                        id="cancelAddRoomBtn">Batal</button>
+                                                <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                                        id="saveAddRoomBtn">Simpan
+                                                        Data Kamar</button>
+                                        </div>
                                 </div>
                         </div>
                         <!-- Page: Tambah Cabang Baru (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
-                                id="addBranchPage">
-                                <div
-                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary"
-                                                id="addBranchPageTitle">Tambah Cabang Baru
-                                        </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
-                                                id="closeAddBranchBtn">
-                                                <span class="material-symbols-outlined">close</span>
+                        <div class="hidden flex-col gap-lg" id="addBranchPage">
+                                <!-- Bagian judul: pola Detail Booking -->
+                                <div>
+                                        <button class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                                                id="closeAddBranchBtn" type="button">
+                                                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                                                Kembali
                                         </button>
+                                        <div
+                                                class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                                                <div>
+                                                        <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight"
+                                                                id="addBranchPageTitle">Tambah Cabang Baru</h1>
+                                                        <p class="font-body-md text-body-md text-ink-muted mt-xs">
+                                                                Lengkapi informasi cabang, harga sewa, dan fasilitas
+                                                                yang tersedia.</p>
+                                                </div>
+                                        </div>
                                 </div>
-                                <div class="p-lg overflow-y-auto flex-1">
-                                        <form class="flex flex-col gap-lg" id="addBranchForm">
-                                                <div class="grid grid-cols-1 gap-base">
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Nama
-                                                                        Cabang</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., Pesona Kos" type="text"
-                                                                        id="branchNameInput">
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Alamat</label>
-                                                                <textarea
-                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
-                                                                        placeholder="Jl. Melati No. 45, Jakarta Selatan"
-                                                                        rows="3" id="branchAddressInput"></textarea>
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">URL
-                                                                        Google Maps</label>
-                                                                <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="https://maps.google.com/..."
-                                                                        type="url" id="branchMapsUrlInput">
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Deskripsi
-                                                                        Singkat</label>
-                                                                <textarea
-                                                                        class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
-                                                                        placeholder="Kos nyaman dengan lokasi strategis..."
-                                                                        rows="3" id="branchDescInput"></textarea>
-                                                        </div>
-                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
-                                                                <div class="flex flex-col gap-xs">
+
+                                <form class="grid grid-cols-1 lg:grid-cols-12 gap-lg" id="addBranchForm">
+                                        <!-- KOLOM KIRI -->
+                                        <div class="lg:col-span-8 flex flex-col gap-lg">
+                                                <!-- Card: Informasi Cabang -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Informasi Cabang</h2>
+                                                        <div class="space-y-md">
+                                                                <div>
                                                                         <label
-                                                                                class="font-label-md text-label-md text-ink-muted">Harga
-                                                                                Bulanan (Rp)</label>
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchNameInput">Nama
+                                                                                Cabang</label>
                                                                         <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                                placeholder="e.g., 650000" type="number"
-                                                                                min="0" id="branchHargaBulananInput">
+                                                                                placeholder="e.g., Pesona Kos"
+                                                                                type="text" id="branchNameInput">
                                                                 </div>
-                                                                <div class="flex flex-col gap-xs">
+                                                                <div>
                                                                         <label
-                                                                                class="font-label-md text-label-md text-ink-muted">Harga
-                                                                                Harian (Rp)</label>
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchAddressInput">Alamat</label>
+                                                                        <textarea
+                                                                                class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                                placeholder="Jl. Melati No. 45, Jakarta Selatan"
+                                                                                rows="3"
+                                                                                id="branchAddressInput"></textarea>
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchMapsUrlInput">URL Google
+                                                                                Maps</label>
                                                                         <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                                placeholder="e.g., 100000" type="number"
-                                                                                min="0" id="branchHargaHarianInput">
+                                                                                placeholder="https://maps.google.com/..."
+                                                                                type="url" id="branchMapsUrlInput">
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchDescInput">Deskripsi
+                                                                                Singkat</label>
+                                                                        <textarea
+                                                                                class="w-full bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base py-sm text-body-sm focus:ring-primary outline-none transition-all resize-none"
+                                                                                placeholder="Kos nyaman dengan lokasi strategis..."
+                                                                                rows="3" id="branchDescInput"></textarea>
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
-                                                        <label class="font-label-md text-label-md text-ink-muted">Fasilitas
-                                                                Cabang</label>
-                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm"
+
+                                                <!-- Card: Harga Sewa -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Harga Sewa</h2>
+                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchHargaBulananInput">Harga
+                                                                                Bulanan (Rp)</label>
+                                                                        <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 650000"
+                                                                                type="number" min="0"
+                                                                                id="branchHargaBulananInput">
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="branchHargaHarianInput">Harga
+                                                                                Harian (Rp)</label>
+                                                                        <input class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 100000"
+                                                                                type="number" min="0"
+                                                                                id="branchHargaHarianInput">
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                </div>
+
+                                        <!-- KOLOM KANAN -->
+                                        <div class="lg:col-span-4 flex flex-col gap-lg">
+                                                <!-- Card: Fasilitas Cabang -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Fasilitas Cabang</h2>
+                                                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-sm"
                                                                 id="branchFacilitiesGroup">
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
@@ -322,12 +382,15 @@
                                                                 </label>
                                                         </div>
                                                 </div>
-                                                <div class="flex flex-col gap-sm border-t border-border-hairline pt-md">
-                                                        <label class="font-label-md text-label-md text-ink-muted">Fasilitas
-                                                                Kamar</label>
-                                                        <p class="font-body-sm text-badge text-ink-muted -mt-xs">Berlaku
+                                                <!-- Card: Fasilitas Kamar -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Fasilitas Kamar</h2>
+                                                        <p class="font-body-sm text-body-sm text-ink-muted mb-sm">Berlaku
                                                                 untuk seluruh kamar di cabang ini.</p>
-                                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-sm"
+                                                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-sm"
                                                                 id="roomFacilitiesGroup">
                                                                 <label class="flex items-center gap-sm">
                                                                         <input class="text-primary focus:ring-primary rounded"
@@ -378,10 +441,11 @@
                                                                 </label>
                                                         </div>
                                                 </div>
-                                        </form>
-                                </div>
-                                <div
-                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
+                                        </div>
+                                </form>
+
+                                <!-- Tombol aksi: kanan bawah -->
+                                <div class="flex justify-end gap-sm">
                                         <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
                                                 id="cancelAddBranchBtn">Batal</button>
                                         <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
@@ -390,68 +454,94 @@
                                 </div>
                         </div>
                         <!-- Page: Edit Kamar (Hidden by default) -->
-                        <div class="hidden flex-col bg-surface-canvas rounded-xl shadow-sm border border-border-hairline min-h-[calc(100vh-160px)]"
-                                id="editRoomPage">
-                                <div
-                                        class="px-lg py-base border-b border-border-hairline flex justify-between items-center">
-                                        <h3 class="font-display-md text-display-md text-ink-primary">Edit Data Kamar
-                                        </h3>
-                                        <button class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs"
-                                                id="closeEditRoomBtn">
-                                                <span class="material-symbols-outlined">close</span>
+                        <div class="hidden flex-col gap-lg" id="editRoomPage">
+                                <!-- Bagian judul: pola Detail Booking -->
+                                <div>
+                                        <button class="flex items-center gap-xs text-ink-muted hover:text-primary transition-colors mb-md font-button-md text-button-md"
+                                                id="closeEditRoomBtn" type="button">
+                                                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                                                Kembali
                                         </button>
+                                        <div
+                                                class="flex flex-col md:flex-row md:items-start md:justify-between gap-md">
+                                                <div>
+                                                        <h1 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
+                                                                Edit Data Kamar</h1>
+                                                        <p class="font-body-md text-body-md text-ink-muted mt-xs">
+                                                                Perbarui nomor dan status kamar. Kode kamar serta
+                                                                cabangnya mengikuti data yang sudah ada.</p>
+                                                </div>
+                                        </div>
                                 </div>
-                                <div class="p-lg overflow-y-auto flex-1">
+
+                                <!-- Form pendek: satu kolom dengan lebar terbatas -->
+                                <div class="w-full max-w-3xl flex flex-col gap-lg">
                                         <form class="flex flex-col gap-lg" id="editRoomForm">
-                                                <div class="grid grid-cols-1 gap-base">
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Kode
-                                                                        Kamar</label>
-                                                                <input id="editRoomCodeInput" readonly
-                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
-                                                                        type="text">
-                                                                <p class="font-body-sm text-badge text-ink-muted">Kode
-                                                                        tidak dapat diubah karena dipakai sebagai acuan
-                                                                        pada data transaksi.</p>
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Cabang</label>
-                                                                <input id="editRoomBranchInput" readonly
-                                                                        class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
-                                                                        type="text">
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Nomor/Nama
-                                                                        Kamar</label>
-                                                                <input id="editRoomNumberInput"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
-                                                                        placeholder="e.g., 101" type="text">
-                                                        </div>
-                                                        <div class="flex flex-col gap-xs">
-                                                                <label
-                                                                        class="font-label-md text-label-md text-ink-muted">Status
-                                                                        Kamar</label>
-                                                                <select id="editRoomStatusSelect"
-                                                                        class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
-                                                                        <option value="tersedia">Tersedia</option>
-                                                                        <option value="terisi">Terisi</option>
-                                                                </select>
-                                                                <p class="font-body-sm text-badge text-ink-muted">Ubah
-                                                                        hanya bila status di sistem tidak sesuai kondisi
-                                                                        sebenarnya di lapangan.</p>
+                                                <!-- Card: Informasi Kamar -->
+                                                <div
+                                                        class="bg-surface-canvas rounded-xl p-base border border-border-hairline shadow-sm">
+                                                        <h2
+                                                                class="font-title-md text-title-md text-ink-primary border-b border-border-hairline pb-sm mb-md">
+                                                                Informasi Kamar</h2>
+                                                        <div class="space-y-md">
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="editRoomCodeInput">Kode
+                                                                                Kamar</label>
+                                                                        <input id="editRoomCodeInput" readonly
+                                                                                class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                                type="text">
+                                                                        <p
+                                                                                class="font-body-sm text-body-sm text-ink-muted mt-xxs">
+                                                                                Kode tidak dapat diubah karena dipakai
+                                                                                sebagai acuan pada data transaksi.</p>
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="editRoomBranchInput">Cabang</label>
+                                                                        <input id="editRoomBranchInput" readonly
+                                                                                class="w-full h-[44px] bg-surface-variant border border-border-hairline rounded-xl shadow-sm px-base text-body-sm text-ink-muted outline-none cursor-not-allowed"
+                                                                                type="text">
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="editRoomNumberInput">Nomor/Nama
+                                                                                Kamar</label>
+                                                                        <input id="editRoomNumberInput"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all"
+                                                                                placeholder="e.g., 101" type="text">
+                                                                </div>
+                                                                <div>
+                                                                        <label
+                                                                                class="font-label-md text-label-md text-ink-muted mb-xxs block"
+                                                                                for="editRoomStatusSelect">Status
+                                                                                Kamar</label>
+                                                                        <select id="editRoomStatusSelect"
+                                                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary outline-none transition-all">
+                                                                                <option value="tersedia">Tersedia
+                                                                                </option>
+                                                                                <option value="terisi">Terisi</option>
+                                                                        </select>
+                                                                        <p
+                                                                                class="font-body-sm text-body-sm text-ink-muted mt-xxs">
+                                                                                Ubah hanya bila status di sistem tidak
+                                                                                sesuai kondisi sebenarnya di lapangan.
+                                                                        </p>
+                                                                </div>
                                                         </div>
                                                 </div>
                                         </form>
-                                </div>
-                                <div
-                                        class="px-lg py-base border-t border-border-hairline bg-surface-soft flex justify-end gap-sm rounded-b-2xl">
-                                        <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
-                                                id="cancelEditRoomBtn">Batal</button>
-                                        <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
-                                                id="saveEditRoomBtn">Simpan Perubahan</button>
+
+                                        <!-- Tombol aksi: kanan bawah -->
+                                        <div class="flex justify-end gap-sm">
+                                                <button class="px-base py-2 border border-outline-variant text-primary font-button-md bg-surface-canvas rounded-lg hover:bg-surface-soft transition-colors shadow-sm"
+                                                        id="cancelEditRoomBtn">Batal</button>
+                                                <button class="px-base py-sm bg-primary text-on-primary font-button-md rounded-lg hover:opacity-90 transition-colors shadow-sm"
+                                                        id="saveEditRoomBtn">Simpan Perubahan</button>
+                                        </div>
                                 </div>
                         </div>
                 </main>

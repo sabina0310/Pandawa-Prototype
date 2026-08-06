@@ -29,9 +29,13 @@
                     <p class="font-body-md text-body-md text-ink-muted">Memuat data kamar...</p>
                 </div>
             </div>
-            <div class="max-w-7xl mx-auto px-base lg:px-xl flex flex-col gap-xl lg:grid lg:grid-cols-3 hidden"
+            <!-- Isi halaman.
+                 Layar kecil : satu kolom bertumpuk, jaraknya gap-section (64px)
+                               supaya seirama dengan jarak antar bagian di dalamnya.
+                 Layar besar : grid 3 kolom, jarak antar kolom gap-xl (32px). -->
+            <div class="max-w-7xl mx-auto px-base lg:px-xl flex flex-col gap-section lg:grid lg:grid-cols-3 lg:gap-xl hidden"
                 id="detailKonten">
-                <!-- Left Content Column -->
+                <!-- Bagian atas kolom kiri: judul, foto utama, dan galeri -->
                 <div class="w-full flex flex-col gap-section lg:col-span-2">
                     <!-- Hero Info & Image -->
                     <div class="flex flex-col gap-lg">
@@ -89,6 +93,123 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Kartu harga & form pemesanan.
+                     Di layar kecil sengaja diletakkan tepat di bawah galeri foto,
+                     supaya pengunjung bisa langsung memesan tanpa menggulir
+                     melewati deskripsi, fasilitas, dan peta.
+                     Di layar besar ia menempati kolom ketiga dan membentang dua
+                     baris, sehingga posisi sticky-nya tetap seperti semula. -->
+                <div class="w-full lg:col-span-1 lg:row-span-2">
+                    <div
+                        class="sticky top-[100px] bg-surface-canvas border border-border-hairline rounded-3xl p-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+                        <div class="mb-lg border-b border-border-hairline pb-lg">
+                            <div class="flex items-center gap-xs mb-sm font-body-sm text-[13px] text-ink-secondary">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-status-available">meeting_room</span>
+                                <span id="detailKetersediaan">Memuat ketersediaan...</span>
+                            </div>
+                            <div class="text-ink-muted font-label-md text-label-md mb-xs">Mulai dari</div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-stat-display text-stat-display text-ink-primary" id="detailHarga">Rp
+                                    100.000</span>
+                                <span class="font-body-sm text-body-sm text-ink-secondary" id="detailSatuanHarga">/
+                                    hari</span>
+                            </div>
+                        </div>
+                        <form class="flex flex-col gap-lg mb-xl">
+                            <div class="flex flex-col gap-xs">
+                                <label class="font-label-md text-label-md text-ink-muted ml-xs">Tipe Sewa</label>
+                                <div class="relative">
+                                    <select id="tipeSewaSelect"
+                                        class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-md pr-10 font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary appearance-none outline-none transition-colors">
+                                        <option value="harian">Harian</option>
+                                        <option value="bulanan">Bulanan</option>
+                                    </select>
+                                    <span
+                                        class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">expand_more</span>
+                                </div>
+                            </div>
+                            <!-- Durasi sewa bulanan: tanggal check-out dihitung otomatis -->
+                            <div class="flex-col gap-xs hidden" id="durasiBulananGroup">
+                                <label class="font-label-md text-label-md text-ink-muted ml-xs">Durasi Sewa</label>
+                                <div class="grid grid-cols-3 gap-sm">
+                                    <button type="button" data-bulan="1"
+                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">1
+                                        Bulan</button>
+                                    <button type="button" data-bulan="3"
+                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">3
+                                        Bulan</button>
+                                    <button type="button" data-bulan="6"
+                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">6
+                                        Bulan</button>
+                                </div>
+                                <p class="font-body-sm text-[12px] text-ink-muted ml-xs mt-xs">Tanggal check-out
+                                    terisi otomatis mengikuti durasi yang dipilih.</p>
+                            </div>
+                            <!-- Peringatan aturan sewa harian -->
+                            <div class="flex items-start gap-sm p-md bg-[#FFFAEB] border border-status-warning/30 rounded-xl"
+                                id="catatanSewaHarian">
+                                <span class="material-symbols-outlined text-[20px] text-status-warning">info</span>
+                                <p class="font-body-sm text-[13px] text-ink-secondary">Sewa harian
+                                    <strong class="text-ink-primary">khusus penyewa pria</strong> dan hanya untuk
+                                    satu orang. Untuk keluarga atau lebih dari satu penghuni, silakan pilih sewa
+                                    bulanan.
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-md">
+                                <div class="flex flex-col gap-xs">
+                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-in</label>
+                                    <div class="relative">
+                                        <input id="checkinInput"
+                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
+                                            type="date">
+                                        <span
+                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-xs">
+                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-out</label>
+                                    <div class="relative">
+                                        <input id="checkoutInput"
+                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
+                                            type="date">
+                                        <span
+                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="flex flex-col gap-md">
+                            <button id="pesanSekarangBtn"
+                                class="w-full bg-primary text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-primary-container transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200">
+                                <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                                Pesan Sekarang
+                            </button>
+                            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+                                class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200 no-underline">
+                                <span class="material-symbols-outlined text-[20px]">chat</span>
+                                Tanya via WhatsApp
+                            </a>
+                        </div>
+                        <div class="mt-lg pt-lg border-t border-border-hairline">
+                            <div
+                                class="flex justify-between items-center mb-sm font-body-sm text-body-sm text-ink-secondary">
+                                <span class="" id="detailLabelHargaSewa">Harga Sewa (1 Hari)</span>
+                                <span class="" id="detailNilaiHargaSewa">Rp 100.000</span>
+                            </div>
+                            <div
+                                class="flex justify-between items-center mt-md pt-md border-t border-border-hairline font-display-md text-display-md text-ink-primary">
+                                <span class="">Total</span>
+                                <span class="" id="detailTotal">Rp 100.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lanjutan kolom kiri: deskripsi, fasilitas, lokasi -->
+                <div class="w-full flex flex-col gap-section lg:col-span-2">
                     <!-- Description -->
                     <div>
                         <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
@@ -205,113 +326,6 @@
                         <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
                             Fasilitas Umum Cabang</h2>
                         <div class="flex flex-wrap gap-md justify-center md:justify-start" id="detailFasilitasUmum">
-                        </div>
-                    </div>
-                </div>
-                <!-- Right Column (Booking Box) -->
-                <div class="w-full lg:col-span-1">
-                    <div
-                        class="sticky top-[100px] bg-surface-canvas border border-border-hairline rounded-3xl p-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-                        <div class="mb-lg border-b border-border-hairline pb-lg">
-                            <div class="flex items-center gap-xs mb-sm font-body-sm text-[13px] text-ink-secondary">
-                                <span
-                                    class="material-symbols-outlined text-[18px] text-status-available">meeting_room</span>
-                                <span id="detailKetersediaan">Memuat ketersediaan...</span>
-                            </div>
-                            <div class="text-ink-muted font-label-md text-label-md mb-xs">Mulai dari</div>
-                            <div class="flex items-baseline gap-2">
-                                <span class="font-stat-display text-stat-display text-ink-primary" id="detailHarga">Rp
-                                    100.000</span>
-                                <span class="font-body-sm text-body-sm text-ink-secondary" id="detailSatuanHarga">/
-                                    hari</span>
-                            </div>
-                        </div>
-                        <form class="flex flex-col gap-lg mb-xl">
-                            <div class="flex flex-col gap-xs">
-                                <label class="font-label-md text-label-md text-ink-muted ml-xs">Tipe Sewa</label>
-                                <div class="relative">
-                                    <select id="tipeSewaSelect"
-                                        class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-md pr-10 font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary appearance-none outline-none transition-colors">
-                                        <option value="harian">Harian</option>
-                                        <option value="bulanan">Bulanan</option>
-                                    </select>
-                                    <span
-                                        class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">expand_more</span>
-                                </div>
-                            </div>
-                            <!-- Durasi sewa bulanan: tanggal check-out dihitung otomatis -->
-                            <div class="flex-col gap-xs hidden" id="durasiBulananGroup">
-                                <label class="font-label-md text-label-md text-ink-muted ml-xs">Durasi Sewa</label>
-                                <div class="grid grid-cols-3 gap-sm">
-                                    <button type="button" data-bulan="1"
-                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">1
-                                        Bulan</button>
-                                    <button type="button" data-bulan="3"
-                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">3
-                                        Bulan</button>
-                                    <button type="button" data-bulan="6"
-                                        class="tombol-durasi-bulan border border-transparent bg-surface-soft text-ink-primary rounded-xl py-md font-button-md text-button-md transition-colors">6
-                                        Bulan</button>
-                                </div>
-                                <p class="font-body-sm text-[12px] text-ink-muted ml-xs mt-xs">Tanggal check-out
-                                    terisi otomatis mengikuti durasi yang dipilih.</p>
-                            </div>
-                            <!-- Peringatan aturan sewa harian -->
-                            <div class="flex items-start gap-sm p-md bg-[#FFFAEB] border border-status-warning/30 rounded-xl"
-                                id="catatanSewaHarian">
-                                <span class="material-symbols-outlined text-[20px] text-status-warning">info</span>
-                                <p class="font-body-sm text-[13px] text-ink-secondary">Sewa harian
-                                    <strong class="text-ink-primary">khusus penyewa pria</strong> dan hanya untuk
-                                    satu orang. Untuk keluarga atau lebih dari satu penghuni, silakan pilih sewa
-                                    bulanan.
-                                </p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-md">
-                                <div class="flex flex-col gap-xs">
-                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-in</label>
-                                    <div class="relative">
-                                        <input id="checkinInput"
-                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
-                                            type="date">
-                                        <span
-                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col gap-xs">
-                                    <label class="font-label-md text-label-md text-ink-muted ml-xs">Check-out</label>
-                                    <div class="relative">
-                                        <input id="checkoutInput"
-                                            class="w-full bg-surface-soft border border-transparent rounded-xl py-md pl-10 pr-md font-body-sm text-body-sm text-ink-primary focus:border-ink-primary focus:bg-surface-canvas focus:ring-1 focus:ring-ink-primary outline-none transition-colors"
-                                            type="date">
-                                        <span
-                                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-ink-muted text-[18px]">calendar_today</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="flex flex-col gap-md">
-                            <button id="pesanSekarangBtn"
-                                class="w-full bg-primary text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-primary-container transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200">
-                                <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
-                                Pesan Sekarang
-                            </button>
-                            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
-                                class="w-full bg-whatsapp-green text-on-primary font-button-md text-button-md py-4 rounded-xl hover:bg-whatsapp-hover transition-colors flex items-center justify-center gap-sm shadow-sm scale-95 active:scale-90 duration-200 no-underline">
-                                <span class="material-symbols-outlined text-[20px]">chat</span>
-                                Tanya via WhatsApp
-                            </a>
-                        </div>
-                        <div class="mt-lg pt-lg border-t border-border-hairline">
-                            <div
-                                class="flex justify-between items-center mb-sm font-body-sm text-body-sm text-ink-secondary">
-                                <span class="" id="detailLabelHargaSewa">Harga Sewa (1 Hari)</span>
-                                <span class="" id="detailNilaiHargaSewa">Rp 100.000</span>
-                            </div>
-                            <div
-                                class="flex justify-between items-center mt-md pt-md border-t border-border-hairline font-display-md text-display-md text-ink-primary">
-                                <span class="">Total</span>
-                                <span class="" id="detailTotal">Rp 100.000</span>
-                            </div>
                         </div>
                     </div>
                 </div>

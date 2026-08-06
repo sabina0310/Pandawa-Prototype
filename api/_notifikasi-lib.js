@@ -81,24 +81,106 @@ function normalisasiNomor(nomor) {
 }
 
 // =====================================================================
-// PENGALIH NOMOR UJI (PENGAMAN)
+// MODE UJI COBA (UAT)
 // ---------------------------------------------------------------------
-// Data hasil seeding memakai nomor telepon ACAK yang formatnya valid.
-// Nomor seperti itu sangat mungkin milik orang lain yang tidak ada
-// hubungannya dengan aplikasi ini.
+// DUA SAKELAR YANG BERDIRI SENDIRI
 //
-// Selama environment variable FONNTE_NOMOR_UJI diisi, SELURUH pesan
-// dialihkan ke nomor tersebut. Nomor tujuan aslinya tetap dicatat di
-// isi pesan dan di log, sehingga bukti pengujian tetap sah.
+//   UAT_MODE          -> menentukan TRANSAKSI MANA yang diproses
+//   FONNTE_NOMOR_UJI  -> menentukan KE NOMOR MANA pesan dikirim
 //
-// CARA MEMATIKAN PENGALIHAN (agar pesan benar-benar ke penyewa):
-// hapus / kosongkan variabel FONNTE_NOMOR_UJI di Vercel maupun di .env,
-// lalu deploy ulang. Tidak ada kode yang perlu diubah.
+// Keduanya sengaja tidak saling memaksa, karena menjawab pertanyaan
+// yang berbeda. Mode uji yang menyala TIDAK dengan sendirinya
+// mengalihkan nomor tujuan: pesan tetap dikirim ke nomor penyewa yang
+// tercatat pada transaksi itu. Pengalihan hanya terjadi bila
+// FONNTE_NOMOR_UJI memang diisi.
+//
+// Gabungan yang mungkin:
+//
+//   UAT_MODE   FONNTE_NOMOR_UJI   akibatnya
+//   ---------  -----------------  ------------------------------------
+//   menyala    kosong             hanya pesanan "UAT-", ke nomor
+//                                 penyewa pada pesanan itu
+//   menyala    diisi              hanya pesanan "UAT-", seluruhnya
+//                                 dialihkan ke nomor penguji
+//   mati       kosong             SEMUA pesanan, ke nomor penyewa
+//                                 (perilaku produksi)
+//   mati       diisi              SEMUA pesanan, dialihkan
+//
+// ---------------------------------------------------------------------
+// NILAI UAT_MODE
+// ---------------------------------------------------------------------
+//   tidak diisi   -> menyala   (aman)
+//   ""            -> menyala   (aman)
+//   "true"        -> menyala
+//   "false"       -> MATI      (seluruh pesanan ikut diproses)
+//
+// Hanya kata "false" yang mematikan. Lupa menyalakan berakibat seluruh
+// transaksi -- termasuk 50 data seeding bernomor acak -- ikut dikirimi
+// pesan; lupa mematikan hanya berakibat pesanan biasa terlewat, dan itu
+// langsung terlihat di log. Karena itu kelalaian diarahkan ke sisi yang
+// lebih aman.
+//
+// ---------------------------------------------------------------------
+// YANG PERLU DIINGAT SAAT FONNTE_NOMOR_UJI DIKOSONGKAN
+// ---------------------------------------------------------------------
+// Pesanan UAT dibuat dengan MENYALIN pesanan lain, termasuk nomornya
+// (lihat api/uat-dummy-booking.js). Jadi nomor tujuannya adalah nomor
+// pesanan asal, bukan nomor penguji. Bila pesanan UAT dibuat dari data
+// seeding, nomor itu acak dan bisa jadi milik orang lain.
+//
+// Aman: buat pesanan UAT dari pesanan yang Anda buat sendiri lewat form
+// pemesanan, dengan nomor WhatsApp Anda sendiri.
 // =====================================================================
+
+/** Awalan order_id yang dibuat api/uat-dummy-booking.js. */
+const AWALAN_ORDER_UAT = 'UAT-';
+
+/** true bila mode uji coba sedang menyala. */
+function modeUjiAktif() {
+  const nilai = String(process.env.UAT_MODE === undefined ? '' : process.env.UAT_MODE)
+    .trim()
+    .toLowerCase();
+
+  // Hanya kata "false" yang mematikan. Selain itu -- termasuk kosong,
+  // tidak diisi, atau salah ketik -- dianggap menyala.
+  return nilai !== 'false';
+}
+
+/** true bila order_id ini milik pesanan uji coba. */
+function pesananUji(orderId) {
+  return String(orderId || '').startsWith(AWALAN_ORDER_UAT);
+}
+
+/**
+ * Keterangan pengaturan yang sedang berlaku, untuk ditulis ke log.
+ * Bukan penolakan -- cron tetap berjalan. Gunanya supaya saat membaca
+ * log jelas terlihat pesan akan mendarat ke mana.
+ */
+function ringkasanPengaturan() {
+  const nomorUji = normalisasiNomor(process.env.FONNTE_NOMOR_UJI);
+
+  const cakupan = modeUjiAktif()
+    ? 'hanya pesanan berawalan "' + AWALAN_ORDER_UAT + '"'
+    : 'SELURUH pesanan yang memenuhi syarat';
+
+  const tujuan = nomorUji
+    ? 'dialihkan ke nomor penguji ' + nomorUji
+    : 'dikirim ke nomor penyewa pada masing-masing pesanan';
+
+  return {
+    modeUji: modeUjiAktif(),
+    pengalihanAktif: !!nomorUji,
+    keterangan: 'Cakupan: ' + cakupan + '. Tujuan: ' + tujuan + '.'
+  };
+}
+
 function tentukanTujuan(nomorAsli) {
   const nomorUji = normalisasiNomor(process.env.FONNTE_NOMOR_UJI);
   const nomorPenyewa = normalisasiNomor(nomorAsli);
 
+  // Pengalihan HANYA bergantung pada FONNTE_NOMOR_UJI, tidak pada
+  // UAT_MODE. Mode uji mempersempit transaksi mana yang diproses, bukan
+  // ke mana pesannya dikirim.
   if (nomorUji) {
     return { tujuan: nomorUji, dialihkan: true, nomorPenyewa: nomorPenyewa };
   }
@@ -233,6 +315,10 @@ function aksesDiizinkan(req) {
 module.exports = {
   ambilFirestore,
   COL_TRANSAKSI,
+  AWALAN_ORDER_UAT,
+  modeUjiAktif,
+  pesananUji,
+  ringkasanPengaturan,
   normalisasiNomor,
   tentukanTujuan,
   kirimWhatsapp,

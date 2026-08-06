@@ -279,7 +279,7 @@ export async function muatKomponen() {
   // Mencocokkan sesi peramban dengan akun di Firestore.
   //
   // Sesi tersimpan di localStorage, akunnya di Firestore. Keduanya bisa
-  // tidak sinkron -- misalnya setelah collection "customers" dihapus
+  // tidak sinkron -- misalnya setelah collection "user" dihapus
   // atau dibuat ulang saat seeding. Bila tidak diperiksa, peramban
   // tetap merasa sudah masuk untuk akun yang sebenarnya tidak ada.
   //
