@@ -100,10 +100,24 @@
                      supaya pengunjung bisa langsung memesan tanpa menggulir
                      melewati deskripsi, fasilitas, dan peta.
                      Di layar besar ia menempati kolom ketiga dan membentang dua
-                     baris, sehingga posisi sticky-nya tetap seperti semula. -->
-                <div class="w-full lg:col-span-1 lg:row-span-2">
+                     baris, sehingga posisi sticky-nya tetap seperti semula.
+
+                     "lg:h-full" penting: kartu di dalamnya memakai position
+                     sticky, dan sticky hanya bisa bergeser sejauh tinggi
+                     pembungkusnya. Tanpa itu pembungkus ini hanya setinggi
+                     kartunya sendiri, sehingga tidak ada ruang untuk menempel
+                     dan kartunya ikut tergulir begitu saja. -->
+                <div class="w-full lg:col-span-1 lg:row-span-2 lg:h-full">
+                    <!-- max-h + overflow-y-auto wajib: kartu ini tingginya
+                         sekitar 757px, sedangkan layar laptop umumnya hanya
+                         ~820px. Dipaku di 100px, ujung bawahnya (Harga Sewa,
+                         Biaya Layanan, Total) jatuh di luar layar dan TIDAK
+                         BISA dijangkau -- digulir pun kartunya memaku ulang.
+                         Dengan batas ini, isi kartu bergulir di dalam dirinya
+                         sendiri saat tidak muat. Kalau layarnya cukup tinggi,
+                         batas ini tidak berpengaruh apa-apa. -->
                     <div
-                        class="sticky top-[100px] bg-surface-canvas border border-border-hairline rounded-3xl p-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+                        class="sticky top-[100px] lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto bg-surface-canvas border border-border-hairline rounded-3xl p-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
                         <div class="mb-lg border-b border-border-hairline pb-lg">
                             <div class="flex items-center gap-xs mb-sm font-body-sm text-[13px] text-ink-secondary">
                                 <span

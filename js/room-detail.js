@@ -50,18 +50,33 @@ function isiTeks(id, nilai) {
   if (elemen) elemen.textContent = nilai;
 }
 
+/**
+ * Menyembunyikan atau menampilkan satu elemen.
+ *
+ * Memakai style.display, bukan kelas "hidden", khusus untuk
+ * #detailKonten. Elemen itu juga memakai kelas "lg:grid", dan aturan di
+ * dalam media query berada lebih belakang pada berkas Tailwind sehingga
+ * "lg:grid" mengalahkan "hidden". Akibatnya mulai lebar 1024px isi
+ * halaman tetap tampil bersamaan dengan tampilan "Memuat data...".
+ *
+ * Nilai '' mengembalikan tampilan ke aturan kelasnya (flex / lg:grid).
+ */
+function aturTampil(elemen, tampil) {
+  if (elemen) elemen.style.display = tampil ? '' : 'none';
+}
+
 function aturLoading(sedangMemuat) {
   const lapisan = document.getElementById('detailLoading');
   const isi = document.getElementById('detailKonten');
   if (lapisan) lapisan.classList.toggle('hidden', !sedangMemuat);
-  if (isi) isi.classList.toggle('hidden', sedangMemuat);
+  aturTampil(isi, !sedangMemuat);
 }
 
 function tampilkanError(judul, keterangan) {
   const lapisan = document.getElementById('detailLoading');
   const isi = document.getElementById('detailKonten');
 
-  if (isi) isi.classList.add('hidden');
+  aturTampil(isi, false);
   if (!lapisan) return;
 
   lapisan.classList.remove('hidden');

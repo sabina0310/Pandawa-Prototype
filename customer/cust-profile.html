@@ -1,195 +1,249 @@
-<!DOCTYPE html><html lang="id" style=""><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Customer Dashboard - Pilar Pandawa</title>
+<!DOCTYPE html>
+<html lang="id" style="">
 
-<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Customer Dashboard - Pilar Pandawa</title>
 
-<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
-<script src="../js/head-bersama.js"></script>
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../js/head-bersama.js"></script>
 </head>
-<body data-halaman="beranda" class="bg-surface-soft min-h-screen flex flex-col md:flex-row font-body-md text-on-surface">
-<!-- SideNavBar (Desktop) -->
-<!-- Sidebar: customer/partials/sidebar.html -->
-<div id="sidebar-placeholder"></div>
-<!-- TopNavBar (Mobile) -->
-<!-- Bilah atas layar kecil: customer/partials/top-bar-mobile.html -->
-<div id="top-bar-mobile-placeholder"></div>
-<!-- Main Content -->
-<main class="flex-1 w-full lg:ml-64 pt-16 lg:pt-0 p-base lg:p-xl max-w-5xl mx-auto flex flex-col gap-lg">
-<!-- Header Section -->
-<div class="flex flex-col gap-sm lg:mt-lg mt-base">
-<h2 class="font-display-xl text-display-xl text-on-surface">Portal Penyewa</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Kelola status hunian dan tagihan Anda dengan mudah.</p>
-</div>
-<!-- Warning Banner -->
-<div class="hidden bg-status-warning/10 border border-status-warning/30 rounded-lg p-base gap-md items-start shadow-sm" id="bannerTenggat">
-<span class="material-symbols-outlined text-status-warning mt-xs" style="font-variation-settings: 'FILL' 1;">warning</span>
-<div>
-<h3 class="font-title-md text-title-md text-status-warning mb-xs">Perhatian</h3>
-<p class="font-body-md text-body-md text-ink-secondary" id="bannerTenggatPesan"></p>
-</div>
-</div>
-<!-- Keterangan pesanan hasil generate untuk pengujian notifikasi.
+
+<body data-halaman="beranda"
+    class="bg-surface-soft min-h-screen flex flex-col md:flex-row font-body-md text-on-surface">
+    <!-- SideNavBar (Desktop) -->
+    <!-- Sidebar: customer/partials/sidebar.html -->
+    <div id="sidebar-placeholder"></div>
+    <!-- TopNavBar (Mobile) -->
+    <!-- Bilah atas layar kecil: customer/partials/top-bar-mobile.html -->
+    <div id="top-bar-mobile-placeholder"></div>
+    <!-- Main Content -->
+    <main class="flex-1 w-full lg:ml-64 pt-16 lg:pt-0 p-base lg:p-xl max-w-5xl mx-auto flex flex-col gap-lg">
+        <!-- Header Section -->
+        <div class="flex flex-col gap-sm lg:mt-lg mt-base">
+            <a class="inline-flex items-center gap-xs font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors no-underline w-fit"
+                href="../index.html">
+                <span class="material-symbols-outlined text-[18px]">home</span>Kembali ke Halaman Utama</a>
+            <h2 class="font-display-xl text-display-xl text-on-surface">Portal Penyewa</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Kelola status hunian dan tagihan Anda dengan
+                mudah.</p>
+        </div>
+        <!-- Warning Banner -->
+        <div class="hidden bg-status-warning/10 border border-status-warning/30 rounded-lg p-base gap-md items-start shadow-sm"
+            id="bannerTenggat">
+            <span class="material-symbols-outlined text-status-warning mt-xs"
+                style="font-variation-settings: 'FILL' 1;">warning</span>
+            <div>
+                <h3 class="font-title-md text-title-md text-status-warning mb-xs">Perhatian</h3>
+                <p class="font-body-md text-body-md text-ink-secondary" id="bannerTenggatPesan"></p>
+            </div>
+        </div>
+        <!-- Keterangan pesanan hasil generate untuk pengujian notifikasi.
      Isinya ditulis js/cust-profile.js, dan hanya tampil bila
      order_id sewa aktif berawalan "UAT-". -->
-<div class="hidden" id="catatanPesananUji"></div>
-<!-- Ditampilkan bila pengguna belum punya sewa aktif -->
-<div class="hidden bg-surface-canvas rounded-lg border border-border-hairline shadow-sm p-xl flex-col items-center text-center gap-sm" id="panelKosong">
-<span class="material-symbols-outlined text-[48px] text-on-surface-variant">bed</span>
-<h3 class="font-title-md text-title-md text-on-surface">Belum ada sewa aktif</h3>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-md" id="panelKosongPesan">Anda belum memiliki sewa yang sedang berjalan.</p>
-<a href="catalogue.html" class="mt-md inline-flex items-center gap-sm bg-primary-container text-on-primary font-button-md text-button-md px-lg py-md rounded-lg hover:brightness-110 transition-all no-underline">
-<span class="material-symbols-outlined text-[20px]">grid_view</span>Cari Kamar Sekarang</a>
-</div>
-<div class="hidden grid-cols-1 lg:grid-cols-12 gap-lg" id="panelSewaAktif">
-<!-- Left Column: Active Booking -->
-<div class="lg:col-span-8 flex flex-col gap-lg" id="kolomKiri">
-<section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm overflow-hidden">
-<div class="h-48 md:h-64 bg-surface-container-high relative">
-<img id="dashFoto" alt="Foto cabang" class="w-full h-full object-cover" data-alt="A modern, clean boarding house room interior viewed from a wide angle, featuring a neatly made bed, a minimalist wooden desk, and soft natural light filtering through a window. The style is bright, professional, and inviting, reflecting a well-managed property." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ6bMuX6afJH01SBsnMx4iHMrrSKCjazrTRvfAUSN7okmBfO3QJcD1hpWarG__6e1EWzOWyMZrkiOC-FI4QH_vHwnfLRQDxVAXQmXqGcv7lVCUuunkg-MtzD_IyJS5G3N12LocDCKKRwLUZCdcu_jWez-T7MUNGCpFUVOb5FoCuEeZNPxIpNHMyEjzVxiOVIvYPzXwi09RP9-zhLzomL8R3nsktDbvrKxHRZJcEryKLyTNtC5StugKE4AeV0pR17lQL4-VN8wToEU">
-<div class="hidden absolute top-sm right-sm bg-status-warning/10 text-status-warning px-sm py-xs rounded-full border border-status-warning/20 items-center gap-xs backdrop-blur-md" id="dashBadgeTenggat">
-<span class="material-symbols-outlined text-[14px]">timer</span>
-<span class="font-badge text-badge" id="dashBadgeTenggatTeks">Mendekati Jatuh Tempo</span>
-</div>
-</div>
-<div class="p-lg">
-<div class="flex justify-between items-start mb-md">
-<div>
-<span class="font-tag-uppercase text-tag-uppercase text-primary-container bg-primary-container/10 px-xs py-[2px] rounded mb-sm inline-block" id="dashTipeSewa">BULANAN</span>
-<h3 class="font-display-lg text-display-lg text-on-surface" id="dashNamaCabang">-</h3>
-<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-xs mt-xs">
-<span class="material-symbols-outlined text-[16px]">location_on</span>
-<span id="dashKamar">-</span>
-</p>
-</div>
-</div>
-<div class="bg-surface-soft p-md rounded-lg border border-border-hairline mt-md flex flex-col md:flex-row md:items-center md:justify-between gap-sm">
-<div>
-<p class="font-label-md text-label-md text-ink-muted mb-xs">Periode Sewa Aktif</p>
-<p class="font-title-md text-title-md text-on-surface flex items-center gap-sm" id="activePeriodText">
-<span class="material-symbols-outlined text-primary-container">calendar_month</span>
-<span id="activePeriodValue">-</span>
-</p>
-</div>
-</div>
-</div>
-<div class="p-lg pt-0 border-t border-border-hairline mt-md" id="formPerpanjangan">
-<h3 class="font-title-md text-title-md text-on-surface mb-md mt-lg">Ajukan Perpanjangan Sewa</h3>
-<div class="space-y-md">
-<div>
-<label class="font-label-md text-label-md text-ink-muted block mb-sm">Pilih Durasi Perpanjangan</label>
-<div class="flex flex-wrap gap-sm">
-<label class="cursor-pointer">
-<input checked="" class="peer sr-only extension-duration" data-months="1" data-price="0" name="duration" type="radio" value="1">
-<div class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
-                                        +1 Bulan
-                                    </div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only extension-duration" data-months="3" data-price="0" name="duration" type="radio" value="3">
-<div class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
-                                        +3 Bulan
-                                    </div>
-</label>
-<label class="cursor-pointer">
-<input class="peer sr-only extension-duration" data-months="6" data-price="0" name="duration" type="radio" value="6">
-<div class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
-                                        +6 Bulan
-                                    </div>
-</label>
-</div>
-</div>
-<div class="pt-sm">
-<label class="font-label-md text-label-md text-ink-muted block mb-xs">Catatan (Opsional)</label>
-<textarea class="w-full rounded-lg border-border-strong focus:border-primary-container focus:ring-1 focus:ring-primary-container p-md font-body-md text-body-md text-on-surface transition-colors" id="extensionNote" placeholder="Tambahkan catatan jika ada..." rows="3"></textarea>
-</div>
-</div>
-</div>
-<!-- Ditampilkan menggantikan formulir setelah penyewa menentukan keputusan -->
-<div class="hidden p-lg border-t border-border-hairline flex-col gap-sm" id="panelKeputusan">
-<div class="flex items-start gap-sm">
-<span class="material-symbols-outlined text-[28px] text-ink-muted" id="panelKeputusanIkon" style="font-variation-settings: 'FILL' 1;">event_busy</span>
-<div>
-<h3 class="font-title-md text-title-md text-on-surface mb-xs" id="panelKeputusanJudul">Keputusan Perpanjangan</h3>
-<p class="font-body-md text-body-md text-on-surface-variant" id="panelKeputusanPesan"></p>
-</div>
-</div>
-</div>
-</section>
-<!-- Extension Form -->
+        <div class="hidden" id="catatanPesananUji"></div>
+        <!-- Ditampilkan bila pengguna belum punya sewa aktif -->
+        <div class="hidden bg-surface-canvas rounded-lg border border-border-hairline shadow-sm p-xl flex-col items-center text-center gap-sm"
+            id="panelKosong">
+            <span class="material-symbols-outlined text-[48px] text-on-surface-variant">bed</span>
+            <h3 class="font-title-md text-title-md text-on-surface">Belum ada sewa aktif</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-md" id="panelKosongPesan">Anda belum
+                memiliki sewa yang sedang berjalan.</p>
+            <a href="catalogue.html"
+                class="mt-md inline-flex items-center gap-sm bg-primary-container text-on-primary font-button-md text-button-md px-lg py-md rounded-lg hover:brightness-110 transition-all no-underline">
+                <span class="material-symbols-outlined text-[20px]">grid_view</span>Cari Kamar Sekarang</a>
+        </div>
+        <div class="hidden grid-cols-1 lg:grid-cols-12 gap-lg" id="panelSewaAktif">
+            <!-- Left Column: Active Booking -->
+            <div class="lg:col-span-8 flex flex-col gap-lg" id="kolomKiri">
+                <section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm overflow-hidden">
+                    <div class="h-48 md:h-64 bg-surface-container-high relative">
+                        <img id="dashFoto" alt="Foto cabang" class="w-full h-full object-cover"
+                            data-alt="A modern, clean boarding house room interior viewed from a wide angle, featuring a neatly made bed, a minimalist wooden desk, and soft natural light filtering through a window. The style is bright, professional, and inviting, reflecting a well-managed property."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ6bMuX6afJH01SBsnMx4iHMrrSKCjazrTRvfAUSN7okmBfO3QJcD1hpWarG__6e1EWzOWyMZrkiOC-FI4QH_vHwnfLRQDxVAXQmXqGcv7lVCUuunkg-MtzD_IyJS5G3N12LocDCKKRwLUZCdcu_jWez-T7MUNGCpFUVOb5FoCuEeZNPxIpNHMyEjzVxiOVIvYPzXwi09RP9-zhLzomL8R3nsktDbvrKxHRZJcEryKLyTNtC5StugKE4AeV0pR17lQL4-VN8wToEU">
+                        <div class="hidden absolute top-sm right-sm bg-status-warning/10 text-status-warning px-sm py-xs rounded-full border border-status-warning/20 items-center gap-xs backdrop-blur-md"
+                            id="dashBadgeTenggat">
+                            <span class="material-symbols-outlined text-[14px]">timer</span>
+                            <span class="font-badge text-badge" id="dashBadgeTenggatTeks">Mendekati Jatuh Tempo</span>
+                        </div>
+                    </div>
+                    <div class="p-lg">
+                        <div class="flex justify-between items-start mb-md">
+                            <div>
+                                <span
+                                    class="font-tag-uppercase text-tag-uppercase text-primary-container bg-primary-container/10 px-xs py-[2px] rounded mb-sm inline-block"
+                                    id="dashTipeSewa">BULANAN</span>
+                                <h3 class="font-display-lg text-display-lg text-on-surface" id="dashNamaCabang">-</h3>
+                                <p
+                                    class="font-body-md text-body-md text-on-surface-variant flex items-center gap-xs mt-xs">
+                                    <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                    <span id="dashKamar">-</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-surface-soft p-md rounded-lg border border-border-hairline mt-md flex flex-col md:flex-row md:items-center md:justify-between gap-sm">
+                            <div>
+                                <p class="font-label-md text-label-md text-ink-muted mb-xs">Periode Sewa Aktif</p>
+                                <p class="font-title-md text-title-md text-on-surface flex items-center gap-sm"
+                                    id="activePeriodText">
+                                    <span class="material-symbols-outlined text-primary-container">calendar_month</span>
+                                    <span id="activePeriodValue">-</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-lg pt-0 border-t border-border-hairline mt-md" id="formPerpanjangan">
+                        <h3 class="font-title-md text-title-md text-on-surface mb-md mt-lg">Ajukan Perpanjangan Sewa
+                        </h3>
+                        <div class="space-y-md">
+                            <div>
+                                <label class="font-label-md text-label-md text-ink-muted block mb-sm">Pilih Durasi
+                                    Perpanjangan</label>
+                                <div class="flex flex-wrap gap-sm">
+                                    <label class="cursor-pointer">
+                                        <input checked="" class="peer sr-only extension-duration" data-months="1"
+                                            data-price="0" name="duration" type="radio" value="1">
+                                        <div
+                                            class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
+                                            +1 Bulan
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only extension-duration" data-months="3" data-price="0"
+                                            name="duration" type="radio" value="3">
+                                        <div
+                                            class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
+                                            +3 Bulan
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only extension-duration" data-months="6" data-price="0"
+                                            name="duration" type="radio" value="6">
+                                        <div
+                                            class="px-lg py-sm rounded-lg border border-border-strong peer-checked:border-primary-container peer-checked:bg-primary-container/5 font-button-md text-button-md text-on-surface-variant peer-checked:text-primary-container transition-all hover:border-outline">
+                                            +6 Bulan
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="pt-sm">
+                                <label class="font-label-md text-label-md text-ink-muted block mb-xs">Catatan
+                                    (Opsional)</label>
+                                <textarea
+                                    class="w-full rounded-lg border-border-strong focus:border-primary-container focus:ring-1 focus:ring-primary-container p-md font-body-md text-body-md text-on-surface transition-colors"
+                                    id="extensionNote" placeholder="Tambahkan catatan jika ada..." rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ditampilkan menggantikan formulir setelah penyewa menentukan keputusan -->
+                    <div class="hidden p-lg border-t border-border-hairline flex-col gap-sm" id="panelKeputusan">
+                        <div class="flex items-start gap-sm">
+                            <span class="material-symbols-outlined text-[28px] text-ink-muted" id="panelKeputusanIkon"
+                                style="font-variation-settings: 'FILL' 1;">event_busy</span>
+                            <div>
+                                <h3 class="font-title-md text-title-md text-on-surface mb-xs" id="panelKeputusanJudul">
+                                    Keputusan Perpanjangan</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant" id="panelKeputusanPesan">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Extension Form -->
 
-</div>
-<!-- Right Column: Billing -->
-<div class="lg:col-span-4 flex flex-col gap-lg" id="kolomTagihan">
-<section class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm p-lg sticky top-24">
-<h3 class="font-title-md text-title-md text-on-surface mb-lg pb-md border-b border-border-hairline">Rincian Tagihan Periode Berikutnya</h3>
-<div class="space-y-md mb-xl">
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-on-surface-variant" id="sewaKamarLabel">Sewa Kamar (1 Bulan)</span>
-<span class="font-title-md text-title-md text-on-surface" id="sewaKamarValue">Rp 500.000</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-on-surface-variant">Biaya Admin</span>
-<span class="font-title-md text-title-md text-on-surface">Rp 0</span>
-</div>
-<div class="pt-md mt-md border-t border-border-hairline border-dashed flex justify-between items-center">
-<span class="font-title-md text-title-md text-on-surface">Total Tagihan</span>
-<span class="font-stat-display text-stat-display text-primary-container" id="totalTagihanValue">Rp 500.000</span>
-</div>
-</div>
-<button id="lanjutkanPembayaranBtn" class="w-full bg-primary-container text-on-primary font-button-md text-button-md py-md px-lg rounded-lg hover:bg-primary-container/90 transition-colors shadow-sm flex justify-center items-center gap-sm">
+            </div>
+            <!-- Right Column: Billing -->
+            <div class="lg:col-span-4 flex flex-col gap-lg" id="kolomTagihan">
+                <section
+                    class="bg-surface-canvas rounded-lg border border-border-hairline shadow-sm p-lg sticky top-24">
+                    <h3 class="font-title-md text-title-md text-on-surface mb-lg pb-md border-b border-border-hairline">
+                        Rincian Tagihan Periode Berikutnya</h3>
+                    <div class="space-y-md mb-xl">
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-md text-body-md text-on-surface-variant" id="sewaKamarLabel">Sewa
+                                Kamar (1 Bulan)</span>
+                            <span class="font-title-md text-title-md text-on-surface" id="sewaKamarValue">Rp
+                                500.000</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-md text-body-md text-on-surface-variant">Biaya Admin</span>
+                            <span class="font-title-md text-title-md text-on-surface">Rp 0</span>
+                        </div>
+                        <div
+                            class="pt-md mt-md border-t border-border-hairline border-dashed flex justify-between items-center">
+                            <span class="font-title-md text-title-md text-on-surface">Total Tagihan</span>
+                            <span class="font-stat-display text-stat-display text-primary-container"
+                                id="totalTagihanValue">Rp 500.000</span>
+                        </div>
+                    </div>
+                    <button id="lanjutkanPembayaranBtn"
+                        class="w-full bg-primary-container text-on-primary font-button-md text-button-md py-md px-lg rounded-lg hover:bg-primary-container/90 transition-colors shadow-sm flex justify-center items-center gap-sm">
                         Lanjutkan Pembayaran
                         <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</button>
-<button id="tidakPerpanjangBtn" class="w-full mt-sm bg-surface-canvas text-error font-button-md text-button-md py-md px-lg rounded-lg border border-error/40 hover:bg-error-container/30 transition-colors flex justify-center items-center gap-sm">
-<span class="material-symbols-outlined text-[20px]">event_busy</span>
+                    </button>
+                    <button id="tidakPerpanjangBtn"
+                        class="w-full mt-sm bg-surface-canvas text-error font-button-md text-button-md py-md px-lg rounded-lg border border-error/40 hover:bg-error-container/30 transition-colors flex justify-center items-center gap-sm">
+                        <span class="material-symbols-outlined text-[20px]">event_busy</span>
                         Saya Tidak Ingin Memperpanjang
                     </button>
-<p class="text-center font-body-sm text-body-sm text-ink-muted mt-md">Pembayaran aman dan terverifikasi otomatis.</p>
-</section>
-</div>
-</div>
-<!-- Bottom spacing for mobile nav -->
-<div class="h-24 lg:hidden"></div>
-</main>
-<!-- BottomNavBar (Mobile) -->
-<!-- Bilah bawah layar kecil: customer/partials/bottom-nav.html -->
-<div id="bottom-nav-placeholder"></div>
+                    <p class="text-center font-body-sm text-body-sm text-ink-muted mt-md">Pembayaran aman dan
+                        terverifikasi otomatis.</p>
+                </section>
+            </div>
+        </div>
+        <!-- Bottom spacing for mobile nav -->
+        <div class="h-24 lg:hidden"></div>
+    </main>
+    <!-- BottomNavBar (Mobile) -->
+    <!-- Bilah bawah layar kecil: customer/partials/bottom-nav.html -->
+    <div id="bottom-nav-placeholder"></div>
 
-<!-- Jendela konfirmasi sebelum menyatakan berhenti menyewa -->
-<div class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-base" id="modalTidakLanjut">
-<div class="bg-surface-canvas rounded-lg border border-border-hairline shadow-lg w-full max-w-md p-lg flex flex-col gap-md">
-<div class="flex items-start gap-sm">
-<span class="material-symbols-outlined text-error text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
-<div>
-<h3 class="font-title-md text-title-md text-on-surface mb-xs">Konfirmasi Tidak Memperpanjang</h3>
-<p class="font-body-md text-body-md text-on-surface-variant" id="modalTidakLanjutPesan"></p>
-</div>
-</div>
-<p class="font-body-sm text-body-sm text-error bg-error-container/40 border border-error/20 rounded-lg p-sm">Keputusan ini bersifat final dan tidak dapat Anda batalkan sendiri. Bila kemudian berubah pikiran, Anda perlu menghubungi admin.</p>
-<p class="hidden font-body-sm text-body-sm text-error" id="modalTidakLanjutError"></p>
-<div class="flex flex-col sm:flex-row gap-sm sm:justify-end">
-<button id="batalTidakLanjutBtn" class="bg-surface-canvas text-on-surface font-button-md text-button-md py-sm px-lg rounded-lg border border-border-strong hover:bg-surface-container-high transition-colors">Batal</button>
-<button id="konfirmasiTidakLanjutBtn" class="bg-error text-on-error font-button-md text-button-md py-sm px-lg rounded-lg hover:brightness-110 transition-all shadow-sm flex justify-center items-center gap-xs">
-<span class="material-symbols-outlined text-[18px]">check</span>Ya, Tidak Perpanjang</button>
-</div>
-</div>
-</div>
+    <!-- Jendela konfirmasi sebelum menyatakan berhenti menyewa -->
+    <div class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-base" id="modalTidakLanjut">
+        <div
+            class="bg-surface-canvas rounded-lg border border-border-hairline shadow-lg w-full max-w-md p-lg flex flex-col gap-md">
+            <div class="flex items-start gap-sm">
+                <span class="material-symbols-outlined text-error text-[28px]"
+                    style="font-variation-settings: 'FILL' 1;">warning</span>
+                <div>
+                    <h3 class="font-title-md text-title-md text-on-surface mb-xs">Konfirmasi Tidak Memperpanjang</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant" id="modalTidakLanjutPesan"></p>
+                </div>
+            </div>
+            <p
+                class="font-body-sm text-body-sm text-error bg-error-container/40 border border-error/20 rounded-lg p-sm">
+                Keputusan ini bersifat final dan tidak dapat Anda batalkan sendiri. Bila kemudian berubah pikiran, Anda
+                perlu menghubungi admin.</p>
+            <p class="hidden font-body-sm text-body-sm text-error" id="modalTidakLanjutError"></p>
+            <div class="flex flex-col sm:flex-row gap-sm sm:justify-end">
+                <button id="batalTidakLanjutBtn"
+                    class="bg-surface-canvas text-on-surface font-button-md text-button-md py-sm px-lg rounded-lg border border-border-strong hover:bg-surface-container-high transition-colors">Batal</button>
+                <button id="konfirmasiTidakLanjutBtn"
+                    class="bg-error text-on-error font-button-md text-button-md py-sm px-lg rounded-lg hover:brightness-110 transition-all shadow-sm flex justify-center items-center gap-xs">
+                    <span class="material-symbols-outlined text-[18px]">check</span>Ya, Tidak Perpanjang</button>
+            </div>
+        </div>
+    </div>
 
-<!-- Sapaan & tombol keluar pada sidebar -->
-<script type="module" src="../js/customer-sidebar.js"></script>
-<script type="module">
-    import { siapkanSidebar } from "../js/customer-sidebar.js";
-    siapkanSidebar(true);
-</script>
+    <!-- Sapaan & tombol keluar pada sidebar -->
+    <script type="module" src="../js/customer-sidebar.js"></script>
+    <script type="module">
+        import { siapkanSidebar } from "../js/customer-sidebar.js";
+        siapkanSidebar(true);
+    </script>
 
-<!-- Menyambungkan dashboard ini ke data Firestore -->
-<script type="module" src="../js/cust-profile.js"></script>
+    <!-- Menyambungkan dashboard ini ke data Firestore -->
+    <script type="module" src="../js/cust-profile.js"></script>
 
 
-<!-- Sidebar, bilah atas, dan bilah bawah dari customer/partials/ -->
-<script type="module" src="../js/komponen.js"></script>
+    <!-- Sidebar, bilah atas, dan bilah bawah dari customer/partials/ -->
+    <script type="module" src="../js/komponen.js"></script>
 
-</body></html>
+</body>
+
+</html>

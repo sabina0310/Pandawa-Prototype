@@ -20,6 +20,10 @@
  *              ditambah durasi, dan kolomnya dikunci supaya tidak ada
  *              dua sumber kebenaran.
  *
+ * Di layar kecil panelnya bisa dilipat dan dimulai dalam keadaan
+ * tertutup, supaya daftar cabang langsung terlihat. Mulai md panel
+ * selalu terbuka dan menempel saat digulir, seperti semula.
+ *
  * Yang benar-benar menyaring daftar cabang hanyalah "Pilih Cabang".
  * Tipe sewa tidak membedakan cabang, karena setiap kamar bisa disewa
  * harian maupun bulanan; sedangkan penyaringan tanggal memerlukan data
@@ -371,6 +375,30 @@ if (pilihanDurasi) {
 document.querySelectorAll('input[name="rentalType"]').forEach(function (radio) {
   radio.addEventListener('change', gantiTipeSewa);
 });
+
+// ---------------------------------------------------------------------
+// PANEL FILTER YANG BISA DILIPAT DI LAYAR KECIL
+// ---------------------------------------------------------------------
+// Panel filter cukup tinggi (cabang, tipe sewa, dua tanggal, durasi,
+// tombol). Bila selalu terbuka, pengunjung ponsel membuka katalog dan
+// belum melihat satu cabang pun sebelum menggulir melewati seluruh
+// panel. Karena itu di layar kecil panel dimulai dalam keadaan tertutup.
+//
+// Mulai md panel selalu terbuka: kelas "md:flex" berada di dalam media
+// query sehingga menang atas "hidden", berapa pun keadaan tombolnya.
+// Jadi tombol ini tidak mengubah apa pun di layar besar.
+const tombolLipatFilter = document.getElementById('tombolLipatFilter');
+const isiFilter = document.getElementById('isiFilter');
+const ikonLipatFilter = document.getElementById('ikonLipatFilter');
+
+if (tombolLipatFilter && isiFilter) {
+  tombolLipatFilter.addEventListener('click', function () {
+    const terbuka = !isiFilter.classList.toggle('hidden');
+
+    tombolLipatFilter.setAttribute('aria-expanded', terbuka ? 'true' : 'false');
+    if (ikonLipatFilter) ikonLipatFilter.classList.toggle('rotate-180', terbuka);
+  });
+}
 
 if (tombolFilter) {
   tombolFilter.addEventListener('click', terapkanFilter);

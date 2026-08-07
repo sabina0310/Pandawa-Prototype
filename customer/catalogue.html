@@ -20,10 +20,30 @@
     <script type="module" src="../js/customer-topnav.js"></script>
     <main class="max-w-7xl mx-auto px-lg py-section grid grid-cols-1 md:grid-cols-12 gap-lg items-start">
         <!-- Left Column (Sidebar Filter) -->
+        <!-- "sticky" sengaja dibatasi md ke atas. Di layar kecil tata letaknya
+             jatuh menjadi satu kolom, sehingga panel yang dipaku justru
+             bertumpuk dengan daftar cabang di bawahnya.
+
+             max-h + overflow-y-auto menjaga panel tidak pernah lebih tinggi
+             daripada layar. Panel ini bertambah tinggi saat tipe sewa Bulanan
+             dipilih (kolom Durasi Sewa muncul); tanpa batas ini, di laptop
+             berlayar pendek ujung bawahnya -- termasuk tombol Terapkan
+             Filter -- jatuh di luar layar dan tidak bisa dijangkau. -->
         <aside
-            class="md:col-span-3 bg-surface-canvas rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] p-base sticky top-24">
-            <h2 class="font-display-md text-display-md text-ink-primary mb-base">Filter Kamar</h2>
-            <div class="flex flex-col gap-base">
+            class="md:col-span-3 bg-surface-canvas rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] p-base md:sticky md:top-24 md:max-h-[calc(100vh-8rem)] md:overflow-y-auto">
+            <!-- Judul sekaligus tombol buka/tutup panel di layar kecil.
+                 Mulai md tombolnya dimatikan (pointer-events-none) dan
+                 tanda panahnya disembunyikan, sehingga tampil sebagai
+                 judul biasa persis seperti sebelumnya. -->
+            <button type="button" id="tombolLipatFilter" aria-expanded="false" aria-controls="isiFilter"
+                class="w-full flex items-center justify-between gap-sm text-left md:pointer-events-none">
+                <h2 class="font-display-md text-display-md text-ink-primary">Filter Kamar</h2>
+                <span id="ikonLipatFilter"
+                    class="material-symbols-outlined text-ink-muted transition-transform duration-200 md:hidden">expand_more</span>
+            </button>
+            <!-- "hidden md:flex": tertutup di layar kecil, selalu terbuka
+                 mulai md karena aturan media query menang atas hidden -->
+            <div class="hidden md:flex flex-col gap-base mt-base" id="isiFilter">
                 <!-- Branch Dropdown -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-ink-muted">Pilih Cabang</label>
