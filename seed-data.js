@@ -197,8 +197,20 @@ function mundurDurasi(tanggalAkhir, tipeSewa, durasi) {
   return hasil;
 }
 
+/**
+ * Nomor kontak penyewa utama.
+ *
+ * Bentuknya dibuat sama persis dengan pesanan sungguhan, yaitu
+ * "+62 " diikuti angka tanpa pemisah apa pun -- lihat js/customer-data.js
+ * pada baris pembentuk "kontak_penyewa". Sebelumnya seeder memakai tanda
+ * hubung ("+62 812-3456-7890"), sehingga data hasil seeding berbeda
+ * bentuk dari data yang lahir dari form pemesanan.
+ *
+ * Angkanya memakai buatWaTanpaAwalan() yang sama dengan penghuni
+ * tambahan, supaya hanya ada SATU sumber bentuk nomor di berkas ini.
+ */
 function buatKontakDummy() {
-  return "+62 " + acakAngka(811, 859) + "-" + acakAngka(1000, 9999) + "-" + acakAngka(1000, 9999);
+  return "+62 " + buatWaTanpaAwalan();
 }
 
 // NIK dummy 16 digit. Dibuat asal-asalan (bukan NIK asli siapa pun),
@@ -229,7 +241,8 @@ function buatNikDummy() {
 //   2. "whatsapp" disimpan TANPA awalan +62, karena pada form angka
 //      "+62" hanyalah hiasan di sebelah kiri kotak isian. Ini berbeda
 //      dengan "kontak_penyewa" milik penyewa utama yang memang memakai
-//      awalan "+62 ".
+//      awalan "+62 ". Selain awalan itu, deret angkanya sama -- keduanya
+//      dibuat buatWaTanpaAwalan(), tanpa tanda hubung.
 //
 // Sewa harian tidak pernah punya penghuni tambahan, tetapi tetap diberi
 // array kosong agar bentuk datanya seragam untuk kedua tipe sewa.
@@ -747,6 +760,169 @@ function buatDataTransaksi(daftarKamar) {
 }
 
 // =====================================================================
+// BAGIAN 6A2 - MEMBUAT DATA COLLECTION "log_notifikasi"
+// ---------------------------------------------------------------------
+// MENGAPA INI PERLU
+//
+// api/cron.js mencari penyewa yang perlu diingatkan lewat WhatsApp:
+//
+//   job bulanan -> sewa bulanan yang check-out TEPAT 7 hari lagi
+//   job harian  -> sewa harian yang check-out HARI INI
+//
+// Data hasil seeding SENGAJA dibuat memenuhi kedua syarat itu (lihat
+// JUMLAH_TEPAT_H7 dan JUMLAH_HARIAN_HARI_INI), supaya ada bahan uji.
+// Akibatnya, begitu cron menyala ia akan benar-benar MENGIRIM WhatsApp
+// ke nomor-nomor dummy tersebut -- nomor yang boleh jadi milik orang
+// lain yang tidak ada hubungannya dengan proyek ini.
+//
+// CARA MENCEGAHNYA
+//
+// Cron sudah punya pencegah kirim ganda: sebelum mengirim, ia memeriksa
+// apakah dokumen ber-ID {order_id}_{jenis}_{tanggal} sudah ada di
+// collection "log_notifikasi". Sudah ada -> dilewati.
+//
+// Jadi seeder cukup menuliskan dokumen log itu LEBIH DULU. Cron akan
+// menganggap notifikasinya sudah pernah dikirim hari ini, lalu melewati
+// penyewa tersebut tanpa mengirim apa pun.
+//
+// Cukup untuk tanggal hari ini saja, karena besok kedua kelompok itu
+// tidak lagi memenuhi syarat: yang H-7 berubah menjadi H-6, dan yang
+// check-out hari ini tanggalnya sudah lewat.
+//
+// Catatan kejujuran data: status dicatat "dilewati", BUKAN "berhasil".
+// Tidak ada pesan yang pernah dikirim, jadi log ini tidak boleh mengaku
+// sebagai bukti pengiriman. Field "sumber" menandainya sebagai data
+// seeding agar mudah dibedakan dari log cron yang sungguhan.
+// =====================================================================
+
+const COL_LOG = "log_notifikasi";
+
+// Harus sama dengan HARI_SEBELUM_JATUH_TEMPO pada api/cron.js
+const HARI_SEBELUM_JATUH_TEMPO = 7;
+
+const JUDUL_LOG = {
+  bulanan: "Pengingat Jatuh Tempo (H-" + HARI_SEBELUM_JATUH_TEMPO + ")",
+  harian: "Pengingat Check-out Hari Ini"
+};
+
+const NAMA_BULAN = [
+  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+  "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+];
+
+/** "5 Agustus 2026" -- sama dengan formatTanggal() di api/_notifikasi-lib.js */
+function tanggalPanjang(tanggal) {
+  return tanggal.getDate() + " " + NAMA_BULAN[tanggal.getMonth()] + " " + tanggal.getFullYear();
+}
+
+/** "2026-08-05" -- sama dengan kunciTanggal() di api/cron.js */
+function kunciTanggal(tanggal) {
+  const bulan = String(tanggal.getMonth() + 1).padStart(2, "0");
+  const hari = String(tanggal.getDate()).padStart(2, "0");
+  return tanggal.getFullYear() + "-" + bulan + "-" + hari;
+}
+
+/**
+ * Document ID log. Polanya HARUS sama persis dengan idLog() di
+ * api/cron.js -- kalau berbeda satu huruf pun, cron tidak akan
+ * mengenalinya dan tetap mengirim pesan.
+ */
+function idLog(orderId, jenis, tanggal) {
+  return orderId + "_" + jenis + "_" + kunciTanggal(tanggal);
+}
+
+/** Dua tanggal jatuh pada hari kalender yang sama. */
+function samaHari(a, b) {
+  return a.getFullYear() === b.getFullYear() &&
+         a.getMonth() === b.getMonth() &&
+         a.getDate() === b.getDate();
+}
+
+/**
+ * Menentukan apakah sebuah transaksi akan diproses cron hari ini,
+ * dan oleh job yang mana.
+ *
+ * Syaratnya ditiru dari kueri Firestore pada api/cron.js. Sengaja
+ * diperiksa dari ISI transaksinya, bukan dari nomor urut perulangan
+ * pembuatnya -- sebab tanggal check-out sebagian transaksi diacak
+ * (acakAngka(1, 7)) dan bisa saja kebetulan jatuh tepat 7 hari lagi.
+ *
+ * @returns {"bulanan"|"harian"|null}
+ */
+function jenisKandidatCron(transaksi, hariIni) {
+  if (transaksi.transaction_status !== "settlement") return null;
+  if (transaksi.status_checkin !== "checked_in") return null;
+  if (!transaksi.tanggal_checkout) return null;
+
+  const keluar = transaksi.tanggal_checkout.toDate();
+
+  if (transaksi.tipe_sewa === "bulanan") {
+    // Penyewa yang sudah menjawab tidak perlu diingatkan lagi
+    if (transaksi.status_perpanjangan !== "belum") return null;
+
+    const tenggat = new Date(hariIni);
+    tenggat.setDate(tenggat.getDate() + HARI_SEBELUM_JATUH_TEMPO);
+    return samaHari(keluar, tenggat) ? "bulanan" : null;
+  }
+
+  if (transaksi.tipe_sewa === "harian") {
+    return samaHari(keluar, hariIni) ? "harian" : null;
+  }
+
+  return null;
+}
+
+/**
+ * Membuat dokumen log penahan untuk setiap transaksi yang hari ini
+ * akan diproses cron.
+ *
+ * Bentuk dokumennya mengikuti yang ditulis prosesSatu() di api/cron.js,
+ * supaya panel notifikasi admin nanti bisa membacanya tanpa perlakuan
+ * khusus.
+ */
+function buatDataLogNotifikasi(daftarTransaksi) {
+  const hariIni = new Date();
+  const daftar = [];
+
+  daftarTransaksi.forEach(function (transaksi) {
+    const jenis = jenisKandidatCron(transaksi, hariIni);
+    if (!jenis) return;
+
+    const keluar = transaksi.tanggal_checkout.toDate();
+
+    daftar.push({
+      _id: idLog(transaksi.order_id, jenis, hariIni),
+
+      order_id: transaksi.order_id,
+      jenis: jenis,
+      judul: JUDUL_LOG[jenis],
+      ringkasan: "Sewa " + transaksi.nama_penyewa + " berakhir " + tanggalPanjang(keluar),
+
+      nama_penyewa: transaksi.nama_penyewa,
+      cabang_id: transaksi.cabang_id,
+      kamar_id: transaksi.kamar_id || null,
+
+      // Tidak ada nomor tujuan karena memang tidak ada yang dikirim
+      kontak_tujuan: null,
+      dialihkan: false,
+
+      waktu_kirim: Timestamp.fromDate(hariIni),
+      status: "dilewati",
+      keterangan: "Data seeding: notifikasi sengaja ditahan agar cron " +
+                  "tidak mengirim WhatsApp ke nomor dummy.",
+      pesan: "(tidak ada pesan yang dikirim)",
+
+      // Sudah dianggap terbaca supaya tidak menumpuk sebagai
+      // pemberitahuan baru di panel admin
+      dibaca: true,
+      sumber: "seed"
+    });
+  });
+
+  return daftar;
+}
+
+// =====================================================================
 // BAGIAN 6B - MEMBUAT DATA COLLECTION "user"
 // ---------------------------------------------------------------------
 // Hanya akun pengelola yang dibuat di sini. Akun penyewa TIDAK dibuat
@@ -865,6 +1041,11 @@ export async function jalankanSeeding(tulisLog, paksa) {
   const dataTransaksi = buatDataTransaksi(dataKamar);
   const dataUser = await buatDataUser();
 
+  // Penahan agar cron tidak mengirim WhatsApp ke nomor dummy.
+  // Harus dibuat SETELAH dataTransaksi, karena isinya diturunkan
+  // dari transaksi mana yang hari ini memenuhi syarat cron.
+  const dataLog = buatDataLogNotifikasi(dataTransaksi);
+
   const kamarTerisi = dataKamar.filter(function (k) { return !k.tersedia; }).length;
 
   tulisLog("  - " + dataCabang.length + " cabang");
@@ -884,6 +1065,7 @@ export async function jalankanSeeding(tulisLog, paksa) {
   tulisLog("      " + denganAnggota.length + " di antaranya punya penghuni tambahan (" +
            totalAnggota + " orang)");
   tulisLog("  - " + dataUser.length + " akun pengelola");
+  tulisLog("  - " + dataLog.length + " log notifikasi penahan (agar cron tidak mengirim)");
 
   // --- Langkah 3: tulis ketiga collection ---
   tulisLog("");
@@ -906,6 +1088,23 @@ export async function jalankanSeeding(tulisLog, paksa) {
   await tulisCollection(COL_USER, dataUser);
   tulisLog("  Selesai: " + dataUser.length + " dokumen (hanya akun pengelola).");
   tulisLog("  Akun penyewa yang sudah terdaftar tidak tersentuh.");
+
+  tulisLog("");
+  tulisLog("Menulis collection 'log_notifikasi'...");
+
+  if (dataLog.length === 0) {
+    tulisLog("  Tidak ada transaksi yang hari ini memenuhi syarat cron.");
+  } else {
+    await tulisCollection(COL_LOG, dataLog);
+    tulisLog("  Selesai: " + dataLog.length + " dokumen penahan.");
+    dataLog.forEach(function (l) {
+      tulisLog("    - " + l.order_id + " (" + l.jenis + ") -> " + l.nama_penyewa);
+    });
+    tulisLog("  Cron akan menganggap penyewa ini sudah dikirimi hari ini,");
+    tulisLog("  sehingga tidak ada WhatsApp yang terkirim ke nomor dummy.");
+    tulisLog("  Berlaku untuk HARI INI saja -- besok mereka sudah tidak");
+    tulisLog("  memenuhi syarat cron, jadi tidak perlu penahan lagi.");
+  }
 
   // --- Langkah 4: ringkasan untuk pemeriksaan ---
   const ringkasanStatus = {};
@@ -968,6 +1167,7 @@ export async function jalankanSeeding(tulisLog, paksa) {
     jumlahCabang: dataCabang.length,
     jumlahKamar: dataKamar.length,
     jumlahTransaksi: dataTransaksi.length,
-    jumlahUser: dataUser.length
+    jumlahUser: dataUser.length,
+    jumlahLog: dataLog.length
   };
 }
