@@ -33,8 +33,16 @@
                  Layar kecil : satu kolom bertumpuk, jaraknya gap-section (64px)
                                supaya seirama dengan jarak antar bagian di dalamnya.
                  Layar besar : grid 3 kolom, jarak antar kolom gap-xl (32px). -->
-            <div class="max-w-7xl mx-auto px-base lg:px-xl flex flex-col gap-section lg:grid lg:grid-cols-3 lg:gap-xl hidden"
-                id="detailKonten">
+            <!-- Disembunyikan lewat style, BUKAN kelas "hidden".
+                 Elemen ini memakai dua utilitas display sekaligus (flex di
+                 layar kecil, lg:grid di layar besar). Kelas "hidden" hanya
+                 mengalahkan "flex"; ia KALAH oleh "lg:grid" yang berada di
+                 dalam media query. Akibatnya dulu isi halaman tersembunyi
+                 di ponsel tetapi tetap tampil di desktop.
+                 js/room-detail.js mengembalikannya dengan style.display = ''
+                 sehingga aturan kelas berlaku lagi di kedua ukuran layar. -->
+            <div class="max-w-7xl mx-auto px-base lg:px-xl flex flex-col gap-section lg:grid lg:grid-cols-3 lg:gap-xl"
+                id="detailKonten" style="display: none">
                 <!-- Bagian atas kolom kiri: judul, foto utama, dan galeri -->
                 <div class="w-full flex flex-col gap-section lg:col-span-2">
                     <!-- Hero Info & Image -->
@@ -67,29 +75,48 @@
                     <!-- Secondary Images Grid -->
                     <div>
                         <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary">Gallery</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-md">
-                            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                        <!-- Layar kecil : digeser ke samping (scroll-snap), seluruh
+                                          foto bisa dijangkau. Lebar tiap foto 78%
+                                          supaya foto berikutnya mengintip sedikit
+                                          di tepi kanan -- itulah petunjuk bahwa
+                                          galerinya masih bisa digeser.
+                                          "-mx-base px-base" membuat fotonya bisa
+                                          menggeser sampai tepi layar.
+                             Layar besar : kembali menjadi grid tiga kolom seperti
+                                          semula, tanpa geser.
+                             Tidak memakai kelas "hidden" di mana pun, supaya
+                                          penyembunyian oleh js/room-detail.js
+                                          (saat foto tidak ada) tetap bekerja di
+                                          semua lebar layar. -->
+                        <div class="flex gap-md overflow-x-auto snap-x snap-mandatory -mx-base px-base pb-sm
+                                    md:grid md:grid-cols-3 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
+                            <div class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
                                 <img id="detailFoto1" alt="Bathroom Photo"
                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                                     data-alt="A close-up shot of a modern, clean private bathroom in a boarding house. The bathroom features contemporary white tiles, a sleek glass shower enclosure, and a modern vanity. The lighting is bright and hygienic, conveying a high standard of cleanliness and organized management."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEFFLagTOIkC7-l80J5zNM1tApcC_oU0aZbrNjDcMZx2HIP6J7CpW4j-boxs2Ug9jvBH3sgT_fSQmN_Yz56NRP4DZtq5ifSckNJA-0LPsz56fAMrMFZEsvjjS5PmxGWC_hhGwbDcqG9MvXxAYelH-O0S2MKH9Y-kt2oA2f9JghRKg7dfc34OCGiiqbNVVK2o0-iEn7fBwtiPtugxUJXhiIjrkXPikg6tCvRiN3g5lMJlbWHG-i6bkO4LTDpHA8mHYMP-lRQszkE-c">
                             </div>
-                            <div class="rounded-2xl overflow-hidden aspect-[4/3]">
+                            <div class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
                                 <img id="detailFoto2" alt="Desk Area Photo"
                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                                     data-alt="A detailed shot of a study area within a modern boarding house room. The image shows a minimalist wooden desk with a comfortable chair, a small desk lamp, and a window in the background. The scene is organized and functional, reflecting a reliable living space."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu2BfkFv2l6PEtKBSteWMf7-lMhMyUq4WceSTd4LQ0orYwaROZNJKf2mujRHX328lpyimVCjp4zY3f-Y-fy7YfkZz3aBzd4k5uy9-kaw283dmnNZO-AkarqL2iPqy1je6yVPzCPVAAYaxBWUfEBvXPm6k5Nbuna8f_48dPzGSi-BailWxwGCp9p8MAXoPurI6BhcxPH9l_JkgxbiiuYwHkBdZKhZoi7nlKwed9ctda0pxlmFb16Kl_TfUrblffghlFU7TPr0ExCic">
                             </div>
+                            <!-- Dulu bertanda "hidden md:block" sehingga foto ini
+                                 tidak pernah muncul di ponsel. Kelas itu dibuang
+                                 agar seluruh foto ikut tergeser di galeri.
+                                 Efek redup (brightness-75) juga dibuang: dulu
+                                 dipakai sebagai latar tulisan "lihat semua" yang
+                                 kini sudah tidak ada, sehingga foto ini tampak
+                                 lebih gelap daripada dua foto lainnya tanpa
+                                 alasan. -->
                             <div
-                                class="rounded-2xl overflow-hidden aspect-[4/3] relative group cursor-pointer hidden md:block">
+                                class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
                                 <img id="detailFoto3" alt="Storage Area Photo"
-                                    class="w-full h-full object-cover brightness-75 group-hover:brightness-50 transition-all duration-500"
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                                     data-alt="An interior shot showing the wardrobe and storage area of a modern boarding house room. The design is sleek with built-in wooden cabinets against a clean white wall. The image implies efficient use of space and a well-managed property."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSICCGQQTtOciw7ggua5XOHIHxHETRF8b5okTTAg8oNKted16JuoLqKjTNL1AG8oXKo_bh7CYXZnFRjthps5U__ZwF-0yE16NwXznu5RxqfF_QSLiLUJrrHKhCBik8tS1wXEYksORkaFIYOwc6oBZqP92yQt7H7BkLsroByxOOuNkGZOw35zIGW7W4slPPjBNA1RkwflAnVaD9g_AH13_gHyTJm-JNpv7jp--6C4uPb-EPaC-5AdZK9LcX6Xh3cTxkpBljmq_HGJo">
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center text-white font-title-md text-title-md z-10">
-                                    Galeri Cabang
-                                </div>
+
                             </div>
                         </div>
                     </div>

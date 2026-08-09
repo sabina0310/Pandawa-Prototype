@@ -53,13 +53,20 @@ function isiTeks(id, nilai) {
 /**
  * Menyembunyikan atau menampilkan satu elemen.
  *
- * Memakai style.display, bukan kelas "hidden", khusus untuk
- * #detailKonten. Elemen itu juga memakai kelas "lg:grid", dan aturan di
- * dalam media query berada lebih belakang pada berkas Tailwind sehingga
- * "lg:grid" mengalahkan "hidden". Akibatnya mulai lebar 1024px isi
- * halaman tetap tampil bersamaan dengan tampilan "Memuat data...".
+ * Khusus untuk #detailKonten, kelas "hidden" TIDAK bisa dipakai. Elemen
+ * itu menyandang dua utilitas display sekaligus:
  *
- * Nilai '' mengembalikan tampilan ke aturan kelasnya (flex / lg:grid).
+ *     flex      -> layar kecil, satu kolom bertumpuk
+ *     lg:grid   -> layar besar, tiga kolom
+ *
+ * Kelas "hidden" hanya mengalahkan "flex". Terhadap "lg:grid" ia KALAH,
+ * karena aturan di dalam media query berada lebih belakang pada berkas
+ * Tailwind. Jadi "hidden" menyembunyikan isi halaman di ponsel sekaligus
+ * gagal menyembunyikannya di desktop -- salah di kedua sisi.
+ *
+ * style.display lebih kuat daripada kelas mana pun, sehingga bekerja
+ * sama di semua lebar layar. Nilai '' melepas paksaan itu dan
+ * mengembalikan tampilan ke aturan kelasnya (flex atau lg:grid).
  */
 function aturTampil(elemen, tampil) {
   if (elemen) elemen.style.display = tampil ? '' : 'none';
