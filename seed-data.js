@@ -333,6 +333,64 @@ function hitungNominal(cabang, tipeSewa, durasi) {
 }
 
 // =====================================================================
+// BAGIAN 3C - FOTO KOS
+// ---------------------------------------------------------------------
+// Seluruh foto diambil dari folder img/kos, bukan lagi dari layanan
+// gambar acak di internet.
+//
+//   FOTO_UTAMA_CABANG -> tampak depan tiap cabang, dipasangkan tetap
+//                        berdasarkan id cabangnya
+//   FOTO_GALERI       -> kolam foto bagian dalam kos. Tiap cabang
+//                        mengambil tiga di antaranya secara acak
+//
+// Alamatnya ROOT-RELATIVE (diawali "/"), bukan relatif biasa. Nilai
+// yang sama ini dibaca dari tiga kedalaman folder yang berbeda:
+//
+//     index.html              -> akar proyek
+//     customer/room-detail.html
+//     customer/order/step-1.html
+//
+// Alamat seperti "img/kos/..." atau "../img/kos/..." pasti patah di
+// salah satu di antaranya, sedangkan "/img/kos/..." selalu dihitung
+// dari akar situs -- benar baik di server lokal maupun di Vercel.
+//
+// Berkasnya berformat .webp hasil pengecilan dari PNG aslinya (lebar
+// 1600px). PNG aslinya tetap ada di folder yang sama tetapi tidak ikut
+// di-commit; lihat .gitignore.
+// =====================================================================
+
+const FOTO_UTAMA_CABANG = {
+  "gangnam-kos": "/img/kos/cabang-1.webp",
+  "pelangi-kos": "/img/kos/cabang-2.webp",
+  "seleb-kos": "/img/kos/cabang-3.webp",
+  "pesona-kos": "/img/kos/cabang-4.webp"
+};
+
+// Sengaja TIDAK memuat berkas ber-nama "cabang-...", karena foto itu
+// tampak depan bangunan dan sudah dipakai sebagai foto utama.
+const FOTO_GALERI = [
+  "/img/kos/dapur.webp",
+  "/img/kos/kamar-mandi.webp",
+  "/img/kos/kamar-tidur-1.webp",
+  "/img/kos/kamar-tidur-2.webp",
+  "/img/kos/meja-kerja.webp",
+  "/img/kos/parkir.webp",
+  "/img/kos/ruang-tamu.webp"
+];
+
+// Banyaknya foto galeri per cabang. Mengikuti jumlah slot yang tersedia
+// di customer/room-detail.html (detailFoto1 sampai detailFoto3).
+const JUMLAH_FOTO_GALERI = 3;
+
+/**
+ * Memilih beberapa foto galeri secara acak TANPA pengulangan, supaya
+ * satu cabang tidak menampilkan foto yang sama dua kali.
+ */
+function pilihFotoGaleri() {
+  return acakUrutan(FOTO_GALERI.slice()).slice(0, JUMLAH_FOTO_GALERI);
+}
+
+// =====================================================================
 // BAGIAN 4 - MEMBUAT DATA COLLECTION "cabang"
 // =====================================================================
 function buatDataCabang() {
@@ -342,12 +400,8 @@ function buatDataCabang() {
       nama_cabang: cabang.nama_cabang,
       alamat: cabang.alamat,
       deskripsi: cabang.deskripsi,
-      gambar_url: "https://picsum.photos/seed/" + cabang.id + "/800/600",
-      galeri_foto: [
-        "https://picsum.photos/seed/" + cabang.id + "-1/600/450",
-        "https://picsum.photos/seed/" + cabang.id + "-2/600/450",
-        "https://picsum.photos/seed/" + cabang.id + "-3/600/450"
-      ],
+      gambar_url: FOTO_UTAMA_CABANG[cabang.id],
+      galeri_foto: pilihFotoGaleri(),
       maps_url: cabang.maps_url,
       fasilitas_umum: cabang.fasilitas_umum,
       fasilitas_kamar: cabang.fasilitas_kamar,

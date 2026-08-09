@@ -12,3 +12,10 @@ node_modules/
 # File sistem
 Thumbs.db
 .DS_Store
+
+# Foto kos versi asli (PNG 7-11 MB per berkas, total ~87 MB).
+# Yang dipakai situs adalah versi .webp di folder yang sama -- lebar
+# 1600px, sekitar 40-300 KB, total 1,3 MB. Versi PNG sengaja tidak ikut
+# di-commit supaya repo dan hasil deploy tetap ringan; berkasnya tetap
+# ada di komputer bila sewaktu-waktu perlu dikecilkan ulang.
+img/kos/*.png
