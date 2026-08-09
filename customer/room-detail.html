@@ -68,8 +68,7 @@
                         <div class="w-full rounded-[2rem] overflow-hidden aspect-[16/10] md:aspect-[21/9]">
                             <img id="detailFotoUtama"
                                 alt="A professional, high-fidelity photograph of a modern, minimal boarding room interior with a comfortable bed, a desk area, and warm lighting."
-                                class="w-full h-full object-cover"
-                                src="/img/kos/cabang-1.webp">
+                                class="w-full h-full object-cover" src="/img/kos/cabang-1.webp">
                         </div>
                     </div>
                     <!-- Secondary Images Grid -->
@@ -90,13 +89,15 @@
                                           semua lebar layar. -->
                         <div class="flex gap-md overflow-x-auto snap-x snap-mandatory -mx-base px-base pb-sm
                                     md:grid md:grid-cols-3 md:overflow-visible md:mx-0 md:px-0 md:pb-0">
-                            <div class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
+                            <div
+                                class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
                                 <img id="detailFoto1" alt="Bathroom Photo"
                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                                     data-alt="A close-up shot of a modern, clean private bathroom in a boarding house. The bathroom features contemporary white tiles, a sleek glass shower enclosure, and a modern vanity. The lighting is bright and hygienic, conveying a high standard of cleanliness and organized management."
                                     src="/img/kos/kamar-mandi.webp">
                             </div>
-                            <div class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
+                            <div
+                                class="snap-start shrink-0 basis-[78%] md:basis-auto rounded-2xl overflow-hidden aspect-[4/3]">
                                 <img id="detailFoto2" alt="Desk Area Photo"
                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                                     data-alt="A detailed shot of a study area within a modern boarding house room. The image shows a minimalist wooden desk with a comfortable chair, a small desk lamp, and a window in the background. The scene is organized and functional, reflecting a reliable living space."
@@ -335,6 +336,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Fasilitas Umum Cabang -->
+                    <div>
+                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
+                            Fasilitas Umum Cabang</h2>
+                        <div class="flex flex-wrap gap-md justify-center md:justify-start" id="detailFasilitasUmum">
+                        </div>
+                    </div>
                     <!-- Map Section -->
                     <div>
                         <h2 id="detailJudulLokasi"
@@ -342,10 +350,14 @@
                             Lokasi Cabang Utama</h2>
                         <div
                             class="w-full h-[400px] bg-surface-soft rounded-2xl border border-border-hairline overflow-hidden relative shadow-sm flex items-center justify-center">
-                            <img alt="Map Location" class="w-full h-full object-cover"
-                                data-alt="A stylized Google Maps interface showing the location of a boarding house in Jakarta. The map uses a clean, light mode corporate aesthetic with subtle gray and soft blue tones. A primary blue map pin marker is centrally located to denote 'Cabang Utama'. The surrounding streets are clearly visible in a modern, flat vector style."
-                                data-location="Jakarta"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp3O1coS3e2KPXNw4Y3CAVTy_Ks_eE1rqXxQqUAGKcy4ueX6IXfBbfhSjVYuyVwvaPnlQvEJcNafnsWCDNn4qvASjaLCWamUIMCCfDKGpuiD5i9d4dPs2hwqkUTq0-D76Rs0sd99RtaR6v03moCkefFB-8gb0Ycsw-lkUa2aRBpN0zhsW_nHtQf-iWmsILbi1EaqV901u2nh_t0WVBh2w8v43c7EA5bjj5ilUZDrD2LQx2ETNdWsCKcI0ZBGHpVNMRXIQFOmjNZ4U">
+                            <!-- Peta Google yang sungguhan, menggantikan tangkapan
+                                 layar statis. Alamat sematannya diisi
+                                 js/room-detail.js sesuai kota cabang yang sedang
+                                 dibuka; dibiarkan kosong di sini supaya tidak ada
+                                 kota yang salah tampil sekejap sebelum data
+                                 Firestore datang. -->
+                            <iframe id="detailPeta" title="Peta lokasi cabang" class="w-full h-full border-0"
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             <div
                                 class="absolute bottom-6 left-6 bg-surface-canvas p-lg rounded-2xl shadow-lg border border-border-hairline max-w-sm">
                                 <p class="font-title-md text-title-md mb-xs text-ink-primary font-bold"
@@ -360,13 +372,6 @@
                                     Buka di Google Maps
                                 </a>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Fasilitas Umum Cabang -->
-                    <div>
-                        <h2 class="font-display-lg text-display-lg mb-lg text-ink-primary text-center md:text-left">
-                            Fasilitas Umum Cabang</h2>
-                        <div class="flex flex-wrap gap-md justify-center md:justify-start" id="detailFasilitasUmum">
                         </div>
                     </div>
                 </div>

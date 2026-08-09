@@ -1,121 +1,153 @@
-<!DOCTYPE html><html lang="id" style=""><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Pilar Pandawa - Portal Penyewa Login</title>
+<!DOCTYPE html>
+<html lang="id" style="">
 
-<!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Pilar Pandawa - Portal Penyewa Login</title>
 
-<!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
-<script src="../js/head-bersama.js"></script>
+    <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Palet, ukuran huruf, ikon tab, dan gaya dasar bersama seluruh halaman customer -->
+    <script src="../js/head-bersama.js"></script>
 </head>
-<body class="min-h-screen bg-surface flex flex-col md:flex-row overflow-x-hidden">
-<!-- Left Side: Visual Branding & Illustration (Desktop Only for Full Height) -->
-<section class="relative w-full md:w-1/2 h-[40vh] md:h-screen overflow-hidden">
-<!-- Background Image -->
-<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLsYVQ9hb-30HtHBBbOGZ-8dWDbAwTsbop8zM5Lj2mCHT1Fqi2HRmoSCZhhl2qx_MB1pG4pzJHrUV1UBijD3I94BZm0QgC2fs9MNVfOqg6RwSH28HTUMYILbBvQyagrZMSmvmjBz7L2gNXBBnzrzGDtMMKN4hkAB7sIjlKA_9r_36dvBvUIoKucUtZYR5zMqnyLhH20vD_3C094O7-1GRxaF5sq6c0pWmeFD_I86RWOjMMUABqWMAuja6g');"></div>
-<!-- Gradient Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-black/20"></div>
-<!-- Content Overlays -->
-<div class="absolute inset-0 flex flex-col justify-between p-lg md:p-xl pointer-events-none">
-<!-- Branding Logo (Top Left) -->
-<div class="flex items-center gap-sm">
-<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shadow-lg">
-<span class="material-symbols-outlined text-on-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">apartment</span>
-</div>
-<span class="font-display-md text-display-md text-surface-canvas tracking-tight drop-shadow-md">Pilar Pandawa</span>
-</div>
-<!-- Back Button (Mobile & Desktop Replacement for Close) -->
-<div class="absolute top-base right-base md:left-xl md:top-auto md:bottom-xl pointer-events-auto hidden md:block">
 
-</div>
-<!-- Feature Badges (Bottom Left - Hidden on small mobile to prioritize space) -->
-<div class="hidden sm:flex flex-col gap-base mb-xl md:mb-0">
-<div class="flex items-center bg-surface-canvas/80 backdrop-blur-lg px-md py-sm rounded-lg border border-surface-canvas/40 shadow-lg w-fit">
-<span class="material-symbols-outlined text-primary mr-sm text-[24px]">person</span>
-<div class="flex flex-col">
-<span class="font-tag-uppercase text-tag-uppercase text-ink-muted">Sewa Harian Pria</span>
-<span class="font-title-md text-title-md text-ink-primary">Rp100.000<span class="text-body-sm font-body-sm">/hari</span></span>
-</div>
-</div>
-<div class="flex items-center bg-surface-canvas/80 backdrop-blur-lg px-md py-sm rounded-lg border border-surface-canvas/40 shadow-lg w-fit">
-<span class="material-symbols-outlined text-secondary mr-sm text-[24px]">groups</span>
-<div class="flex flex-col">
-<span class="font-tag-uppercase text-tag-uppercase text-ink-muted">Sewa Bulanan Keluarga</span>
-<span class="font-title-md text-title-md text-ink-primary">Rp500.000<span class="text-body-sm font-body-sm">/bulan</span></span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Right Side: Login Form -->
-<section class="w-full md:w-1/2 flex flex-col justify-center bg-surface-canvas px-lg py-xl md:px-xl min-h-[60vh] md:min-h-screen">
-<div class="max-w-[400px] mx-auto w-full">
-<!-- Header -->
-<header class="mb-xl text-center md:text-left">
-<h1 class="font-display-xl text-display-xl text-ink-primary mb-sm font-bold">Masuk Akun Penyewa</h1>
-<p class="font-body-md text-body-md text-on-surface-variant">Cari hunian Anda dengan mudah dalam satu portal.</p>
-</header>
-<!-- Form -->
-<!-- Kotak pesan hasil aksi (sukses / gagal) -->
-<div class="hidden" id="authAlert"></div>
-<form class="space-y-lg" id="loginForm">
-<!-- Username Input -->
-<div class="space-y-xs">
-<label class="font-label-md text-label-md text-ink-primary font-semibold" for="username">Username</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
-<span class="material-symbols-outlined text-[20px]">person</span>
-</div>
-<input class="w-full pl-xl pr-md py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="username" placeholder="Masukkan username" required="" type="text">
-</div>
-</div>
-<!-- Password Input -->
-<div class="space-y-xs">
-<label class="font-label-md text-label-md text-ink-primary font-semibold" for="password">Kata Sandi</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
-<span class="material-symbols-outlined text-[20px]">lock</span>
-</div>
-<input class="w-full pl-xl pr-[48px] py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary" id="password" placeholder="••••••••" required="" type="password">
-<button class="absolute inset-y-0 right-0 flex items-center pr-md text-on-surface-variant hover:text-primary-container transition-colors" onclick="togglePassword()" type="button">
-<span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
-</button>
-</div>
-<div class="flex justify-end pt-xs">
-<a class="font-label-md text-label-md text-primary-container hover:underline font-semibold belum-tersedia" href="#" aria-disabled="true" title="Halaman ini belum tersedia">Lupa Kata Sandi?</a>
-</div>
-</div>
-<!-- Primary Action -->
-<button id="loginBtn" class="w-full py-md px-base bg-primary-container text-on-primary font-button-md text-button-md rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-sm mt-lg" type="submit">
+<body class="min-h-screen bg-surface flex flex-col md:flex-row overflow-x-hidden">
+    <!-- Left Side: Visual Branding & Illustration (Desktop Only for Full Height) -->
+    <section class="relative w-full md:w-1/2 h-[40vh] md:h-screen overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLsYVQ9hb-30HtHBBbOGZ-8dWDbAwTsbop8zM5Lj2mCHT1Fqi2HRmoSCZhhl2qx_MB1pG4pzJHrUV1UBijD3I94BZm0QgC2fs9MNVfOqg6RwSH28HTUMYILbBvQyagrZMSmvmjBz7L2gNXBBnzrzGDtMMKN4hkAB7sIjlKA_9r_36dvBvUIoKucUtZYR5zMqnyLhH20vD_3C094O7-1GRxaF5sq6c0pWmeFD_I86RWOjMMUABqWMAuja6g');">
+        </div>
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-black/20"></div>
+        <!-- Content Overlays -->
+        <div class="absolute inset-0 flex flex-col justify-between p-lg md:p-xl pointer-events-none">
+            <!-- Branding Logo (Top Left) -->
+            <div class="flex items-center gap-sm">
+                <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-on-primary text-[24px]"
+                        style="font-variation-settings: 'FILL' 1;">apartment</span>
+                </div>
+                <span class="font-display-md text-display-md text-surface-canvas tracking-tight drop-shadow-md">Pilar
+                    Pandawa</span>
+            </div>
+            <!-- Back Button (Mobile & Desktop Replacement for Close) -->
+            <div
+                class="absolute top-base right-base md:left-xl md:top-auto md:bottom-xl pointer-events-auto hidden md:block">
+
+            </div>
+            <!-- Feature Badges (Bottom Left - Hidden on small mobile to prioritize space) -->
+            <div class="hidden sm:flex flex-col gap-base mb-xl md:mb-0">
+                <div
+                    class="flex items-center bg-surface-canvas/80 backdrop-blur-lg px-md py-sm rounded-lg border border-surface-canvas/40 shadow-lg w-fit">
+                    <span class="material-symbols-outlined text-primary mr-sm text-[24px]">person</span>
+                    <div class="flex flex-col">
+                        <span class="font-tag-uppercase text-tag-uppercase text-ink-muted">Sewa Harian Pria</span>
+                        <span class="font-title-md text-title-md text-ink-primary">Rp100.000<span
+                                class="text-body-sm font-body-sm">/hari</span></span>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center bg-surface-canvas/80 backdrop-blur-lg px-md py-sm rounded-lg border border-surface-canvas/40 shadow-lg w-fit">
+                    <span class="material-symbols-outlined text-secondary mr-sm text-[24px]">groups</span>
+                    <div class="flex flex-col">
+                        <span class="font-tag-uppercase text-tag-uppercase text-ink-muted">Sewa Bulanan Keluarga</span>
+                        <span class="font-title-md text-title-md text-ink-primary">Rp500.000<span
+                                class="text-body-sm font-body-sm">/bulan</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Right Side: Login Form -->
+    <section
+        class="w-full md:w-1/2 flex flex-col justify-center bg-surface-canvas px-lg py-xl md:px-xl min-h-[60vh] md:min-h-screen">
+        <div class="max-w-[400px] mx-auto w-full">
+            <!-- Header -->
+            <header class="mb-xl text-center md:text-left">
+                <h1 class="font-display-xl text-display-xl text-ink-primary mb-sm font-bold">Masuk Akun Penyewa</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Cari hunian Anda dengan mudah dalam satu
+                    portal.</p>
+            </header>
+            <!-- Form -->
+            <!-- Kotak pesan hasil aksi (sukses / gagal) -->
+            <div class="hidden" id="authAlert"></div>
+            <form class="space-y-lg" id="loginForm">
+                <!-- Username Input -->
+                <div class="space-y-xs">
+                    <label class="font-label-md text-label-md text-ink-primary font-semibold"
+                        for="username">Username</label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
+                            <span class="material-symbols-outlined text-[20px]">person</span>
+                        </div>
+                        <input
+                            class="w-full pl-xl pr-md py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary"
+                            id="username" placeholder="Masukkan username" required="" type="text">
+                    </div>
+                </div>
+                <!-- Password Input -->
+                <div class="space-y-xs">
+                    <label class="font-label-md text-label-md text-ink-primary font-semibold" for="password">Kata
+                        Sandi</label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none text-ink-muted">
+                            <span class="material-symbols-outlined text-[20px]">lock</span>
+                        </div>
+                        <input
+                            class="w-full pl-xl pr-[48px] py-md bg-surface border-border-strong border rounded-lg focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-body-md text-ink-primary"
+                            id="password" placeholder="••••••••" required="" type="password">
+                        <button
+                            class="absolute inset-y-0 right-0 flex items-center pr-md text-on-surface-variant hover:text-primary-container transition-colors"
+                            onclick="togglePassword()" type="button">
+                            <span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
+                        </button>
+                    </div>
+                    <div class="flex justify-end pt-xs">
+                        <a class="font-label-md text-label-md text-primary-container hover:underline font-semibold belum-tersedia"
+                            href="#" aria-disabled="true" title="Halaman ini belum tersedia">Lupa Kata Sandi?</a>
+                    </div>
+                </div>
+                <!-- Primary Action -->
+                <button id="loginBtn"
+                    class="w-full py-md px-base bg-primary-container text-on-primary font-button-md text-button-md rounded-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-sm mt-lg"
+                    type="submit">
                     Masuk
                 </button>
-</form>
-<!-- Divider -->
-<div class="relative my-xl">
-<div class="absolute inset-0 flex items-center">
-<div class="w-full border-t border-border-hairline"></div>
-</div>
-<div class="relative flex justify-center text-body-sm font-body-sm">
-<span class="px-md bg-surface-canvas text-ink-muted">Atau Konsultasi Langsung</span>
-</div>
-</div>
-<!-- Secondary Action (WhatsApp) -->
-<div class="space-y-xl">
-<a class="w-full py-md px-base bg-whatsapp-green text-on-secondary font-button-md text-button-md rounded-lg shadow-sm hover:bg-whatsapp-hover hover:shadow-md active:scale-[0.98] transition-all flex justify-center items-center gap-sm" href="https://wa.me/6281234567890" target="_blank">
-<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.63 1.438h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
-</svg>
+            </form>
+            <!-- Divider -->
+            <div class="relative my-xl">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-border-hairline"></div>
+                </div>
+                <div class="relative flex justify-center text-body-sm font-body-sm">
+                    <span class="px-md bg-surface-canvas text-ink-muted">Atau Konsultasi Langsung</span>
+                </div>
+            </div>
+            <!-- Secondary Action (WhatsApp) -->
+            <div class="space-y-xl">
+                <a class="w-full py-md px-base bg-whatsapp-green text-on-secondary font-button-md text-button-md rounded-lg shadow-sm hover:bg-whatsapp-hover hover:shadow-md active:scale-[0.98] transition-all flex justify-center items-center gap-sm"
+                    href="https://wa.me/6281234567890" target="_blank">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.63 1.438h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z">
+                        </path>
+                    </svg>
                     Hubungi Petugas via WhatsApp
                 </a>
-<!-- Footer Link -->
-<p class="text-center font-body-sm text-body-sm text-ink-muted">
-                    Belum punya akun? <a class="text-primary-container font-semibold hover:underline" href="register-customer.html">Daftar di sini</a>
-</p>
-</div>
-</div>
-</section>
-<script>
+                <!-- Footer Link -->
+                <p class="text-center font-body-sm text-body-sm text-ink-muted">
+                    Belum punya akun? <a class="text-primary-container font-semibold hover:underline"
+                        href="register-customer.html">Daftar di sini</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <script>
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const eyeIcon = document.getElementById('eye-icon');
@@ -141,13 +173,15 @@
         });
     </script>
 
-<!-- Logika login: memverifikasi ke collection "user" -->
-<!-- Menjelaskan bila pengunjung tiba di sini karena sesinya dibersihkan
+    <!-- Logika login: memverifikasi ke collection "user" -->
+    <!-- Menjelaskan bila pengunjung tiba di sini karena sesinya dibersihkan
      (akun pada sesi sudah tidak ada di Firestore) -->
-<script type="module" src="../js/sesi-valid.js"></script>
+    <script type="module" src="../js/sesi-valid.js"></script>
 
-<script type="module" src="../js/login-customer.js"></script>
+    <script type="module" src="../js/login-customer.js"></script>
 
 
 
-</body></html>
+</body>
+
+</html>

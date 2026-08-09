@@ -60,17 +60,20 @@ form.addEventListener("submit", async function (e) {
     // --- 2 & 3. Pemeriksaan username + penyimpanan ---
     // Pemeriksaan username sudah dikerjakan di dalam daftarkanPengguna,
     // sehingga jeda antara memeriksa dan menyimpan sekecil mungkin.
-    const pengguna = await daftarkanPengguna(data);
+    // Hasilnya tidak dipakai -- yang penting fungsi ini selesai tanpa
+    // melempar galat, artinya akunnya sudah tersimpan.
+    await daftarkanPengguna(data);
 
     // --- 4. Arahkan ke halaman login ---
-    // Username dibawa lewat alamat agar kolomnya terisi otomatis,
-    // sehingga pengguna cukup mengetikkan kata sandinya.
+    // Yang dibawa hanya penanda "daftar=berhasil", sekadar untuk
+    // memunculkan ucapan di halaman login. Username SENGAJA tidak ikut
+    // dibawa: halaman login harus dimulai dengan isian yang bersih,
+    // dan username tidak perlu tertulis di bilah alamat.
     tampilkanPesan("sukses",
       "Pendaftaran berhasil. Silakan masuk memakai akun baru Anda...");
 
     setTimeout(function () {
-      window.location.href =
-        "login-customer.html?daftar=berhasil&username=" + encodeURIComponent(pengguna.username);
+      window.location.href = "login-customer.html?daftar=berhasil";
     }, 1200);
 
   } catch (err) {

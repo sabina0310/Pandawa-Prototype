@@ -187,10 +187,56 @@ function tampilkanDetailCabang(cabang) {
   isiTeks('detailNamaCabangPeta', cabang.nama_cabang + ' Pilar Pandawa');
   isiTeks('detailAlamatPeta', cabang.alamat);
 
+  pasangPeta(cabang);
+
   const tautanPeta = document.getElementById('detailTautanPeta');
   if (tautanPeta && cabang.maps_url) {
     tautanPeta.href = cabang.maps_url;
   }
+}
+
+/**
+ * Mengambil nama kota dari alamat cabang.
+ *
+ * Alamat pada data selalu berpola "<jalan dan nomor>, <kota>", contoh:
+ *
+ *     "Jl. Selebriti No. 3, Surabaya"      -> "Surabaya"
+ *     "Jl. Melati No. 45, Jakarta Selatan" -> "Jakarta Selatan"
+ *
+ * Bila tidak ada koma, seluruh alamat dipakai apa adanya.
+ */
+function kotaDariAlamat(alamat) {
+  const teks = String(alamat || '').trim();
+  if (!teks) return '';
+
+  const potongan = teks.split(',');
+  return potongan[potongan.length - 1].trim() || teks;
+}
+
+/**
+ * Menampilkan peta Google yang sungguhan pada bagian lokasi.
+ *
+ * YANG DICARI HANYA NAMA KOTANYA, bukan alamat lengkap. Alasannya:
+ * alamat cabang pada prototipe ini tidak nyata, sehingga pencarian
+ * alamat lengkap menghasilkan penanda yang menyesatkan -- ada cabang
+ * yang tidak ditemukan sama sekali, dan ada yang penandanya justru
+ * menunjuk kedai kopi yang kebetulan berdiri di alamat itu. Menampilkan
+ * kotanya saja selalu benar, walau tidak menunjuk titik tertentu.
+ *
+ * Sematannya memakai bentuk "maps.google.com/maps?q=...&output=embed"
+ * yang tidak memerlukan API key, sehingga tidak ada kunci rahasia yang
+ * perlu disimpan maupun ikut ter-commit ke repositori.
+ */
+function pasangPeta(cabang) {
+  const peta = document.getElementById('detailPeta');
+  if (!peta) return;
+
+  const kota = kotaDariAlamat(cabang.alamat);
+  if (!kota) return;
+
+  peta.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(kota) +
+             '&output=embed';
+  peta.title = 'Peta lokasi ' + cabang.nama_cabang + ' di ' + kota;
 }
 
 // =====================================================================

@@ -52,22 +52,27 @@ function halamanTujuan() {
 
 /**
  * Menyiapkan halaman saat pertama dibuka.
- * Bila pengunjung baru saja mendaftar, kolom username diisikan
- * otomatis dan diberi ucapan agar alurnya terasa menyambung.
+ *
+ * Bila pengunjung baru saja mendaftar, ia hanya diberi ucapan bahwa
+ * akunnya sudah jadi. Kolom isian SENGAJA dibiarkan kosong: halaman
+ * login harus selalu dimulai dari keadaan bersih, siapa pun yang
+ * membukanya dan dari mana pun ia datang.
+ *
+ * Sebelumnya username dibawa lewat alamat lalu diisikan otomatis.
+ * Itu dihapus karena username ikut tertulis di bilah alamat -- terbaca
+ * orang lain yang melihat layar, dan tersimpan di riwayat peramban.
  */
 function siapkanHalaman() {
   const parameter = new URLSearchParams(window.location.search);
 
   if (parameter.get("daftar") === "berhasil") {
-    const username = parameter.get("username");
-
-    if (username) {
-      document.getElementById("username").value = username;
-      document.getElementById("password").focus();
-    }
-
     tampilkanPesan("sukses",
       "Akun Anda berhasil dibuat. Silakan masuk memakai kata sandi yang tadi Anda daftarkan.");
+
+    // Kursor diletakkan di kolom pertama supaya pengguna bisa langsung
+    // mengetik, tanpa ada isian yang sudah terisi lebih dulu.
+    const kolomUsername = document.getElementById("username");
+    if (kolomUsername) kolomUsername.focus();
   }
 }
 
