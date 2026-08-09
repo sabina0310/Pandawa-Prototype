@@ -152,8 +152,64 @@ function sembunyikanError() {
   kotak.classList.remove('flex');
 }
 
+// =====================================================================
+// 4b. PERNYATAAN PERSETUJUAN SYARAT & KETENTUAN
+// ---------------------------------------------------------------------
+// Kotak centang ini sebenarnya sudah bertanda "required" sejak awal,
+// tetapi atribut itu tidak berpengaruh apa-apa di sini: kotaknya tidak
+// berada di dalam <form> yang di-submit, sehingga peramban tidak pernah
+// memeriksanya. Tombol "Lanjut ke Pembayaran" pun langsung memanggil
+// prosesPembayaran() tanpa melihat keadaan centangnya.
+//
+// Pemeriksaannya karena itu dikerjakan sendiri, meniru cara langkah 1
+// menangani kotak persetujuannya: kotak diberi garis merah, lalu
+// pengunjung diberi tahu apa yang kurang.
+// =====================================================================
+
+/** Menghapus tanda merah pada kotak persetujuan. */
+function bersihkanTandaPersetujuan() {
+  const kotak = document.getElementById('kotakPersetujuan');
+  if (!kotak) return;
+
+  kotak.classList.remove('border-error');
+  kotak.classList.add('border-transparent');
+}
+
+/**
+ * true bila pengunjung sudah mencentang persetujuan.
+ * Bila belum, kotaknya ditandai dan halaman digulir ke sana -- kotak
+ * persetujuan berada jauh di atas tombol, sehingga pesan galat di dekat
+ * tombol saja belum tentu terlihat.
+ */
+function persetujuanDicentang() {
+  const setuju = document.getElementById('agreement');
+  const kotak = document.getElementById('kotakPersetujuan');
+
+  if (setuju && setuju.checked) {
+    bersihkanTandaPersetujuan();
+    return true;
+  }
+
+  if (kotak) {
+    kotak.classList.remove('border-transparent');
+    kotak.classList.add('border-error');
+    kotak.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  return false;
+}
+
 async function prosesPembayaran() {
   sembunyikanError();
+
+  // Diperiksa lebih dulu, sebelum tombol dikunci dan sebelum apa pun
+  // dikirim ke Midtrans.
+  if (!persetujuanDicentang()) {
+    tampilkanError('Anda harus menyetujui Syarat & Ketentuan Sewa ' +
+      'sebelum melanjutkan ke pembayaran.');
+    return;
+  }
+
   setLoadingTombol(true);
 
   try {
@@ -232,6 +288,18 @@ function mulai() {
   const tombol = document.getElementById('lanjutStep3Btn');
   if (tombol) {
     tombol.addEventListener('click', prosesPembayaran);
+  }
+
+  // Begitu pengunjung mencentang, tanda merah dan pesannya langsung
+  // hilang -- tidak perlu menunggu tombol ditekan lagi.
+  const setuju = document.getElementById('agreement');
+  if (setuju) {
+    setuju.addEventListener('change', function () {
+      if (setuju.checked) {
+        bersihkanTandaPersetujuan();
+        sembunyikanError();
+      }
+    });
   }
 }
 

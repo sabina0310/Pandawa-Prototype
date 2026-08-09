@@ -127,10 +127,9 @@ export function pesananUji(transaksi) {
  */
 export function keteranganPesananUji(bentuk) {
   const pesan = bentuk === "ringkas"
-    ? "Data pengujian: dibuat otomatis untuk menguji notifikasi WhatsApp " +
-      "tenggat pemesanan H-7."
+    ? "Data pengujian: dibuat otomatis untuk menguji fitur perpanjangan sewa. "
     : "Pesanan ini <strong>dibuat otomatis oleh sistem</strong> untuk menguji " +
-      "pengiriman notifikasi WhatsApp tenggat pemesanan <strong>H-7</strong>. ";
+      "perpanjangan sewa. <strong>H-7</strong>. ";
 
   return '<div class="flex items-start gap-sm bg-surface-container-high ' +
     'border border-border-hairline rounded-lg px-base py-sm">' +

@@ -282,8 +282,7 @@ function terapkanKeputusan() {
     if (judul) judul.textContent = "Sewa Anda akan diperpanjang";
     if (pesan) {
       pesan.textContent =
-        "Pembayaran perpanjangan sudah kami terima. Admin akan menentukan kamar " +
-        "untuk periode berikutnya. Rinciannya dapat dilihat di halaman Riwayat Pesanan.";
+        "Pembayaran perpanjangan sudah kami terima. Rinciannya dapat dilihat di halaman Riwayat Pesanan.";
     }
     return;
   }

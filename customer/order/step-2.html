@@ -97,8 +97,8 @@
                                                                 data-icon="person">person</span>
                                                         Review Data Diri Penyewa
                                                 </h2>
-                                                <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="step-1.html">Ubah Data</a>
+                                                <!-- <a class="text-primary-container font-label-md text-label-md hover:underline"
+                                                        href="step-1.html">Ubah Data</a> -->
                                         </div>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
                                                 <div>
@@ -131,8 +131,8 @@
                                                                 class="material-symbols-outlined text-primary-container">group</span>
                                                         Review Data Penghuni Tambahan
                                                 </h2>
-                                                <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="step-1.html">Ubah Data</a>
+                                                <!-- <a class="text-primary-container font-label-md text-label-md hover:underline"
+                                                        href="step-1.html">Ubah Data</a> -->
                                         </div>
                                         <div class="space-y-md" id="tenantsReviewContainer">
                                                 <div
@@ -187,8 +187,8 @@
                                                                 class="material-symbols-outlined text-primary-container">account_balance_wallet</span>
                                                         Metode Pembayaran Dipilih
                                                 </h2>
-                                                <a class="text-primary-container font-label-md text-label-md hover:underline"
-                                                        href="step-1.html">Ubah</a>
+                                                <!-- <a class="text-primary-container font-label-md text-label-md hover:underline"
+                                                        href="step-1.html">Ubah</a> -->
                                         </div>
                                         <div class="flex items-center gap-4">
                                                 <div class="w-16 h-10 bg-white border border-border-hairline rounded flex items-center justify-center"
@@ -244,10 +244,15 @@
                                                                 penggantian.</li>
                                                 </ol>
                                         </div>
-                                        <label
-                                                class="flex items-start gap-3 cursor-pointer group p-sm hover:bg-surface-soft rounded transition-colors">
+                                        <!-- "border border-transparent" dipasang sejak awal supaya saat
+                                             kotak ini ditandai merah (border-error) lebarnya tidak
+                                             bergeser satu piksel. Polanya sama dengan
+                                             #kotakPersetujuan di step-1.html. -->
+                                        <label id="kotakPersetujuan"
+                                                class="flex items-start gap-3 cursor-pointer group p-sm hover:bg-surface-soft rounded transition-colors border border-transparent">
                                                 <div class="relative flex items-center pt-1">
-                                                        <input class="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-border-strong checked:border-primary-container checked:bg-primary-container transition-all"
+                                                        <input id="agreement"
+                                                                class="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-border-strong checked:border-primary-container checked:bg-primary-container transition-all"
                                                                 required="" type="checkbox">
                                                         <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none material-symbols-outlined text-sm font-bold"
                                                                 data-icon="check">check</span>
