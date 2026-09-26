@@ -96,14 +96,14 @@
                         Tindakan</span>
                 </div>
             </div>
-            <!-- Jatuh Tempo Hari Ini -->
+            <!-- Jatuh Tempo Minggu Ini -->
             <div
                 class="bg-surface-canvas rounded-xl p-lg shadow-sm border border-border-hairline flex flex-col justify-between">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-xl bg-[#FEF0C7] flex items-center justify-center text-status-warning">
                         <span class="material-symbols-outlined text-[20px]">payments</span>
                     </div>
-                    <span class="font-title-md text-title-md font-semibold text-ink-primary">Jatuh Tempo Hari Ini</span>
+                    <span class="font-title-md text-title-md font-semibold text-ink-primary">Jatuh Tempo Minggu Ini</span>
                 </div>
 
                 <div class="font-display-xl text-[40px] font-bold text-ink-primary leading-none" id="statJatuhTempo">0</div>
@@ -114,37 +114,23 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-8">
                     <div>
                         <h2 class="font-display-md text-title-md font-bold text-ink-primary">Grafik Pendapatan</h2>
-                        <p class="text-ink-muted text-label-md mt-1">Tren pendapatan bulanan operasional.</p>
+                        <p class="text-ink-muted text-label-md mt-1">Total transaksi lunas per bulan, mengikuti
+                            filter cabang di atas.</p>
                     </div>
-                    <select
-                        class="bg-surface-variant border-none rounded-xl px-4 py-2 text-label-md font-semibold focus:ring-0 outline-none text-ink-secondary cursor-pointer">
-                        <option>Semua Cabang</option>
-                    </select>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <label class="text-label-md text-ink-muted" for="grafikBulanMulai">Dari</label>
+                        <input type="month" id="grafikBulanMulai"
+                            class="bg-surface-variant border-none rounded-xl px-3 py-2 text-label-md font-semibold text-ink-secondary focus:ring-1 focus:ring-primary outline-none cursor-pointer">
+                        <label class="text-label-md text-ink-muted" for="grafikBulanSelesai">s/d</label>
+                        <input type="month" id="grafikBulanSelesai"
+                            class="bg-surface-variant border-none rounded-xl px-3 py-2 text-label-md font-semibold text-ink-secondary focus:ring-1 focus:ring-primary outline-none cursor-pointer">
+                    </div>
                 </div>
-                <div class="h-56 flex items-end gap-4 px-2 border-b border-border-hairline pb-2">
-                    <div
-                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[40%] hover:bg-primary transition-colors relative group py-sm px-base">
-                        <div
-                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-ink-primary text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                            4.2jt</div>
-                    </div>
-                    <div
-                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[65%] hover:bg-primary transition-colors relative group py-sm px-base">
-                    </div>
-                    <div
-                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[55%] hover:bg-primary transition-colors relative group py-sm px-base">
-                    </div>
-                    <div
-                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[85%] hover:bg-primary transition-colors relative group py-sm px-base">
-                    </div>
-                    <div
-                        class="flex-1 bg-[#D1E0FF] rounded-t-lg h-[70%] hover:bg-primary transition-colors relative group py-sm px-base">
-                    </div>
-                    <div class="flex-1 bg-primary rounded-t-lg h-[95%] relative group shadow-md py-sm px-base"></div>
-                </div>
-                <div class="flex justify-between mt-4 text-badge font-semibold text-ink-muted px-2">
-                    <span class="">Mei</span><span class="">Jun</span><span class="">Jul</span><span
-                        class="">Agu</span><span class="">Sep</span><span class="">Okt</span>
+                <!-- Digulir mendatar (kelas .gulir-x dari js/head-bersama.js) di layar
+                     sempit, supaya batang & label bulan tidak berdesakan -- lihat
+                     lebarMinimum pada gambarGrafikPendapatan() di js/admin-dashboard.js. -->
+                <div class="gulir-x">
+                    <div id="grafikPendapatan"></div>
                 </div>
             </section>
             <!-- 3. Room Status Quick View (Replacing old placement) -->

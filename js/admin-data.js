@@ -201,3 +201,22 @@ export async function simpanCheckin(orderId, kamarId) {
     });
   }
 }
+
+/**
+ * Menyimpan hasil proses check-out.
+ * Status check-in transaksi berubah menjadi "checked_out" dan waktu
+ * kepulangan sebenarnya dicatat; kamar yang ditinggalkan dikembalikan
+ * menjadi tersedia.
+ */
+export async function simpanCheckout(orderId, kamarId) {
+  await updateDoc(doc(db, COL_TRANSAKSI, orderId), {
+    status_checkin: "checked_out",
+    tanggal_aktual_checkout: Timestamp.fromDate(new Date())
+  });
+
+  if (kamarId) {
+    await updateDoc(doc(db, COL_KAMAR, kamarId), {
+      tersedia: true
+    });
+  }
+}

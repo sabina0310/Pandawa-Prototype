@@ -5,7 +5,7 @@
         <script src="../js/jaga-portal.js" data-peran="admin" data-login="login.html"></script>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>Manajemen Check-in Pilar Pandawa</title>
+        <title>Manajemen Check-in dan Check-out Pilar Pandawa</title>
 
         <!-- Tailwind wajib dimuat lebih dulu: berkas di bawahnya mengisi konfigurasinya -->
         <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -40,7 +40,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
                         <div>
                                 <h2 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
-                                        Manajemen Check-in
+                                        Manajemen Check-in dan Check-out
                                 </h2>
                                 <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Pantau kedatangan
                                         penghuni, proses verifikasi identitas, dan serah terima kunci</p>
@@ -66,7 +66,7 @@
                         <div
                                 class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
                                 <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Check-in Hari
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-in Minggu
                                                 Ini</span>
                                         <div
                                                 class="w-8 h-8 rounded-full bg-primary-fixed/30 flex items-center justify-center">
@@ -76,16 +76,16 @@
                                 </div>
                                 <div class="flex items-end justify-between">
                                         <span class="font-stat-display text-stat-display text-ink-primary"
-                                                id="statCheckinHariIni">0</span>
+                                                id="statCheckinMingguIni">0</span>
                                         <span
                                                 class="bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20 inline-flex items-center gap-xxs">Perlu
                                                 Verifikasi</span>
                                 </div>
                         </div>
-                        <!-- <div
+                        <div
                                 class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
                                 <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Check-out Hari
+                                        <span class="font-label-md text-label-md text-ink-muted">Check-out Minggu
                                                 Ini</span>
                                         <div
                                                 class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center">
@@ -94,12 +94,13 @@
                                         </div>
                                 </div>
                                 <div class="flex items-end justify-between">
-                                        <span class="font-stat-display text-stat-display text-ink-primary">5</span>
+                                        <span class="font-stat-display text-stat-display text-ink-primary"
+                                                id="statCheckoutMingguIni">0</span>
                                         <span
-                                                class="bg-surface-variant text-ink-secondary font-badge text-badge px-sm py-xxs rounded-full border border-border-strong inline-flex items-center gap-xxs">Inspeksi
-                                                Kamar</span>
+                                                class="bg-error/10 text-error font-badge text-badge px-sm py-xxs rounded-full border border-error/20 inline-flex items-center gap-xxs">Perlu
+                                                Diproses</span>
                                 </div>
-                        </div> -->
+                        </div>
                         <div
                                 class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
                                 <div class="flex justify-between items-start mb-md">
@@ -120,18 +121,12 @@
                 </div>
                 <!-- Tab Bar -->
                 <div class="border-b border-border-hairline mb-lg flex overflow-x-auto hide-scrollbar">
-                        <button data-tab="hari-ini"
+                        <button data-tab="checkin"
                                 class="checkin-tab px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap">Jadwal
-                                Hari Ini</button>
-                        <button data-tab="mendatang"
-                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Check-in
-                                Mendatang</button>
-                        <!-- <button
-                                class="px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Jadwal
-                                Check-out</button> -->
-                        <button data-tab="riwayat"
-                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Riwayat
-                                Serah Terima</button>
+                                Check-in</button>
+                        <button data-tab="checkout"
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Jadwal
+                                Check-out</button>
                 </div>
                 <!-- Operations Table -->
                 <div class="bg-surface-canvas rounded-xl shadow-sm border border-border-hairline overflow-hidden">
@@ -145,7 +140,7 @@
                                                         <th
                                                                 class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap w-1/4">
                                                                 Kamar &amp; Tipe</th>
-                                                        <th
+                                                        <th id="thTanggalJadwal"
                                                                 class="px-base py-sm text-left font-label-md text-label-md text-ink-muted uppercase tracking-wider whitespace-nowrap w-1/5">
                                                                 Waktu Check-in</th>
                                                         <th
@@ -337,6 +332,111 @@
                         <div class="px-lg py-md flex items-center justify-end">
                                 <button class="font-button-md text-button-md bg-primary-container text-on-primary hover:bg-surface-tint transition-colors px-lg py-sm rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]"
                                         id="checkinSuccessDone" type="button">Selesai</button>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Modal: Konfirmasi Proses Check-out -->
+        <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+                id="checkoutModal">
+                <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between px-lg pt-lg pb-md">
+                                <h3 class="font-display-md text-display-md text-ink-primary font-bold">Konfirmasi
+                                        Check-out</h3>
+                                <button class="text-ink-muted hover:text-ink-primary transition-colors"
+                                        id="checkoutModalClose" type="button">
+                                        <span class="material-symbols-outlined">close</span>
+                                </button>
+                        </div>
+                        <!-- Body -->
+                        <div class="px-lg pb-lg space-y-lg">
+                                <!-- Guest Info -->
+                                <div class="bg-surface-soft rounded-xl p-base">
+                                        <div class="flex items-center gap-sm">
+                                                <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-title-md text-title-md text-primary-container shrink-0"
+                                                        id="checkoutModalInitials">BS</div>
+                                                <div>
+                                                        <div class="font-title-md text-title-md text-ink-primary"
+                                                                id="checkoutModalName">Budi Santoso</div>
+                                                        <div class="font-body-sm text-body-sm text-ink-muted"
+                                                                id="checkoutModalBookingId">ID: BK-202310-001</div>
+                                                </div>
+                                        </div>
+                                        <div
+                                                class="border-t border-border-hairline mt-sm pt-sm flex items-center gap-xs">
+                                                <span
+                                                        class="material-symbols-outlined text-[18px] text-ink-muted">meeting_room</span>
+                                                <span class="font-body-sm text-body-sm text-ink-secondary"
+                                                        id="checkoutModalRoom">Kamar A01 (Cabang Utama)</span>
+                                        </div>
+                                </div>
+                                <p class="font-body-sm text-body-sm text-ink-secondary">Pastikan kamar sudah
+                                        diperiksa dan kunci fisik/akses kamar sudah diterima kembali sebelum
+                                        melanjutkan. Status kamar akan otomatis berubah menjadi
+                                        <span class="font-semibold text-ink-primary">Tersedia</span> setelah
+                                        dikonfirmasi.</p>
+                        </div>
+                        <!-- Footer -->
+                        <div class="border-t border-border-hairline px-lg py-md flex items-center justify-end gap-sm">
+                                <button class="font-button-md text-button-md text-ink-secondary hover:bg-surface-variant transition-colors px-md py-sm rounded-lg"
+                                        id="checkoutModalCancel" type="button">Batal</button>
+                                <button class="font-button-md text-button-md bg-error text-white hover:opacity-90 transition-colors px-md py-sm rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]"
+                                        id="checkoutModalConfirm" type="button">Konfirmasi Check-out</button>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Modal: Check-out Berhasil -->
+        <div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm px-base"
+                id="checkoutSuccessModal">
+                <div class="w-full max-w-md bg-surface-canvas rounded-2xl shadow-2xl overflow-hidden">
+                        <!-- Body -->
+                        <div class="px-lg pt-xl pb-lg text-center">
+                                <div
+                                        class="w-16 h-16 rounded-full bg-status-available/10 flex items-center justify-center mx-auto mb-md">
+                                        <span class="material-symbols-outlined text-status-available text-[32px]"
+                                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                </div>
+                                <h3 class="font-display-md text-display-md text-ink-primary font-bold">Check-out
+                                        Berhasil!</h3>
+                                <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Data penghuni telah
+                                        diperbarui dan status kamar kini menjadi Tersedia.</p>
+                        </div>
+                        <!-- Info -->
+                        <div class="px-lg pb-lg border-t border-border-hairline pt-lg">
+                                <div class="grid grid-cols-2 gap-base">
+                                        <div>
+                                                <div
+                                                        class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                        Informasi Penghuni</div>
+                                                <div class="font-title-md text-title-md text-ink-primary"
+                                                        id="checkoutSuccessName">Budi Santoso</div>
+                                                <div class="font-body-sm text-body-sm text-ink-muted"
+                                                        id="checkoutSuccessBookingId">BK-202310-001</div>
+                                        </div>
+                                        <div>
+                                                <div
+                                                        class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                        Informasi Kamar</div>
+                                                <div class="font-title-md text-title-md text-ink-primary"
+                                                        id="checkoutSuccessRoom">Kamar A01</div>
+                                                <div class="font-body-sm text-body-sm text-ink-muted"
+                                                        id="checkoutSuccessBranch">Cabang Utama</div>
+                                        </div>
+                                </div>
+                                <div class="mt-base">
+                                        <div
+                                                class="font-tag-uppercase text-tag-uppercase text-ink-muted uppercase mb-xs">
+                                                Waktu Check-out</div>
+                                        <div class="font-title-md text-title-md text-ink-primary"
+                                                id="checkoutSuccessTime">15 Okt 2023, 10:30 WIB</div>
+                                </div>
+                        </div>
+                        <!-- Footer -->
+                        <div class="px-lg py-md flex items-center justify-end">
+                                <button class="font-button-md text-button-md bg-primary-container text-on-primary hover:bg-surface-tint transition-colors px-lg py-sm rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]"
+                                        id="checkoutSuccessDone" type="button">Selesai</button>
                         </div>
                 </div>
         </div>

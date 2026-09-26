@@ -27,7 +27,7 @@
             <button id="notificationBtn"
                 class="text-ink-muted hover:bg-surface-variant transition-colors p-sm rounded-full relative px-sm py-xxs font-badge text-badge inline-flex items-center gap-xxs">
                 <span class="material-symbols-outlined">notifications</span>
-                <span id="notificationDot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
+                <span id="notificationDot" class="hidden absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
             </button>
             <!-- Notification Panel -->
             <div id="notificationPanel"
@@ -36,56 +36,16 @@
                     <div class="flex items-center gap-sm">
                         <h3 class="font-title-md text-title-md text-ink-primary font-bold">Notifikasi</h3>
                         <span id="notificationCountBadge"
-                            class="bg-primary text-on-primary text-badge font-bold px-2 py-0.5 rounded-full uppercase inline-flex items-center gap-xxs">3
+                            class="hidden bg-primary text-on-primary text-badge font-bold px-2 py-0.5 rounded-full uppercase inline-flex items-center gap-xxs">0
                             Baru</span>
                     </div>
                     <button id="markAllReadBtn" class="text-primary text-label-md font-semibold hover:underline">Tandai
                         semua dibaca</button>
                 </div>
-                <div class="max-h-[420px] overflow-y-auto divide-y divide-border-hairline">
-                    <div class="notification-item flex gap-sm px-base py-base bg-primary/5 rounded-lg"
-                        data-unread="true">
-                        <div
-                            class="w-9 h-9 rounded-full bg-status-available/10 text-status-available flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]"
-                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-body-sm text-ink-primary">Pembayaran Berhasil!</p>
-                            <p class="text-label-md text-ink-secondary mt-0.5">Budi Santoso (Kamar 102 - Cabang Utama)
-                                telah membayar tagihan via Payment Gateway.</p>
-                            <p class="text-badge text-status-available mt-1">Status tagihan otomatis diperbarui
-                                menjadi Lunas.</p>
-                            <p class="text-badge text-ink-muted mt-1">10 menit yang lalu</p>
-                        </div>
-                    </div>
-                    <div class="notification-item flex gap-sm px-base py-base bg-status-warning/5 rounded-lg"
-                        data-unread="true">
-                        <div
-                            class="w-9 h-9 rounded-full bg-status-warning/10 text-status-warning flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">schedule</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-body-sm text-ink-primary">Peringatan Jatuh Tempo!</p>
-                            <p class="text-label-md text-ink-secondary mt-0.5">Masa sewa Siti Aminah di Kamar 205
-                                (Bulanan Keluarga) akan berakhir besok.</p>
-                            <p class="text-badge text-status-warning mt-1">Harap antar perpanjangan atau persiapan
-                                check-out.</p>
-                            <p class="text-badge text-ink-muted mt-1">1 jam yang lalu</p>
-                        </div>
-                    </div>
-                    <div class="notification-item flex gap-sm px-base py-base" data-unread="false">
-                        <div
-                            class="w-9 h-9 rounded-full bg-status-available/10 text-status-available flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">send</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-body-sm text-ink-primary">Pengingat Otomatis Terkirim</p>
-                            <p class="text-label-md text-ink-secondary mt-0.5">Sistem telah mengirimkan pesan tagihan ke
-                                Rina Wijaya (Kamar 310) via WhatsApp.</p>
-                            <p class="text-badge text-ink-muted mt-1">3 jam yang lalu</p>
-                        </div>
-                    </div>
+                <!-- Diisi js/admin-notifikasi.js: gabungan log_notifikasi (pengingat
+                     jatuh tempo) & transaksi_pemesanan (pesanan baru, lunas maupun belum). -->
+                <div id="notificationList" class="max-h-[420px] overflow-y-auto divide-y divide-border-hairline">
+                    <div class="px-base py-section text-center text-ink-muted text-body-sm">Memuat notifikasi...</div>
                 </div>
                 <div class="px-base py-base border-t border-border-hairline text-center">
                     <a href="#" class="text-primary text-label-md font-semibold hover:underline">Lihat Semua
@@ -193,9 +153,6 @@
     (function () {
         var notificationBtn = document.getElementById('notificationBtn');
         var notificationPanel = document.getElementById('notificationPanel');
-        var notificationDot = document.getElementById('notificationDot');
-        var notificationCountBadge = document.getElementById('notificationCountBadge');
-        var markAllReadBtn = document.getElementById('markAllReadBtn');
 
         function togglePanel(show) {
             notificationPanel.classList.toggle('hidden', !show);
@@ -211,18 +168,11 @@
                 togglePanel(false);
             }
         });
-
-        markAllReadBtn.addEventListener('click', function () {
-            document.querySelectorAll('.notification-item[data-unread="true"]').forEach(function (item) {
-                item.dataset.unread = 'false';
-                item.classList.remove('bg-primary/5', 'bg-status-warning/5');
-            });
-            notificationDot.classList.add('hidden');
-            notificationCountBadge.classList.add('hidden');
-        });
     })();
 </script>
 
-<!-- Menghidupkan tombol menu di layar kecil: sidebar menjadi laci geser.
+<!-- Mengisi panel notifikasi dengan data Firestore nyata (log_notifikasi
+     & transaksi_pemesanan) dan menghidupkan tombol menu di layar kecil.
      Skrip pemuat di tiap halaman menyusun ulang <script> ini agar dijalankan. -->
+<script src="../js/admin-notifikasi.js"></script>
 <script src="../js/admin-laci.js"></script>

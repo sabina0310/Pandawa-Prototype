@@ -62,8 +62,10 @@
             class="status-tab pb-3 border-b-2 border-primary font-title-md text-title-md text-primary font-bold">Semua
             Pesanan</button>
           <button data-tab="menunggu-alokasi"
-            class="status-tab pb-3 border-b-2 border-transparent font-title-md text-title-md text-ink-muted hover:text-on-surface transition-colors">Menunggu
-            Alokasi</button>
+            class="status-tab pb-3 border-b-2 border-transparent font-title-md text-title-md text-ink-muted hover:text-on-surface transition-colors flex items-center gap-2">Menunggu
+            Alokasi
+            <span class="hidden bg-error text-on-error rounded-full px-2 py-0.5 font-badge text-badge inline-flex items-center gap-xxs" id="badgeMenungguAlokasi">0</span>
+          </button>
           <button data-tab="jatuh-tempo"
             class="status-tab pb-3 border-b-2 border-transparent font-title-md text-title-md text-ink-muted hover:text-on-surface transition-colors flex items-center gap-2">
             Jatuh Tempo / Menunggak
@@ -124,7 +126,7 @@
             <span class="material-symbols-outlined">payments</span>
           </div>
           <div>
-            <p class="font-label-md text-body-sm text-ink-muted font-semibold">Jatuh Tempo Hari Ini</p>
+            <p class="font-label-md text-body-sm text-ink-muted font-semibold">Jatuh Tempo Minggu Ini</p>
             <p class="font-stat-display text-stat-display text-ink-primary font-bold" id="statJatuhTempo">0</p>
           </div>
         </div>

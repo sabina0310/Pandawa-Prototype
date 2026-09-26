@@ -334,7 +334,7 @@ async function jobBulanan(db) {
   for (const dokumen of kandidat) {
     hasil.push(await prosesSatu(
       db, dokumen, 'bulanan', pesanBulanan,
-      'Pengingat Jatuh Tempo (H-' + HARI_SEBELUM_JATUH_TEMPO + ')'
+      'Pengingat Masa Sewa'
     ));
   }
 
@@ -387,7 +387,7 @@ async function jobHarian(db) {
   for (const dokumen of kandidat) {
     hasil.push(await prosesSatu(
       db, dokumen, 'harian', pesanHarian,
-      'Pengingat Check-out Hari Ini'
+      'Pengingat Masa Sewa'
     ));
   }
 

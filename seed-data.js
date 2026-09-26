@@ -11,7 +11,7 @@
  * MENGISI 4 COLLECTION:
  *   1. cabang              -> 4 dokumen  (induk / master data)
  *   2. kamar               -> 40-60 dokumen (mereferensikan cabang_id)
- *   3. transaksi_pemesanan -> 50 dokumen (mereferensikan cabang & kamar,
+ *   3. transaksi_pemesanan -> 28 dokumen (mereferensikan cabang & kamar,
  *                             sewa bulanan ikut membawa penghuni tambahan)
  *   4. user                -> 2 dokumen  (akun admin & super admin)
  *
@@ -195,6 +195,18 @@ function mundurDurasi(tanggalAkhir, tipeSewa, durasi) {
   }
   hasil.setHours(14, 0, 0, 0); // jam check-in standar
   return hasil;
+}
+
+/**
+ * Tanggal literal (bukan acak). Dipakai transaksi skenario pengujian
+ * jatuh tempo yang HARUS jatuh pada tanggal pasti (lihat BAGIAN 6),
+ * supaya tidak bergantung pada aritmetika tanggal yang bisa meleset
+ * pada kasus tepi seperti akhir bulan.
+ *
+ * @param {number} bulan - 1-12 (Januari=1), BUKAN 0-indeks seperti Date bawaan
+ */
+function tgl(tahun, bulan, hari, jam, menit) {
+  return new Date(tahun, bulan - 1, hari, jam !== undefined ? jam : 14, menit || 0, 0, 0);
 }
 
 /**
@@ -444,40 +456,45 @@ function buatDataKamar() {
 // =====================================================================
 // BAGIAN 6 - MEMBUAT DATA COLLECTION "transaksi_pemesanan"
 // -----------------------------------------------------------------
-// Komposisi 50 transaksi (sesuai ketentuan a-f):
-//   (a)  8 pending, belum dialokasikan
-//   (b)  8 settlement, belum dialokasikan  -> perlu tindakan admin
-//   (c) 15 settlement bulanan, sudah check-in -> 6 di antaranya jatuh tempo dekat
-//   (g)  2 settlement harian, sudah check-in, CHECK-OUT HARI INI
-//   (e)  8 sudah check-out                 -> riwayat
-//   (f)  9 gagal (deny/expire/cancel)
+// Dataset ini TIDAK diacak seperti versi sebelumnya. Isinya sengaja
+// dibuat sebagai skenario pasti untuk menguji perilaku jatuh tempo &
+// notifikasi cron (api/cron.js), ditambah beberapa sampel status lain
+// supaya tampilan admin/super admin tidak kosong.
+//
+// KOMPOSISI (28 transaksi total):
+//
+//   KELOMPOK A -- 5 sewa BULANAN yang sedang aktif, berakhir
+//                 SERENTAK di akhir tahun (31 Des 2026).
+//   KELOMPOK B -- 2 sewa bulanan + 3 sewa harian yang BELUM check-in,
+//                 mulai aktif BULAN DEPAN (Oktober 2026). Sudah lunas,
+//                 tetapi kamar sengaja belum dialokasikan (kamar_id
+//                 null) -- meniru alur nyata: admin baru mengalokasikan
+//                 kamar mendekati tanggal check-in.
+//   KELOMPOK C -- 2 sewa bulanan + 2 sewa harian yang SEDANG aktif dan
+//                 jatuh tempo (check-out) TEPAT 1 atau 2 Oktober 2026.
+//   KELOMPOK D -- 3 sewa bulanan + 2 sewa harian yang SEDANG aktif dan
+//                 jatuh tempo (check-out) TEPAT 8 atau 9 Oktober 2026.
+//
+//   SAMPEL      -- 3 pending, 3 gagal (deny/expire/cancel), dan
+//                 3 riwayat sudah check-out, agar tab-tab lain pada
+//                 halaman admin tetap punya isi untuk didemokan.
+//
+// Kelompok C dan D (9 transaksi) itulah yang dimaksud "akan jatuh
+// tempo" -- BAGIAN 6A2 di bawah membuatkan log_notifikasi penahan
+// untuk kesembilannya, supaya begitu tanggal pemicunya tiba, cron
+// menganggap sudah pernah mengirim dan TIDAK benar-benar mengirim
+// WhatsApp ke nomor dummy.
 // =====================================================================
-const JUMLAH_PENDING = 8;
-const JUMLAH_BELUM_ALOKASI = 8;
-const JUMLAH_CHECKED_IN = 15;
-const JUMLAH_JATUH_TEMPO = 6; // bagian dari JUMLAH_CHECKED_IN
-const JUMLAH_CHECKED_OUT = 8;
-const JUMLAH_GAGAL = 9;
 
-// ---------------------------------------------------------------------
-// DATA TERJAMIN UNTUK PENGUJIAN NOTIFIKASI (api/cron.js)
-// ---------------------------------------------------------------------
-// Tanpa ini, kedua job notifikasi bisa saja menemukan nol kandidat
-// karena tanggalnya diacak. Angka di bawah menjamin selalu ada bahan
-// uji begitu seeding selesai:
-//
-//   JUMLAH_TEPAT_H7  -> sewa bulanan yang check-out TEPAT 7 hari lagi
-//                       (bahan uji job bulanan)
-//   JUMLAH_HARIAN_HARI_INI -> sewa harian yang check-out HARI INI
-//                       (bahan uji job harian)
-//
-// Keduanya berstatus checked_in, karena notifikasi hanya masuk akal
-// untuk penyewa yang memang sedang menempati kamar.
-const JUMLAH_TEPAT_H7 = 2;          // bagian dari JUMLAH_JATUH_TEMPO
-const JUMLAH_HARIAN_HARI_INI = 2;   // blok tersendiri
+const JUMLAH_SAMPEL_PENDING = 3;
+const JUMLAH_SAMPEL_GAGAL = 3;
+const JUMLAH_SAMPEL_CHECKED_OUT = 3;
 
 function buatDataTransaksi(daftarKamar) {
   const daftarTransaksi = [];
+  // Menandai transaksi kelompok C & D, dipakai BAGIAN 6A2 untuk
+  // membuat log_notifikasi penahannya.
+  const daftarJatuhTempo = [];
 
   // Peta cabang agar mudah dicari berdasarkan id
   const petaCabang = {};
@@ -554,12 +571,8 @@ function buatDataTransaksi(daftarKamar) {
     return dokumen;
   }
 
-  // Menentukan lama sewa sesuai tipe
-  function acakDurasi(tipeSewa) {
-    return tipeSewa === "bulanan" ? acakAngka(1, 6) : acakAngka(1, 7);
-  }
-
-  // Menghitung tanggal check-out dari tanggal check-in
+  // Menghitung tanggal check-out dari tanggal check-in (dipakai
+  // kelompok B, yang tanggal pastinya cukup pada sisi check-in).
   function hitungCheckout(tanggalCheckin, tipeSewa, durasi) {
     const hasil = new Date(tanggalCheckin);
     if (tipeSewa === "bulanan") {
@@ -571,15 +584,157 @@ function buatDataTransaksi(daftarKamar) {
     return hasil;
   }
 
-  // -------------------------------------------------------------
-  // (a) PENDING - baru memesan, belum dibayar, belum dialokasikan
-  // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_PENDING; i++) {
-    const cabang = acakDari(DAFTAR_CABANG);
-    const tipeSewa = Math.random() < 0.6 ? "bulanan" : "harian";
-    const durasi = acakDurasi(tipeSewa);
+  /**
+   * Menurunkan waktu_transaksi, settlement_time, dan tanggal_aktual_checkin
+   * dari sebuah tanggal check-in yang SUDAH TERJADI (kelompok A/C/D).
+   * Polanya sama dengan yang dipakai versi seeding sebelumnya: transaksi
+   * terjadi beberapa hari sebelum check-in, lunas tidak lama sesudahnya.
+   */
+  function turunanSudahCheckin(tanggalCheckin) {
+    const waktuTransaksi = new Date(tanggalCheckin);
+    waktuTransaksi.setDate(waktuTransaksi.getDate() - acakAngka(1, 10));
+    waktuTransaksi.setHours(acakAngka(8, 20), acakAngka(0, 59), 0, 0);
 
-    const waktuTransaksi = geserHari(-acakAngka(0, 14));
+    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
+
+    const aktualCheckin = new Date(tanggalCheckin);
+    aktualCheckin.setHours(acakAngka(13, 19), acakAngka(0, 59), 0, 0);
+
+    return { waktuTransaksi: waktuTransaksi, waktuSettlement: waktuSettlement, aktualCheckin: aktualCheckin };
+  }
+
+  // Mengambil satu kamar acak lalu menandainya terisi (dipakai A/C/D)
+  function ambilKamarTerisi() {
+    const kamar = kamarTersisa.pop();
+    kamar.tersedia = false;
+    return kamar;
+  }
+
+  // -------------------------------------------------------------
+  // KELOMPOK A -- 5 sewa bulanan aktif, berakhir bersama 31 Des 2026
+  // -------------------------------------------------------------
+  const checkoutAkhirTahun = tgl(2026, 12, 31, 12);
+  const KELOMPOK_A = [
+    { checkin: tgl(2026, 5, 1), durasi: 7 },
+    { checkin: tgl(2026, 6, 1), durasi: 6 },
+    { checkin: tgl(2026, 7, 1), durasi: 5 },
+    { checkin: tgl(2026, 8, 1), durasi: 4 },
+    { checkin: tgl(2026, 9, 1), durasi: 3 }
+  ];
+
+  KELOMPOK_A.forEach(function (item) {
+    const kamar = ambilKamarTerisi();
+    const cabang = petaCabang[kamar.cabang_id];
+    const turunan = turunanSudahCheckin(item.checkin);
+
+    daftarTransaksi.push(buatTransaksi({
+      transaction_status: "settlement",
+      transaction_time: turunan.waktuTransaksi,
+      settlement_time: turunan.waktuSettlement,
+      order_amount: hitungNominal(cabang, "bulanan", item.durasi),
+      cabang_id: kamar.cabang_id,
+      kamar_id: kamar._id,
+      tipe_sewa: "bulanan",
+      tanggal_checkin: item.checkin,
+      tanggal_checkout: checkoutAkhirTahun,
+      status_checkin: "checked_in",
+      tanggal_aktual_checkin: turunan.aktualCheckin,
+      tanggal_aktual_checkout: null
+    }));
+  });
+
+  // -------------------------------------------------------------
+  // KELOMPOK B -- 2 bulanan + 3 harian, mulai aktif BULAN DEPAN
+  // (Oktober 2026). Sudah lunas, belum check-in, kamar BELUM
+  // dialokasikan (menunggu tindakan admin mendekati tanggal mulai).
+  // -------------------------------------------------------------
+  const KELOMPOK_B = [
+    { tipeSewa: "bulanan", checkin: tgl(2026, 10, 5), durasi: 2, cabangId: "pesona-kos" },
+    { tipeSewa: "bulanan", checkin: tgl(2026, 10, 15), durasi: 3, cabangId: "gangnam-kos" },
+    { tipeSewa: "harian", checkin: tgl(2026, 10, 3), durasi: 3, cabangId: "pelangi-kos" },
+    { tipeSewa: "harian", checkin: tgl(2026, 10, 10), durasi: 2, cabangId: "seleb-kos" },
+    { tipeSewa: "harian", checkin: tgl(2026, 10, 20), durasi: 4, cabangId: "pesona-kos" }
+  ];
+
+  KELOMPOK_B.forEach(function (item) {
+    const cabang = petaCabang[item.cabangId];
+
+    // Pesanan sudah dibuat & lunas beberapa hari sebelum hari ini,
+    // jauh sebelum tanggal check-in-nya sendiri (yang masih di masa
+    // depan bulan depan).
+    const waktuTransaksi = geserHari(-acakAngka(1, 15));
+    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
+
+    daftarTransaksi.push(buatTransaksi({
+      transaction_status: "settlement",
+      transaction_time: waktuTransaksi,
+      settlement_time: waktuSettlement,
+      order_amount: hitungNominal(cabang, item.tipeSewa, item.durasi),
+      cabang_id: item.cabangId,
+      kamar_id: null, // belum dialokasikan -- baru aktif bulan depan
+      tipe_sewa: item.tipeSewa,
+      tanggal_checkin: item.checkin,
+      tanggal_checkout: hitungCheckout(item.checkin, item.tipeSewa, item.durasi),
+      status_checkin: "belum_checkin",
+      tanggal_aktual_checkin: null,
+      tanggal_aktual_checkout: null
+    }));
+  });
+
+  // -------------------------------------------------------------
+  // KELOMPOK C -- 2 bulanan + 2 harian, jatuh tempo 1 atau 2 Okt 2026
+  // KELOMPOK D -- 3 bulanan + 2 harian, jatuh tempo 8 atau 9 Okt 2026
+  // Keduanya SEDANG aktif (checked_in) per hari ini. Setiap anggotanya
+  // ditandai sebagai "jatuh tempo" agar BAGIAN 6A2 membuatkan
+  // log_notifikasi penahannya.
+  // -------------------------------------------------------------
+  const KELOMPOK_CD = [
+    // --- Kelompok C: jatuh tempo 1-2 Oktober 2026 ---
+    { tipeSewa: "bulanan", checkin: tgl(2026, 9, 1), checkout: tgl(2026, 10, 1, 12), durasi: 1 },
+    { tipeSewa: "bulanan", checkin: tgl(2026, 8, 2), checkout: tgl(2026, 10, 2, 12), durasi: 2 },
+    { tipeSewa: "harian", checkin: tgl(2026, 9, 24), checkout: tgl(2026, 10, 1, 12), durasi: 7 },
+    { tipeSewa: "harian", checkin: tgl(2026, 9, 25), checkout: tgl(2026, 10, 2, 12), durasi: 7 },
+    // --- Kelompok D: jatuh tempo 8-9 Oktober 2026 ---
+    { tipeSewa: "bulanan", checkin: tgl(2026, 9, 8), checkout: tgl(2026, 10, 8, 12), durasi: 1 },
+    { tipeSewa: "bulanan", checkin: tgl(2026, 7, 8), checkout: tgl(2026, 10, 8, 12), durasi: 3 },
+    { tipeSewa: "bulanan", checkin: tgl(2026, 8, 9), checkout: tgl(2026, 10, 9, 12), durasi: 2 },
+    { tipeSewa: "harian", checkin: tgl(2026, 9, 20), checkout: tgl(2026, 10, 8, 12), durasi: 18 },
+    { tipeSewa: "harian", checkin: tgl(2026, 9, 21), checkout: tgl(2026, 10, 9, 12), durasi: 18 }
+  ];
+
+  KELOMPOK_CD.forEach(function (item) {
+    const kamar = ambilKamarTerisi();
+    const cabang = petaCabang[kamar.cabang_id];
+    const turunan = turunanSudahCheckin(item.checkin);
+
+    const transaksi = buatTransaksi({
+      transaction_status: "settlement",
+      transaction_time: turunan.waktuTransaksi,
+      settlement_time: turunan.waktuSettlement,
+      order_amount: hitungNominal(cabang, item.tipeSewa, item.durasi),
+      cabang_id: kamar.cabang_id,
+      kamar_id: kamar._id,
+      tipe_sewa: item.tipeSewa,
+      tanggal_checkin: item.checkin,
+      tanggal_checkout: item.checkout,
+      status_checkin: "checked_in",
+      tanggal_aktual_checkin: turunan.aktualCheckin,
+      tanggal_aktual_checkout: null
+    });
+
+    daftarTransaksi.push(transaksi);
+    daftarJatuhTempo.push(transaksi);
+  });
+
+  // -------------------------------------------------------------
+  // SAMPEL -- PENDING (baru memesan, belum dibayar)
+  // -------------------------------------------------------------
+  for (let i = 0; i < JUMLAH_SAMPEL_PENDING; i++) {
+    const cabang = acakDari(DAFTAR_CABANG);
+    const tipeSewa = i % 2 === 0 ? "bulanan" : "harian";
+    const durasi = tipeSewa === "bulanan" ? acakAngka(1, 6) : acakAngka(1, 7);
+
+    const waktuTransaksi = geserHari(-acakAngka(0, 10));
     const tanggalCheckin = geserHari(acakAngka(1, 30), 14);
 
     daftarTransaksi.push(buatTransaksi({
@@ -588,7 +743,7 @@ function buatDataTransaksi(daftarKamar) {
       settlement_time: null,
       order_amount: hitungNominal(cabang, tipeSewa, durasi),
       cabang_id: cabang.id,
-      kamar_id: null,                  // belum dialokasikan
+      kamar_id: null,
       tipe_sewa: tipeSewa,
       tanggal_checkin: tanggalCheckin,
       tanggal_checkout: hitungCheckout(tanggalCheckin, tipeSewa, durasi),
@@ -599,24 +754,23 @@ function buatDataTransaksi(daftarKamar) {
   }
 
   // -------------------------------------------------------------
-  // (b) SETTLEMENT tapi BELUM DIALOKASIKAN - menunggu tindakan admin
+  // SAMPEL -- GAGAL (deny / expire / cancel)
   // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_BELUM_ALOKASI; i++) {
+  for (let i = 0; i < JUMLAH_SAMPEL_GAGAL; i++) {
     const cabang = acakDari(DAFTAR_CABANG);
-    const tipeSewa = Math.random() < 0.6 ? "bulanan" : "harian";
-    const durasi = acakDurasi(tipeSewa);
+    const tipeSewa = i % 2 === 0 ? "bulanan" : "harian";
+    const durasi = tipeSewa === "bulanan" ? acakAngka(1, 6) : acakAngka(1, 7);
 
-    const waktuTransaksi = geserHari(-acakAngka(1, 20));
-    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
-    const tanggalCheckin = geserHari(acakAngka(0, 21), 14);
+    const waktuTransaksi = geserHari(-acakAngka(5, 60));
+    const tanggalCheckin = geserHari(-acakAngka(0, 40), 14);
 
     daftarTransaksi.push(buatTransaksi({
-      transaction_status: "settlement",
+      transaction_status: acakDari(STATUS_GAGAL),
       transaction_time: waktuTransaksi,
-      settlement_time: waktuSettlement,
+      settlement_time: null,
       order_amount: hitungNominal(cabang, tipeSewa, durasi),
       cabang_id: cabang.id,
-      kamar_id: null,                  // sudah bayar, kamar belum ditentukan
+      kamar_id: null,
       tipe_sewa: tipeSewa,
       tanggal_checkin: tanggalCheckin,
       tanggal_checkout: hitungCheckout(tanggalCheckin, tipeSewa, durasi),
@@ -627,126 +781,15 @@ function buatDataTransaksi(daftarKamar) {
   }
 
   // -------------------------------------------------------------
-  // (c) & (d) SEDANG MENGHUNI (checked_in)
-  //     6 di antaranya sengaja dibuat mendekati jatuh tempo (H-1..H-7)
-  //     Kamar yang dipakai di sini diubah menjadi tersedia = false
+  // SAMPEL -- SUDAH CHECK-OUT (riwayat penyewa yang selesai)
+  // Kamar yang dipakai tetap tersedia = true.
   // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_CHECKED_IN; i++) {
+  for (let i = 0; i < JUMLAH_SAMPEL_CHECKED_OUT; i++) {
     const kamar = kamarTersisa.pop();
     const cabang = petaCabang[kamar.cabang_id];
 
-    // Penghuni aktif sengaja dibuat sewa BULANAN. Alasannya: sewa harian
-    // paling lama 7 hari, sehingga penghuninya pasti selalu terhitung
-    // "mendekati jatuh tempo" dan jumlahnya jadi tidak terkendali.
-    const tipeSewa = "bulanan";
-    const durasi = acakDurasi(tipeSewa); // 1-6 bulan
-
-    // Sisa hari menuju check-out.
-    // 6 transaksi pertama -> 1 sampai 7 hari lagi (mendekati jatuh tempo).
-    // Sisanya -> lebih lama, tapi tidak boleh melebihi masa sewanya sendiri
-    // supaya tanggal check-in tetap jatuh di masa lalu.
-    // Beberapa transaksi pertama sengaja dibuat TEPAT 7 hari lagi agar
-    // job notifikasi bulanan selalu punya kandidat saat diuji.
-    const batasAman = Math.min(60, durasi * 28 - 2);
-    let hariMenujuCheckout;
-
-    if (i < JUMLAH_TEPAT_H7) {
-      hariMenujuCheckout = 7;
-    } else if (i < JUMLAH_JATUH_TEMPO) {
-      hariMenujuCheckout = acakAngka(1, 7);
-    } else {
-      hariMenujuCheckout = acakAngka(8, batasAman);
-    }
-
-    const tanggalCheckout = geserHari(hariMenujuCheckout, 12);
-    const tanggalCheckin = mundurDurasi(tanggalCheckout, tipeSewa, durasi);
-
-    // Transaksi terjadi beberapa hari sebelum check-in
-    const waktuTransaksi = new Date(tanggalCheckin);
-    waktuTransaksi.setDate(waktuTransaksi.getDate() - acakAngka(1, 10));
-    waktuTransaksi.setHours(acakAngka(8, 20), acakAngka(0, 59), 0, 0);
-
-    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
-
-    // Check-in sebenarnya terjadi pada hari yang sama, jam bisa berbeda
-    const aktualCheckin = new Date(tanggalCheckin);
-    aktualCheckin.setHours(acakAngka(13, 19), acakAngka(0, 59), 0, 0);
-
-    // Kamar sedang dihuni -> tidak tersedia
-    kamar.tersedia = false;
-
-    daftarTransaksi.push(buatTransaksi({
-      transaction_status: "settlement",
-      transaction_time: waktuTransaksi,
-      settlement_time: waktuSettlement,
-      order_amount: hitungNominal(cabang, tipeSewa, durasi),
-      cabang_id: kamar.cabang_id,
-      kamar_id: kamar._id,             // sudah dialokasikan admin
-      tipe_sewa: tipeSewa,
-      tanggal_checkin: tanggalCheckin,
-      tanggal_checkout: tanggalCheckout,
-      status_checkin: "checked_in",
-      tanggal_aktual_checkin: aktualCheckin,
-      tanggal_aktual_checkout: null
-    }));
-  }
-
-  // -------------------------------------------------------------
-  // (g) SEWA HARIAN YANG CHECK-OUT HARI INI
-  //     Bahan uji untuk job notifikasi harian pada api/cron.js.
-  //     Penyewa sedang menempati kamar dan harus keluar hari ini.
-  // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_HARIAN_HARI_INI; i++) {
-    const kamar = kamarTersisa.pop();
-    const cabang = petaCabang[kamar.cabang_id];
-
-    const tipeSewa = "harian";
-    const durasi = acakAngka(1, 5); // menginap 1-5 malam
-
-    // Check-out hari ini pukul 12 siang, check-in beberapa hari lalu
-    const tanggalCheckout = geserHari(0, 12);
-    const tanggalCheckin = mundurDurasi(tanggalCheckout, tipeSewa, durasi);
-
-    const waktuTransaksi = new Date(tanggalCheckin);
-    waktuTransaksi.setDate(waktuTransaksi.getDate() - acakAngka(1, 5));
-    waktuTransaksi.setHours(acakAngka(8, 20), acakAngka(0, 59), 0, 0);
-
-    const waktuSettlement = new Date(waktuTransaksi.getTime() + acakAngka(2, 45) * 60000);
-
-    const aktualCheckin = new Date(tanggalCheckin);
-    aktualCheckin.setHours(acakAngka(13, 19), acakAngka(0, 59), 0, 0);
-
-    // Masih dihuni sampai siang ini
-    kamar.tersedia = false;
-
-    daftarTransaksi.push(buatTransaksi({
-      transaction_status: "settlement",
-      transaction_time: waktuTransaksi,
-      settlement_time: waktuSettlement,
-      order_amount: hitungNominal(cabang, tipeSewa, durasi),
-      cabang_id: kamar.cabang_id,
-      kamar_id: kamar._id,
-      tipe_sewa: tipeSewa,
-      tanggal_checkin: tanggalCheckin,
-      tanggal_checkout: tanggalCheckout,
-      status_checkin: "checked_in",
-      tanggal_aktual_checkin: aktualCheckin,
-      tanggal_aktual_checkout: null
-    }));
-  }
-
-  // -------------------------------------------------------------
-  // (e) SUDAH CHECK-OUT - riwayat penyewa yang selesai
-  //     Kamar yang dipakai tetap tersedia = true
-  // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_CHECKED_OUT; i++) {
-    const kamar = kamarTersisa.pop();
-    const cabang = petaCabang[kamar.cabang_id];
-
-    // Riwayat memakai campuran harian dan bulanan agar datanya bervariasi.
-    // Semua tanggalnya di masa lalu, jadi tipe apa pun aman.
     const tipeSewa = i % 2 === 0 ? "harian" : "bulanan";
-    const durasi = acakDurasi(tipeSewa);
+    const durasi = tipeSewa === "bulanan" ? acakAngka(1, 6) : acakAngka(1, 7);
 
     // Seluruh rangkaian tanggal berada di masa lalu
     const tanggalCheckout = geserHari(-acakAngka(5, 90), 12);
@@ -783,34 +826,7 @@ function buatDataTransaksi(daftarKamar) {
     }));
   }
 
-  // -------------------------------------------------------------
-  // (f) TRANSAKSI GAGAL - deny / expire / cancel
-  // -------------------------------------------------------------
-  for (let i = 0; i < JUMLAH_GAGAL; i++) {
-    const cabang = acakDari(DAFTAR_CABANG);
-    const tipeSewa = Math.random() < 0.6 ? "bulanan" : "harian";
-    const durasi = acakDurasi(tipeSewa);
-
-    const waktuTransaksi = geserHari(-acakAngka(5, 120));
-    const tanggalCheckin = geserHari(-acakAngka(0, 100), 14);
-
-    daftarTransaksi.push(buatTransaksi({
-      transaction_status: acakDari(STATUS_GAGAL),
-      transaction_time: waktuTransaksi,
-      settlement_time: null,           // tidak pernah lunas
-      order_amount: hitungNominal(cabang, tipeSewa, durasi),
-      cabang_id: cabang.id,
-      kamar_id: null,
-      tipe_sewa: tipeSewa,
-      tanggal_checkin: tanggalCheckin,
-      tanggal_checkout: hitungCheckout(tanggalCheckin, tipeSewa, durasi),
-      status_checkin: "belum_checkin",
-      tanggal_aktual_checkin: null,
-      tanggal_aktual_checkout: null
-    }));
-  }
-
-  return daftarTransaksi;
+  return { transaksi: daftarTransaksi, jatuhTempo: daftarJatuhTempo };
 }
 
 // =====================================================================
@@ -823,11 +839,12 @@ function buatDataTransaksi(daftarKamar) {
 //   job bulanan -> sewa bulanan yang check-out TEPAT 7 hari lagi
 //   job harian  -> sewa harian yang check-out HARI INI
 //
-// Data hasil seeding SENGAJA dibuat memenuhi kedua syarat itu (lihat
-// JUMLAH_TEPAT_H7 dan JUMLAH_HARIAN_HARI_INI), supaya ada bahan uji.
-// Akibatnya, begitu cron menyala ia akan benar-benar MENGIRIM WhatsApp
-// ke nomor-nomor dummy tersebut -- nomor yang boleh jadi milik orang
-// lain yang tidak ada hubungannya dengan proyek ini.
+// Kelompok C dan D pada BAGIAN 6 (9 transaksi, ditandai lewat
+// daftarJatuhTempo) SENGAJA dibuat jatuh tempo pada tanggal pasti di
+// awal Oktober 2026. Begitu tanggal itu tiba, cron akan menganggapnya
+// kandidat dan benar-benar mengirim WhatsApp ke nomor dummy -- nomor
+// yang boleh jadi milik orang lain yang tidak ada hubungannya dengan
+// proyek ini.
 //
 // CARA MENCEGAHNYA
 //
@@ -835,13 +852,19 @@ function buatDataTransaksi(daftarKamar) {
 // apakah dokumen ber-ID {order_id}_{jenis}_{tanggal} sudah ada di
 // collection "log_notifikasi". Sudah ada -> dilewati.
 //
-// Jadi seeder cukup menuliskan dokumen log itu LEBIH DULU. Cron akan
-// menganggap notifikasinya sudah pernah dikirim hari ini, lalu melewati
-// penyewa tersebut tanpa mengirim apa pun.
+// Beda dengan versi seeder sebelumnya (yang hanya menahan kandidat HARI
+// INI), di sini "tanggal" pemicunya dihitung PER TRANSAKSI, karena
+// jatuh temponya memang tersebar di beberapa tanggal berbeda:
 //
-// Cukup untuk tanggal hari ini saja, karena besok kedua kelompok itu
-// tidak lagi memenuhi syarat: yang H-7 berubah menjadi H-6, dan yang
-// check-out hari ini tanggalnya sudah lewat.
+//   bulanan -> tanggal pemicu = tanggal_checkout dikurangi 7 hari
+//              (persis saat job bulanan akan menemukannya sebagai H-7)
+//   harian  -> tanggal pemicu = tanggal_checkout itu sendiri
+//
+// Dua dari sembilan (kelompok C, bulanan, jatuh tempo 1-2 Oktober)
+// pemicunya jatuh pada 24-25 September -- yaitu SEBELUM tanggal
+// seeding ini dijalankan (26 September 2026). Log tetap dibuat untuk
+// keduanya agar konsisten, meski secara praktis sudah tidak mungkin
+// terpakai (cron tidak pernah "mundur" ke tanggal yang sudah lewat).
 //
 // Catatan kejujuran data: status dicatat "dilewati", BUKAN "berhasil".
 // Tidak ada pesan yang pernah dikirim, jadi log ini tidak boleh mengaku
@@ -854,9 +877,11 @@ const COL_LOG = "log_notifikasi";
 // Harus sama dengan HARI_SEBELUM_JATUH_TEMPO pada api/cron.js
 const HARI_SEBELUM_JATUH_TEMPO = 7;
 
+// Judul disamakan untuk kedua jenis sewa -- perbedaan bulanan (H-7)
+// vs harian (hari-H) sudah cukup terlihat dari isi "ringkasan" masing-masing.
 const JUDUL_LOG = {
-  bulanan: "Pengingat Jatuh Tempo (H-" + HARI_SEBELUM_JATUH_TEMPO + ")",
-  harian: "Pengingat Check-out Hari Ini"
+  bulanan: "Pengingat Masa Sewa",
+  harian: "Pengingat Masa Sewa"
 };
 
 const NAMA_BULAN = [
@@ -885,71 +910,41 @@ function idLog(orderId, jenis, tanggal) {
   return orderId + "_" + jenis + "_" + kunciTanggal(tanggal);
 }
 
-/** Dua tanggal jatuh pada hari kalender yang sama. */
-function samaHari(a, b) {
-  return a.getFullYear() === b.getFullYear() &&
-         a.getMonth() === b.getMonth() &&
-         a.getDate() === b.getDate();
-}
-
 /**
- * Menentukan apakah sebuah transaksi akan diproses cron hari ini,
- * dan oleh job yang mana.
- *
- * Syaratnya ditiru dari kueri Firestore pada api/cron.js. Sengaja
- * diperiksa dari ISI transaksinya, bukan dari nomor urut perulangan
- * pembuatnya -- sebab tanggal check-out sebagian transaksi diacak
- * (acakAngka(1, 7)) dan bisa saja kebetulan jatuh tepat 7 hari lagi.
- *
- * @returns {"bulanan"|"harian"|null}
+ * Tanggal saat cron akan menemukan transaksi ini sebagai kandidat
+ * notifikasi -- lihat penjelasan di atas.
  */
-function jenisKandidatCron(transaksi, hariIni) {
-  if (transaksi.transaction_status !== "settlement") return null;
-  if (transaksi.status_checkin !== "checked_in") return null;
-  if (!transaksi.tanggal_checkout) return null;
-
+function tanggalPemicu(transaksi) {
   const keluar = transaksi.tanggal_checkout.toDate();
 
   if (transaksi.tipe_sewa === "bulanan") {
-    // Penyewa yang sudah menjawab tidak perlu diingatkan lagi
-    if (transaksi.status_perpanjangan !== "belum") return null;
-
-    const tenggat = new Date(hariIni);
-    tenggat.setDate(tenggat.getDate() + HARI_SEBELUM_JATUH_TEMPO);
-    return samaHari(keluar, tenggat) ? "bulanan" : null;
+    const pemicu = new Date(keluar);
+    pemicu.setDate(pemicu.getDate() - HARI_SEBELUM_JATUH_TEMPO);
+    return pemicu;
   }
 
-  if (transaksi.tipe_sewa === "harian") {
-    return samaHari(keluar, hariIni) ? "harian" : null;
-  }
-
-  return null;
+  return keluar; // harian: pemicunya adalah hari check-out itu sendiri
 }
 
 /**
- * Membuat dokumen log penahan untuk setiap transaksi yang hari ini
- * akan diproses cron.
+ * Membuat dokumen log penahan untuk setiap transaksi yang tergolong
+ * "akan jatuh tempo" (kelompok C & D pada BAGIAN 6).
  *
  * Bentuk dokumennya mengikuti yang ditulis prosesSatu() di api/cron.js,
  * supaya panel notifikasi admin nanti bisa membacanya tanpa perlakuan
  * khusus.
  */
-function buatDataLogNotifikasi(daftarTransaksi) {
-  const hariIni = new Date();
-  const daftar = [];
-
-  daftarTransaksi.forEach(function (transaksi) {
-    const jenis = jenisKandidatCron(transaksi, hariIni);
-    if (!jenis) return;
-
+function buatDataLogNotifikasi(daftarJatuhTempo) {
+  return daftarJatuhTempo.map(function (transaksi) {
+    const pemicu = tanggalPemicu(transaksi);
     const keluar = transaksi.tanggal_checkout.toDate();
 
-    daftar.push({
-      _id: idLog(transaksi.order_id, jenis, hariIni),
+    return {
+      _id: idLog(transaksi.order_id, transaksi.tipe_sewa, pemicu),
 
       order_id: transaksi.order_id,
-      jenis: jenis,
-      judul: JUDUL_LOG[jenis],
+      jenis: transaksi.tipe_sewa,
+      judul: JUDUL_LOG[transaksi.tipe_sewa],
       ringkasan: "Sewa " + transaksi.nama_penyewa + " berakhir " + tanggalPanjang(keluar),
 
       nama_penyewa: transaksi.nama_penyewa,
@@ -960,20 +955,19 @@ function buatDataLogNotifikasi(daftarTransaksi) {
       kontak_tujuan: null,
       dialihkan: false,
 
-      waktu_kirim: Timestamp.fromDate(hariIni),
+      waktu_kirim: Timestamp.fromDate(pemicu),
       status: "dilewati",
-      keterangan: "Data seeding: notifikasi sengaja ditahan agar cron " +
-                  "tidak mengirim WhatsApp ke nomor dummy.",
+      keterangan: "Data seeding: notifikasi ditahan lebih dulu untuk tanggal " +
+                  tanggalPanjang(pemicu) + ", agar cron tidak mengirim WhatsApp " +
+                  "ke nomor dummy saat tanggal itu tiba.",
       pesan: "(tidak ada pesan yang dikirim)",
 
       // Sudah dianggap terbaca supaya tidak menumpuk sebagai
       // pemberitahuan baru di panel admin
       dibaca: true,
       sumber: "seed"
-    });
+    };
   });
-
-  return daftar;
 }
 
 // =====================================================================
@@ -1092,13 +1086,14 @@ export async function jalankanSeeding(tulisLog, paksa) {
   const dataKamar = buatDataKamar();
   // Catatan: buatDataTransaksi() juga MENGUBAH field "tersedia" pada
   // dataKamar agar konsisten dengan transaksi yang dibuat.
-  const dataTransaksi = buatDataTransaksi(dataKamar);
+  const hasilTransaksi = buatDataTransaksi(dataKamar);
+  const dataTransaksi = hasilTransaksi.transaksi;
   const dataUser = await buatDataUser();
 
   // Penahan agar cron tidak mengirim WhatsApp ke nomor dummy.
   // Harus dibuat SETELAH dataTransaksi, karena isinya diturunkan
-  // dari transaksi mana yang hari ini memenuhi syarat cron.
-  const dataLog = buatDataLogNotifikasi(dataTransaksi);
+  // dari transaksi kelompok C & D (lihat BAGIAN 6A2).
+  const dataLog = buatDataLogNotifikasi(hasilTransaksi.jatuhTempo);
 
   const kamarTerisi = dataKamar.filter(function (k) { return !k.tersedia; }).length;
 
@@ -1147,17 +1142,17 @@ export async function jalankanSeeding(tulisLog, paksa) {
   tulisLog("Menulis collection 'log_notifikasi'...");
 
   if (dataLog.length === 0) {
-    tulisLog("  Tidak ada transaksi yang hari ini memenuhi syarat cron.");
+    tulisLog("  Tidak ada transaksi yang akan jatuh tempo perlu ditahan.");
   } else {
     await tulisCollection(COL_LOG, dataLog);
     tulisLog("  Selesai: " + dataLog.length + " dokumen penahan.");
     dataLog.forEach(function (l) {
-      tulisLog("    - " + l.order_id + " (" + l.jenis + ") -> " + l.nama_penyewa);
+      tulisLog("    - " + l.order_id + " (" + l.jenis + ") -> " + l.nama_penyewa +
+               "  [pemicu " + new Date(l.waktu_kirim.toDate()).toLocaleDateString("id-ID") + "]");
     });
-    tulisLog("  Cron akan menganggap penyewa ini sudah dikirimi hari ini,");
-    tulisLog("  sehingga tidak ada WhatsApp yang terkirim ke nomor dummy.");
-    tulisLog("  Berlaku untuk HARI INI saja -- besok mereka sudah tidak");
-    tulisLog("  memenuhi syarat cron, jadi tidak perlu penahan lagi.");
+    tulisLog("  Cron akan menganggap penyewa-penyewa ini sudah dikirimi pada");
+    tulisLog("  tanggal pemicunya masing-masing, sehingga tidak ada WhatsApp");
+    tulisLog("  yang benar-benar terkirim ke nomor dummy.");
   }
 
   // --- Langkah 4: ringkasan untuk pemeriksaan ---
@@ -1168,14 +1163,15 @@ export async function jalankanSeeding(tulisLog, paksa) {
     ringkasanCheckin[t.status_checkin] = (ringkasanCheckin[t.status_checkin] || 0) + 1;
   });
 
-  // Menghitung transaksi yang mendekati jatuh tempo (H-1 sampai H-7)
+  // Menghitung transaksi yang mendekati jatuh tempo (H-1 sampai H-14,
+  // supaya kelompok C & D di awal Oktober ikut tercantum)
   const sekarang = new Date();
-  const batas7Hari = new Date();
-  batas7Hari.setDate(batas7Hari.getDate() + 7);
+  const batasHari = new Date();
+  batasHari.setDate(batasHari.getDate() + 14);
 
   const jatuhTempo = dataTransaksi.filter(function (t) {
     const checkout = t.tanggal_checkout.toDate();
-    return t.status_checkin === "checked_in" && checkout >= sekarang && checkout <= batas7Hari;
+    return t.status_checkin === "checked_in" && checkout >= sekarang && checkout <= batasHari;
   });
 
   tulisLog("");
@@ -1192,7 +1188,7 @@ export async function jalankanSeeding(tulisLog, paksa) {
     tulisLog("  - " + s + ": " + ringkasanCheckin[s]);
   });
   tulisLog("");
-  tulisLog("Mendekati jatuh tempo (checkout <= 7 hari lagi): " + jatuhTempo.length + " transaksi");
+  tulisLog("Mendekati jatuh tempo (checkout <= 14 hari lagi): " + jatuhTempo.length + " transaksi");
   jatuhTempo
     .sort(function (a, b) { return a.tanggal_checkout.toDate() - b.tanggal_checkout.toDate(); })
     .forEach(function (t) {

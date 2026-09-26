@@ -11,9 +11,11 @@
  * Data transaksi dipantau dengan onSnapshot, jadi angka di layar ikut
  * berubah begitu ada perubahan di Firestore tanpa perlu refresh.
  *
- * Catatan: "Grafik Pendapatan" sengaja dibiarkan memakai angka contoh
- * (hardcode) karena data seeding hanya mencakup sekitar 4 bulan,
- * tidak cukup untuk mengisi grafik 6 bulan.
+ * "Grafik Pendapatan" menjumlahkan order_amount transaksi LUNAS per
+ * bulan (berdasarkan settlement_time, sama seperti js/admin-financials.js),
+ * dibatasi rentang "Dari bulan - Sampai bulan" yang bisa diatur pengguna
+ * (bawaan: 6 bulan terakhir), dan ikut tersaring oleh filter cabang yang
+ * sama dengan seluruh kartu lain di halaman ini.
  * =====================================================================
  */
 
@@ -29,6 +31,8 @@ import {
 
 import {
   formatTanggal,
+  formatRupiah,
+  statusLunas,
   labelSisaHari,
   sisaHari,
   inisial,
@@ -51,6 +55,10 @@ const elTabelAlokasi = document.getElementById("tabelAlokasi");
 const elFilterStatusKamar = document.getElementById("filterStatusKamar");
 const elGridStatusKamar = document.getElementById("gridStatusKamar");
 
+const elGrafikPendapatan = document.getElementById("grafikPendapatan");
+const elGrafikBulanMulai = document.getElementById("grafikBulanMulai");
+const elGrafikBulanSelesai = document.getElementById("grafikBulanSelesai");
+
 // --- Penyimpanan data terakhir --------------------------------------
 let petaCabang = {};
 let petaKamar = {};
@@ -63,6 +71,18 @@ let cabangTerpilih = "semua"; // "semua" atau id cabang
 // =====================================================================
 function sesuaiFilter(cabangId) {
   return cabangTerpilih === "semua" || cabangId === cabangTerpilih;
+}
+
+/**
+ * Jatuh tempo yang PERLU TINDAKAN di dashboard: penyewa bulanan yang
+ * sudah menjawab "Tidak Lanjut" (status_perpanjangan) SENGAJA
+ * dikecualikan -- kepastian mereka akan keluar sudah cukup ditangani
+ * di tab "Jadwal Check-out" pada halaman Manajemen Check-in & Check-out,
+ * jadi tidak perlu dobel tampil di sini sebagai sesuatu yang masih
+ * perlu dikejar admin. Sama persis dengan js/admin-bookings.js.
+ */
+function jatuhTempoPerluTindakan(t) {
+  return mendekatiJatuhTempo(t) && t.status_perpanjangan !== "tidak_lanjut";
 }
 
 // =====================================================================
@@ -81,7 +101,7 @@ function gambarKartuRingkasan() {
   });
 
   const pemesananBaru = transaksiTampil.filter(perluAlokasi).length;
-  const jatuhTempo = transaksiTampil.filter(mendekatiJatuhTempo).length;
+  const jatuhTempo = transaksiTampil.filter(jatuhTempoPerluTindakan).length;
 
   elStatTerisi.textContent = terisi;
   elStatKosong.textContent = kosong;
@@ -126,7 +146,7 @@ function kartuJatuhTempoHtml(t) {
 
 function gambarJatuhTempo() {
   const daftar = daftarTransaksi
-    .filter(function (t) { return sesuaiFilter(t.cabang_id) && mendekatiJatuhTempo(t); })
+    .filter(function (t) { return sesuaiFilter(t.cabang_id) && jatuhTempoPerluTindakan(t); })
     .sort(function (a, b) { return sisaHari(a.tanggal_checkout) - sisaHari(b.tanggal_checkout); })
     .slice(0, 5); // dashboard hanya menampilkan 5 teratas
 
@@ -186,7 +206,7 @@ function gambarTabelAlokasi() {
 function kartuKamarHtml(kamar, transaksiHuni) {
   // Kamar terisi yang penghuninya akan check-out dalam 7 hari
   // ditandai khusus agar admin bisa bersiap.
-  const akanCheckout = transaksiHuni && mendekatiJatuhTempo(transaksiHuni);
+  const akanCheckout = transaksiHuni && jatuhTempoPerluTindakan(transaksiHuni);
 
   if (kamar.tersedia === false) {
     const warnaGaris = akanCheckout ? "bg-status-warning" : "bg-status-occupied";
@@ -242,6 +262,136 @@ function gambarStatusKamar() {
   });
 
   elGridStatusKamar.innerHTML = potongan.join("");
+}
+
+// =====================================================================
+// BAGIAN 4B - GRAFIK PENDAPATAN (per bulan, transaksi lunas)
+// ---------------------------------------------------------------------
+// Sinkron dengan filter cabang lewat sesuaiFilter() yang sama dipakai
+// kartu-kartu lain, dan ikut digambar ulang oleh gambarSemua() setiap
+// kali data transaksi berubah atau filter cabang berpindah.
+// =====================================================================
+const NAMA_BULAN_SINGKAT = [
+  "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+  "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+];
+
+// Batas rentang terpanjang yang boleh ditampilkan sekaligus, supaya
+// grafik tidak meluber bila pengguna memilih rentang bertahun-tahun.
+const MAKS_BULAN_GRAFIK = 36;
+
+/** Date -> "2026-09", format yang dipakai <input type="month">. */
+function bulanKeNilaiInput(tanggal) {
+  return tanggal.getFullYear() + "-" + String(tanggal.getMonth() + 1).padStart(2, "0");
+}
+
+/** "2026-09" -> { tahun: 2026, bulan: 8 } (bulan 0-indeks). */
+function uraiNilaiBulan(nilai) {
+  const bagian = nilai.split("-");
+  return { tahun: Number(bagian[0]), bulan: Number(bagian[1]) - 1 };
+}
+
+// Rentang bawaan saat halaman baru dibuka (belum diubah pengguna)
+const JUMLAH_BULAN_BAWAAN = 6;
+
+/** Mengisi kolom "Dari" & "Sampai" dengan JUMLAH_BULAN_BAWAAN bulan terakhir. */
+function aturRentangGrafikBawaan() {
+  const sekarang = new Date();
+  const bulanLalu = new Date(sekarang.getFullYear(), sekarang.getMonth() - (JUMLAH_BULAN_BAWAAN - 1), 1);
+
+  elGrafikBulanMulai.value = bulanKeNilaiInput(bulanLalu);
+  elGrafikBulanSelesai.value = bulanKeNilaiInput(sekarang);
+}
+
+/**
+ * Daftar { tahun, bulan } berurutan maju dari "mulai" sampai "selesai".
+ * Urutan dua kolom yang tertukar tetap ditampilkan maju (bukan error),
+ * dan rentangnya dipotong maksimal MAKS_BULAN_GRAFIK bulan.
+ */
+function daftarBulanRentang(nilaiMulai, nilaiSelesai) {
+  const mulai = uraiNilaiBulan(nilaiMulai);
+  const selesai = uraiNilaiBulan(nilaiSelesai);
+
+  let idxMulai = mulai.tahun * 12 + mulai.bulan;
+  let idxSelesai = selesai.tahun * 12 + selesai.bulan;
+
+  if (idxSelesai < idxMulai) {
+    const tukar = idxMulai;
+    idxMulai = idxSelesai;
+    idxSelesai = tukar;
+  }
+  idxMulai = Math.max(idxMulai, idxSelesai - (MAKS_BULAN_GRAFIK - 1));
+
+  const daftar = [];
+  for (let idx = idxMulai; idx <= idxSelesai; idx++) {
+    daftar.push({ tahun: Math.floor(idx / 12), bulan: ((idx % 12) + 12) % 12 });
+  }
+  return daftar;
+}
+
+function gambarGrafikPendapatan() {
+  if (!elGrafikPendapatan) return;
+
+  if (!elGrafikBulanMulai.value || !elGrafikBulanSelesai.value) {
+    aturRentangGrafikBawaan();
+  }
+
+  const bulanList = daftarBulanRentang(elGrafikBulanMulai.value, elGrafikBulanSelesai.value);
+
+  // Hanya transaksi LUNAS pada cabang yang sedang difilter -- sama
+  // dengan syarat kartu ringkasan keuangan pada js/admin-financials.js.
+  const transaksiLunas = daftarTransaksi.filter(function (t) {
+    return sesuaiFilter(t.cabang_id) && statusLunas(t.transaction_status) && t.settlement_time;
+  });
+
+  const totalPerBulan = bulanList.map(function (bl) {
+    const total = transaksiLunas.reduce(function (jumlah, t) {
+      const waktu = t.settlement_time.toDate();
+      if (waktu.getFullYear() === bl.tahun && waktu.getMonth() === bl.bulan) {
+        return jumlah + Number(t.order_amount || 0);
+      }
+      return jumlah;
+    }, 0);
+
+    return { tahun: bl.tahun, bulan: bl.bulan, total: total };
+  });
+
+  const nilaiMaksimum = totalPerBulan.reduce(function (m, b) { return Math.max(m, b.total); }, 0);
+
+  if (nilaiMaksimum === 0) {
+    elGrafikPendapatan.innerHTML =
+      '<div class="h-56 flex items-center justify-center text-ink-muted text-body-sm text-center px-base">' +
+      'Belum ada transaksi lunas pada periode ini.</div>';
+    return;
+  }
+
+  // Lebar minimum per batang supaya label bulan tidak berdesakan --
+  // di layar sempit, pembungkus ".gulir-x" pada HTML yang menggulirkan
+  // grafik ini secara mendatar (lihat komentar di admin/dashboard-admin.html).
+  const lebarMinimum = Math.max(560, totalPerBulan.length * 48);
+
+  elGrafikPendapatan.innerHTML =
+    '<div class="flex items-end gap-2 sm:gap-3 h-56 border-b border-border-hairline pb-2" style="min-width:' + lebarMinimum + 'px">' +
+    totalPerBulan.map(function (b) {
+      const tinggiPersen = Math.max(4, Math.round((b.total / nilaiMaksimum) * 100));
+      const label = NAMA_BULAN_SINGKAT[b.bulan] + " " + b.tahun;
+      const nilaiTeks = formatRupiah(b.total);
+      const judul = amankanTeks(label + ": " + nilaiTeks);
+
+      return '' +
+        '<div class="flex-1 flex flex-col items-center gap-2 h-full min-w-[32px]">' +
+        '<div class="w-full flex-1 flex items-end">' +
+        '<div class="w-full bg-primary-fixed rounded-t-lg hover:bg-primary transition-colors relative group cursor-default" ' +
+        'style="height:' + tinggiPersen + '%" title="' + judul + '">' +
+        '<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-ink-primary text-white text-xs px-2 py-1 rounded ' +
+        'opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">' +
+        amankanTeks(nilaiTeks) + '</div>' +
+        '</div>' +
+        '</div>' +
+        '<span class="text-badge font-semibold text-ink-muted whitespace-nowrap">' + amankanTeks(label) + '</span>' +
+        '</div>';
+    }).join("") +
+    '</div>';
 }
 
 // =====================================================================
@@ -306,6 +456,7 @@ function gambarSemua() {
   gambarJatuhTempo();
   gambarTabelAlokasi();
   gambarStatusKamar();
+  gambarGrafikPendapatan();
 }
 
 // =====================================================================
@@ -324,6 +475,11 @@ async function mulai() {
     elFilterCabang.addEventListener("change", function () {
       pilihCabang(elFilterCabang.value);
     });
+
+    // Grafik pendapatan: bawaan 6 bulan terakhir, bisa diubah manual
+    aturRentangGrafikBawaan();
+    elGrafikBulanMulai.addEventListener("change", gambarGrafikPendapatan);
+    elGrafikBulanSelesai.addEventListener("change", gambarGrafikPendapatan);
 
     // Data kamar dipantau real-time agar status Terisi/Tersedia langsung
     // berubah setelah admin melakukan alokasi atau check-in.

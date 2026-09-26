@@ -14,7 +14,6 @@
 import {
   ambilPeta,
   pantauTransaksi,
-  mendekatiJatuhTempo,
   COL_CABANG,
   COL_KAMAR
 } from "./admin-data.js";
@@ -47,12 +46,7 @@ const elCari = document.getElementById("searchTransaksi");
 const elTombolExport = document.getElementById("exportExcelBtn");
 
 const elTotalPendapatan = document.getElementById("statTotalPendapatan");
-const elPerubahanBulan = document.getElementById("statPerubahanBulan");
-const elTransaksiLunas = document.getElementById("statTransaksiLunas");
 const elMenungguBayar = document.getElementById("statMenungguBayar");
-const elJumlahPending = document.getElementById("statJumlahPending");
-const elNilaiJatuhTempo = document.getElementById("statNilaiJatuhTempo");
-const elJumlahJatuhTempo = document.getElementById("statJumlahJatuhTempo");
 
 // --- Penyimpanan data terakhir --------------------------------------
 let petaCabang = {};
@@ -107,67 +101,13 @@ function gambarKartuRingkasan() {
 
   const lunas = daftar.filter(function (t) { return statusLunas(t.transaction_status); });
   const pending = daftar.filter(function (t) { return t.transaction_status === "pending"; });
-  const jatuhTempo = daftar.filter(mendekatiJatuhTempo);
 
   function jumlahkan(kumpulan) {
     return kumpulan.reduce(function (total, t) { return total + Number(t.order_amount || 0); }, 0);
   }
 
   elTotalPendapatan.textContent = formatRupiah(jumlahkan(lunas));
-  elTransaksiLunas.textContent = lunas.length;
   elMenungguBayar.textContent = formatRupiah(jumlahkan(pending));
-  elJumlahPending.textContent = pending.length + " Transaksi Pending";
-
-  elNilaiJatuhTempo.textContent = formatRupiah(jumlahkan(jatuhTempo));
-  elJumlahJatuhTempo.textContent = jatuhTempo.length + " Penghuni Perlu Perpanjangan";
-
-  gambarPerubahanBulan(lunas);
-}
-
-/**
- * Membandingkan pendapatan bulan ini dengan bulan sebelumnya.
- * Perbandingan memakai settlement_time, yaitu saat uang benar-benar
- * diterima, bukan saat pesanan dibuat.
- */
-function gambarPerubahanBulan(daftarLunas) {
-  const sekarang = new Date();
-  const bulanIni = sekarang.getMonth();
-  const tahunIni = sekarang.getFullYear();
-
-  const bulanLalu = bulanIni === 0 ? 11 : bulanIni - 1;
-  const tahunBulanLalu = bulanIni === 0 ? tahunIni - 1 : tahunIni;
-
-  let totalBulanIni = 0;
-  let totalBulanLalu = 0;
-
-  daftarLunas.forEach(function (t) {
-    const waktu = keDate(t.settlement_time);
-    if (!waktu) return;
-
-    if (waktu.getMonth() === bulanIni && waktu.getFullYear() === tahunIni) {
-      totalBulanIni += Number(t.order_amount || 0);
-    } else if (waktu.getMonth() === bulanLalu && waktu.getFullYear() === tahunBulanLalu) {
-      totalBulanLalu += Number(t.order_amount || 0);
-    }
-  });
-
-  if (totalBulanLalu === 0) {
-    elPerubahanBulan.textContent = "Belum ada pembanding bulan lalu";
-    elPerubahanBulan.className = "text-ink-muted text-xs mt-sm";
-    return;
-  }
-
-  const persen = Math.round(((totalBulanIni - totalBulanLalu) / totalBulanLalu) * 100);
-  const naik = persen >= 0;
-
-  elPerubahanBulan.innerHTML =
-    '<span class="material-symbols-outlined text-[16px]">' +
-    (naik ? "trending_up" : "trending_down") + "</span>" +
-    (naik ? "+" : "") + persen + "% dari bulan lalu";
-
-  elPerubahanBulan.className = naik
-    ? "text-status-available text-xs font-bold flex items-center gap-xxs mt-sm"
-    : "text-error text-xs font-bold flex items-center gap-xxs mt-sm";
 }
 
 // =====================================================================

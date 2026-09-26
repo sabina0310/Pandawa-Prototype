@@ -46,6 +46,7 @@ const elInfoHalaman = document.getElementById("paginationInfo");
 const elTombolHalaman = document.getElementById("paginationButtons");
 const elFilterCabang = document.getElementById("filterCabang");
 const elBadgeJatuhTempo = document.getElementById("badgeJatuhTempo");
+const elBadgeMenungguAlokasi = document.getElementById("badgeMenungguAlokasi");
 
 const elStatTerisi = document.getElementById("statTerisi");
 const elStatKosong = document.getElementById("statKosong");
@@ -66,13 +67,24 @@ let cabangTerpilih = "semua";
 // PENYARINGAN
 // =====================================================================
 
+/**
+ * Jatuh tempo yang PERLU TINDAKAN di halaman ini: penyewa bulanan yang
+ * sudah menjawab "Tidak Lanjut" (status_perpanjangan) SENGAJA dikecualikan
+ * -- kepastian mereka akan keluar sudah cukup ditangani di tab "Jadwal
+ * Check-out" pada halaman Manajemen Check-in, jadi tidak perlu dobel
+ * tampil di sini sebagai sesuatu yang masih perlu dikejar admin.
+ */
+function jatuhTempoPerluTindakan(t) {
+  return mendekatiJatuhTempo(t) && t.status_perpanjangan !== "tidak_lanjut";
+}
+
 /** Mengambil transaksi sesuai tab dan filter cabang yang sedang aktif. */
 function transaksiTampil() {
   return daftarTransaksi.filter(function (t) {
     if (cabangTerpilih !== "semua" && t.cabang_id !== cabangTerpilih) return false;
 
     if (tabAktif === "menunggu-alokasi") return perluAlokasi(t);
-    if (tabAktif === "jatuh-tempo") return mendekatiJatuhTempo(t);
+    if (tabAktif === "jatuh-tempo") return jatuhTempoPerluTindakan(t);
     return true; // tab "semua"
   });
 }
@@ -91,9 +103,13 @@ function gambarKartuRingkasan() {
 
   elStatTerisi.textContent = kamarTampil.filter(function (k) { return k.tersedia === false; }).length;
   elStatKosong.textContent = kamarTampil.filter(function (k) { return k.tersedia !== false; }).length;
-  elStatPemesananBaru.textContent = transaksiCabang.filter(perluAlokasi).length;
 
-  const jumlahJatuhTempo = transaksiCabang.filter(mendekatiJatuhTempo).length;
+  const jumlahMenungguAlokasi = transaksiCabang.filter(perluAlokasi).length;
+  elStatPemesananBaru.textContent = jumlahMenungguAlokasi;
+  elBadgeMenungguAlokasi.textContent = jumlahMenungguAlokasi;
+  elBadgeMenungguAlokasi.classList.toggle("hidden", jumlahMenungguAlokasi === 0);
+
+  const jumlahJatuhTempo = transaksiCabang.filter(jatuhTempoPerluTindakan).length;
   elStatJatuhTempo.textContent = jumlahJatuhTempo;
   elBadgeJatuhTempo.textContent = jumlahJatuhTempo;
 }
@@ -125,7 +141,7 @@ function barisHtml(t) {
   // Penghuni yang mendekati jatuh tempo diberi badge tambahan
   // berisi sisa harinya, agar admin langsung melihat urgensinya.
   let badgeTambahan = "";
-  if (mendekatiJatuhTempo(t)) {
+  if (jatuhTempoPerluTindakan(t)) {
     const mendesak = sisaHari(t.tanggal_checkout) <= 3;
     const kelas = mendesak ? "bg-error/10 text-error" : "bg-status-warning/10 text-status-warning";
     badgeTambahan =
