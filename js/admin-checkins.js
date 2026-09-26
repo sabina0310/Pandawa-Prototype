@@ -33,7 +33,6 @@ import {
   simpanCheckin,
   simpanCheckout,
   mendekatiJatuhTempo,
-  sedangMenghuni,
   COL_CABANG,
   COL_KAMAR
 } from "./admin-data.js";
@@ -60,9 +59,8 @@ const JUMLAH_KOLOM = 5;
 const elTabel = document.getElementById("checkinsTableBody");
 const elThTanggal = document.getElementById("thTanggalJadwal");
 const elFilterCabang = document.getElementById("filterCabang");
-const elStatCheckin = document.getElementById("statCheckinMingguIni");
-const elStatCheckout = document.getElementById("statCheckoutMingguIni");
-const elStatPenghuniAktif = document.getElementById("statPenghuniAktif");
+const elBadgeCheckin = document.getElementById("badgeCheckin");
+const elBadgeCheckout = document.getElementById("badgeCheckout");
 const tombolTab = document.querySelectorAll(".checkin-tab");
 
 // --- Modal Check-in ---------------------------------------------------
@@ -152,20 +150,23 @@ function transaksiTampil() {
 }
 
 // =====================================================================
-// KARTU RINGKASAN
+// BADGE JUMLAH PADA TAB
 // =====================================================================
-function gambarKartuRingkasan() {
+function gambarBadgeTab() {
   const transaksiCabang = daftarTransaksi.filter(function (t) {
     return cabangTerpilih === "semua" || t.cabang_id === cabangTerpilih;
   });
 
-  elStatCheckin.textContent = transaksiCabang.filter(function (t) {
+  const jumlahCheckin = transaksiCabang.filter(function (t) {
     return siapCheckin(t) && dalamTujuhHari(t.tanggal_checkin);
   }).length;
+  const jumlahCheckout = transaksiCabang.filter(siapCheckout).length;
 
-  elStatCheckout.textContent = transaksiCabang.filter(siapCheckout).length;
+  elBadgeCheckin.textContent = jumlahCheckin;
+  elBadgeCheckin.classList.toggle("hidden", jumlahCheckin === 0);
 
-  elStatPenghuniAktif.textContent = transaksiCabang.filter(sedangMenghuni).length;
+  elBadgeCheckout.textContent = jumlahCheckout;
+  elBadgeCheckout.classList.toggle("hidden", jumlahCheckout === 0);
 }
 
 // =====================================================================
@@ -282,7 +283,7 @@ function gambarTabel() {
 }
 
 function gambarSemua() {
-  gambarKartuRingkasan();
+  gambarBadgeTab();
   gambarTabel();
 }
 

@@ -37,96 +37,38 @@
         <!-- Main Content Area -->
         <main class="md:ml-[260px] pt-[96px] px-base md:px-lg lg:px-xl pb-xl min-h-screen flex flex-col gap-lg">
                 <!-- Page Title Section -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
-                        <div>
-                                <h2 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
-                                        Manajemen Check-in dan Check-out
-                                </h2>
-                                <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Pantau kedatangan
-                                        penghuni, proses verifikasi identitas, dan serah terima kunci</p>
-                        </div>
-                        <div class="flex items-center gap-md shrink-0">
-                                <div class="relative">
-                                        <select id="filterCabang"
-                                                class="appearance-none bg-surface-canvas border border-border-strong rounded-lg py-sm pl-md pr-xl font-label-md text-label-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer">
-                                                <option value="semua">Semua Cabang</option>
-                                        </select>
-                                        <span
-                                                class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
-                                </div>
-                                <!-- <button
-                                        class="bg-primary-container text-white font-button-md text-button-md px-lg py-sm rounded-lg hover:bg-surface-tint transition-colors flex items-center gap-sm shadow-[0_1px_3px_0_rgba(0,0,0,0.1)]">
-                                        <span class="material-symbols-outlined text-[18px]">add</span>
-                                        Check-in Langsung / Manual
-                                </button> -->
-                        </div>
+                <div class="mb-lg">
+                        <h2 class="font-display-lg text-display-lg font-bold text-ink-primary tracking-tight">
+                                Manajemen Check-in dan Check-out
+                        </h2>
+                        <p class="font-body-sm text-body-sm text-ink-muted mt-xs">Pantau kedatangan
+                                penghuni, proses verifikasi identitas, dan serah terima kunci</p>
                 </div>
-                <!-- Metric Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md mb-xl">
-                        <div
-                                class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
-                                <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Check-in Minggu
-                                                Ini</span>
-                                        <div
-                                                class="w-8 h-8 rounded-full bg-primary-fixed/30 flex items-center justify-center">
-                                                <span
-                                                        class="material-symbols-outlined text-primary-container text-[18px]">login</span>
-                                        </div>
-                                </div>
-                                <div class="flex items-end justify-between">
-                                        <span class="font-stat-display text-stat-display text-ink-primary"
-                                                id="statCheckinMingguIni">0</span>
-                                        <span
-                                                class="bg-status-warning/10 text-status-warning font-badge text-badge px-sm py-xxs rounded-full border border-status-warning/20 inline-flex items-center gap-xxs">Perlu
-                                                Verifikasi</span>
-                                </div>
-                        </div>
-                        <div
-                                class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
-                                <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Check-out Minggu
-                                                Ini</span>
-                                        <div
-                                                class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center">
-                                                <span
-                                                        class="material-symbols-outlined text-ink-secondary text-[18px]">logout</span>
-                                        </div>
-                                </div>
-                                <div class="flex items-end justify-between">
-                                        <span class="font-stat-display text-stat-display text-ink-primary"
-                                                id="statCheckoutMingguIni">0</span>
-                                        <span
-                                                class="bg-error/10 text-error font-badge text-badge px-sm py-xxs rounded-full border border-error/20 inline-flex items-center gap-xxs">Perlu
-                                                Diproses</span>
-                                </div>
-                        </div>
-                        <div
-                                class="bg-surface-canvas rounded-xl p-base shadow-sm border border-border-hairline flex flex-col justify-between h-full">
-                                <div class="flex justify-between items-start mb-md">
-                                        <span class="font-label-md text-label-md text-ink-muted">Penghuni
-                                                Aktif</span>
-                                        <div
-                                                class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center">
-                                                <span
-                                                        class="material-symbols-outlined text-status-available text-[18px]">people</span>
-                                        </div>
-                                </div>
-                                <div class="flex flex-col">
-                                        <span class="font-stat-display text-stat-display text-ink-primary"
-                                                id="statPenghuniAktif">0</span>
-                                        <span class="font-body-sm text-body-sm text-ink-muted">Teralokasi</span>
-                                </div>
+                <!-- Filter Cabang -->
+                <div
+                        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-canvas p-4 rounded-xl border-none shadow-card mb-lg">
+                        <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-ink-muted">filter_list</span>
+                                <select id="filterCabang"
+                                        class="bg-transparent border border-border-strong rounded-md px-3 py-1.5 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                                        <option value="semua">Semua Cabang</option>
+                                </select>
                         </div>
                 </div>
                 <!-- Tab Bar -->
                 <div class="border-b border-border-hairline mb-lg flex overflow-x-auto hide-scrollbar">
                         <button data-tab="checkin"
-                                class="checkin-tab px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap">Jadwal
-                                Check-in</button>
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-primary font-bold border-b-2 border-primary whitespace-nowrap flex items-center gap-2">Jadwal
+                                Check-in
+                                <span class="hidden bg-error text-on-error rounded-full px-2 py-0.5 font-badge text-badge inline-flex items-center gap-xxs"
+                                        id="badgeCheckin">0</span>
+                        </button>
                         <button data-tab="checkout"
-                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap">Jadwal
-                                Check-out</button>
+                                class="checkin-tab px-md py-sm font-label-md text-label-md text-ink-muted hover:text-ink-primary transition-colors whitespace-nowrap flex items-center gap-2">Jadwal
+                                Check-out
+                                <span class="hidden bg-error text-on-error rounded-full px-2 py-0.5 font-badge text-badge inline-flex items-center gap-xxs"
+                                        id="badgeCheckout">0</span>
+                        </button>
                 </div>
                 <!-- Operations Table -->
                 <div class="bg-surface-canvas rounded-xl shadow-sm border border-border-hairline overflow-hidden">
