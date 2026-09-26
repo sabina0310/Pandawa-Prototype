@@ -2,6 +2,7 @@
 <html lang="id" style="">
 
 <head>
+<script src="../js/jaga-portal.js" data-peran="superadmin" data-login="login-super-admin.html"></script>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Dashboard Operasional - Pilar Pandawa</title>
@@ -140,12 +141,14 @@
                 </div>
                 <div
                         class="bg-surface-canvas rounded-2xl shadow-sm border-none p-lg mb-xl flex flex-wrap gap-md items-end">
-                        <div class="flex-1 min-w-[200px]"><label
-                                        class="block text-label-md text-ink-muted mb-xs">Periode</label>
-                                <div class="relative"><input
-                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary"
-                                                type="text" value="01 Okt 2023 - 31 Okt 2023"><span
-                                                class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted">calendar_today</span>
+                        <div class="flex-1 min-w-[260px]"><label
+                                        class="block text-label-md text-ink-muted mb-xs">Periode Sewa (Check-in)</label>
+                                <div class="flex items-center gap-xs">
+                                        <input id="filterPeriodeMulai" type="date" aria-label="Dari tanggal"
+                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
+                                        <span class="text-ink-muted text-body-sm shrink-0">s/d</span>
+                                        <input id="filterPeriodeSelesai" type="date" aria-label="Sampai tanggal"
+                                                class="w-full h-[44px] bg-surface-soft border border-border-hairline rounded-xl shadow-sm px-base text-body-sm focus:ring-primary">
                                 </div>
                         </div>
                         <div class="w-48"><label class="block text-label-md text-ink-muted mb-xs">Cabang</label><select id="filterCabang"

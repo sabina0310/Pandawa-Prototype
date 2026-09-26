@@ -41,6 +41,8 @@ const elTabel = document.getElementById("transactionsTableBody");
 const elFilterCabang = document.getElementById("filterCabang");
 const elFilterTipe = document.getElementById("filterTipeSewa");
 const elFilterStatus = document.getElementById("filterStatus");
+const elFilterPeriodeMulai = document.getElementById("filterPeriodeMulai");
+const elFilterPeriodeSelesai = document.getElementById("filterPeriodeSelesai");
 const elCari = document.getElementById("searchTransaksi");
 const elTombolExport = document.getElementById("exportExcelBtn");
 
@@ -59,6 +61,22 @@ let daftarTransaksi = [];
 // =====================================================================
 // PENYARINGAN
 // =====================================================================
+
+/** true bila tanggal check-in transaksi berada di rentang "Periode" yang dipilih. */
+function dalamPeriode(t) {
+  const dari = elFilterPeriodeMulai.value;
+  const sampai = elFilterPeriodeSelesai.value;
+  if (!dari && !sampai) return true;
+
+  const checkin = keDate(t.tanggal_checkin);
+  if (!checkin) return false;
+
+  if (dari && checkin < new Date(dari + "T00:00:00")) return false;
+  if (sampai && checkin > new Date(sampai + "T23:59:59")) return false;
+
+  return true;
+}
+
 function transaksiTampil() {
   const kataCari = elCari.value.trim().toLowerCase();
 
@@ -69,6 +87,8 @@ function transaksiTampil() {
     if (elFilterStatus.value === "lunas" && !statusLunas(t.transaction_status)) return false;
     if (elFilterStatus.value === "pending" && t.transaction_status !== "pending") return false;
     if (elFilterStatus.value === "gagal" && !statusGagal(t.transaction_status)) return false;
+
+    if (!dalamPeriode(t)) return false;
 
     if (kataCari) {
       const gabungan = (t.order_id + " " + t.nama_penyewa + " " + t.kontak_penyewa).toLowerCase();
@@ -279,7 +299,7 @@ function exportCsv() {
 async function mulai() {
   pesanTabel(elTabel, "Memuat data...", JUMLAH_KOLOM);
 
-  [elFilterCabang, elFilterTipe, elFilterStatus].forEach(function (el) {
+  [elFilterCabang, elFilterTipe, elFilterStatus, elFilterPeriodeMulai, elFilterPeriodeSelesai].forEach(function (el) {
     el.addEventListener("change", gambarSemua);
   });
   elCari.addEventListener("input", gambarSemua);

@@ -151,13 +151,25 @@
         </div>
     </div>
     <div class="px-md pb-base mt-auto">
-        <a class="flex items-center gap-base px-base py-sm text-error hover:bg-error-container transition-all rounded-lg font-title-md text-body-md"
-            href="#">
+        <a id="logoutBtn" class="flex items-center gap-base px-base py-sm text-error hover:bg-error-container transition-all rounded-lg font-title-md text-body-md"
+            href="login.html">
             <span class="material-symbols-outlined">logout</span>
             Logout
         </a>
     </div>
 </nav>
+<script>
+    (function () {
+        var tombolLogout = document.getElementById('logoutBtn');
+        if (!tombolLogout) return;
+
+        tombolLogout.addEventListener('click', function (e) {
+            e.preventDefault();
+            localStorage.removeItem('adminSession');
+            window.location.href = 'login.html';
+        });
+    })();
+</script>
 <script>
     (function () {
         var currentPage = window.location.pathname.split('/').pop() || 'dashboard-admin.html';

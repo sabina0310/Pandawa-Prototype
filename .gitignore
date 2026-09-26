@@ -3,6 +3,11 @@
 .env.local
 .env.*.local
 
+# Dump mentah sesi Claude Code -- berisi output MENTAH setiap perintah
+# yang pernah dijalankan (termasuk kredensial yang sempat ditampilkan
+# di terminal, mis. token/URL remote git). JANGAN pernah di-commit.
+transkrip/
+
 # Dependencies
 node_modules/
 
