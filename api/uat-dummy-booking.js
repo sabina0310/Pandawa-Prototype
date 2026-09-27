@@ -59,13 +59,20 @@ function geserHari(jumlahHari, jam) {
 }
 
 /**
- * Mengambil satu kamar yang benar-benar masih tersedia, dipilih acak.
- * Sengaja tidak memakai angka karangan supaya data dummy tetap
- * merujuk kamar dan cabang yang sungguh-sungguh ada.
+ * Mengambil satu kamar yang benar-benar masih tersedia PADA CABANG YANG
+ * SAMA dengan pemesanan asli, dipilih acak di antara kamar-kamar itu.
+ * Sengaja tidak memakai angka karangan supaya data dummy tetap merujuk
+ * kamar yang sungguh-sungguh ada -- dan sengaja dibatasi ke cabang yang
+ * sama supaya laporan/notifikasi dummy konsisten dengan cabang yang
+ * benar-benar dipilih penyewa saat memesan.
  */
-async function ambilKamarTersedia(db) {
+async function ambilKamarTersedia(db, cabangId) {
   const cuplikan = await getDocs(
-    query(collection(db, COL_KAMAR), where('tersedia', '==', true))
+    query(
+      collection(db, COL_KAMAR),
+      where('cabang_id', '==', cabangId),
+      where('tersedia', '==', true)
+    )
   );
 
   if (cuplikan.empty) return null;
@@ -136,15 +143,24 @@ module.exports = async (req, res) => {
     }
 
     // -----------------------------------------------------------------
-    // 2. Pilih kamar yang benar-benar tersedia
+    // 2. Pilih kamar yang benar-benar tersedia, di cabang yang SAMA
+    //    dengan pemesanan asli (bukan cabang mana pun secara acak).
     // -----------------------------------------------------------------
-    const kamar = await ambilKamarTersedia(db);
+    if (!asli.cabang_id) {
+      console.log('[UAT] GAGAL: booking asli tidak memiliki cabang_id.');
+      return res.status(422).json({
+        sukses: false,
+        error: 'Booking asli "' + orderIdAsli + '" tidak memiliki cabang_id, dummy tidak bisa dibuat.'
+      });
+    }
+
+    const kamar = await ambilKamarTersedia(db, asli.cabang_id);
 
     if (!kamar) {
-      console.log('[UAT] GAGAL: tidak ada kamar tersedia.');
+      console.log('[UAT] GAGAL: tidak ada kamar tersedia di cabang ' + asli.cabang_id + '.');
       return res.status(409).json({
         sukses: false,
-        error: 'Tidak ada kamar yang tersedia untuk data uji. ' +
+        error: 'Tidak ada kamar yang tersedia di cabang "' + asli.cabang_id + '" untuk data uji. ' +
                'Jalankan /api/uat-bersihkan untuk mengembalikan kamar bekas pengujian.'
       });
     }
